@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace StructLinq.Range
 {
@@ -15,7 +14,7 @@ namespace StructLinq.Range
             this.start = start;
             this.count = count;
         }
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

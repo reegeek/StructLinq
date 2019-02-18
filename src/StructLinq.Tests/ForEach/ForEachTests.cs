@@ -1,4 +1,5 @@
 ﻿using System;
+using StructLinq.Range;
 using Xunit;
 
 namespace StructLinq.Tests.ForEach
@@ -13,7 +14,7 @@ namespace StructLinq.Tests.ForEach
         {
             var structEnum = StructEnumerable.Range(start, count);
             var countAction = new CountAction();
-            structEnum.ForEach(ref countAction);
+            StructEnumerable.ForEach<int, RangeEnumerator, CountAction>(structEnum, ref countAction);
             Assert.Equal(count, countAction.Count);
         }
 
@@ -25,7 +26,7 @@ namespace StructLinq.Tests.ForEach
         {
             var structEnum = StructEnumerable.Range(start, count);
             var countAction = new ClassAction();
-            structEnum.ForEach(countAction);
+            StructEnumerable.ForEach<int, RangeEnumerator>(structEnum, countAction);
             Assert.Equal(count, countAction.Count);
         }
 
@@ -38,7 +39,7 @@ namespace StructLinq.Tests.ForEach
             var structEnum = StructEnumerable.Range(start, count);
             int resultCount = 0;
             Action<int> action = delegate(int i) { resultCount++; };
-            structEnum.ForEach(action);
+            StructEnumerable.ForEach<int, RangeEnumerator>(structEnum, action);
             Assert.Equal(count, resultCount);
         }
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using StructLinq.ForEach;
 
+// ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     public static partial class StructEnumerable
@@ -39,35 +41,4 @@ namespace StructLinq
             enumerable.ForEach(ref structAction);
         }
     }
-
-    struct StructActionFromInterface<T> : IAction<T>
-    {
-        #region private fields
-        private readonly IAction<T> action;
-        #endregion
-        public StructActionFromInterface(IAction<T> action)
-        {
-            this.action = action;
-        }
-        public void Do(T element)
-        {
-            action.Do(element);
-        }
-    }
-
-    struct StructActionFromDelegate<T> : IAction<T>
-    {
-        #region private fields
-        private readonly Action<T> action;
-        #endregion
-        public StructActionFromDelegate(Action<T> action)
-        {
-            this.action = action;
-        }
-        public void Do(T element)
-        {
-            action(element);
-        }
-    }
-
 }
