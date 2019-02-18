@@ -4,4 +4,5 @@
   </PropertyGroup>
   <Import Project="$(RootDir)\Build\Common.props"/>
   <Import Condition="$(MSBuildProjectName.EndsWith('Tests'))" Project="$(RootDir)\Build\Common.Tests.props"/>
+  <Import Condition="$(MSBuildProjectName.EndsWith('Benchmark'))" Project="$(RootDir)\Build\Common.Benchmark.props"/>
 </Project>
