@@ -1,0 +1,30 @@
+<Project>
+  <PropertyGroup Label="Framework">
+    <DefaultTargetFrameworks>netstandard2.0;net461</DefaultTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Default to Debug and AnyCPU">
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Project paths">
+    <ResultDir Condition="'$(ResultDir)' == ''">$(RootDir)\.result</ResultDir>
+    <OutputPath>$(ResultDir)\bin\$(Platform)\$(Configuration)</OutputPath>
+    <BaseIntermediateOutputPath>$(ResultDir)\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+</Project>

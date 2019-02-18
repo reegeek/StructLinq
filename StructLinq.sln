@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq", "src\StructLinq\StructLinq.csproj", "{458ED1F2-37EC-4569-9958-728CEFA43D8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{2987C571-432E-4640-8D24-A3F8C9341276}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Common.props = Build\Common.props
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {784B203D-5E08-4ABF-A436-EE9F11F80E40}
+	EndGlobalSection
+EndGlobal
