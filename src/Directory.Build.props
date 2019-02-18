@@ -3,4 +3,5 @@
     <RootDir>$(MSBuildThisFileDirectory)\..</RootDir>
   </PropertyGroup>
   <Import Project="$(RootDir)\Build\Common.props"/>
+  <Import Condition="$(MSBuildProjectName.EndsWith('Tests'))" Project="$(RootDir)\Build\Common.Tests.props"/>
 </Project>

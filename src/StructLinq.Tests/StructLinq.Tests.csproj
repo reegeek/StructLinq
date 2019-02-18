@@ -4,4 +4,8 @@
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StructLinq\StructLinq.csproj" />
+  </ItemGroup>
+
 </Project>
