@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Xunit;
 
-namespace StructLinq.Tests.Range
+namespace StructLinq.Tests
 {
     public class RangeTests
     {
