@@ -11,8 +11,8 @@ namespace StructLinq.Benchmark
     public class Select
     {
         private readonly IEnumerable<double> sysRange;
-        private readonly ITypedEnumerable<double, SelectEnumerator<int, double, RangeEnumerator, StructFunctionFromDelegate<int, double>>> delegateRange;
-        private readonly ITypedEnumerable<double, SelectEnumerator<int, double, GenericEnumerator<int>, StructFunctionFromDelegate<int, double>>> convertRange;
+        private readonly ITypedEnumerable<double, SelectEnumerator<int, double, RangeEnumerator, StructFunction<int, double>>> delegateRange;
+        private readonly ITypedEnumerable<double, SelectEnumerator<int, double, GenericEnumerator<int>, StructFunction<int, double>>> convertRange;
         private CountAction<double>[] countActions = new CountAction<double>[1];
         public int Count = 10000;
         private ITypedEnumerable<double, SelectEnumerator<int, double, RangeEnumerator, MultFunction>> structRange;

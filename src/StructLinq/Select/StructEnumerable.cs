@@ -22,13 +22,7 @@ namespace StructLinq
             var function = factory.Build();
             return new SelectEnumerable<TIn, TOut, TEnumerator, TFunction>(ref function, enumerable);
         }
-        public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, StructFunctionFromInterface<TIn, TOut>>>
-            Select<TIn, TOut, TEnumerator>(this ITypedEnumerable<TIn, TEnumerator> enumerable, IFunction<TIn, TOut> function)
-            where TEnumerator : IEnumerator<TIn>
-        {
-            return enumerable.Select(function.ToFactory());
-        }
-        public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, StructFunctionFromDelegate<TIn, TOut>>>
+        public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, StructFunction<TIn, TOut>>>
             Select<TIn, TOut, TEnumerator>(this ITypedEnumerable<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
             where TEnumerator : IEnumerator<TIn>
         {

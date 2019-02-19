@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace StructLinq.Range
+﻿namespace StructLinq.Range
 {
-    class RangeEnumerable : ITypedEnumerable<int, RangeEnumerator>
+    class RangeEnumerable : AbstractTypedEnumerable<int, RangeEnumerator>
     {
         #region private fields
         private readonly int start;
@@ -14,15 +11,7 @@ namespace StructLinq.Range
             this.start = start;
             this.count = count;
         }
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        public IEnumerator<int> GetEnumerator()
-        {
-            return GetTypedEnumerator();
-        }
-        public RangeEnumerator GetTypedEnumerator()
+        public override RangeEnumerator GetTypedEnumerator()
         {
             return new RangeEnumerator(start, count);
         }

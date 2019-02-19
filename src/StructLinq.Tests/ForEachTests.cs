@@ -21,18 +21,6 @@ namespace StructLinq.Tests
         [InlineData(0, 10)]
         [InlineData(-10, 20)]
         [InlineData(-20, 10)]
-        public void InterfaceTest(int start, int count)
-        {
-            var structEnum = StructEnumerable.Range(start, count);
-            var countAction = new ClassAction();
-            structEnum.ForEach(countAction);
-            Assert.Equal(count, countAction.Count);
-        }
-
-        [Theory]
-        [InlineData(0, 10)]
-        [InlineData(-10, 20)]
-        [InlineData(-20, 10)]
         public void DelegateTest(int start, int count)
         {
             var structEnum = StructEnumerable.Range(start, count);

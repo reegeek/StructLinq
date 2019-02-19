@@ -28,16 +28,10 @@ namespace StructLinq
                 ForEach<T, TEnumerator, TAction>(enumerator, ref action);
             }
         }
-        public static void ForEach<T, TEnumerator>(this ITypedEnumerable<T, TEnumerator> enumerable, IAction<T> action)
-            where TEnumerator : IEnumerator<T>
-        {
-            var structAction = new StructActionFromInterface<T>(action);
-            enumerable.ForEach(ref structAction);
-        }
         public static void ForEach<T, TEnumerator>(this ITypedEnumerable<T, TEnumerator> enumerable, Action<T> action)
             where TEnumerator : IEnumerator<T>
         {
-            var structAction = new StructActionFromDelegate<T>(action);
+            var structAction = new StructAction<T>(action);
             enumerable.ForEach(ref structAction);
         }
     }

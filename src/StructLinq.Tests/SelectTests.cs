@@ -21,20 +21,6 @@ namespace StructLinq.Tests
                 .ToArray();
             Assert.Equal(sys, structEnum);
         }
-        [Fact]
-        public void InterfaceTest()
-        {
-            Func<int, double> selector = x => x * 2.0;
-            var sys = Enumerable
-                .Range(-50, 100)
-                .Select(selector)
-                .ToArray();
-            var structEnum = StructEnumerable
-                .Range(-50, 100)
-                .Select(new TestInterface())
-                .ToArray();
-            Assert.Equal(sys, structEnum);
-        }
 
         [Fact]
         public void StructTest()
