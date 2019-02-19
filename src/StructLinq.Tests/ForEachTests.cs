@@ -1,5 +1,4 @@
 ﻿using System;
-using StructLinq.Range;
 using Xunit;
 
 namespace StructLinq.Tests
@@ -44,15 +43,6 @@ namespace StructLinq.Tests
         }
 
 
-        struct CountAction : IAction<int>
-        {
-            public int Count;
-            public void Do(int element)
-            {
-                Count++;
-            }
-        }
-
         class ClassAction : IAction<int>
         {
             public int Count;
@@ -62,5 +52,14 @@ namespace StructLinq.Tests
             }
         }
 
+    }
+
+    struct CountAction : IAction<int>
+    {
+        public int Count;
+        public void Do(int element)
+        {
+            Count++;
+        }
     }
 }

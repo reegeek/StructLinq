@@ -13,7 +13,7 @@ namespace StructLinq.Benchmark
         private readonly IEnumerable<int> sysRange;
         private readonly ITypedEnumerable<int, RangeEnumerator> structRange;
         private readonly ITypedEnumerable<int, GenericEnumerator<int>> convertRange;
-        private CountAction[] countActions = new CountAction[1];
+        private CountAction<int>[] countActions = new CountAction<int>[1];
         public int Count = 10000;
         public ForEach()
         {
@@ -43,7 +43,7 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int StructForEach()
         {
-            ref CountAction countAction = ref countActions[0];
+            ref CountAction<int> countAction = ref countActions[0];
             countAction.Count = 0;
             structRange.ForEach(ref countAction);
             return countAction.Count;
@@ -52,21 +52,19 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int ConvertForEach()
         {
-            ref CountAction countAction = ref countActions[0];
+            ref CountAction<int> countAction = ref countActions[0];
             countAction.Count = 0;
             convertRange.ForEach(ref countAction);
             return countAction.Count;
         }
+    }
 
-
-        struct CountAction : IAction<int>
+    struct CountAction<T> : IAction<T>
+    {
+        public int Count;
+        public void Do(T element)
         {
-            public int Count;
-            public void Do(int element)
-            {
-                Count++;
-            }
+            Count++;
         }
-
     }
 }
