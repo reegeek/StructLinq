@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using StructLinq.Select;
 
 // ReSharper disable once CheckNamespace
@@ -20,7 +21,7 @@ namespace StructLinq
             where TFunction : struct, IFunction<TIn, TOut>
         {
             var function = factory.Build();
-            return new SelectEnumerable<TIn, TOut, TEnumerator, TFunction>(ref function, enumerable);
+            return enumerable.Select<TIn, TOut, TEnumerator, TFunction>(ref function);
         }
         public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, StructFunction<TIn, TOut>>>
             Select<TIn, TOut, TEnumerator>(this ITypedEnumerable<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)

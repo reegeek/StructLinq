@@ -8,7 +8,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         #region private methods
-        private static void ForEach<T, TEnumerator, TAction>(this TEnumerator enumerator, ref TAction action)
+        private static void ForEach<T, TEnumerator, TAction>(TEnumerator enumerator, ref TAction action)
             where TEnumerator : IEnumerator<T>
             where TAction : struct, IAction<T>
 
