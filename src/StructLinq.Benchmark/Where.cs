@@ -11,8 +11,10 @@ namespace StructLinq.Benchmark
     public class Where
     {
         private readonly IEnumerable<int> sysRange;
-        private readonly ITypedEnumerable<int, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> delegateRange;
-        private readonly ITypedEnumerable<int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>> convertRange;
+        private readonly ITypedEnumerable<int, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>
+            delegateRange;
+        private readonly ITypedEnumerable<int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>>
+            convertRange;
         private CountAction<int>[] countActions = new CountAction<int>[1];
         public int Count = 10000;
         private ITypedEnumerable<int, WhereEnumerator<int, RangeEnumerator, WhereFunc>> structRange;
@@ -33,6 +35,7 @@ namespace StructLinq.Benchmark
             {
                 count++;
             }
+
             return count;
         }
 
@@ -70,5 +73,6 @@ namespace StructLinq.Benchmark
             return element > 0;
         }
     }
-
 }
+
+    
