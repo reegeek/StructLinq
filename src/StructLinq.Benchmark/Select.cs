@@ -21,8 +21,8 @@ namespace StructLinq.Benchmark
             sysRange = Enumerable.Range(0, Count).Select(x=> x * 2.0);
             delegateRange = StructEnumerable.Range(0, Count).Select(x=> x * 2.0);
             convertRange = Enumerable.Range(0, Count).ToTypedEnumerable().Select(x=> x * 2.0);
-            var structFactory = new StructFuncFactory();
-            structRange = StructEnumerable.Range(0, Count).Select(structFactory);
+            var multFunction = new MultFunction();
+            structRange = StructEnumerable.Range(0, Count).Select(ref multFunction, default(double));
         }
 
         [Benchmark(Baseline = true)]
@@ -60,14 +60,6 @@ namespace StructLinq.Benchmark
             countAction.Count = 0;
             convertRange.ForEach(ref countAction);
             return countAction.Count;
-        }
-    }
-
-    class StructFuncFactory : IFunctionFactory<int, double, MultFunction>
-    {
-        public MultFunction Build()
-        {
-            return new MultFunction();
         }
     }
 

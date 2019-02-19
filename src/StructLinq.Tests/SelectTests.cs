@@ -30,29 +30,13 @@ namespace StructLinq.Tests
                 .Range(-50, 100)
                 .Select(selector)
                 .ToArray();
+            var fct = new MultFunction();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Select(new StructInterface())
+                .Select(ref fct, default(double))
                 .ToArray();
             Assert.Equal(sys, structEnum);
 
-        }
-
-
-        class TestInterface : IFunction<int, double>
-        {
-            public double Eval(int element)
-            {
-                return element * 2.0;
-            }
-        }
-
-        class StructInterface : IFunctionFactory<int, double, MultFunction>
-        {
-            public MultFunction Build()
-            {
-                return new MultFunction();
-            }
         }
 
         struct MultFunction : IFunction<int, double>
