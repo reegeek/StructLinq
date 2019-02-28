@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -33,7 +32,7 @@ namespace StructLinq.Tests
             var fct = new MultFunction();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Select(ref fct, default(double))
+                .Select(ref fct, Identity<double>.Instance)
                 .ToArray();
             Assert.Equal(sys, structEnum);
 

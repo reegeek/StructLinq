@@ -22,7 +22,7 @@ namespace StructLinq.Benchmark
             delegateRange = StructEnumerable.Range(0, Count).Select(x=> x * 2.0);
             convertRange = Enumerable.Range(0, Count).ToTypedEnumerable().Select(x=> x * 2.0);
             var multFunction = new MultFunction();
-            structRange = StructEnumerable.Range(0, Count).Select(ref multFunction, default(double));
+            structRange = StructEnumerable.Range(0, Count).Select(ref multFunction, Identity<double>.Instance);
         }
 
         [Benchmark(Baseline = true)]
