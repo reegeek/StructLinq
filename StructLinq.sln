@@ -17,12 +17,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.Tests", "src\Str
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.Benchmark", "src\StructLinq.Benchmark\StructLinq.Benchmark.csproj", "{363DB35F-7108-4DE4-AE6C-62950E53D84E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NukeBuild", "Build\Nuke\NukeBuild.csproj", "{59BA8327-1D58-4D23-B16D-22C6323DC4F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59BA8327-1D58-4D23-B16D-22C6323DC4F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BA8327-1D58-4D23-B16D-22C6323DC4F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
