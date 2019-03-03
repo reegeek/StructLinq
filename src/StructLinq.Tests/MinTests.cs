@@ -1,0 +1,27 @@
+﻿using System;
+using System.Linq;
+using Xunit;
+
+namespace StructLinq.Tests
+{
+    public class MinTests
+    {
+        [Fact]
+        public void MinTest()
+        {
+            var count = 100;
+            var mult = -2.0;
+            var structMin = StructEnumerable
+                .Range(0, count)
+                .Select(x => x * mult)
+                .Min();
+            Assert.Equal((count - 1) * mult, structMin);
+        }
+        [Fact]
+        public void ErrorTest()
+        {
+            var structEnum = Enumerable.Empty<double>().ToTypedEnumerable();
+            Assert.Throws<ArgumentOutOfRangeException>(() => structEnum.Min());
+        }
+    }
+}
