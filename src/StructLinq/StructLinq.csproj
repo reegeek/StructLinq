@@ -6,9 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="Max\MaxStructEnumerable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MaxStructEnumerable.cs</LastGenOutput>
+    </None>
     <None Update="Sum\SumStructEnumerable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SumStructEnumerable.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Max\MaxStructEnumerable.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaxStructEnumerable.tt</DependentUpon>
     </None>
     <None Update="Sum\SumStructEnumerable.cs">
       <DesignTime>True</DesignTime>
@@ -17,13 +29,22 @@
     </None>
   </ItemGroup>
 
-
   <ItemGroup>
+    <Compile Update="Max\MaxStructEnumerable.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaxStructEnumerable.tt</DependentUpon>
+    </Compile>
     <Compile Update="Sum\SumStructEnumerable.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SumStructEnumerable.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>
