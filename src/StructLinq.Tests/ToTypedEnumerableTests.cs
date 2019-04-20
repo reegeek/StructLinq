@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class ToTypedEnumerableTests
+    public class ToTypedEnumerableTests : AbstractEnumerableTests<int>
     {
         [Theory]
         [InlineData(0, 10)]
@@ -14,6 +15,10 @@ namespace StructLinq.Tests
             var sys = Enumerable.Range(start, count);
             var structEnum = sys.ToTypedEnumerable();
             Assert.Equal(sys, structEnum);
+        }
+        protected override IEnumerable<int> Build(int size)
+        {
+            return StructEnumerable.Range(-1, size).ToTypedEnumerable();
         }
     }
 }

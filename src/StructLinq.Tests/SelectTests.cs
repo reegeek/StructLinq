@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class SelectTests
+    public class SelectTests : AbstractEnumerableTests<int>
     {
         [Fact]
         public void DelegateTest()
@@ -36,6 +37,11 @@ namespace StructLinq.Tests
                 .ToArray();
             Assert.Equal(sys, structEnum);
 
+        }
+
+        protected override IEnumerable<int> Build(int size)
+        {
+            return StructEnumerable.Range(-1, size).Select(x => x * 2);
         }
 
         struct MultFunction : IFunction<int, double>

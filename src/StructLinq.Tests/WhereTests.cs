@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class WhereTests
+    public class WhereTests : AbstractEnumerableTests<int>
     {
+        protected override IEnumerable<int> Build(int size)
+        {
+            return StructEnumerable.Range(-1, size).Where(x => x >= -1);
+        }
+
         [Fact]
         public void DelegateTest()
         {
