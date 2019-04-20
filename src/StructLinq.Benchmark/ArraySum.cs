@@ -11,23 +11,21 @@ namespace StructLinq.Benchmark
     {
         private readonly IEnumerable<int> sysArray;
         public int Count = 1000;
-        private readonly ITypedEnumerable<int, UnmanagedArrayEnumerator<int>> structArray;
         private readonly int[] array;
         private readonly ITypedEnumerable<int, ArrayStructEnumerator<int>> safeStructArray;
         private ITypedEnumerable<int, GenericEnumerator<int>> convertArray;
         public ArraySum()
         {
             sysArray = Enumerable.ToArray(Enumerable.Range(0,Count));
-            structArray = Enumerable.ToArray(Enumerable.Range(0, Count)).ToTypedEnumerable();
             convertArray = sysArray.ToTypedEnumerable();
-            safeStructArray = Enumerable.ToArray(Enumerable.Range(0, Count)).SafeToTypedEnumerable();
+            safeStructArray = Enumerable.ToArray(Enumerable.Range(0, Count)).ToTypedEnumerable();
             array = Enumerable.ToArray(Enumerable.Range(0, Count));
         }
         [Benchmark]
         public int SysSum()
         {
             int sum = 0;
-            for (int i = 0; i < Count; i++)
+            foreach (var i in array)
             {
                 sum += array[i];
             }
@@ -38,9 +36,6 @@ namespace StructLinq.Benchmark
 
         [Benchmark]
         public int ConvertSum() => convertArray.Sum();
-
-        [Benchmark]
-        public int StructSum() => structArray.Sum();
 
         [Benchmark]
         public int SafeStructSum() => safeStructArray.Sum();
