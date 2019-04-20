@@ -1,0 +1,6 @@
+<Project>
+  <!--fix weird bug during compilation-->
+  <Target Name="DeleteGenerateBindingRedirects" BeforeTargets="GenerateBindingRedirects">
+    <Delete Files="$(_GenerateBindingRedirectsIntermediateAppConfig)" />
+  </Target>
+</Project>

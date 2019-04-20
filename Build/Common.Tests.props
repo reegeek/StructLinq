@@ -11,4 +11,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <Import Project="$(RootDir)\Build\Common.targets"/>
+
 </Project>
