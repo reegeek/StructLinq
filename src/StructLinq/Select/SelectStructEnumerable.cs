@@ -8,8 +8,15 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
-            Select<TIn, TOut, TEnumerator, TFunction>(this ITypedEnumerable<TIn, TEnumerator> enumerable, ref TFunction function, Identity<TOut> output)
+            Select<TIn, TOut, TEnumerator, TFunction>(this ITypedEnumerable<TIn, TEnumerator> enumerable, ref TFunction function, Id<TOut> _)
             where TEnumerator : IEnumerator<TIn> 
+            where TFunction : struct, IFunction<TIn, TOut>
+        {
+            return enumerable.Select<TIn, TOut, TEnumerator, TFunction>(ref function);
+        }
+        public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
+            Select<TIn, TOut, TEnumerator, TFunction>(this ITypedEnumerable<TIn, TEnumerator> enumerable, ref TFunction function)
+            where TEnumerator : IEnumerator<TIn>
             where TFunction : struct, IFunction<TIn, TOut>
         {
             return new SelectEnumerable<TIn, TOut, TEnumerator, TFunction>(ref function, enumerable);
@@ -19,7 +26,7 @@ namespace StructLinq
             where TEnumerator : IEnumerator<TIn>
         {
             var fct = function.ToStruct();
-            return enumerable.Select(ref fct, Identity<TOut>.Instance);
+            return enumerable.Select(ref fct, Id<TOut>.Value);
         }
     }
 

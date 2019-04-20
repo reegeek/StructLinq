@@ -28,10 +28,10 @@ namespace StructLinq.Benchmark
                 .Select(x => x *2);
             convertWithStruct = Enumerable.Range(0, Count).ToTypedEnumerable()
                 .Where(ref where)
-                .Select(ref select, Identity<int>.Instance);
+                .Select(ref select, Id<int>.Value);
             structRange = StructEnumerable.Range(0, Count)
                 .Where(ref where)
-                .Select(ref select, Identity<int>.Instance);
+                .Select(ref select, Id<int>.Value);
         }
         [Benchmark(Baseline = true)]
         public int SysSum()
