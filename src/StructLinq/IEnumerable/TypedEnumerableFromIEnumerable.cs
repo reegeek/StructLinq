@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace StructLinq.IEnumerable
 {
-    class TypedEnumerableFromIEnumerable<T> : AbstractTypedEnumerable<T, GenericEnumerator<T>>
+    struct TypedEnumerableFromIEnumerable<T> : ITypedEnumerable<T, GenericEnumerator<T>>
     {
         #region private fields
         private readonly IEnumerable<T> inner;
@@ -11,9 +12,17 @@ namespace StructLinq.IEnumerable
         {
             this.inner = inner;
         }
-        public override GenericEnumerator<T> GetTypedEnumerator()
+        public GenericEnumerator<T> GetTypedEnumerator()
         {
             return new GenericEnumerator<T>(inner.GetEnumerator());
+        }
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return GetTypedEnumerator();
         }
     }
 }

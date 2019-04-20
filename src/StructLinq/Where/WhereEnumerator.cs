@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Where
 {
@@ -16,29 +17,36 @@ namespace StructLinq.Where
             this.predicate = predicate;
             this.enumerator = enumerator;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
-                if (predicate.Eval(current))
-                {
-                    Current = current;
-                    return true;
-                }
+                if (!predicate.Eval(current))
+                    continue;
+                Current = current;
+                return true;
             }
 
             return false;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
             enumerator.Reset();
         }
         object IEnumerator.Current => Current;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             enumerator.Dispose();
         }
-        public TIn Current { get; private set; }
+        public TIn Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get;
+            private set;
+        }
     }
 }

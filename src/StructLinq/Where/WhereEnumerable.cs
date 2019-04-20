@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace StructLinq.Where
 {
-    class WhereEnumerable<TIn, TEnumerator, TFunction> : AbstractTypedEnumerable<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>
+    struct WhereEnumerable<TIn, TEnumerator, TFunction> : ITypedEnumerable<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>
         where TEnumerator : IEnumerator<TIn> 
         where TFunction : IFunction<TIn, bool>
     {
@@ -15,10 +14,18 @@ namespace StructLinq.Where
             this.function = function;
             this.inner = inner;
         }
-        public override WhereEnumerator<TIn, TEnumerator, TFunction> GetTypedEnumerator()
+        public WhereEnumerator<TIn, TEnumerator, TFunction> GetTypedEnumerator()
         {
             var enumerator = inner.GetTypedEnumerator();
             return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
+        }
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public IEnumerator<TIn> GetEnumerator()
+        {
+            return GetTypedEnumerator();
         }
     }
 }
