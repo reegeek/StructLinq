@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq", "src\StructLinq\StructLinq.csproj", "{458ED1F2-37EC-4569-9958-728CEFA43D8C}"
 EndProject
@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{2987C571
 		Build\Common.Benchmark.props = Build\Common.Benchmark.props
 		Build\Common.props = Build\Common.props
 		Build\Common.Tests.props = Build\Common.Tests.props
+		Build\DeleteGenerateBindingRedirects.target = Build\DeleteGenerateBindingRedirects.target
 		src\Directory.Build.props = src\Directory.Build.props
 	EndProjectSection
 EndProject
@@ -25,8 +26,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59BA8327-1D58-4D23-B16D-22C6323DC4F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59BA8327-1D58-4D23-B16D-22C6323DC4F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{458ED1F2-37EC-4569-9958-728CEFA43D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +38,8 @@ Global
 		{363DB35F-7108-4DE4-AE6C-62950E53D84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{363DB35F-7108-4DE4-AE6C-62950E53D84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{363DB35F-7108-4DE4-AE6C-62950E53D84E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BA8327-1D58-4D23-B16D-22C6323DC4F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BA8327-1D58-4D23-B16D-22C6323DC4F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

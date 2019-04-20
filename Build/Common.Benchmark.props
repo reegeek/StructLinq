@@ -12,6 +12,6 @@
     <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.11.4" />
   </ItemGroup>
 
-  <Import Project="$(RootDir)\Build\Common.targets"/>
+  <Import Project="$(RootDir)\Build\DeleteGenerateBindingRedirects.target"/>
 
 </Project>
