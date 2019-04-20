@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
-using StructLinq.ForEach;
 using StructLinq.IEnumerable;
 using StructLinq.Range;
 

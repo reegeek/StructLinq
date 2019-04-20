@@ -1,6 +1,9 @@
-﻿namespace StructLinq.Array
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace StructLinq.Array
 {
-    class ArrayEnumerable<T> : AbstractTypedEnumerable<T, ArrayStructEnumerator<T>>
+    struct ArrayEnumerable<T> : ITypedEnumerable<T, ArrayStructEnumerator<T>>
     {
         #region private fields
         private T[] array;
@@ -9,9 +12,17 @@
         {
             this.array = array;
         }
-        public override ArrayStructEnumerator<T> GetTypedEnumerator()
+        public ArrayStructEnumerator<T> GetTypedEnumerator()
         {
             return new ArrayStructEnumerator<T>(ref array);
+        }
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return GetTypedEnumerator();
         }
     }
 }
