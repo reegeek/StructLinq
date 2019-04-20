@@ -14,6 +14,5 @@
         {
             aggregation.Aggregate(element);
         }
-        public TAccumulate Result => aggregation.Result;
     }
 }
