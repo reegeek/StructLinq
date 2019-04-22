@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace StructLinq.Range
@@ -7,30 +8,25 @@ namespace StructLinq.Range
     public struct RangeEnumerator : IEnumerator<int>
     {
         #region private fields
-        private readonly int start;
-        private readonly int count;
         private int index;
+        private readonly int end;
+        private readonly int start;
         #endregion
         public RangeEnumerator(int start, int count)
         {
+            end = start + count - 1;
             this.start = start;
-            this.count = count;
-            index = 0;
-            Current = default(int);
+            index = start - 1;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (index >= count)
-                return false;
-            Current = start + index;
-            index++;
-            return true;
+            return ++index <= end;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            index = 0;
+            index = start - 1;
         }
         object IEnumerator.Current => Current;
         public void Dispose()
@@ -39,8 +35,7 @@ namespace StructLinq.Range
         public int Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get;
-            private set;
+            get => index;
         }
     }
 }
