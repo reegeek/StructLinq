@@ -6,7 +6,7 @@ using StructLinq.Range;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, ClrJob(baseline:true), CoreJob]
+    [MemoryDiagnoser]
     public class Sum
     {
         private readonly IEnumerable<int> sysRange;

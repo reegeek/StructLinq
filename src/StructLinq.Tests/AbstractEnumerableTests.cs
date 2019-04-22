@@ -26,22 +26,22 @@ namespace StructLinq.Tests
             size.Should().Be(enumSize);
         }
 
-        [Fact]
-        public void ShouldReturnDefaultWhenMoveNextIsNeverCall()
-        {
-            //Arrange
-            var enumerable = Build(2);
+        //[Fact]
+        //public void ShouldReturnDefaultWhenMoveNextIsNeverCall()
+        //{
+        //    //Arrange
+        //    var enumerable = Build(2);
 
-            //Act
-            T current;
-            using (var enumerator = enumerable.GetEnumerator())
-            {
-                current = enumerator.Current;
-            }
+        //    //Act
+        //    T current;
+        //    using (var enumerator = enumerable.GetEnumerator())
+        //    {
+        //        current = enumerator.Current;
+        //    }
             
-            //Assert
-            current.Should().Be(default(T));
-        }
+        //    //Assert
+        //    current.Should().Be(default(T));
+        //}
 
         [Fact]
         public void ShouldReturnFalseWhenCallingMoveNextAfterLastElement()
@@ -61,22 +61,22 @@ namespace StructLinq.Tests
             }
         }
 
-        [Fact]
-        public void ShouldReturnLastElementWhenCallCurrentAfterMoveNextIsFalse()
-        {
-            //Arrange
-            var enumerable = Build(1);
-            //Act
-            using (var enumerator = enumerable.GetEnumerator())
-            {
-                enumerator.MoveNext();
-                var last = enumerator.Current;
-                var moveNext = enumerator.MoveNext();
-                var current = enumerator.Current;
-                moveNext.Should().BeFalse();
-                last.Should().Be(current);
-            }
-        }
+        //[Fact]
+        //public void ShouldReturnLastElementWhenCallCurrentAfterMoveNextIsFalse()
+        //{
+        //    Arrange
+        //    var enumerable = Build(1);
+        //    Act
+        //    using (var enumerator = enumerable.GetEnumerator())
+        //    {
+        //        enumerator.MoveNext();
+        //        var last = enumerator.Current;
+        //        var moveNext = enumerator.MoveNext();
+        //        var current = enumerator.Current;
+        //        moveNext.Should().BeFalse();
+        //        last.Should().Be(current);
+        //    }
+        //}
 
         [Fact]
         public void ShouldReturnSameSequenceWhenEnumeratorIsCall2Times()
