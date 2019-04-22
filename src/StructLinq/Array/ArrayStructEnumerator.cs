@@ -14,24 +14,18 @@ namespace StructLinq.Array
         public ArrayStructEnumerator(ref T[] array)
         {
             this.array = array;
-            endIndex = array.Length;
-            index = 0;
-            Current = default;
+            endIndex = array.Length - 1;
+            index = -1;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (index >= endIndex)
-                return false;
-            Current = array[index];
-            ++index;
-            return true;
+            return ++index <= endIndex;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            index = 0;
-            Current = default;
+            index = -1;
         }
         object IEnumerator.Current => Current;
 
@@ -42,8 +36,7 @@ namespace StructLinq.Array
         public T Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get;
-            private set;
+            get => array[index];
         }
     }
 }
