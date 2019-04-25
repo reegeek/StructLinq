@@ -19,7 +19,7 @@ namespace StructLinq
         {
             this.inner = inner;
         }
-        public TOut Eval(TIn element)
+        public TOut Eval(in TIn element)
         {
             return inner(element);
         }

@@ -65,7 +65,7 @@ namespace StructLinq.Benchmark
 
     struct MultFunction : IFunction<int, double>
     {
-        public double Eval(int element)
+        public double Eval(in int element)
         {
             return element * 2.0;
         }

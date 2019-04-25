@@ -68,7 +68,7 @@ namespace StructLinq.Benchmark
 
     struct WhereFunc : IFunction<int, bool>
     {
-        public bool Eval(int element)
+        public bool Eval(in int element)
         {
             return element > 0;
         }

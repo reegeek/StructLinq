@@ -62,7 +62,7 @@ namespace StructLinq.Benchmark
 
     struct WherePredicate : IFunction<int, bool>
     {
-        public bool Eval(int element)
+        public bool Eval(in int element)
         {
             return (element & 1) == 0;
         }
@@ -70,7 +70,7 @@ namespace StructLinq.Benchmark
 
     struct SelectFunction : IFunction<int, int>
     {
-        public int Eval(int element)
+        public int Eval(in int element)
         {
             return element * 2;
         }

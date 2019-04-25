@@ -50,9 +50,10 @@ namespace StructLinq.Benchmark
                 Element = element;
             }
         }
+
         private struct Select : IFunction<Container, int>
         {
-            public int Eval(Container element)
+            public int Eval(in Container element)
             {
                 return element.Element;
             }

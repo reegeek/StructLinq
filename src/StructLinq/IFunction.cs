@@ -1,7 +1,7 @@
 ﻿namespace StructLinq
 {
-    public interface IFunction<in TIn, out TOut>
+    public interface IFunction<TIn, out TOut>
     {
-        TOut Eval(TIn element);
+        TOut Eval(in TIn element);
     }
 }
