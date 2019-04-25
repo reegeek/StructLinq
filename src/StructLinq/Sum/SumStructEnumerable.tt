@@ -21,6 +21,8 @@
     };
 #>
 
+// Generated code
+
 using System;
 using System.Collections.Generic;
  
@@ -34,7 +36,7 @@ namespace StructLinq
     {
         #region private fields
         private static <#= t.Name #> <#= t.Name #>Sum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
         {
             <#= t.Name #> result = 0;
             while (enumerator.MoveNext())
@@ -45,7 +47,7 @@ namespace StructLinq
         }
         #endregion
         public static <#= t.Name #> Sum<TEnumerator>(this ITypedEnumerable<<#= t.Name #>, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {

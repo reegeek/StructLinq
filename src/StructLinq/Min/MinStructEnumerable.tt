@@ -19,6 +19,8 @@
     };
 #>
 
+// Generated code
+
 using System;
 using System.Collections.Generic;
 
@@ -30,7 +32,7 @@ namespace StructLinq
     {
         #region private fields
         private static <#= t.Name #> <#= t.Name #>Min<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
         {
 			if (!enumerator.MoveNext())
                 throw new ArgumentOutOfRangeException("No elements");
@@ -45,7 +47,7 @@ namespace StructLinq
         }
         #endregion
         public static <#= t.Name #> Min<TEnumerator>(this ITypedEnumerable<<#= t.Name #>, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {

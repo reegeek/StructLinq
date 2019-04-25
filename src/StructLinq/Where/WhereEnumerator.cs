@@ -5,8 +5,8 @@ using System.Runtime.CompilerServices;
 namespace StructLinq.Where
 {
     public struct WhereEnumerator<TIn, TEnumerator, TFunction> : IEnumerator<TIn>
-        where TFunction : IFunction<TIn, bool>
-        where TEnumerator : IEnumerator<TIn>
+        where TFunction : struct, IFunction<TIn, bool>
+        where TEnumerator : struct, IEnumerator<TIn>
     {
         #region private fields
         private TFunction predicate;

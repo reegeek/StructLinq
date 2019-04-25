@@ -5,7 +5,7 @@ namespace StructLinq.Select
 {
     struct SelectEnumerable<TIn, TOut, TEnumerator, TFunction> : ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
         where TFunction : struct, IFunction<TIn, TOut>
-        where TEnumerator : IEnumerator<TIn>
+        where TEnumerator : struct, IEnumerator<TIn>
     {
         #region private fields
         private TFunction function;

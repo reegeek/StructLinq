@@ -20,8 +20,20 @@ namespace StructLinq.Benchmark
             structRange = StructEnumerable.Range(0, Count);
         }
 
-
         [Benchmark(Baseline = true)]
+        public int RawMax()
+        {
+            var max = int.MaxValue;
+            for (var index = 0; index < Count; index++)
+            {
+                if (index < max)
+                    max = index;
+            }
+
+            return max;
+        } 
+
+        [Benchmark]
         public int SysMin()
         {
             return sysRange.Min();

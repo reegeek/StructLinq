@@ -1,5 +1,7 @@
 ﻿
 
+// Generated code
+
 using System;
 using System.Collections.Generic;
  
@@ -12,7 +14,7 @@ namespace StructLinq
     {
         #region private fields
         private static Int16 Int16Sum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<Int16>
+            where TEnumerator : struct, IEnumerator<Int16>
         {
             Int16 result = 0;
             while (enumerator.MoveNext())
@@ -23,7 +25,7 @@ namespace StructLinq
         }
         #endregion
         public static Int16 Sum<TEnumerator>(this ITypedEnumerable<Int16, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<Int16>
+            where TEnumerator : struct, IEnumerator<Int16>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -37,7 +39,7 @@ namespace StructLinq
     {
         #region private fields
         private static Int32 Int32Sum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<Int32>
+            where TEnumerator : struct, IEnumerator<Int32>
         {
             Int32 result = 0;
             while (enumerator.MoveNext())
@@ -48,7 +50,7 @@ namespace StructLinq
         }
         #endregion
         public static Int32 Sum<TEnumerator>(this ITypedEnumerable<Int32, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<Int32>
+            where TEnumerator : struct, IEnumerator<Int32>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -62,7 +64,7 @@ namespace StructLinq
     {
         #region private fields
         private static Int64 Int64Sum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<Int64>
+            where TEnumerator : struct, IEnumerator<Int64>
         {
             Int64 result = 0;
             while (enumerator.MoveNext())
@@ -73,7 +75,7 @@ namespace StructLinq
         }
         #endregion
         public static Int64 Sum<TEnumerator>(this ITypedEnumerable<Int64, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<Int64>
+            where TEnumerator : struct, IEnumerator<Int64>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -87,7 +89,7 @@ namespace StructLinq
     {
         #region private fields
         private static UInt16 UInt16Sum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<UInt16>
+            where TEnumerator : struct, IEnumerator<UInt16>
         {
             UInt16 result = 0;
             while (enumerator.MoveNext())
@@ -98,7 +100,7 @@ namespace StructLinq
         }
         #endregion
         public static UInt16 Sum<TEnumerator>(this ITypedEnumerable<UInt16, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<UInt16>
+            where TEnumerator : struct, IEnumerator<UInt16>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -112,7 +114,7 @@ namespace StructLinq
     {
         #region private fields
         private static UInt32 UInt32Sum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<UInt32>
+            where TEnumerator : struct, IEnumerator<UInt32>
         {
             UInt32 result = 0;
             while (enumerator.MoveNext())
@@ -123,7 +125,7 @@ namespace StructLinq
         }
         #endregion
         public static UInt32 Sum<TEnumerator>(this ITypedEnumerable<UInt32, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<UInt32>
+            where TEnumerator : struct, IEnumerator<UInt32>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -137,7 +139,7 @@ namespace StructLinq
     {
         #region private fields
         private static UInt64 UInt64Sum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<UInt64>
+            where TEnumerator : struct, IEnumerator<UInt64>
         {
             UInt64 result = 0;
             while (enumerator.MoveNext())
@@ -148,7 +150,7 @@ namespace StructLinq
         }
         #endregion
         public static UInt64 Sum<TEnumerator>(this ITypedEnumerable<UInt64, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<UInt64>
+            where TEnumerator : struct, IEnumerator<UInt64>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -162,7 +164,7 @@ namespace StructLinq
     {
         #region private fields
         private static Single SingleSum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<Single>
+            where TEnumerator : struct, IEnumerator<Single>
         {
             Single result = 0;
             while (enumerator.MoveNext())
@@ -173,7 +175,7 @@ namespace StructLinq
         }
         #endregion
         public static Single Sum<TEnumerator>(this ITypedEnumerable<Single, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<Single>
+            where TEnumerator : struct, IEnumerator<Single>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -187,7 +189,7 @@ namespace StructLinq
     {
         #region private fields
         private static Double DoubleSum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<Double>
+            where TEnumerator : struct, IEnumerator<Double>
         {
             Double result = 0;
             while (enumerator.MoveNext())
@@ -198,7 +200,7 @@ namespace StructLinq
         }
         #endregion
         public static Double Sum<TEnumerator>(this ITypedEnumerable<Double, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<Double>
+            where TEnumerator : struct, IEnumerator<Double>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -212,7 +214,7 @@ namespace StructLinq
     {
         #region private fields
         private static Byte ByteSum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<Byte>
+            where TEnumerator : struct, IEnumerator<Byte>
         {
             Byte result = 0;
             while (enumerator.MoveNext())
@@ -223,7 +225,7 @@ namespace StructLinq
         }
         #endregion
         public static Byte Sum<TEnumerator>(this ITypedEnumerable<Byte, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<Byte>
+            where TEnumerator : struct, IEnumerator<Byte>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {
@@ -237,7 +239,7 @@ namespace StructLinq
     {
         #region private fields
         private static SByte SByteSum<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : IEnumerator<SByte>
+            where TEnumerator : struct, IEnumerator<SByte>
         {
             SByte result = 0;
             while (enumerator.MoveNext())
@@ -248,7 +250,7 @@ namespace StructLinq
         }
         #endregion
         public static SByte Sum<TEnumerator>(this ITypedEnumerable<SByte, TEnumerator> enumerable)
-            where TEnumerator : IEnumerator<SByte>
+            where TEnumerator : struct, IEnumerator<SByte>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
             {

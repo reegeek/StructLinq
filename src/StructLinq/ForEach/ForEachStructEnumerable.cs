@@ -20,7 +20,7 @@ namespace StructLinq
         }
         #endregion
         public static void ForEach<T, TEnumerator, TAction>(this ITypedEnumerable<T, TEnumerator> enumerable, ref TAction action) 
-            where TEnumerator : IEnumerator<T>
+            where TEnumerator : struct, IEnumerator<T>
             where TAction : struct, IAction<T>
         {
             using (var enumerator = enumerable.GetTypedEnumerator())
@@ -29,7 +29,7 @@ namespace StructLinq
             }
         }
         public static void ForEach<T, TEnumerator>(this ITypedEnumerable<T, TEnumerator> enumerable, Action<T> action)
-            where TEnumerator : IEnumerator<T>
+            where TEnumerator : struct, IEnumerator<T>
         {
             var structAction = new StructAction<T>(action);
             enumerable.ForEach(ref structAction);

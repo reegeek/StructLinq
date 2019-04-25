@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
 using StructLinq.IEnumerable;
@@ -20,8 +21,20 @@ namespace StructLinq.Benchmark
             structRange = StructEnumerable.Range(0, Count);
         }
 
-
         [Benchmark(Baseline = true)]
+        public int RawMax()
+        {
+            int max = int.MinValue;
+            for (int index = 0; index < Count; index++)
+            {
+                if (index > max)
+                    max = index;
+            }
+
+            return max;
+        }
+
+        [Benchmark]
         public int SysMax()
         {
             return sysRange.Max();

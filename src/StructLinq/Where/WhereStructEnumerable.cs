@@ -9,14 +9,14 @@ namespace StructLinq
     {
         public static ITypedEnumerable<T, WhereEnumerator<T, TEnumerator, TFunction>> 
             Where<T, TEnumerator, TFunction>(this ITypedEnumerable<T, TEnumerator> enumerable, ref TFunction predicate)
-            where TEnumerator : IEnumerator<T>
+            where TEnumerator : struct, IEnumerator<T>
             where TFunction : struct, IFunction<T, bool>
         {
             return new WhereEnumerable<T, TEnumerator, TFunction>(ref predicate, enumerable);
         }
         public static ITypedEnumerable<T, WhereEnumerator<T, TEnumerator, StructFunction<T,bool>>>
             Where<T, TEnumerator>(this ITypedEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
-            where TEnumerator : IEnumerator<T>
+            where TEnumerator : struct, IEnumerator<T>
         {
             var structPredicate = predicate.ToStruct();
             return enumerable.Where(ref structPredicate);
