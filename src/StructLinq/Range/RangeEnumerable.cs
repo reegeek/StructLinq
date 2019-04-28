@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StructLinq.Range
 {
-    struct RangeEnumerable : ITypedEnumerable<int, RangeEnumerator>
+    public readonly struct RangeEnumerable : ITypedEnumerable<int, RangeEnumerator>
     {
         #region private fields
         private readonly int start;

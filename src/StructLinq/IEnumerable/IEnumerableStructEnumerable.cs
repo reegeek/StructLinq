@@ -6,7 +6,7 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        public static ITypedEnumerable<T, GenericEnumerator<T>> ToTypedEnumerable<T>(this IEnumerable<T> enumerable)
+        public static TypedEnumerableFromIEnumerable<T> ToTypedEnumerable<T>(this IEnumerable<T> enumerable)
         {
             return new TypedEnumerableFromIEnumerable<T>(enumerable);
         }

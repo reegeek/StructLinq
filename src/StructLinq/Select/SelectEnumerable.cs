@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StructLinq.Select
 {
-    struct SelectEnumerable<TIn, TOut, TEnumerator, TFunction> : ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
+    public struct SelectEnumerable<TIn, TOut, TEnumerator, TFunction> : ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
         where TFunction : struct, IFunction<TIn, TOut>
         where TEnumerator : struct, IEnumerator<TIn>
     {

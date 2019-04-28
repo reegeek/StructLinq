@@ -5,7 +5,7 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        public static ITypedEnumerable<T,ArrayStructEnumerator<T>> ToTypedEnumerable<T>(this T[] array)
+        public static ArrayEnumerable<T> ToTypedEnumerable<T>(this T[] array)
         {
             return new ArrayEnumerable<T>(ref array);
         }

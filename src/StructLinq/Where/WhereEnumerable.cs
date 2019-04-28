@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StructLinq.Where
 {
-    struct WhereEnumerable<TIn, TEnumerator, TFunction> : ITypedEnumerable<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>
+    public struct WhereEnumerable<TIn, TEnumerator, TFunction> : ITypedEnumerable<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>
         where TEnumerator : struct, IEnumerator<TIn> 
         where TFunction : struct, IFunction<TIn, bool>
     {

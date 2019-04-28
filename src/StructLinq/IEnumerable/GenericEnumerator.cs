@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.IEnumerable
 {
-    public struct GenericEnumerator<T> : IEnumerator<T>
+    public readonly struct GenericEnumerator<T> : IEnumerator<T>
     {
         #region private fields
         private readonly IEnumerator<T> inner;
@@ -12,19 +13,26 @@ namespace StructLinq.IEnumerable
         {
             this.inner = inner;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
             return inner.MoveNext();
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
             inner.Reset();
         }
         object IEnumerator.Current => Current;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             inner.Dispose();
         }
-        public T Current => inner.Current;
+        public T Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => inner.Current;
+        }
     }
 }

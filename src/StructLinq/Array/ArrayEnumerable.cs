@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StructLinq.Array
 {
-    struct ArrayEnumerable<T> : ITypedEnumerable<T, ArrayStructEnumerator<T>>
+    public struct ArrayEnumerable<T> : ITypedEnumerable<T, ArrayStructEnumerator<T>>
     {
         #region private fields
         private T[] array;

@@ -7,21 +7,19 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
-            Select<TIn, TOut, TEnumerator, TFunction>(this ITypedEnumerable<TIn, TEnumerator> enumerable, ref TFunction function, Id<TOut> _)
+        public static SelectEnumerable<TIn, TOut, TEnumerator, TFunction> Select<TIn, TOut, TEnumerator, TFunction>(this ITypedEnumerable<TIn, TEnumerator> enumerable, ref TFunction function, Id<TOut> _)
             where TEnumerator : struct, IEnumerator<TIn> 
             where TFunction : struct, IFunction<TIn, TOut>
         {
             return enumerable.Select<TIn, TOut, TEnumerator, TFunction>(ref function);
         }
-        public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
-            Select<TIn, TOut, TEnumerator, TFunction>(this ITypedEnumerable<TIn, TEnumerator> enumerable, ref TFunction function)
+        public static SelectEnumerable<TIn, TOut, TEnumerator, TFunction> Select<TIn, TOut, TEnumerator, TFunction>(this ITypedEnumerable<TIn, TEnumerator> enumerable, ref TFunction function)
             where TEnumerator : struct, IEnumerator<TIn>
             where TFunction : struct, IFunction<TIn, TOut>
         {
             return new SelectEnumerable<TIn, TOut, TEnumerator, TFunction>(ref function, enumerable);
         }
-        public static ITypedEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, StructFunction<TIn, TOut>>>
+        public static SelectEnumerable<TIn, TOut, TEnumerator, StructFunction<TIn, TOut>>
             Select<TIn, TOut, TEnumerator>(this ITypedEnumerable<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
             where TEnumerator : struct, IEnumerator<TIn>
         {

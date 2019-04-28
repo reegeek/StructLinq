@@ -29,8 +29,7 @@ namespace StructLinq
                 return Aggregate<T, TAccumulate, TEnumerator, TAggregation>(enumerator, seed, ref aggregation);
             }
         }
-        public static TAccumulate Aggregate<T, TAccumulate, TEnumerator>(this ITypedEnumerable<T, TEnumerator> enumerable, TAccumulate seed,
-            Func<TAccumulate, T, TAccumulate> func)
+        public static TAccumulate Aggregate<T, TAccumulate, TEnumerator>(this ITypedEnumerable<T, TEnumerator> enumerable, TAccumulate seed, Func<TAccumulate, T, TAccumulate> func)
             where TEnumerator : struct, IEnumerator<T>
         {
             var aggregation = new FuncAggregation<T, TAccumulate>(func);

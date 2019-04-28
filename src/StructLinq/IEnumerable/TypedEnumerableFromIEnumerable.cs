@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StructLinq.IEnumerable
 {
-    struct TypedEnumerableFromIEnumerable<T> : ITypedEnumerable<T, GenericEnumerator<T>>
+    public readonly struct TypedEnumerableFromIEnumerable<T> : ITypedEnumerable<T, GenericEnumerator<T>>
     {
         #region private fields
         private readonly IEnumerable<T> inner;
