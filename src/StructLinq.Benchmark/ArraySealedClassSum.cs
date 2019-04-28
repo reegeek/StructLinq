@@ -7,19 +7,19 @@ using StructLinq.Select;
 namespace StructLinq.Benchmark
 {
     [MemoryDiagnoser]
-    public class ArrayClassSum
+    public class ArraySealedClassSum
     {
         private readonly IEnumerable<int> sysArray;
         public int Count = 1000;
-        private readonly Container[] array;
-        private readonly ITypedEnumerable<int, SelectEnumerator<Container, int, ArrayStructEnumerator<Container>, ContainerSelect>> safeStructArray;
-        private ITypedEnumerable<int, SelectEnumerator<Container, int, ArrayStructEnumerator<Container>, StructFunction<Container, int>>> convertArray;
-        private ContainerSelect select;
-        public ArrayClassSum()
+        private readonly SealedContainer[] array;
+        private readonly ITypedEnumerable<int, SelectEnumerator<SealedContainer, int, ArrayStructEnumerator<SealedContainer>, SealedContainerSelect>> safeStructArray;
+        private ITypedEnumerable<int, SelectEnumerator<SealedContainer, int, ArrayStructEnumerator<SealedContainer>, StructFunction<SealedContainer, int>>> convertArray;
+        private SealedContainerSelect select;
+        public ArraySealedClassSum()
         {
-            array = Enumerable.Range(0, Count).Select(x => new Container(x)).ToArray();
-            select = new ContainerSelect();
-            sysArray = array.Select(x => x.Element);
+            array = Enumerable.Range(0, Count).Select(x=> new SealedContainer(x)).ToArray();
+            select = new SealedContainerSelect();
+            sysArray = array.Select(x=> x.Element);
             convertArray = array.ToTypedEnumerable().Select(x => x.Element);
             safeStructArray = array.ToTypedEnumerable().Select(ref select, Id<int>.Value);
         }
@@ -43,22 +43,21 @@ namespace StructLinq.Benchmark
         public int SafeStructSum() => safeStructArray.Sum();
     }
 
-
-    internal class Container
+    internal struct SealedContainerSelect : IFunction<SealedContainer, int>
     {
-        public readonly int Element;
-        public Container(int element)
+        public int Eval(in SealedContainer element)
         {
-            Element = element;
+            return element.Element;
         }
     }
 
 
-    internal struct ContainerSelect : IFunction<Container, int>
+    internal sealed class SealedContainer
     {
-            public int Eval(in Container element)
+        public readonly int Element;
+        public SealedContainer(int element)
         {
-            return element.Element;
+            Element = element;
         }
     }
 
