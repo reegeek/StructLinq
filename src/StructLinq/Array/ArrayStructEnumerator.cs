@@ -11,7 +11,7 @@ namespace StructLinq.Array
         private readonly int endIndex;
         private int index;
         #endregion
-        public ArrayStructEnumerator(ref T[] array)
+        public ArrayStructEnumerator(T[] array)
         {
             this.array = array;
             endIndex = array.Length - 1;
@@ -27,13 +27,13 @@ namespace StructLinq.Array
         {
             index = -1;
         }
-        object IEnumerator.Current => Current;
+        readonly object IEnumerator.Current => Current;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Dispose()
+        public readonly void Dispose()
         {
         }
-        public T Current
+        public readonly T Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => array[index];

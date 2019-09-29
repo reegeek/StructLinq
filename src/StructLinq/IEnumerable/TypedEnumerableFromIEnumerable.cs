@@ -12,10 +12,12 @@ namespace StructLinq.IEnumerable
         {
             this.inner = inner;
         }
+
         public GenericEnumerator<T> GetTypedEnumerator()
         {
             return new GenericEnumerator<T>(inner.GetEnumerator());
         }
+
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

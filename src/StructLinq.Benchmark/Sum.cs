@@ -11,8 +11,8 @@ namespace StructLinq.Benchmark
     {
         private readonly IEnumerable<int> sysRange;
         private readonly ITypedEnumerable<int, GenericEnumerator<int>> convertRange;
-        public int Count = 10000;
-        private ITypedEnumerable<int, RangeEnumerator> structRange;
+        private const int Count = 10000;
+        private readonly ITypedEnumerable<int, RangeEnumerator> structRange;
         public Sum()
         {
             sysRange = Enumerable.Range(0, Count);

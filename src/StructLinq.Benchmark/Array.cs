@@ -10,8 +10,8 @@ namespace StructLinq.Benchmark
     public class Array
     {
         private readonly ITypedEnumerable<int, ArrayStructEnumerator<int>> safeArray;
-        private readonly CountAction<int>[] countActions = new CountAction<int>[1];
-        public int Count = 10000;
+        private readonly SumIntAction[] sumActions = new SumIntAction[1];
+        private const int Count = 10000;
         private readonly IEnumerable<int> sysEnumerable;
         private readonly ITypedEnumerable<int, GenericEnumerator<int>> convertArray;
         private readonly int[] array;
@@ -26,40 +26,49 @@ namespace StructLinq.Benchmark
         [Benchmark(Baseline = true)]
         public int EnumArray()
         {
-            int count = 0;
+            int sum = 0;
             foreach (var i in sysEnumerable)
             {
-                count++;
+                sum += i;
             }
-            return count;
+            return sum;
         }
 
         [Benchmark]
         public int SysArray()
         {
-            int count = 0;
+            int sum = 0;
             foreach (var i in array)
             {
-                count++;
+                sum+=i;
             }
-            return count;
+            return sum;
         }
 
         [Benchmark]
         public int UnsafeArray()
         {
-            ref CountAction<int> countAction = ref countActions[0];
-            countAction.Count = 0;
-            safeArray.ForEach(ref countAction);
-            return countAction.Count;
+            ref SumIntAction sumAction = ref sumActions[0];
+            sumAction.Sum = 0;
+            safeArray.ForEach(ref sumAction);
+            return sumAction.Sum;
         }
         [Benchmark]
         public int ConvertArray()
         {
-            ref CountAction<int> countAction = ref countActions[0];
-            countAction.Count = 0;
-            convertArray.ForEach(ref countAction);
-            return countAction.Count;
+            ref SumIntAction sumAction = ref sumActions[0];
+            sumAction.Sum = 0;
+            convertArray.ForEach(ref sumAction);
+            return sumAction.Sum;
+        }
+    }
+
+    public struct SumIntAction : IAction<int>
+    {
+        public int Sum;
+        public void Do(int element)
+        {
+            Sum += element;
         }
     }
 }

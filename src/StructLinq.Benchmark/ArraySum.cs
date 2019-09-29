@@ -10,10 +10,10 @@ namespace StructLinq.Benchmark
     public class ArraySum
     {
         private readonly IEnumerable<int> sysArray;
-        public int Count = 1000;
+        private readonly int Count = 1000;
         private readonly int[] array;
         private readonly ITypedEnumerable<int, ArrayStructEnumerator<int>> safeStructArray;
-        private ITypedEnumerable<int, GenericEnumerator<int>> convertArray;
+        private readonly ITypedEnumerable<int, GenericEnumerator<int>> convertArray;
         public ArraySum()
         {
             sysArray = Enumerable.ToArray(Enumerable.Range(0,Count));

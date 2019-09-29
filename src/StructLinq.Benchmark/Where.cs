@@ -15,16 +15,16 @@ namespace StructLinq.Benchmark
             delegateRange;
         private readonly ITypedEnumerable<int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>>
             convertRange;
-        private CountAction<int>[] countActions = new CountAction<int>[1];
-        public int Count = 10000;
-        private ITypedEnumerable<int, WhereEnumerator<int, RangeEnumerator, WhereFunc>> structRange;
+        private readonly CountAction<int>[] countActions = new CountAction<int>[1];
+        private const int Count = 10000;
+        private readonly ITypedEnumerable<int, WhereEnumerator<int, RangeEnumerator, WhereFunc>> structRange;
         public Where()
         {
             sysRange = Enumerable.Range(0, Count).Where(x => x > 0);
             delegateRange = StructEnumerable.Range(0, Count).Where(x => x > 0);
             convertRange = Enumerable.Range(0, Count).ToTypedEnumerable().Where(x => x > 0);
             var predicate = new WhereFunc();
-            structRange = StructEnumerable.Range(0, Count).Where(ref predicate);
+            structRange = StructEnumerable.Range(0, Count).Where(in predicate);
         }
 
         [Benchmark(Baseline = true)]
@@ -68,7 +68,7 @@ namespace StructLinq.Benchmark
 
     struct WhereFunc : IFunction<int, bool>
     {
-        public bool Eval(in int element)
+        public readonly bool Eval(in int element)
         {
             return element > 0;
         }

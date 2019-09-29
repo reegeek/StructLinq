@@ -2,7 +2,7 @@
 
 namespace StructLinq.ForEach
 {
-    struct StructAction<T> : IAction<T>
+    readonly struct StructAction<T> : IAction<T>
     {
         #region private fields
         private readonly Action<T> action;

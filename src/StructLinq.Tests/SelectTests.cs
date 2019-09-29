@@ -33,7 +33,7 @@ namespace StructLinq.Tests
             var fct = new MultFunction();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Select(ref fct, Id<double>.Value)
+                .Select(in fct, Id<double>.Value)
                 .ToArray();
             Assert.Equal(sys, structEnum);
 
