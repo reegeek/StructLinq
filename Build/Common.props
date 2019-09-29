@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Common properties">
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
 
