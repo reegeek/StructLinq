@@ -9,7 +9,7 @@ namespace StructLinq.Where
         where TEnumerator : struct, IEnumerator<TIn>
     {
         #region private fields
-        private readonly TFunction predicate;
+        private TFunction predicate;
         private TEnumerator enumerator;
         #endregion
         public WhereEnumerator(in TFunction predicate, in TEnumerator enumerator) : this()

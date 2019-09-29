@@ -15,17 +15,17 @@ namespace StructLinq.Where
             this.inner = inner;
         }
 
-        public readonly WhereEnumerator<TIn, TEnumerator, TFunction> GetTypedEnumerator()
+        public WhereEnumerator<TIn, TEnumerator, TFunction> GetTypedEnumerator()
         {
             var enumerator = inner.GetTypedEnumerator();
             return new WhereEnumerator<TIn, TEnumerator, TFunction>(function, enumerator);
         }
 
-        readonly IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
-        public readonly IEnumerator<TIn> GetEnumerator()
+        public IEnumerator<TIn> GetEnumerator()
         {
             return GetTypedEnumerator();
         }
