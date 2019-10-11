@@ -12,10 +12,10 @@ namespace StructLinq.Benchmark
     public class RangeWhereSelectSum
     {
         private readonly IEnumerable<int> sysRange;
-        public int Count = 10000;
+        private const int Count = 10000;
         private readonly ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>, StructFunction<int, int>>> convertWithDelegate;
-        private ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, RangeEnumerator, WherePredicate>, SelectFunction>> structRange;
-        private ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, GenericEnumerator<int>, WherePredicate>, SelectFunction>> convertWithStruct;
+        private readonly ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, RangeEnumerator, WherePredicate>, SelectFunction>> structRange;
+        private readonly ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, GenericEnumerator<int>, WherePredicate>, SelectFunction>> convertWithStruct;
         public RangeWhereSelectSum()
         {
             sysRange = Enumerable.Range(0, Count)
@@ -27,11 +27,11 @@ namespace StructLinq.Benchmark
                 .Where(x => (x & 1) == 0)
                 .Select(x => x *2);
             convertWithStruct = Enumerable.Range(0, Count).ToTypedEnumerable()
-                .Where(ref where)
-                .Select(ref select, Id<int>.Value);
+                .Where(in where)
+                .Select(in select, Id<int>.Value);
             structRange = StructEnumerable.Range(0, Count)
-                .Where(ref where)
-                .Select(ref select, Id<int>.Value);
+                .Where(in where)
+                .Select(in select, Id<int>.Value);
         }
         [Benchmark(Baseline = true)]
         public int SysSum()
@@ -62,7 +62,7 @@ namespace StructLinq.Benchmark
 
     struct WherePredicate : IFunction<int, bool>
     {
-        public bool Eval(in int element)
+        public readonly bool Eval(in int element)
         {
             return (element & 1) == 0;
         }
@@ -70,7 +70,7 @@ namespace StructLinq.Benchmark
 
     struct SelectFunction : IFunction<int, int>
     {
-        public int Eval(in int element)
+        public readonly int Eval(in int element)
         {
             return element * 2;
         }

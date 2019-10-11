@@ -12,7 +12,7 @@ namespace StructLinq.Where
         private TFunction predicate;
         private TEnumerator enumerator;
         #endregion
-        public WhereEnumerator(ref TFunction predicate, ref TEnumerator enumerator) : this()
+        public WhereEnumerator(in TFunction predicate, in TEnumerator enumerator) : this()
         {
             this.predicate = predicate;
             this.enumerator = enumerator;
@@ -25,7 +25,6 @@ namespace StructLinq.Where
                 var current = enumerator.Current;
                 if (!predicate.Eval(current))
                     continue;
-                Current = current;
                 return true;
             }
 
@@ -36,17 +35,16 @@ namespace StructLinq.Where
         {
             enumerator.Reset();
         }
-        object IEnumerator.Current => Current;
+        readonly object IEnumerator.Current => Current;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             enumerator.Dispose();
         }
-        public TIn Current
+        public readonly TIn Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get;
-            private set;
+            get => enumerator.Current; 
         }
     }
 }

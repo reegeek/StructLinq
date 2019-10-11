@@ -9,10 +9,10 @@ namespace StructLinq.Select
         where TEnumerator : struct, IEnumerator<TIn>
     {
         #region private fields
-        private TFunction function;
+        private readonly TFunction function;
         private TEnumerator enumerator;
         #endregion
-        public SelectEnumerator(ref TFunction function, ref TEnumerator enumerator)
+        public SelectEnumerator(in TFunction function,in TEnumerator enumerator)
         {
             this.function = function;
             this.enumerator = enumerator;
@@ -27,13 +27,13 @@ namespace StructLinq.Select
         {
             enumerator.Reset();
         }
-        object IEnumerator.Current => Current;
+        readonly object IEnumerator.Current => Current;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             enumerator.Dispose();
         }
-        public TOut Current
+        public readonly TOut Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => function.Eval(enumerator.Current);

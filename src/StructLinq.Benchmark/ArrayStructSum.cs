@@ -10,18 +10,17 @@ namespace StructLinq.Benchmark
     public class ArrayStructSum
     {
         private readonly IEnumerable<int> sysArray;
-        public int Count = 1000;
+        private const int Count = 1000;
         private readonly StructContainer[] array;
         private readonly ITypedEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructContainerSelect>> safeStructArray;
-        private ITypedEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructFunction<StructContainer, int>>> convertArray;
-        private StructContainerSelect select;
+        private readonly ITypedEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructFunction<StructContainer, int>>> convertArray;
         public ArrayStructSum()
         {
             array = Enumerable.Range(0, Count).Select(x => StructContainer.Create(x)).ToArray();
-            select = new StructContainerSelect();
+            var @select = new StructContainerSelect();
             sysArray = array.Select(x => x.Element);
             convertArray = array.ToTypedEnumerable().Select(x => x.Element);
-            safeStructArray = array.ToTypedEnumerable().Select(ref select, Id<int>.Value);
+            safeStructArray = array.ToTypedEnumerable().Select(in select, Id<int>.Value);
         }
         [Benchmark]
         public int SysSum()
@@ -46,7 +45,7 @@ namespace StructLinq.Benchmark
 
     internal struct StructContainerSelect : IFunction<StructContainer, int>
     {
-        public int Eval(in StructContainer element)
+        public readonly int Eval(in StructContainer element)
         {
             return element.Element;
         }

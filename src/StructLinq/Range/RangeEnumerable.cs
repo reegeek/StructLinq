@@ -14,10 +14,12 @@ namespace StructLinq.Range
             this.start = start;
             this.count = count;
         }
+
         public RangeEnumerator GetTypedEnumerator()
         {
             return new RangeEnumerator(start, count);
         }
+
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

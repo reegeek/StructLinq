@@ -13,16 +13,16 @@ namespace StructLinq.Benchmark
         private readonly IEnumerable<double> sysRange;
         private readonly ITypedEnumerable<double, SelectEnumerator<int, double, RangeEnumerator, StructFunction<int, double>>> delegateRange;
         private readonly ITypedEnumerable<double, SelectEnumerator<int, double, GenericEnumerator<int>, StructFunction<int, double>>> convertRange;
-        private CountAction<double>[] countActions = new CountAction<double>[1];
-        public int Count = 10000;
-        private ITypedEnumerable<double, SelectEnumerator<int, double, RangeEnumerator, MultFunction>> structRange;
+        private readonly CountAction<double>[] countActions = new CountAction<double>[1];
+        private const int Count = 10000;
+        private readonly ITypedEnumerable<double, SelectEnumerator<int, double, RangeEnumerator, MultFunction>> structRange;
         public Select()
         {
             sysRange = Enumerable.Range(0, Count).Select(x=> x * 2.0);
             delegateRange = StructEnumerable.Range(0, Count).Select(x=> x * 2.0);
             convertRange = Enumerable.Range(0, Count).ToTypedEnumerable().Select(x=> x * 2.0);
             var multFunction = new MultFunction();
-            structRange = StructEnumerable.Range(0, Count).Select(ref multFunction, Id<double>.Value);
+            structRange = StructEnumerable.Range(0, Count).Select(in multFunction, Id<double>.Value);
         }
 
         [Benchmark(Baseline = true)]
@@ -65,7 +65,7 @@ namespace StructLinq.Benchmark
 
     struct MultFunction : IFunction<int, double>
     {
-        public double Eval(in int element)
+        public readonly double Eval(in int element)
         {
             return element * 2.0;
         }

@@ -3,19 +3,21 @@ using System.Collections.Generic;
 
 namespace StructLinq.Array
 {
-    public struct ArrayEnumerable<T> : ITypedEnumerable<T, ArrayStructEnumerator<T>>
+    public readonly struct ArrayEnumerable<T> : ITypedEnumerable<T, ArrayStructEnumerator<T>>
     {
         #region private fields
-        private T[] array;
+        private readonly T[] array;
         #endregion
-        public ArrayEnumerable(ref T[] array)
+        public ArrayEnumerable(T[] array)
         {
             this.array = array;
         }
+
         public ArrayStructEnumerator<T> GetTypedEnumerator()
         {
-            return new ArrayStructEnumerator<T>(ref array);
+            return new ArrayStructEnumerator<T>(array);
         }
+
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

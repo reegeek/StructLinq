@@ -7,7 +7,7 @@ namespace StructLinq
     {
         public static ArrayEnumerable<T> ToTypedEnumerable<T>(this T[] array)
         {
-            return new ArrayEnumerable<T>(ref array);
+            return new ArrayEnumerable<T>(array);
         }
     }
 }

@@ -10,10 +10,10 @@ namespace StructLinq.Benchmark
     public class Aggregate
     {
         private readonly IEnumerable<int> sysRange;
-        private ITypedEnumerable<int, RangeEnumerator> structRange;
-        private ITypedEnumerable<int, GenericEnumerator<int>> convertRange;
+        private readonly ITypedEnumerable<int, RangeEnumerator> structRange;
+        private readonly ITypedEnumerable<int, GenericEnumerator<int>> convertRange;
         private readonly Aggregation[] aggregations = new Aggregation[1];
-        public int Count = 10000;
+        private const int Count = 10000;
         public Aggregate()
         {
             sysRange = Enumerable.Range(0, Count);

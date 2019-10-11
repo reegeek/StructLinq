@@ -38,7 +38,7 @@ namespace StructLinq.Tests
             var whereFunc = new WhereFunc();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Where(ref whereFunc)
+                .Where(in whereFunc)
                 .ToArray();
             Assert.Equal(sys, structEnum);
 

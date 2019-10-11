@@ -27,11 +27,11 @@ namespace StructLinq.Range
         {
             index = start - 1;
         }
-        object IEnumerator.Current => Current;
-        public void Dispose()
+        readonly object IEnumerator.Current => Current;
+        public readonly void Dispose()
         {
         }
-        public int Current
+        public readonly int Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => index;

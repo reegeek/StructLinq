@@ -3,22 +3,24 @@ using System.Collections.Generic;
 
 namespace StructLinq.Where
 {
-    public struct WhereEnumerable<TIn, TEnumerator, TFunction> : ITypedEnumerable<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>
+    public readonly struct WhereEnumerable<TIn, TEnumerator, TFunction> : ITypedEnumerable<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>
         where TEnumerator : struct, IEnumerator<TIn> 
         where TFunction : struct, IFunction<TIn, bool>
     {
-        private TFunction function;
+        private readonly TFunction function;
         private readonly ITypedEnumerable<TIn, TEnumerator> inner;
-        public WhereEnumerable(ref TFunction function, ITypedEnumerable<TIn, TEnumerator> inner)
+        public WhereEnumerable(in TFunction function, in ITypedEnumerable<TIn, TEnumerator> inner)
         {
             this.function = function;
             this.inner = inner;
         }
+
         public WhereEnumerator<TIn, TEnumerator, TFunction> GetTypedEnumerator()
         {
             var enumerator = inner.GetTypedEnumerator();
-            return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
+            return new WhereEnumerator<TIn, TEnumerator, TFunction>(function, enumerator);
         }
+
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
