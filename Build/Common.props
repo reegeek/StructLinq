@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup Label="Framework">
-    <DefaultTargetFrameworks>netstandard2.0</DefaultTargetFrameworks>
+    <DefaultTargetFrameworks>netcoreapp3.0</DefaultTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Label="Default to Debug and AnyCPU">

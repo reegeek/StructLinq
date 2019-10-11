@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup Label="Framework">
-    <DefaultTargetFrameworks>netcoreapp3.0;net461</DefaultTargetFrameworks>
+    <DefaultTargetFrameworks>netcoreapp3.0</DefaultTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
