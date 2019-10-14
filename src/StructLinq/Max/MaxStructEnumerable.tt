@@ -34,7 +34,7 @@ namespace StructLinq
         public static <#= t.Name #> Max<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IEnumerator<<#= t.Name #>>
         {
-            using (var enumerator = enumerable.GetTypedEnumerator())
+            using (var enumerator = enumerable.GetStructEnumerator())
             {
 				if (!enumerator.MoveNext())
 					throw new ArgumentOutOfRangeException("No elements");
