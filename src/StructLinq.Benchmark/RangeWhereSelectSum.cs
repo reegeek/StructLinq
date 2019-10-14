@@ -13,9 +13,9 @@ namespace StructLinq.Benchmark
     {
         private readonly IEnumerable<int> sysRange;
         private const int Count = 10000;
-        private readonly ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>, StructFunction<int, int>>> convertWithDelegate;
-        private readonly ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, RangeEnumerator, WherePredicate>, SelectFunction>> structRange;
-        private readonly ITypedEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, GenericEnumerator<int>, WherePredicate>, SelectFunction>> convertWithStruct;
+        private readonly IStructEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>, StructFunction<int, int>>> convertWithDelegate;
+        private readonly IStructEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, RangeEnumerator, WherePredicate>, SelectFunction>> structRange;
+        private readonly IStructEnumerable<int, SelectEnumerator<int, int, WhereEnumerator<int, GenericEnumerator<int>, WherePredicate>, SelectFunction>> convertWithStruct;
         public RangeWhereSelectSum()
         {
             sysRange = Enumerable.Range(0, Count)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StructLinq.Array
 {
-    public readonly struct ArrayEnumerable<T> : ITypedEnumerable<T, ArrayStructEnumerator<T>>
+    public readonly struct ArrayEnumerable<T> : IStructEnumerable<T, ArrayStructEnumerator<T>>
     {
         #region private fields
         private readonly T[] array;
@@ -13,7 +13,7 @@ namespace StructLinq.Array
             this.array = array;
         }
 
-        public ArrayStructEnumerator<T> GetTypedEnumerator()
+        public ArrayStructEnumerator<T> GetStructEnumerator()
         {
             return new ArrayStructEnumerator<T>(array);
         }
@@ -24,7 +24,7 @@ namespace StructLinq.Array
         }
         public IEnumerator<T> GetEnumerator()
         {
-            return GetTypedEnumerator();
+            return GetStructEnumerator();
         }
     }
 }

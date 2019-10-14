@@ -9,11 +9,11 @@ namespace StructLinq.Benchmark
     [MemoryDiagnoser]
     public class Array
     {
-        private readonly ITypedEnumerable<int, ArrayStructEnumerator<int>> safeArray;
+        private readonly IStructEnumerable<int, ArrayStructEnumerator<int>> safeArray;
         private readonly SumIntAction[] sumActions = new SumIntAction[1];
         private const int Count = 10000;
         private readonly IEnumerable<int> sysEnumerable;
-        private readonly ITypedEnumerable<int, GenericEnumerator<int>> convertArray;
+        private readonly IStructEnumerable<int, GenericEnumerator<int>> convertArray;
         private readonly int[] array;
         public Array()
         {

@@ -10,8 +10,8 @@ namespace StructLinq.Benchmark
     public class ForEach
     {
         private readonly IEnumerable<int> sysRange;
-        private readonly ITypedEnumerable<int, RangeEnumerator> structRange;
-        private readonly ITypedEnumerable<int, GenericEnumerator<int>> convertRange;
+        private readonly IStructEnumerable<int, RangeEnumerator> structRange;
+        private readonly IStructEnumerable<int, GenericEnumerator<int>> convertRange;
         private readonly CountAction<int>[] countActions = new CountAction<int>[1];
         private const int Count = 10000;
         public ForEach()

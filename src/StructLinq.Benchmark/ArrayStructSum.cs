@@ -12,8 +12,8 @@ namespace StructLinq.Benchmark
         private readonly IEnumerable<int> sysArray;
         private const int Count = 1000;
         private readonly StructContainer[] array;
-        private readonly ITypedEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructContainerSelect>> safeStructArray;
-        private readonly ITypedEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructFunction<StructContainer, int>>> convertArray;
+        private readonly IStructEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructContainerSelect>> safeStructArray;
+        private readonly IStructEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructFunction<StructContainer, int>>> convertArray;
         public ArrayStructSum()
         {
             array = Enumerable.Range(0, Count).Select(x => StructContainer.Create(x)).ToArray();

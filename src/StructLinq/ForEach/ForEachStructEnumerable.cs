@@ -7,11 +7,11 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        public static void ForEach<T, TEnumerator, TAction>(this ITypedEnumerable<T, TEnumerator> enumerable, ref TAction action) 
+        public static void ForEach<T, TEnumerator, TAction>(this IStructEnumerable<T, TEnumerator> enumerable, ref TAction action) 
             where TEnumerator : struct, IEnumerator<T>
             where TAction : struct, IAction<T>
         {
-            using (var enumerator = enumerable.GetTypedEnumerator())
+            using (var enumerator = enumerable.GetStructEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
@@ -19,7 +19,7 @@ namespace StructLinq
                 }
             }
         }
-        public static void ForEach<T, TEnumerator>(this ITypedEnumerable<T, TEnumerator> enumerable, Action<T> action)
+        public static void ForEach<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Action<T> action)
             where TEnumerator : struct, IEnumerator<T>
         {
             var structAction = new StructAction<T>(action);

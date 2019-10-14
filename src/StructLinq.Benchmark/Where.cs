@@ -11,13 +11,13 @@ namespace StructLinq.Benchmark
     public class Where
     {
         private readonly IEnumerable<int> sysRange;
-        private readonly ITypedEnumerable<int, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>
+        private readonly IStructEnumerable<int, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>
             delegateRange;
-        private readonly ITypedEnumerable<int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>>
+        private readonly IStructEnumerable<int, WhereEnumerator<int, GenericEnumerator<int>, StructFunction<int, bool>>>
             convertRange;
         private readonly CountAction<int>[] countActions = new CountAction<int>[1];
         private const int Count = 10000;
-        private readonly ITypedEnumerable<int, WhereEnumerator<int, RangeEnumerator, WhereFunc>> structRange;
+        private readonly IStructEnumerable<int, WhereEnumerator<int, RangeEnumerator, WhereFunc>> structRange;
         public Where()
         {
             sysRange = Enumerable.Range(0, Count).Where(x => x > 0);
