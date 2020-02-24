@@ -31,21 +31,27 @@ namespace StructLinq
 <# foreach(var t in types) {  #>
     public static partial class StructEnumerable
     {
+        private static <#= t.Name #> Max<#= t.Name #><TEnumerator>(TEnumerator enumerator)
+            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
+        {
+			if (!enumerator.MoveNext())
+				throw new ArgumentOutOfRangeException("No elements");
+			<#= t.Name #> result = enumerator.Current;
+			while (enumerator.MoveNext())
+			{
+				var current = enumerator.Current;
+				if (current > result)
+					result = current;
+			}
+			return result;
+        }
+
         public static <#= t.Name #> Max<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IEnumerator<<#= t.Name #>>
         {
             using (var enumerator = enumerable.GetStructEnumerator())
             {
-				if (!enumerator.MoveNext())
-					throw new ArgumentOutOfRangeException("No elements");
-				<#= t.Name #> result = enumerator.Current;
-				while (enumerator.MoveNext())
-				{
-					var current = enumerator.Current;
-					if (current > result)
-						result = current;
-				}
-				return result;
+				return Max<#= t.Name #>(enumerator);
             }
         }
     }
