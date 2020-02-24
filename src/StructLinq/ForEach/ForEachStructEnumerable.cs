@@ -7,7 +7,7 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        private static void InternalForEach<T, TEnumerator, TAction>(TAction action, TEnumerator enumerator)
+        private static void InternalForEach<T, TEnumerator, TAction>(ref TAction action, TEnumerator enumerator)
             where TEnumerator : struct, IEnumerator<T>
             where TAction : struct, IAction<T>
         {
@@ -23,7 +23,7 @@ namespace StructLinq
         {
             using (var enumerator = enumerable.GetStructEnumerator())
             {
-                InternalForEach<T, TEnumerator, TAction>(action, enumerator);
+                InternalForEach<T, TEnumerator, TAction>(ref action, enumerator);
             }
         }
 
