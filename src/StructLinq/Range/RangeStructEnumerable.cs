@@ -5,7 +5,7 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        public static IStructEnumerable<int, RangeEnumerator> Range(int start, int count)
+        public static RangeEnumerable Range(int start, int count)
         {
             return new RangeEnumerable(start, count);
         }
