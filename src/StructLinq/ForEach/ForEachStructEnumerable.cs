@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.ForEach;
 
 // ReSharper disable once CheckNamespace
@@ -17,6 +18,7 @@ namespace StructLinq
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEach<T, TEnumerator, TAction>(this IStructEnumerable<T, TEnumerator> enumerable, ref TAction action) 
             where TEnumerator : struct, IEnumerator<T>
             where TAction : struct, IAction<T>
@@ -27,7 +29,8 @@ namespace StructLinq
             }
         }
 
-        public static void ForEach<T, TEnumerator, TAction, TEnumerable>(this TEnumerable enumerable, ref TAction action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ForEach<T, TEnumerator, TAction, TEnumerable>(this TEnumerable enumerable, ref TAction action, Func<(TEnumerable, TAction), (IStructEnumerable<T, TEnumerator>, IAction<T>)> _)
             where TEnumerator : struct, IEnumerator<T>
             where TAction : struct, IAction<T>
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
@@ -41,7 +44,7 @@ namespace StructLinq
             }
         }
 
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEach<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Action<T> action)
             where TEnumerator : struct, IEnumerator<T>
         {
@@ -49,7 +52,8 @@ namespace StructLinq
             enumerable.ForEach(ref structAction);
         }
 
-        public static void ForEach<T, TEnumerator, TEnumerable>(this TEnumerable enumerable, Action<T> action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ForEach<T, TEnumerator, TEnumerable>(this ref TEnumerable enumerable, Action<T> action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IEnumerator<T>
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
@@ -61,5 +65,7 @@ namespace StructLinq
                 }
             }
         }
+
+
     }
 }

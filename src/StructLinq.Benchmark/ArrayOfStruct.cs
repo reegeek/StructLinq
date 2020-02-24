@@ -25,7 +25,7 @@ namespace StructLinq.Benchmark
     [MemoryDiagnoser]
     public class ArrayOfStruct
     {
-        private readonly ArrayEnumerable<Struct> arrayEnumerable;
+        private ArrayEnumerable<Struct> arrayEnumerable;
         private const int Count = 10000;
         private readonly IEnumerable<Struct> sysEnumerable;
         private readonly Struct[] array;
