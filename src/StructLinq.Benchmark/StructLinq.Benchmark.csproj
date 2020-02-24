@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.11.4" />
-    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.11.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\StructLinq\StructLinq.csproj" />
   </ItemGroup>
 
