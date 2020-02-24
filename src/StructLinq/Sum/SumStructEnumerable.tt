@@ -53,6 +53,21 @@ namespace StructLinq
                 return Sum<#= t.Name #>(enumerator);
             }
         }
+
+        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this ref TEnumerable enumerable, Func<TEnumerable, IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
+            where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
+        {
+            using (var enumerator = enumerable.GetStructEnumerator())
+            {
+                <#= t.Name #> result = 0;
+                while (enumerator.MoveNext())
+                {
+                    result += enumerator.Current;
+                }
+                return result;
+            }
+        }
     }
 
 <# } #>

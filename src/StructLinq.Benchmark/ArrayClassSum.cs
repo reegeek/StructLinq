@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using StructLinq.Array;
+using StructLinq.IEnumerable;
 using StructLinq.Select;
 
 namespace StructLinq.Benchmark
@@ -12,15 +14,15 @@ namespace StructLinq.Benchmark
         private readonly IEnumerable<int> sysArray;
         private const int Count = 1000;
         private readonly Container[] array;
-        private readonly IStructEnumerable<int, SelectEnumerator<Container, int, ArrayStructEnumerator<Container>, ContainerSelect>> safeStructArray;
-        private readonly IStructEnumerable<int, SelectEnumerator<Container, int, ArrayStructEnumerator<Container>, StructFunction<Container, int>>> convertArray;
+        private readonly SelectEnumerable<Container, int, RefArrayStructEnumerator<Container>, ContainerSelect> safeStructArray;
+        private readonly SelectEnumerable<RefContainer<Container>, int, ArrayStructEnumerator<RefContainer<Container>>, StructFunction<RefContainer<Container>, int>> convertArray;
         public ArrayClassSum()
         {
             array = Enumerable.Range(0, Count).Select(x => new Container(x)).ToArray();
             var @select = new ContainerSelect();
             sysArray = array.Select(x => x.Element);
-            convertArray = array.ToTypedEnumerable().Select(x => x.Element);
-            safeStructArray = array.ToTypedEnumerable().Select(in select, Id<int>.Value);
+            convertArray = array.Select(x=> new RefContainer<Container>(x)).ToArray().ToTypedEnumerable().Select(x => x.Element.Element);
+            safeStructArray = array.ToRefTypedEnumerable().Select(in select, Id<int>.Value);
         }
         [Benchmark]
         public int SysSum()
@@ -49,6 +51,15 @@ namespace StructLinq.Benchmark
         public Container(int element)
         {
             Element = element;
+        }
+    }
+
+    internal struct RefContainer<T>
+    {
+        public readonly T Element;
+        public RefContainer(T element)
+        {
+            this.Element = element;
         }
     }
 

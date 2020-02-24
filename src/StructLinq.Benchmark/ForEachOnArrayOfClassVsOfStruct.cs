@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using StructLinq.Array;
+using StructLinq.IEnumerable;
 using StructLinq.Select;
 
 namespace StructLinq.Benchmark
@@ -13,14 +14,14 @@ namespace StructLinq.Benchmark
     public class SumOnArrayOfClassVsOfStruct
     {
         private readonly ClassContainer[] sysRange;
-        private readonly SelectEnumerable<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructFunction<StructContainer, int>> arrayOfStructEnumerable;
-        private readonly SelectEnumerable<ClassContainer, int, ArrayStructEnumerator<ClassContainer>, StructFunction<ClassContainer, int>> arrayOfClassEnumerable;
+        private readonly SelectEnumerable<StructContainer, int, RefArrayStructEnumerator<StructContainer>, StructFunction<StructContainer, int>> arrayOfStructEnumerable;
+        private readonly SelectEnumerable<ClassContainer, int, RefArrayStructEnumerator<ClassContainer>, StructFunction<ClassContainer, int>> arrayOfClassEnumerable;
         private const int Count = 10000;
         public SumOnArrayOfClassVsOfStruct()
         {
             sysRange = Enumerable.Range(0, Count).Select(x=> new ClassContainer(x)).ToArray();
-            arrayOfClassEnumerable = Enumerable.Range(0, Count).Select(x=> new ClassContainer(x)).ToArray().ToTypedEnumerable().Select(x=> x.Index);
-            arrayOfStructEnumerable = Enumerable.Range(0, Count).Select(x => new StructContainer(x)).ToArray().ToTypedEnumerable().Select(x => x.Index);
+            arrayOfClassEnumerable = Enumerable.Range(0, Count).Select(x=> new ClassContainer(x)).ToArray().ToRefTypedEnumerable().Select(x=> x.Index);
+            arrayOfStructEnumerable = Enumerable.Range(0, Count).Select(x => new StructContainer(x)).ToArray().ToRefTypedEnumerable().Select(x => x.Index);
         }
 
         [Benchmark(Baseline = true)]

@@ -2,6 +2,7 @@
 using System.Linq;
 using BenchmarkDotNet.Attributes;
 using StructLinq.Array;
+using StructLinq.IEnumerable;
 using StructLinq.Select;
 
 namespace StructLinq.Benchmark
@@ -12,15 +13,15 @@ namespace StructLinq.Benchmark
         private readonly IEnumerable<int> sysArray;
         private const int Count = 1000;
         private readonly SealedContainer[] array;
-        private readonly IStructEnumerable<int, SelectEnumerator<SealedContainer, int, ArrayStructEnumerator<SealedContainer>, SealedContainerSelect>> safeStructArray;
-        private readonly IStructEnumerable<int, SelectEnumerator<SealedContainer, int, ArrayStructEnumerator<SealedContainer>, StructFunction<SealedContainer, int>>> convertArray;
+        private SelectEnumerable<SealedContainer, int, RefArrayStructEnumerator<SealedContainer>, SealedContainerSelect> safeStructArray;
+        private readonly SelectEnumerable<SealedContainer, int, RefArrayStructEnumerator<SealedContainer>, StructFunction<SealedContainer, int>> convertArray;
         public ArraySealedClassSum()
         {
             array = Enumerable.Range(0, Count).Select(x=> new SealedContainer(x)).ToArray();
             var @select = new SealedContainerSelect();
             sysArray = array.Select(x=> x.Element);
-            convertArray = array.ToTypedEnumerable().Select(x => x.Element);
-            safeStructArray = array.ToTypedEnumerable().Select(in select, Id<int>.Value);
+            convertArray = array.ToRefTypedEnumerable().Select(x => x.Element);
+            safeStructArray = array.ToRefTypedEnumerable().Select(in select, Id<int>.Value);
         }
         [Benchmark]
         public int SysSum()
@@ -39,7 +40,7 @@ namespace StructLinq.Benchmark
         public int ConvertSum() => convertArray.Sum();
 
         [Benchmark]
-        public int SafeStructSum() => safeStructArray.Sum();
+        public int SafeStructSum() => safeStructArray.Sum(x=> x);
     }
 
     internal struct SealedContainerSelect : IFunction<SealedContainer, int>

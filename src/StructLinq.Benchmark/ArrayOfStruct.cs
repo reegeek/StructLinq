@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using StructLinq.Array;
 
@@ -24,13 +25,13 @@ namespace StructLinq.Benchmark
     [MemoryDiagnoser]
     public class ArrayOfStruct
     {
-        private readonly ArrayEnumerable<int> arrayEnumerable;
+        private readonly ArrayEnumerable<Struct> arrayEnumerable;
         private const int Count = 10000;
-        private readonly IEnumerable<int> sysEnumerable;
-        private readonly int[] array;
+        private readonly IEnumerable<Struct> sysEnumerable;
+        private readonly Struct[] array;
         public ArrayOfStruct()
         {
-            array = Enumerable.Range(0, Count).ToArray();
+            array = Enumerable.Range(0, Count).Select(x=> new Struct(x)).ToArray();
             sysEnumerable = array;
             arrayEnumerable = array.ToTypedEnumerable();
         }
@@ -39,9 +40,9 @@ namespace StructLinq.Benchmark
         public int ForEachOnIEnumerable()
         {
             int sum = 0;
-            foreach (var i in sysEnumerable)
+            foreach (var @struct in sysEnumerable)
             {
-                sum += i;
+                sum += @struct.Integer;
             }
             return sum;
         }
@@ -50,9 +51,9 @@ namespace StructLinq.Benchmark
         public int ForEachOnArray()
         {
             int sum = 0;
-            foreach (var i in array)
+            foreach (var @struct in array)
             {
-                sum+=i;
+                sum+=@struct.Integer;
             }
             return sum;
         }
@@ -64,14 +65,26 @@ namespace StructLinq.Benchmark
             arrayEnumerable.ForEach(ref sumAction, x=>x);
             return sumAction.Sum;
         }
+
+        private readonly struct Struct
+        {
+            public readonly int Integer;
+            public Struct(int integer)
+            {
+                Integer = integer;
+            }
+        }
+
+        private struct SumIntAction : IAction<Struct>
+        {
+            public int Sum;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public void Do(Struct element)
+            {
+                Sum += element.Integer;
+            }
+        }
+
     }
 
-    public struct SumIntAction : IAction<int>
-    {
-        public int Sum;
-        public void Do(int element)
-        {
-            Sum += element;
-        }
-    }
 }

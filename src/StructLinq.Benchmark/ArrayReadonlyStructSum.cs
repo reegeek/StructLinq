@@ -12,7 +12,7 @@ namespace StructLinq.Benchmark
         private readonly IEnumerable<int> sysArray;
         private const int Count = 1000;
         private readonly ReadonlyStructContainer[] array;
-        private readonly IStructEnumerable<int, SelectEnumerator<ReadonlyStructContainer, int, ArrayStructEnumerator<ReadonlyStructContainer>, ReadonlyStructContainerSelect>> safeStructArray;
+        private SelectEnumerable<ReadonlyStructContainer, int, ArrayStructEnumerator<ReadonlyStructContainer>, ReadonlyStructContainerSelect> safeStructArray;
         private readonly IStructEnumerable<int, SelectEnumerator<ReadonlyStructContainer, int, ArrayStructEnumerator<ReadonlyStructContainer>, StructFunction<ReadonlyStructContainer, int>>> convertArray;
         public ArrayReadonlyStructSum()
         {
@@ -39,7 +39,7 @@ namespace StructLinq.Benchmark
         public int ConvertSum() => convertArray.Sum();
 
         [Benchmark]
-        public int SafeStructSum() => safeStructArray.Sum();
+        public int SafeStructSum() => safeStructArray.Sum(x=> x);
     }
 
     internal struct ReadonlyStructContainerSelect : IFunction<ReadonlyStructContainer, int>

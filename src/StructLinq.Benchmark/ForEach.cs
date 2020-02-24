@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -83,6 +84,7 @@ namespace StructLinq.Benchmark
     struct CountAction<T> : IAction<T>
     {
         public int Count;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void  Do(T element)
         {
             Count++;
