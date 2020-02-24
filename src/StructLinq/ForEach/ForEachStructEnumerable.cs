@@ -27,12 +27,39 @@ namespace StructLinq
             }
         }
 
+        public static void ForEach<T, TEnumerator, TAction, TEnumerable>(this TEnumerable enumerable, ref TAction action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IEnumerator<T>
+            where TAction : struct, IAction<T>
+            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+        {
+            using (var enumerator = enumerable.GetStructEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    action.Do(enumerator.Current);
+                }
+            }
+        }
+
 
         public static void ForEach<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Action<T> action)
             where TEnumerator : struct, IEnumerator<T>
         {
             var structAction = new StructAction<T>(action);
             enumerable.ForEach(ref structAction);
+        }
+
+        public static void ForEach<T, TEnumerator, TEnumerable>(this TEnumerable enumerable, Action<T> action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IEnumerator<T>
+            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+        {
+            using (var enumerator = enumerable.GetStructEnumerator())
+            {
+                while (enumerator.MoveNext())
+                {
+                    action(enumerator.Current);
+                }
+            }
         }
     }
 }

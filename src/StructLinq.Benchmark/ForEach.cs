@@ -1,30 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
-using StructLinq.IEnumerable;
-using StructLinq.Range;
 
 namespace StructLinq.Benchmark
 {
     [MemoryDiagnoser]
     public class ForEach
     {
-        private readonly IEnumerable<int> sysRange;
-        private readonly IStructEnumerable<int, RangeEnumerator> structRange;
-        private readonly IStructEnumerable<int, GenericEnumerator<int>> convertRange;
-        private readonly CountAction<int>[] countActions = new CountAction<int>[1];
-        private const int Count = 10000;
+        private int count;
+        private Action<int> action;
+        private const int Count = 100000;
+
         public ForEach()
         {
-            sysRange = Enumerable.Range(0, Count);
-            structRange = StructEnumerable.Range(0, Count);
-            convertRange = sysRange.ToTypedEnumerable();
+            count = 0;
+            action = i => count++;
+
         }
 
         [Benchmark(Baseline = true)]
-        public int SysForEach()
+        public int ClrForEach()
         {
-            int count = 0;
+            var sysRange = Enumerable.Range(0, Count);
             foreach (var i in sysRange)
             {
                 count++;
@@ -32,27 +29,34 @@ namespace StructLinq.Benchmark
             return count;
         }
         [Benchmark]
-        public int DelegateForEach()
+        public int WithAction()
         {
-            int count = 0;
-            structRange.ForEach(i => count++);
+            StructEnumerable.Range(0, Count).ForEach(action);
             return count;
         }
 
         [Benchmark]
-        public int StructForEach()
+        public int WithStruct()
         {
-            ref CountAction<int> countAction = ref countActions[0];
-            countAction.Count = 0;
-            structRange.ForEach(ref countAction);
+            CountAction<int> countAction = new CountAction<int> { Count = 0 };
+            StructEnumerable.Range(0, Count).ForEach(ref countAction);
             return countAction.Count;
         }
 
         [Benchmark]
-        public int ConvertForEach()
+        public int ZeroAllocWithStruct()
         {
-            ref CountAction<int> countAction = ref countActions[0];
-            countAction.Count = 0;
+            CountAction<int> countAction = new CountAction<int> { Count = 0 };
+            StructEnumerable.Range(0, Count).ForEach(ref countAction, x=> x);
+            return countAction.Count;
+        }
+
+
+        [Benchmark]
+        public int ToTypedEnumerableWithStruct()
+        {
+            CountAction<int> countAction = new CountAction<int> { Count = 0 };
+            var convertRange = Enumerable.Range(0, Count).ToTypedEnumerable();
             convertRange.ForEach(ref countAction);
             return countAction.Count;
         }
