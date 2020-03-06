@@ -25,7 +25,7 @@ namespace StructLinq.Tests
                 .Sum();
             var structEnum = Enumerable
                 .Range(-50, 100)
-                .ToTypedEnumerable()
+                .ToStructEnumerable()
                 .Sum();
             Assert.Equal(sys, structEnum);
         }

@@ -17,8 +17,8 @@ namespace StructLinq.Benchmark
         public ArraySum()
         {
             sysArray = Enumerable.ToArray(Enumerable.Range(0,Count));
-            convertArray = sysArray.ToTypedEnumerable();
-            safeStructArray = Enumerable.ToArray(Enumerable.Range(0, Count)).ToTypedEnumerable();
+            convertArray = sysArray.ToStructEnumerable();
+            safeStructArray = Enumerable.ToArray(Enumerable.Range(0, Count)).ToStructEnumerable();
             array = Enumerable.ToArray(Enumerable.Range(0, Count));
         }
         [Benchmark]

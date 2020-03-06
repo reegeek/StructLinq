@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace StructLinq.Array
+﻿namespace StructLinq.Array
 {
     public readonly struct ArrayEnumerable<T> : IStructEnumerable<T, ArrayStructEnumerator<T>>
     {
@@ -13,18 +10,10 @@ namespace StructLinq.Array
             this.array = array;
         }
 
-        public ArrayStructEnumerator<T> GetStructEnumerator()
+        public ArrayStructEnumerator<T> GetEnumerator()
         {
             return new ArrayStructEnumerator<T>(array);
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        public IEnumerator<T> GetEnumerator()
-        {
-            return GetStructEnumerator();
-        }
     }
 }

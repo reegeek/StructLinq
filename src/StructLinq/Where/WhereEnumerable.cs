@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace StructLinq.Where
+﻿namespace StructLinq.Where
 {
     public readonly struct WhereEnumerable<TIn, TEnumerator, TFunction> : IStructEnumerable<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>
-        where TEnumerator : struct, IEnumerator<TIn> 
+        where TEnumerator : struct, IStructEnumerator<TIn> 
         where TFunction : struct, IFunction<TIn, bool>
     {
         private readonly TFunction function;
@@ -15,19 +12,11 @@ namespace StructLinq.Where
             this.inner = inner;
         }
 
-        public WhereEnumerator<TIn, TEnumerator, TFunction> GetStructEnumerator()
+        public WhereEnumerator<TIn, TEnumerator, TFunction> GetEnumerator()
         {
-            var enumerator = inner.GetStructEnumerator();
+            var enumerator = inner.GetEnumerator();
             return new WhereEnumerator<TIn, TEnumerator, TFunction>(function, enumerator);
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        public IEnumerator<TIn> GetEnumerator()
-        {
-            return GetStructEnumerator();
-        }
     }
 }

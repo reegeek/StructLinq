@@ -1,12 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace StructLinq.Select
 {
-    public struct SelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IEnumerator<TOut>
+    public struct SelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IStructEnumerator<TOut>
         where TFunction : struct, IFunction<TIn, TOut>
-        where TEnumerator : struct, IEnumerator<TIn>
+        where TEnumerator : struct, IStructEnumerator<TIn>
     {
         #region private fields
         private readonly TFunction function;
@@ -26,12 +25,6 @@ namespace StructLinq.Select
         public void Reset()
         {
             enumerator.Reset();
-        }
-        readonly object IEnumerator.Current => Current;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Dispose()
-        {
-            enumerator.Dispose();
         }
         public readonly TOut Current
         {

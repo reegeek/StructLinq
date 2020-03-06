@@ -18,7 +18,7 @@ namespace StructLinq.Benchmark
         {
             sysRange = Enumerable.Range(0, Count);
             structRange = StructEnumerable.Range(0, Count);
-            convertRange = sysRange.ToTypedEnumerable();
+            convertRange = sysRange.ToStructEnumerable();
         }
 
         [Benchmark(Baseline = true)]

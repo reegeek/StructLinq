@@ -20,7 +20,7 @@ namespace StructLinq.Benchmark
         {
             sysRange = Enumerable.Range(0, Count).Select(x=> x * 2.0);
             delegateRange = StructEnumerable.Range(0, Count).Select(x=> x * 2.0);
-            convertRange = Enumerable.Range(0, Count).ToTypedEnumerable().Select(x=> x * 2.0);
+            convertRange = Enumerable.Range(0, Count).ToStructEnumerable().Select(x=> x * 2.0);
             var multFunction = new MultFunction();
             structRange = StructEnumerable.Range(0, Count).Select(in multFunction, Id<double>.Value);
         }

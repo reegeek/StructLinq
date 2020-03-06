@@ -10,7 +10,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static Int16 MinInt16<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Int16>
+            where TEnumerator : struct, IStructEnumerator<Int16>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -25,12 +25,10 @@ namespace StructLinq
         }
 
         public static Int16 Min<TEnumerator>(this IStructEnumerable<Int16, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Int16>
+            where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinInt16(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinInt16(enumerator);
         }
     }
 
@@ -38,7 +36,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static Int32 MinInt32<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Int32>
+            where TEnumerator : struct, IStructEnumerator<Int32>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -53,12 +51,10 @@ namespace StructLinq
         }
 
         public static Int32 Min<TEnumerator>(this IStructEnumerable<Int32, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Int32>
+            where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinInt32(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinInt32(enumerator);
         }
     }
 
@@ -66,7 +62,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static Int64 MinInt64<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Int64>
+            where TEnumerator : struct, IStructEnumerator<Int64>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -81,12 +77,10 @@ namespace StructLinq
         }
 
         public static Int64 Min<TEnumerator>(this IStructEnumerable<Int64, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Int64>
+            where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinInt64(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinInt64(enumerator);
         }
     }
 
@@ -94,7 +88,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static UInt16 MinUInt16<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<UInt16>
+            where TEnumerator : struct, IStructEnumerator<UInt16>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -109,12 +103,10 @@ namespace StructLinq
         }
 
         public static UInt16 Min<TEnumerator>(this IStructEnumerable<UInt16, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<UInt16>
+            where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinUInt16(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinUInt16(enumerator);
         }
     }
 
@@ -122,7 +114,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static UInt32 MinUInt32<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<UInt32>
+            where TEnumerator : struct, IStructEnumerator<UInt32>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -137,12 +129,10 @@ namespace StructLinq
         }
 
         public static UInt32 Min<TEnumerator>(this IStructEnumerable<UInt32, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<UInt32>
+            where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinUInt32(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinUInt32(enumerator);
         }
     }
 
@@ -150,7 +140,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static UInt64 MinUInt64<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<UInt64>
+            where TEnumerator : struct, IStructEnumerator<UInt64>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -165,12 +155,10 @@ namespace StructLinq
         }
 
         public static UInt64 Min<TEnumerator>(this IStructEnumerable<UInt64, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<UInt64>
+            where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinUInt64(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinUInt64(enumerator);
         }
     }
 
@@ -178,7 +166,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static Single MinSingle<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Single>
+            where TEnumerator : struct, IStructEnumerator<Single>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -193,12 +181,10 @@ namespace StructLinq
         }
 
         public static Single Min<TEnumerator>(this IStructEnumerable<Single, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Single>
+            where TEnumerator : struct, IStructEnumerator<Single>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinSingle(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinSingle(enumerator);
         }
     }
 
@@ -206,7 +192,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static Double MinDouble<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Double>
+            where TEnumerator : struct, IStructEnumerator<Double>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -221,12 +207,10 @@ namespace StructLinq
         }
 
         public static Double Min<TEnumerator>(this IStructEnumerable<Double, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Double>
+            where TEnumerator : struct, IStructEnumerator<Double>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinDouble(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinDouble(enumerator);
         }
     }
 
@@ -234,7 +218,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static Byte MinByte<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Byte>
+            where TEnumerator : struct, IStructEnumerator<Byte>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -249,12 +233,10 @@ namespace StructLinq
         }
 
         public static Byte Min<TEnumerator>(this IStructEnumerable<Byte, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Byte>
+            where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinByte(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinByte(enumerator);
         }
     }
 
@@ -262,7 +244,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static SByte MinSByte<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<SByte>
+            where TEnumerator : struct, IStructEnumerator<SByte>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -277,12 +259,10 @@ namespace StructLinq
         }
 
         public static SByte Min<TEnumerator>(this IStructEnumerable<SByte, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<SByte>
+            where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return MinSByte(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MinSByte(enumerator);
         }
     }
 

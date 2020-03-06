@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace StructLinq.IEnumerable
 {
-    public readonly struct GenericEnumerator<T> : IEnumerator<T>
+    public readonly struct GenericEnumerator<T> : IStructEnumerator<T>, IDisposable
     {
         #region private fields
         private readonly IEnumerator<T> inner;
@@ -23,16 +23,15 @@ namespace StructLinq.IEnumerable
         {
             inner.Reset();
         }
-        object IEnumerator.Current => Current;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Dispose()
-        {
-            inner.Dispose();
-        }
         public T Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => inner.Current;
+        }
+
+        public void Dispose()
+        {
+            inner.Dispose();
         }
     }
 }

@@ -19,8 +19,8 @@ namespace StructLinq.Benchmark
             array = Enumerable.Range(0, Count).Select(x => new Container(x)).ToArray();
             var @select = new ContainerSelect();
             sysArray = array.Select(x => x.Element);
-            convertArray = array.ToTypedEnumerable().Select(x => x.Element);
-            safeStructArray = array.ToTypedEnumerable().Select(in select, Id<int>.Value);
+            convertArray = array.ToStructEnumerable().Select(x => x.Element);
+            safeStructArray = array.ToStructEnumerable().Select(in select, Id<int>.Value);
         }
         [Benchmark]
         public int SysSum()

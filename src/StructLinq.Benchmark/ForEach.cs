@@ -74,7 +74,7 @@ namespace StructLinq.Benchmark
         public int ToTypedEnumerableWithStruct()
         {
             CountAction<int> countAction = new CountAction<int> { Count = 0 };
-            var convertRange = Enumerable.Range(0, Count).ToTypedEnumerable();
+            var convertRange = Enumerable.Range(0, Count).ToStructEnumerable();
             convertRange.ForEach(ref countAction);
             return countAction.Count;
         }

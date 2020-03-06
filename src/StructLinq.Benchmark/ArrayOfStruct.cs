@@ -32,7 +32,7 @@ namespace StructLinq.Benchmark
         {
             array = Enumerable.Range(0, Count).ToArray();
             sysEnumerable = array;
-            arrayEnumerable = array.ToTypedEnumerable();
+            arrayEnumerable = array.ToStructEnumerable();
         }
 
         [Benchmark(Baseline = true)]

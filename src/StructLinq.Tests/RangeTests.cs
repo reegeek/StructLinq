@@ -10,7 +10,7 @@ namespace StructLinq.Tests
     {
         protected override IEnumerable<int> Build(int size)
         {
-            return StructEnumerable.Range(-1, size);
+            return StructEnumerable.Range(-1, size).ToEnumerable();
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace StructLinq.Tests
         public void ShouldBeEqualToSystem(int start, int count)
         {
             var system = Enumerable.Range(start, count);
-            var structEnum = StructEnumerable.Range(start, count);
+            var structEnum = StructEnumerable.Range(start, count).ToEnumerable();
             structEnum.Should().Equal(system);
         }
     }

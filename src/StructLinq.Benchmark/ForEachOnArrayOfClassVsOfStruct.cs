@@ -19,8 +19,8 @@ namespace StructLinq.Benchmark
         public SumOnArrayOfClassVsOfStruct()
         {
             sysRange = Enumerable.Range(0, Count).Select(x=> new ClassContainer(x)).ToArray();
-            arrayOfClassEnumerable = Enumerable.Range(0, Count).Select(x=> new ClassContainer(x)).ToArray().ToTypedEnumerable().Select(x=> x.Index);
-            arrayOfStructEnumerable = Enumerable.Range(0, Count).Select(x => new StructContainer(x)).ToArray().ToTypedEnumerable().Select(x => x.Index);
+            arrayOfClassEnumerable = Enumerable.Range(0, Count).Select(x=> new ClassContainer(x)).ToArray().ToStructEnumerable().Select(x=> x.Index);
+            arrayOfStructEnumerable = Enumerable.Range(0, Count).Select(x => new StructContainer(x)).ToArray().ToStructEnumerable().Select(x => x.Index);
         }
 
         [Benchmark(Baseline = true)]

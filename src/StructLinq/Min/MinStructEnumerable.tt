@@ -31,7 +31,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         public static <#= t.Name #> Min<#= t.Name #><TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
         	if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -46,12 +46,10 @@ namespace StructLinq
         }
 
         public static <#= t.Name #> Min<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return Min<#= t.Name #>(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return Min<#= t.Name #>(enumerator);
         }
     }
 

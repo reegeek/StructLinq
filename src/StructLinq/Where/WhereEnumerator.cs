@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Where
 {
-    public struct WhereEnumerator<TIn, TEnumerator, TFunction> : IEnumerator<TIn>
+    public struct WhereEnumerator<TIn, TEnumerator, TFunction> : IStructEnumerator<TIn>
         where TFunction : struct, IFunction<TIn, bool>
-        where TEnumerator : struct, IEnumerator<TIn>
+        where TEnumerator : struct, IStructEnumerator<TIn>
     {
         #region private fields
         private TFunction predicate;
@@ -34,12 +32,6 @@ namespace StructLinq.Where
         public void Reset()
         {
             enumerator.Reset();
-        }
-        readonly object IEnumerator.Current => Current;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Dispose()
-        {
-            enumerator.Dispose();
         }
         public readonly TIn Current
         {

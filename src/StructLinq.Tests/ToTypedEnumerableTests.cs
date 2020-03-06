@@ -13,12 +13,12 @@ namespace StructLinq.Tests
         public void Test(int start, int count)
         {
             var sys = Enumerable.Range(start, count);
-            var structEnum = sys.ToTypedEnumerable();
+            var structEnum = sys.ToStructEnumerable().ToEnumerable();
             Assert.Equal(sys, structEnum);
         }
         protected override IEnumerable<int> Build(int size)
         {
-            return StructEnumerable.Range(-1, size).ToTypedEnumerable();
+            return StructEnumerable.Range(-1, size).ToEnumerable();
         }
     }
 }

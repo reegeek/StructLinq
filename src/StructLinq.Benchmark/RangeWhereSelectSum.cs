@@ -23,10 +23,10 @@ namespace StructLinq.Benchmark
                 .Select(x=> x * 2);
             var where = new WherePredicate();
             var select = new SelectFunction();
-            convertWithDelegate = Enumerable.Range(0, Count).ToTypedEnumerable()
+            convertWithDelegate = Enumerable.Range(0, Count).ToStructEnumerable()
                 .Where(x => (x & 1) == 0)
                 .Select(x => x *2);
-            convertWithStruct = Enumerable.Range(0, Count).ToTypedEnumerable()
+            convertWithStruct = Enumerable.Range(0, Count).ToStructEnumerable()
                 .Where(in where)
                 .Select(in select, Id<int>.Value);
             structRange = StructEnumerable.Range(0, Count)

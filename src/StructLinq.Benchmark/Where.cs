@@ -22,7 +22,7 @@ namespace StructLinq.Benchmark
         {
             sysRange = Enumerable.Range(0, Count).Where(x => x > 0);
             delegateRange = StructEnumerable.Range(0, Count).Where(x => x > 0);
-            convertRange = Enumerable.Range(0, Count).ToTypedEnumerable().Where(x => x > 0);
+            convertRange = Enumerable.Range(0, Count).ToStructEnumerable().Where(x => x > 0);
             var predicate = new WhereFunc();
             structRange = StructEnumerable.Range(0, Count).Where(in predicate);
         }

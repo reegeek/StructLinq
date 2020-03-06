@@ -3,7 +3,6 @@
 // Generated code
 
 using System;
-using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
@@ -11,7 +10,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static Int16 MaxInt16<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Int16>
+            where TEnumerator : struct, IStructEnumerator<Int16>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -26,12 +25,10 @@ namespace StructLinq
         }
 
         public static Int16 Max<TEnumerator>(this IStructEnumerable<Int16, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Int16>
+            where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxInt16(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxInt16(enumerator);
         }
     }
 
@@ -39,7 +36,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static Int32 MaxInt32<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Int32>
+            where TEnumerator : struct, IStructEnumerator<Int32>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -54,12 +51,10 @@ namespace StructLinq
         }
 
         public static Int32 Max<TEnumerator>(this IStructEnumerable<Int32, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Int32>
+            where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxInt32(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxInt32(enumerator);
         }
     }
 
@@ -67,7 +62,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static Int64 MaxInt64<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Int64>
+            where TEnumerator : struct, IStructEnumerator<Int64>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -82,12 +77,10 @@ namespace StructLinq
         }
 
         public static Int64 Max<TEnumerator>(this IStructEnumerable<Int64, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Int64>
+            where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxInt64(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxInt64(enumerator);
         }
     }
 
@@ -95,7 +88,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static UInt16 MaxUInt16<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<UInt16>
+            where TEnumerator : struct, IStructEnumerator<UInt16>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -110,12 +103,10 @@ namespace StructLinq
         }
 
         public static UInt16 Max<TEnumerator>(this IStructEnumerable<UInt16, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<UInt16>
+            where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxUInt16(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxUInt16(enumerator);
         }
     }
 
@@ -123,7 +114,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static UInt32 MaxUInt32<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<UInt32>
+            where TEnumerator : struct, IStructEnumerator<UInt32>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -138,12 +129,10 @@ namespace StructLinq
         }
 
         public static UInt32 Max<TEnumerator>(this IStructEnumerable<UInt32, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<UInt32>
+            where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxUInt32(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxUInt32(enumerator);
         }
     }
 
@@ -151,7 +140,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static UInt64 MaxUInt64<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<UInt64>
+            where TEnumerator : struct, IStructEnumerator<UInt64>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -166,12 +155,10 @@ namespace StructLinq
         }
 
         public static UInt64 Max<TEnumerator>(this IStructEnumerable<UInt64, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<UInt64>
+            where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxUInt64(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxUInt64(enumerator);
         }
     }
 
@@ -179,7 +166,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static Single MaxSingle<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Single>
+            where TEnumerator : struct, IStructEnumerator<Single>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -194,12 +181,10 @@ namespace StructLinq
         }
 
         public static Single Max<TEnumerator>(this IStructEnumerable<Single, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Single>
+            where TEnumerator : struct, IStructEnumerator<Single>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxSingle(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxSingle(enumerator);
         }
     }
 
@@ -207,7 +192,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static Double MaxDouble<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Double>
+            where TEnumerator : struct, IStructEnumerator<Double>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -222,12 +207,10 @@ namespace StructLinq
         }
 
         public static Double Max<TEnumerator>(this IStructEnumerable<Double, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Double>
+            where TEnumerator : struct, IStructEnumerator<Double>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxDouble(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxDouble(enumerator);
         }
     }
 
@@ -235,7 +218,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static Byte MaxByte<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<Byte>
+            where TEnumerator : struct, IStructEnumerator<Byte>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -250,12 +233,10 @@ namespace StructLinq
         }
 
         public static Byte Max<TEnumerator>(this IStructEnumerable<Byte, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<Byte>
+            where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxByte(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxByte(enumerator);
         }
     }
 
@@ -263,7 +244,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         private static SByte MaxSByte<TEnumerator>(TEnumerator enumerator)
-            where TEnumerator : struct, IEnumerator<SByte>
+            where TEnumerator : struct, IStructEnumerator<SByte>
         {
 			if (!enumerator.MoveNext())
 				throw new ArgumentOutOfRangeException("No elements");
@@ -278,12 +259,10 @@ namespace StructLinq
         }
 
         public static SByte Max<TEnumerator>(this IStructEnumerable<SByte, TEnumerator> enumerable)
-            where TEnumerator : struct, IEnumerator<SByte>
+            where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-				return MaxSByte(enumerator);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return MaxSByte(enumerator);
         }
     }
 

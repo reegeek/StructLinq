@@ -17,7 +17,7 @@ namespace StructLinq.Benchmark
         public Max()
         {
             sysRange = Enumerable.Range(0, Count);
-            convertRange = Enumerable.Range(0, Count).ToTypedEnumerable();
+            convertRange = Enumerable.Range(0, Count).ToStructEnumerable();
             structRange = StructEnumerable.Range(0, Count);
         }
 

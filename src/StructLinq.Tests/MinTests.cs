@@ -20,7 +20,7 @@ namespace StructLinq.Tests
         [Fact]
         public void ErrorTest()
         {
-            var structEnum = Enumerable.Empty<double>().ToTypedEnumerable();
+            var structEnum = Enumerable.Empty<double>().ToStructEnumerable();
             Assert.Throws<ArgumentOutOfRangeException>(() => structEnum.Min());
         }
     }

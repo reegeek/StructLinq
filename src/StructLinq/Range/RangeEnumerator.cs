@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Range
 {
-    public struct RangeEnumerator : IEnumerator<int>
+    public struct RangeEnumerator : IStructEnumerator<int>
     {
         #region private fields
         private int index;
@@ -26,10 +24,6 @@ namespace StructLinq.Range
         public void Reset()
         {
             index = start - 1;
-        }
-        readonly object IEnumerator.Current => Current;
-        public readonly void Dispose()
-        {
         }
         public readonly int Current
         {

@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Array
 {
-    public struct ArrayStructEnumerator<T> : IEnumerator<T>
+    public struct ArrayStructEnumerator<T> : IStructEnumerator<T>
     {
         #region private fields
         private readonly T[] array;
@@ -26,12 +24,6 @@ namespace StructLinq.Array
         public void Reset()
         {
             index = -1;
-        }
-        readonly object IEnumerator.Current => Current;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly void Dispose()
-        {
         }
         public readonly T Current
         {

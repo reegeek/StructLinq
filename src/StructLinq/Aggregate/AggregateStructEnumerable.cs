@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using StructLinq.Aggregate;
 
 // ReSharper disable once CheckNamespace
@@ -9,7 +8,7 @@ namespace StructLinq
     {
         #region private methods
         private static TAccumulate Aggregate<T, TAccumulate, TEnumerator, TAggregation>(TEnumerator enumerator, TAccumulate seed, ref TAggregation aggregation)
-            where TEnumerator : IEnumerator<T>
+            where TEnumerator : IStructEnumerator<T>
             where TAggregation : struct, IAggregation<T, TAccumulate>
         {
             aggregation.Result = seed;
@@ -21,16 +20,14 @@ namespace StructLinq
         }
         #endregion
         public static TAccumulate Aggregate<T, TAccumulate, TEnumerator, TAggregation>(this IStructEnumerable<T, TEnumerator> enumerable, TAccumulate seed, ref TAggregation aggregation)
-            where TEnumerator : struct, IEnumerator<T>
+            where TEnumerator : struct, IStructEnumerator<T>
             where TAggregation : struct, IAggregation<T, TAccumulate>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
-            {
-                return Aggregate<T, TAccumulate, TEnumerator, TAggregation>(enumerator, seed, ref aggregation);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            return Aggregate<T, TAccumulate, TEnumerator, TAggregation>(enumerator, seed, ref aggregation);
         }
         public static TAccumulate Aggregate<T, TAccumulate, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, TAccumulate seed, Func<TAccumulate, T, TAccumulate> func)
-            where TEnumerator : struct, IEnumerator<T>
+            where TEnumerator : struct, IStructEnumerator<T>
         {
             var aggregation = new FuncAggregation<T, TAccumulate>(func);
             return enumerable.Aggregate(seed, ref aggregation);
