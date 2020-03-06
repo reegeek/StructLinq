@@ -128,6 +128,16 @@ namespace StructLinq.Benchmark
             return sumAction.Sum;
         }
 
+        [Benchmark]
+        public int Indirect6()
+        {
+            var sumAction = new SumOfClass { Sum = 0 };
+
+            ForEach3(ref arrayEnumerable, ref sumAction, x => x);
+            return sumAction.Sum;
+        }
+
+
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEach<T, TEnumerator, TAction>(ref TEnumerator enumerator, ref TAction action, Func<TEnumerator, IEnumerator<T>> _)
@@ -201,6 +211,30 @@ namespace StructLinq.Benchmark
                 }
             }
 
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ForEach3<T, TEnumerator, TAction, TEnumerable>(ref TEnumerable enumerable, ref TAction action,
+                                                                          Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IEnumerator<T>
+            where TAction : struct, IAction<T>
+            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+            where T : class
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            try
+            {
+                while (enumerator.MoveNext())
+                {
+                    var current = enumerator.Current;
+                    action.Do(current);
+                }
+            }
+            finally
+            {
+                enumerator.Dispose();
+                
+            }
         }
 
 
