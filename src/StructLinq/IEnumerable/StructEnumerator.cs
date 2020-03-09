@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StructLinq.IEnumerable
 {
-    public class StructEnumerator<T> : IEnumerator<T>
+    public struct StructEnumerator<T> : IEnumerator<T>
     {
         private readonly IStructEnumerator<T> enumerator;
 

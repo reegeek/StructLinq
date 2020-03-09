@@ -1,4 +1,8 @@
-﻿namespace StructLinq.Range
+﻿using System.Collections;
+using System.Collections.Generic;
+using StructLinq.IEnumerable;
+
+namespace StructLinq.Range
 {
     public readonly struct RangeEnumerable : IStructEnumerable<int, RangeEnumerator>
     {
@@ -12,9 +16,20 @@
             this.count = count;
         }
 
-        public RangeEnumerator GetEnumerator()
+        public RangeEnumerator GetStructEnumerator()
         {
             return new RangeEnumerator(start, count);
         }
+
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<int> GetEnumerator()
+        {
+            return new StructEnumerator<int>(GetStructEnumerator());
+        }
+
     }
 }

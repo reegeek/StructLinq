@@ -1,8 +1,10 @@
-﻿namespace StructLinq
+﻿using System.Collections.Generic;
+
+namespace StructLinq
 {
-    public interface IStructEnumerable<T, out TEnumerator>
+    public interface IStructEnumerable<out T, out TEnumerator> : IEnumerable<T>
         where TEnumerator : struct, IStructEnumerator<T>
     {
-        TEnumerator GetEnumerator();
+        TEnumerator GetStructEnumerator();
     }
 }

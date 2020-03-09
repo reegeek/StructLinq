@@ -18,7 +18,6 @@ namespace StructLinq.Tests
             var structEnum = StructEnumerable
                 .Range(-50, 100)
                 .Select(selector)
-                .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
         }
@@ -35,7 +34,6 @@ namespace StructLinq.Tests
             var structEnum = StructEnumerable
                 .Range(-50, 100)
                 .Select(in fct, Id<double>.Value)
-                .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
 
@@ -43,7 +41,7 @@ namespace StructLinq.Tests
 
         protected override IEnumerable<int> Build(int size)
         {
-            return StructEnumerable.Range(-1, size).Select(x => x * 2).ToEnumerable();
+            return StructEnumerable.Range(-1, size).Select(x => x * 2);
         }
 
         struct MultFunction : IFunction<int, double>

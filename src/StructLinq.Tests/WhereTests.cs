@@ -9,7 +9,7 @@ namespace StructLinq.Tests
     {
         protected override IEnumerable<int> Build(int size)
         {
-            return StructEnumerable.Range(-1, size).Where(x => x >= -1).ToEnumerable();
+            return StructEnumerable.Range(-1, size).Where(x => x >= -1);
         }
 
         [Fact]
@@ -23,7 +23,6 @@ namespace StructLinq.Tests
             var structEnum = StructEnumerable
                 .Range(-50, 100)
                 .Where(selector)
-                .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
         }
@@ -40,7 +39,6 @@ namespace StructLinq.Tests
             var structEnum = StructEnumerable
                 .Range(-50, 100)
                 .Where(in whereFunc)
-                .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
 

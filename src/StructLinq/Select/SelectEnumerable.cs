@@ -1,4 +1,8 @@
-﻿namespace StructLinq.Select
+﻿using System.Collections;
+using System.Collections.Generic;
+using StructLinq.IEnumerable;
+
+namespace StructLinq.Select
 {
     public readonly struct SelectEnumerable<TIn, TOut, TEnumerator, TFunction> : IStructEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
         where TFunction : struct, IFunction<TIn, TOut>
@@ -14,11 +18,22 @@
             this.inner = inner;
         }
 
-        public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
+        public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetStructEnumerator()
         {
-            var typedEnumerator = inner.GetEnumerator();
+            var typedEnumerator = inner.GetStructEnumerator();
             return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(function, typedEnumerator);
         }
+
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<TOut> GetEnumerator()
+        {
+            return new StructEnumerator<TOut>(GetStructEnumerator());
+        }
+
     }
 }
 

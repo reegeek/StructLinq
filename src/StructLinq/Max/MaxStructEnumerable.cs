@@ -27,7 +27,7 @@ namespace StructLinq
         public static Int16 Max<TEnumerator>(this IStructEnumerable<Int16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxInt16(enumerator);
         }
     }
@@ -53,7 +53,7 @@ namespace StructLinq
         public static Int32 Max<TEnumerator>(this IStructEnumerable<Int32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxInt32(enumerator);
         }
     }
@@ -79,7 +79,7 @@ namespace StructLinq
         public static Int64 Max<TEnumerator>(this IStructEnumerable<Int64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxInt64(enumerator);
         }
     }
@@ -105,7 +105,7 @@ namespace StructLinq
         public static UInt16 Max<TEnumerator>(this IStructEnumerable<UInt16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxUInt16(enumerator);
         }
     }
@@ -131,7 +131,7 @@ namespace StructLinq
         public static UInt32 Max<TEnumerator>(this IStructEnumerable<UInt32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxUInt32(enumerator);
         }
     }
@@ -157,7 +157,7 @@ namespace StructLinq
         public static UInt64 Max<TEnumerator>(this IStructEnumerable<UInt64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxUInt64(enumerator);
         }
     }
@@ -183,7 +183,7 @@ namespace StructLinq
         public static Single Max<TEnumerator>(this IStructEnumerable<Single, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Single>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxSingle(enumerator);
         }
     }
@@ -209,7 +209,7 @@ namespace StructLinq
         public static Double Max<TEnumerator>(this IStructEnumerable<Double, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Double>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxDouble(enumerator);
         }
     }
@@ -235,7 +235,7 @@ namespace StructLinq
         public static Byte Max<TEnumerator>(this IStructEnumerable<Byte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxByte(enumerator);
         }
     }
@@ -261,7 +261,7 @@ namespace StructLinq
         public static SByte Max<TEnumerator>(this IStructEnumerable<SByte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return MaxSByte(enumerator);
         }
     }
