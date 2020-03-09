@@ -23,6 +23,8 @@
 // Generated code
 
 using System;
+using System.Runtime.CompilerServices;
+
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
@@ -30,6 +32,7 @@ namespace StructLinq
 <# foreach(var t in types) {  #>
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static <#= t.Name #> Max<#= t.Name #><TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
@@ -45,10 +48,20 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Max<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
+            return Max<#= t.Name #>(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static <#= t.Name #> Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
             return Max<#= t.Name #>(enumerator);
         }
     }

@@ -3,12 +3,15 @@
 // Generated code
 
 using System;
+using System.Runtime.CompilerServices;
+
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Int16 MaxInt16<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
@@ -24,7 +27,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Int16 Max<TEnumerator>(this IStructEnumerable<Int16, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<Int16>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxInt16(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static Int16 Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<Int16, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<Int16, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -35,6 +48,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Int32 MaxInt32<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
@@ -50,7 +64,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Int32 Max<TEnumerator>(this IStructEnumerable<Int32, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<Int32>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxInt32(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static Int32 Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<Int32, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<Int32, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -61,6 +85,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Int64 MaxInt64<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
@@ -76,7 +101,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Int64 Max<TEnumerator>(this IStructEnumerable<Int64, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<Int64>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxInt64(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static Int64 Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<Int64, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<Int64, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -87,6 +122,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static UInt16 MaxUInt16<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
@@ -102,7 +138,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt16 Max<TEnumerator>(this IStructEnumerable<UInt16, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<UInt16>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxUInt16(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static UInt16 Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<UInt16, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<UInt16, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -113,6 +159,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static UInt32 MaxUInt32<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
@@ -128,7 +175,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt32 Max<TEnumerator>(this IStructEnumerable<UInt32, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<UInt32>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxUInt32(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static UInt32 Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<UInt32, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<UInt32, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -139,6 +196,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static UInt64 MaxUInt64<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
@@ -154,7 +212,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt64 Max<TEnumerator>(this IStructEnumerable<UInt64, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<UInt64>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxUInt64(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static UInt64 Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<UInt64, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<UInt64, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -165,6 +233,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Single MaxSingle<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Single>
         {
@@ -180,7 +249,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Single Max<TEnumerator>(this IStructEnumerable<Single, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<Single>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxSingle(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static Single Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<Single, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<Single, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -191,6 +270,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Double MaxDouble<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Double>
         {
@@ -206,7 +286,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Double Max<TEnumerator>(this IStructEnumerable<Double, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<Double>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxDouble(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static Double Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<Double, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<Double, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -217,6 +307,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Byte MaxByte<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
@@ -232,7 +323,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Byte Max<TEnumerator>(this IStructEnumerable<Byte, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<Byte>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxByte(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static Byte Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<Byte, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<Byte, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var enumerator = enumerable.GetStructEnumerator();
@@ -243,6 +344,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static SByte MaxSByte<TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
@@ -258,7 +360,17 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SByte Max<TEnumerator>(this IStructEnumerable<SByte, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<SByte>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return MaxSByte(enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+       public static SByte Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<SByte, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<SByte, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var enumerator = enumerable.GetStructEnumerator();
