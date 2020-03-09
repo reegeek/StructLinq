@@ -18,6 +18,18 @@ namespace StructLinq.Tests
         }
 
         [Fact]
+        public void ZeroAllocStructTest()
+        {
+            var sys = Enumerable
+                      .Range(-50, 100)
+                      .Sum();
+            var structEnum = StructEnumerable
+                             .Range(-50, 100)
+                             .Sum(x=> x);
+            Assert.Equal(sys, structEnum);
+        }
+
+        [Fact]
         public void ConvertTest()
         {
             var sys = Enumerable

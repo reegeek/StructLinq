@@ -38,6 +38,6 @@ namespace StructLinq.Benchmark
         public int ConvertSum() => convertArray.Sum();
 
         [Benchmark]
-        public int SafeStructSum() => safeStructArray.Sum();
+        public int StructSum() => safeStructArray.Sum();
     }
 }

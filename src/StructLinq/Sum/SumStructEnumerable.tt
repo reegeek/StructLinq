@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
  
 
 // ReSharper disable once CheckNamespace
@@ -34,6 +35,7 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static <#= t.Name #> Sum<#= t.Name #><TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
@@ -45,12 +47,23 @@ namespace StructLinq
             return result;
         }
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Sum<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return Sum<#= t.Name #>(enumerator);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+            where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return Sum<#= t.Name #>(enumerator);
+        }
+
     }
 
 <# } #>
