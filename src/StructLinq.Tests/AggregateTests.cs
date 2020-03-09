@@ -28,6 +28,19 @@ namespace StructLinq.Tests
             Assert.Equal(expected, actual);
         }
 
+        [Fact]
+        public void StructTest2()
+        {
+            var expected =
+                Enumerable.Range(-50, 100)
+                          .Aggregate(0, (accumulate, element) => accumulate + element);
+            var aggregation = new Aggregation();
+            var actual = StructEnumerable.Range(-50, 100)
+                                         .Aggregate(0, ref aggregation, x=>x);
+            Assert.Equal(expected, actual);
+        }
+
+
         struct Aggregation : IAggregation<int, int>
         {
             public Aggregation(int result)
