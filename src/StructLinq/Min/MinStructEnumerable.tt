@@ -22,7 +22,8 @@
 // Generated code
 
 using System;
-using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
@@ -30,7 +31,8 @@ namespace StructLinq
 <# foreach(var t in types) {  #>
     public static partial class StructEnumerable
     {
-        public static <#= t.Name #> Min<#= t.Name #><TEnumerator>(TEnumerator enumerator)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static <#= t.Name #> Min<#= t.Name #><TEnumerator>(TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
         	if (!enumerator.MoveNext())
@@ -45,12 +47,23 @@ namespace StructLinq
 			return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Min<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             return Min<#= t.Name #>(enumerator);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Min<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+        {
+            var enumerator = enumerable.GetStructEnumerator();
+            return Min<#= t.Name #>(enumerator);
+        }
+
     }
 
 
