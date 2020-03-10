@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Select
 {
@@ -8,10 +7,10 @@ namespace StructLinq.Select
         where TEnumerator : struct, IStructEnumerator<TIn>
     {
         #region private fields
-        private readonly TFunction function;
+        private TFunction function;
         private TEnumerator enumerator;
         #endregion
-        public SelectEnumerator(in TFunction function,in TEnumerator enumerator)
+        public SelectEnumerator(ref TFunction function, ref TEnumerator enumerator)
         {
             this.function = function;
             this.enumerator = enumerator;
@@ -26,7 +25,7 @@ namespace StructLinq.Select
         {
             enumerator.Reset();
         }
-        public readonly TOut Current
+        public TOut Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => function.Eval(enumerator.Current);

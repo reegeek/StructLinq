@@ -33,7 +33,7 @@ namespace StructLinq.Tests
             var fct = new MultFunction();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Select(in fct, Id<double>.Value)
+                .Select(ref fct, x=>x, x => x)
                 .ToArray();
             Assert.Equal(sys, structEnum);
 
@@ -46,7 +46,7 @@ namespace StructLinq.Tests
 
         struct MultFunction : IFunction<int, double>
         {
-            public double Eval(in int element)
+            public double Eval(int element)
             {
                 return element * 2.0;
             }

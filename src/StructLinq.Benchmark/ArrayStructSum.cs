@@ -19,8 +19,8 @@ namespace StructLinq.Benchmark
             array = Enumerable.Range(0, Count).Select(x => StructContainer.Create(x)).ToArray();
             var @select = new StructContainerSelect();
             sysArray = array.Select(x => x.Element);
-            convertArray = array.ToStructEnumerable().Select(x => x.Element);
-            safeStructArray = array.ToStructEnumerable().Select(in select, Id<int>.Value);
+            convertArray = array.ToStructEnumerable().Select(x => x.Element, x => x);
+            safeStructArray = array.ToStructEnumerable().Select(ref select, x=>x, x => x);
         }
         [Benchmark]
         public int SysSum()
@@ -45,7 +45,7 @@ namespace StructLinq.Benchmark
 
     internal struct StructContainerSelect : IFunction<StructContainer, int>
     {
-        public readonly int Eval(in StructContainer element)
+        public readonly int Eval(StructContainer element)
         {
             return element.Element;
         }

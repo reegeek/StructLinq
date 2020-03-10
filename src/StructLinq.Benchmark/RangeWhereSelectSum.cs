@@ -25,13 +25,13 @@ namespace StructLinq.Benchmark
             var select = new SelectFunction();
             convertWithDelegate = Enumerable.Range(0, Count).ToStructEnumerable()
                 .Where(x => (x & 1) == 0)
-                .Select(x => x *2);
+                .Select(x => x *2, x => x);
             convertWithStruct = Enumerable.Range(0, Count).ToStructEnumerable()
                 .Where(in where)
-                .Select(in select, Id<int>.Value);
+                .Select(ref select, x=>x, x => x);
             structRange = StructEnumerable.Range(0, Count)
                 .Where(in where)
-                .Select(in select, Id<int>.Value);
+                .Select(ref select, x=>x, x => x);
         }
         [Benchmark(Baseline = true)]
         public int SysSum()
@@ -62,7 +62,7 @@ namespace StructLinq.Benchmark
 
     struct WherePredicate : IFunction<int, bool>
     {
-        public readonly bool Eval(in int element)
+        public readonly bool Eval(int element)
         {
             return (element & 1) == 0;
         }
@@ -70,7 +70,7 @@ namespace StructLinq.Benchmark
 
     struct SelectFunction : IFunction<int, int>
     {
-        public readonly int Eval(in int element)
+        public readonly int Eval(int element)
         {
             return element * 2;
         }

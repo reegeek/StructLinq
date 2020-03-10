@@ -1,27 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.IEnumerable;
 
 namespace StructLinq.Select
 {
-    public readonly struct SelectEnumerable<TIn, TOut, TEnumerator, TFunction> : IStructEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
+    public struct SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator, TFunction> : IStructEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
         where TFunction : struct, IFunction<TIn, TOut>
         where TEnumerator : struct, IStructEnumerator<TIn>
+        where TEnumerable : struct, IStructEnumerable<TIn, TEnumerator>
     {
         #region private fields
-        private readonly TFunction function;
-        private readonly IStructEnumerable<TIn, TEnumerator> inner;
+        private TFunction function;
+        private TEnumerable inner;
         #endregion
-        public SelectEnumerable(in TFunction function, in IStructEnumerable<TIn, TEnumerator> inner)
+
+        public SelectEnumerable(ref TFunction function, ref TEnumerable inner)
         {
             this.function = function;
             this.inner = inner;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetStructEnumerator()
         {
             var typedEnumerator = inner.GetStructEnumerator();
-            return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(function, typedEnumerator);
+            return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
 
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -33,7 +37,6 @@ namespace StructLinq.Select
         {
             return new StructEnumerator<TOut>(GetStructEnumerator());
         }
-
     }
 }
 

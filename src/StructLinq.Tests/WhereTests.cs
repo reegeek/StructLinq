@@ -46,7 +46,7 @@ namespace StructLinq.Tests
 
         struct WhereFunc : IFunction<int, bool>
         {
-            public bool Eval(in int element)
+            public bool Eval(int element)
             {
                 return element > 0;
             }
