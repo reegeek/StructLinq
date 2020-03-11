@@ -6,19 +6,22 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        public static WhereEnumerable<T, TEnumerator, TFunction>
-            Where<T, TEnumerator, TFunction>(this IStructEnumerable<T, TEnumerator> enumerable, in TFunction predicate)
+        public static WhereEnumerable<T, TEnumerable, TEnumerator, TFunction> Where<T, TEnumerable, TEnumerator, TFunction>(this TEnumerable enumerable, ref TFunction predicate, 
+                                                                                                                            Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
             where TFunction : struct, IFunction<T, bool>
+            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            return new WhereEnumerable<T, TEnumerator, TFunction>(in predicate, in enumerable);
+            return new WhereEnumerable<T, TEnumerable, TEnumerator, TFunction>(ref predicate, ref enumerable);
         }
-        public static WhereEnumerable<T, TEnumerator, StructFunction<T, bool>>
-            Where<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
+        public static WhereEnumerable<T, TEnumerable, TEnumerator, StructFunction<T, bool>> Where<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, 
+                                                                                                                               Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
             var structPredicate = predicate.ToStruct();
-            return enumerable.Where(in structPredicate);
+            return new WhereEnumerable<T, TEnumerable, TEnumerator, StructFunction<T, bool>>(ref structPredicate, ref enumerable);
+
         }
     }
 }

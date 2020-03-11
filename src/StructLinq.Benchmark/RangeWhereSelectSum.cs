@@ -24,13 +24,13 @@ namespace StructLinq.Benchmark
             var where = new WherePredicate();
             var select = new SelectFunction();
             convertWithDelegate = Enumerable.Range(0, Count).ToStructEnumerable()
-                .Where(x => (x & 1) == 0)
+                .Where(x => (x & 1) == 0, x=>x)
                 .Select(x => x *2, x => x);
             convertWithStruct = Enumerable.Range(0, Count).ToStructEnumerable()
-                .Where(in where)
+                .Where(ref where, x=>x)
                 .Select(ref select, x=>x, x => x);
             structRange = StructEnumerable.Range(0, Count)
-                .Where(in where)
+                .Where(ref where, x=>x)
                 .Select(ref select, x=>x, x => x);
         }
         [Benchmark(Baseline = true)]

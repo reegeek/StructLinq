@@ -10,7 +10,7 @@ namespace StructLinq.Where
         private TFunction predicate;
         private TEnumerator enumerator;
         #endregion
-        public WhereEnumerator(in TFunction predicate, in TEnumerator enumerator) : this()
+        public WhereEnumerator(ref TFunction predicate, ref TEnumerator enumerator)
         {
             this.predicate = predicate;
             this.enumerator = enumerator;
