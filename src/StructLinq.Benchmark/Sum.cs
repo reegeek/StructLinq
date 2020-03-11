@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
-using StructLinq.IEnumerable;
-using StructLinq.Range;
 
 namespace StructLinq.Benchmark
 {
@@ -17,24 +14,18 @@ namespace StructLinq.Benchmark
     //```
     //|     Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
     //|----------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-    //|     ForSum |  3.116 us | 0.0663 us | 0.1161 us |  1.00 |    0.00 |     - |     - |     - |         - |
-    //|     SysSum | 45.478 us | 0.9326 us | 1.3375 us | 14.52 |    0.73 |     - |     - |     - |      40 B |
-    //|  StructSum |  3.044 us | 0.0597 us | 0.0687 us |  0.98 |    0.04 |     - |     - |     - |         - |
-    //| ConvertSum | 44.414 us | 0.6786 us | 0.6348 us | 14.17 |    0.67 |     - |     - |     - |      41 B |
+    //|     ForSum |  3.004 us | 0.0598 us | 0.1000 us |  1.00 |    0.00 |     - |     - |     - |         - |
+    //|     SysSum | 40.905 us | 0.5443 us | 0.5092 us | 13.38 |    0.53 |     - |     - |     - |      40 B |
+    //|  StructSum |  2.969 us | 0.0390 us | 0.0365 us |  0.97 |    0.03 |     - |     - |     - |         - |
+    //| ConvertSum | 40.720 us | 0.5673 us | 0.5306 us | 13.32 |    0.58 |     - |     - |     - |      40 B |
 
 
     [MemoryDiagnoser, DisassemblyDiagnoser(recursiveDepth: 4)]
     public class Sum
     {
-        private readonly IEnumerable<int> sysRange;
-        private readonly IStructEnumerable<int, GenericEnumerator<int>> convertRange;
         private const int Count = 10000;
-        private readonly IStructEnumerable<int, RangeEnumerator> structRange;
         public Sum()
         {
-            sysRange = Enumerable.Range(0, Count);
-            convertRange = Enumerable.Range(0, Count).ToStructEnumerable();
-            structRange = StructEnumerable.Range(0, Count);
         }
 
 
@@ -52,19 +43,19 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int SysSum()
         {
-            return sysRange.Sum();
+            return Enumerable.Range(0, Count).Sum();
         }
 
         [Benchmark]
         public int StructSum()
         {
-            return structRange.Sum();
+            return StructEnumerable.Range(0, Count).Sum(x=>x);
         }
 
         [Benchmark]
         public int ConvertSum()
         {
-            return convertRange.Sum();
+            return Enumerable.Range(0, Count).ToStructEnumerable().Sum(x=>x);
         }
 
     }

@@ -14,10 +14,11 @@ namespace StructLinq.Benchmark
     //```
     //|         Method |     Mean |    Error |   StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
     //|--------------- |---------:|---------:|---------:|------:|--------:|------:|------:|------:|----------:|
-    //|      SysSelect | 66.87 us | 1.280 us | 1.524 us |  1.00 |    0.00 |     - |     - |     - |      88 B |
-    //| DelegateSelect | 30.33 us | 0.606 us | 0.744 us |  0.45 |    0.02 |     - |     - |     - |         - |
-    //|   StructSelect | 19.63 us | 0.213 us | 0.189 us |  0.30 |    0.01 |     - |     - |     - |         - |
-    //|  ConvertSelect | 69.85 us | 1.508 us | 1.411 us |  1.05 |    0.03 |     - |     - |     - |      40 B |
+    //|      SysSelect | 60.40 us | 0.705 us | 0.588 us |  1.00 |    0.00 |     - |     - |     - |      88 B |
+    //| DelegateSelect | 31.94 us | 0.623 us | 0.788 us |  0.53 |    0.01 |     - |     - |     - |         - |
+    //|   StructSelect | 19.14 us | 0.071 us | 0.066 us |  0.32 |    0.00 |     - |     - |     - |         - |
+    //|  ConvertSelect | 44.31 us | 1.078 us | 0.956 us |  0.73 |    0.02 |     - |     - |     - |      40 B |
+
 
     [MemoryDiagnoser, DisassemblyDiagnoser(recursiveDepth: 4)]
     public class Select
@@ -30,13 +31,7 @@ namespace StructLinq.Benchmark
         [Benchmark(Baseline = true)]
         public double SysSelect()
         {
-            double sum = 0;
-            var enumerable = Enumerable.Range(0, Count).Select(x=> x * 2.0);
-            foreach (var i in enumerable)
-            {
-                sum+= i;
-            }
-            return sum;
+            return Enumerable.Range(0, Count).Select(x=> x * 2.0).Sum();
         }
 
         [Benchmark]
@@ -60,9 +55,10 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public double ConvertSelect()
         {
+            var multFunction = new MultFunction();
             return Enumerable.Range(0, Count)
                       .ToStructEnumerable()
-                      .Select(x=> x * 2.0, x => x)
+                      .Select(ref multFunction, x => x, x=> x)
                       .Sum(x=>x);
         }
     }
