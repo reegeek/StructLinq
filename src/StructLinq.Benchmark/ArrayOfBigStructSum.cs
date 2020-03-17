@@ -1,26 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
-using StructLinq.Array;
-using StructLinq.Select;
 
 namespace StructLinq.Benchmark
 {
+
+    //BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
+    //Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+    //.NET Core SDK=3.1.101
+    //[Host]     : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+    //DefaultJob : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+
+
+    //```
+    //|           Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+    //|----------------- |-----------:|---------:|---------:|------:|-------:|------:|------:|----------:|
+    //|           SysSum |   613.5 ns |  2.22 ns |  2.08 ns |  0.09 |      - |     - |     - |         - |
+    //| SysEnumerableSum | 6,813.1 ns | 26.47 ns | 23.46 ns |  1.00 | 0.0076 |     - |     - |      48 B |
+    //|        StructSum | 3,132.6 ns | 14.93 ns | 13.96 ns |  0.46 |      - |     - |     - |         - |
+
     [MemoryDiagnoser]
-    public class ArrayStructSum
+    public class ArrayOfBigStructSum
     {
-        private readonly IEnumerable<int> sysArray;
         private const int Count = 1000;
         private readonly StructContainer[] array;
-        private readonly IStructEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructContainerSelect>> safeStructArray;
-        private readonly IStructEnumerable<int, SelectEnumerator<StructContainer, int, ArrayStructEnumerator<StructContainer>, StructFunction<StructContainer, int>>> convertArray;
-        public ArrayStructSum()
+        public ArrayOfBigStructSum()
         {
             array = Enumerable.Range(0, Count).Select(x => StructContainer.Create(x)).ToArray();
-            var @select = new StructContainerSelect();
-            sysArray = array.Select(x => x.Element);
-            convertArray = array.ToStructEnumerable().Select(x => x.Element, x => x);
-            safeStructArray = array.ToStructEnumerable().Select(ref select, x=>x, x => x);
         }
         [Benchmark]
         public int SysSum()
@@ -33,13 +38,16 @@ namespace StructLinq.Benchmark
             return sum;
         }
         [Benchmark(Baseline = true)]
-        public int SysEnumerableSum() => sysArray.Sum();
+        public int SysEnumerableSum() => array.Select(x=> x.Element).Sum();
 
         [Benchmark]
-        public int ConvertSum() => convertArray.Sum();
-
-        [Benchmark]
-        public int SafeStructSum() => safeStructArray.Sum();
+        public int StructSum()
+        {
+            var @select = new StructContainerSelect();
+            return array.ToStructEnumerable()
+                        .Select(ref @select, x=>x, x=>x)
+                        .Sum(x=>x);
+        }
     }
 
 

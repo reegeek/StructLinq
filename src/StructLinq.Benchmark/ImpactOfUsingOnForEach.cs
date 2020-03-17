@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
-using StructLinq.Array;
+using StructLinq.IEnumerable;
 
 namespace StructLinq.Benchmark
 {
@@ -29,13 +31,13 @@ namespace StructLinq.Benchmark
     {
         private const int Count = 10000;
 
-        private ArrayEnumerable<Class> arrayOfClass;
-        private ArrayEnumerable<Struct> arrayOfStruct;
+        private ArrayEnumerableWithDispose<Class> arrayOfClass;
+        private ArrayEnumerableWithDispose<Struct> arrayOfStruct;
 
         public ImpactOfUsingOnForEach()
         {
-            arrayOfClass = Enumerable.Range(0, Count).Select(x => new Class(x)).ToArray().ToStructEnumerable();
-            arrayOfStruct = Enumerable.Range(0, Count).Select(x => new Struct(x)).ToArray().ToStructEnumerable();
+            arrayOfClass = new ArrayEnumerableWithDispose<Class>(Enumerable.Range(0, Count).Select(x => new Class(x)).ToArray());
+            arrayOfStruct = new ArrayEnumerableWithDispose<Struct>(Enumerable.Range(0, Count).Select(x => new Struct(x)).ToArray());
         }
 
         [Benchmark(Baseline = true)]
@@ -79,10 +81,10 @@ namespace StructLinq.Benchmark
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEachWithoutUsing<T, TEnumerator, TEnumerable>(ref TEnumerable enumerable,
                                                                             Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, IStructEnumerator<T>, IDisposable
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             while (enumerator.MoveNext())
             {
             }
@@ -92,22 +94,24 @@ namespace StructLinq.Benchmark
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEachWithUsing<T, TEnumerator, TEnumerable>(ref TEnumerable enumerable,
                                                                          Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, IStructEnumerator<T>, IDisposable
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            using var enumerator = enumerable.GetEnumerator();
-            while (enumerator.MoveNext())
+            using (var enumerator = enumerable.GetStructEnumerator())
             {
+                while (enumerator.MoveNext())
+                {
+                }
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ForEachWithTryFinally<T, TEnumerator, TEnumerable>(ref TEnumerable enumerable,
                                                                               Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, IStructEnumerator<T>, IDisposable
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.GetStructEnumerator();
             try
             {
                 while (enumerator.MoveNext())
@@ -117,7 +121,6 @@ namespace StructLinq.Benchmark
             finally
             {
                 enumerator.Dispose();
-
             }
         }
 
@@ -141,4 +144,63 @@ namespace StructLinq.Benchmark
         }
     }
 
+    public readonly struct ArrayEnumerableWithDispose<T> : IStructEnumerable<T, ArrayStructEnumeratorWithDispose<T>>
+    {
+        #region private fields
+        private readonly T[] array;
+        #endregion
+        public ArrayEnumerableWithDispose(T[] array)
+        {
+            this.array = array;
+        }
+
+        public ArrayStructEnumeratorWithDispose<T> GetStructEnumerator()
+        {
+            return new ArrayStructEnumeratorWithDispose<T>(array);
+        }
+
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new StructEnumerator<T>(GetStructEnumerator());
+        }
+    }
+
+    public struct ArrayStructEnumeratorWithDispose<T> : IStructEnumerator<T>, IDisposable
+    {
+        #region private fields
+        private readonly T[] array;
+        private readonly int endIndex;
+        private int index;
+        #endregion
+        public ArrayStructEnumeratorWithDispose(T[] array)
+        {
+            this.array = array;
+            endIndex = array.Length - 1;
+            index = -1;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool MoveNext()
+        {
+            return ++index <= endIndex;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset()
+        {
+            index = -1;
+        }
+        public readonly T Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => array[index];
+        }
+
+        public void Dispose()
+        {
+        }
+    }
 }
