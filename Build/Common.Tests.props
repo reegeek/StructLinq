@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup Label="Framework">
     <DefaultTargetFrameworks>netcoreapp3.1;net48</DefaultTargetFrameworks>
+    <IsPackable>False</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
