@@ -1,5 +1,8 @@
 # StructLinq
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/reegeek/StructLinq/blob/master/LICENSE)
+[![Nuget](https://img.shields.io/nuget/v/StructLinq)](https://www.nuget.org/packages/StructLinq/) ![Nuget](https://img.shields.io/nuget/dt/structLinq)  
+[![Build Status](https://dev.azure.com/reegeek/StrucLinq/_apis/build/status/reegeek.StructLinq?branchName=master)](https://dev.azure.com/reegeek/StrucLinq/_build/latest?definitionId=2&branchName=master)
+![continuous](https://github.com/reegeek/StructLinq/workflows/continuous/badge.svg)  
+[![GitHub stars](https://img.shields.io/github/stars/reegeek/StructLinq)](https://github.com/reegeek/StructLinq/stargazers) [![GitHub forks](https://img.shields.io/github/forks/reegeek/StructLinq)](https://github.com/reegeek/StructLinq/network) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/reegeek/StructLinq/blob/master/LICENSE)
 
 Implementation in C# of LINQ concept with struct to reduce drastically memory allocation and improve performance.
 
@@ -16,7 +19,7 @@ Implementation in C# of LINQ concept with struct to reduce drastically memory al
 
 ## Installation
 This library is distributed via [NugGet](https://www.nuget.org/).
-To install [`StructLinq`]() :
+To install [`StructLinq`](https://www.nuget.org/packages/StructLinq/) :
   ```
   PM> Install-Package StructLinq
   ```
