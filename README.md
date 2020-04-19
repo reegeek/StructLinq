@@ -42,7 +42,7 @@ You can also improve performance by using struct for Where predicate and select 
 
 ## Performances
 
-Benchmark are in [here](src\StructLinq.Benchmark).
+Benchmark are in [here](src/StructLinq.Benchmark).
 For example on following linq sequence:
  ```csharp
     array
@@ -50,7 +50,7 @@ For example on following linq sequence:
       .Select(x => x * 2)
       .Sum();
  ```
- [Benchmark](src\StructLinq.Benchmark\ArrayWhereSelectSum.cs) results are:
+ [Benchmark](src/StructLinq.Benchmark/ArrayWhereSelectSum.cs) results are:
 
  ``` ini
 
