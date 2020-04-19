@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using StructLinq.IEnumerable;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Select
 {
@@ -34,17 +31,6 @@ namespace StructLinq.Select
         public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
             return GetStructEnumerator();
-        }
-
-
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new StructEnumerator<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(GetStructEnumerator());
-        }
-
-        IEnumerator<TOut> IEnumerable<TOut>.GetEnumerator()
-        {
-            return new StructEnumerator<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(GetStructEnumerator());
         }
     }
 }

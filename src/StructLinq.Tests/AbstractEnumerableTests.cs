@@ -22,7 +22,7 @@ namespace StructLinq.Tests
             var enumerable = Build(size);
 
             //Act
-            int enumSize = enumerable.Count();
+            int enumSize = enumerable.ToEnumerable().Count();
 
             //Assert
             size.Should().Be(enumSize);
@@ -51,7 +51,7 @@ namespace StructLinq.Tests
             //Arrange
             var enumerable = Build(5);
             //Act
-            using (var enumerator = enumerable.GetEnumerator())
+            using (var enumerator = enumerable.ToEnumerable().GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
@@ -86,8 +86,8 @@ namespace StructLinq.Tests
             //Arrange
             var enumerable = Build(5);
             //Act
-            var array1 = enumerable.ToArray();
-            var array2 = enumerable.ToArray();
+            var array1 = enumerable.ToEnumerable().ToArray();
+            var array2 = enumerable.ToEnumerable().ToArray();
             //Assert
             array1.Should().Equal(array2);
         }
@@ -101,7 +101,7 @@ namespace StructLinq.Tests
             var enumerable = Build(5);
             
             //Act
-            using (var enumerator = enumerable.GetEnumerator())
+            using (var enumerator = enumerable.ToEnumerable().GetEnumerator())
             {
                 var list1 = FillList(enumerator);
                 enumerator.Reset();

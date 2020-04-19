@@ -13,7 +13,7 @@ namespace StructLinq.Tests
             var mult = -2.0;
             var structMin = StructEnumerable
                 .Range(0, count)
-                .Select(x => x * mult)
+                .Select(x => x * mult, x=>x)
                 .Min();
             Assert.Equal((count - 1) * mult, structMin);
         }
@@ -25,7 +25,7 @@ namespace StructLinq.Tests
             var mult = -2.0;
             var structMin = StructEnumerable
                             .Range(0, count)
-                            .Select(x => x * mult)
+                            .Select(x => x * mult, x => x)
                             .Min(x=>x);
             Assert.Equal((count - 1) * mult, structMin);
         }

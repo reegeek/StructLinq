@@ -19,7 +19,7 @@ namespace StructLinq.Benchmark
             array = Enumerable.Range(0, Count).ToArray();
             sysEnumerable = Enumerable.Range(0, Count).ToArray();
             arrayEnumerable = Enumerable.Range(0, Count).ToArray().ToStructEnumerable();
-            arrayEnumerableAsIEnumerable = Enumerable.Range(0, Count).ToArray().ToStructEnumerable();
+            arrayEnumerableAsIEnumerable = Enumerable.Range(0, Count).ToArray().ToStructEnumerable().ToEnumerable();
         }
 
         [Benchmark(Baseline = true)]

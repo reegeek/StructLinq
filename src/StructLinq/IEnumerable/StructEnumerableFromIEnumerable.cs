@@ -23,16 +23,5 @@ namespace StructLinq.IEnumerable
         {
             return GetStructEnumerator();
         }
-
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new StructEnumerator<T, GenericEnumerator<T>>(GetStructEnumerator());
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return new StructEnumerator<T, GenericEnumerator<T>>(GetStructEnumerator());
-        }
-
     }
 }

@@ -26,7 +26,8 @@ namespace StructLinq.Tests
                 .ToArray();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Where(selector)
+                .Where(selector, x=>x)
+                .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
         }
@@ -43,6 +44,7 @@ namespace StructLinq.Tests
             var structEnum = StructEnumerable
                 .Range(-50, 100)
                 .Where(ref whereFunc, x=>x)
+                .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
 

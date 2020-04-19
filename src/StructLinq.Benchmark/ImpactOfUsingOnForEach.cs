@@ -159,11 +159,6 @@ namespace StructLinq.Benchmark
             return new ArrayStructEnumeratorWithDispose<T>(array);
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             return new StructEnumerator<T, ArrayStructEnumeratorWithDispose<T>>(GetStructEnumerator());

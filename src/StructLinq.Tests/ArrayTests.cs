@@ -10,7 +10,7 @@ namespace StructLinq.Tests
         public void ShouldSameAsSystem()
         {
             var sysArray = Enumerable.Range(0, 50).ToArray();
-            var structArray = Enumerable.Range(0, 50).ToArray().ToStructEnumerable().ToArray();
+            var structArray = Enumerable.Range(0, 50).ToArray().ToStructEnumerable().ToEnumerable().ToArray();
             Assert.Equal(sysArray, structArray);
         }
 

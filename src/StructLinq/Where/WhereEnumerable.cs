@@ -32,16 +32,5 @@ namespace StructLinq.Where
         {
             return GetStructEnumerator();
         }
-        
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new StructEnumerator<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>(GetStructEnumerator());
-        }
-
-        IEnumerator<TIn> IEnumerable<TIn>.GetEnumerator()
-        {
-            return new StructEnumerator<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>(GetStructEnumerator());
-        }
-
     }
 }

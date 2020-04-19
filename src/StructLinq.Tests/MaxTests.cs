@@ -13,7 +13,7 @@ namespace StructLinq.Tests
             var mult = 2.0;
             var structMax = StructEnumerable
                 .Range(0, count)
-                .Select(x=> x * mult)
+                .Select(x=> x * mult, x=>x)
                 .Max();
             Assert.Equal((count-1) * mult, structMax);
         }
@@ -25,7 +25,7 @@ namespace StructLinq.Tests
             var mult = 2.0;
             var structMax = StructEnumerable
                             .Range(0, count)
-                            .Select(x=> x * mult)
+                            .Select(x=> x * mult, x=>x)
                             .Max(x=>x);
             Assert.Equal((count-1) * mult, structMax);
         }

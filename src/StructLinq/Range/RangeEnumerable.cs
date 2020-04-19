@@ -30,16 +30,5 @@ namespace StructLinq.Range
         {
             return GetStructEnumerator();
         }
-        
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return new StructEnumerator<int, RangeEnumerator>(GetStructEnumerator());
-        }
-
-        IEnumerator<int> IEnumerable<int>.GetEnumerator()
-        {
-            return new StructEnumerator<int, RangeEnumerator>(GetStructEnumerator());
-        }
-
     }
 }
