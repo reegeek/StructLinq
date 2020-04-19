@@ -2,13 +2,14 @@
 using System.Linq;
 using Xunit;
 using FluentAssertions;
+using StructLinq.Range;
 
 
 namespace StructLinq.Tests
 {
-    public class RangeTests : AbstractEnumerableTests<int>
+    public class RangeTests : AbstractEnumerableTests<int, RangeEnumerable, RangeEnumerator>
     {
-        protected override IEnumerable<int> Build(int size)
+        protected override RangeEnumerable Build(int size)
         {
             return StructEnumerable.Range(-1, size);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using StructLinq.Array;
 
 namespace StructLinq.IEnumerable
 {
@@ -18,14 +19,19 @@ namespace StructLinq.IEnumerable
             return new GenericEnumerator<T>(inner.GetEnumerator());
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        public GenericEnumerator<T> GetEnumerator()
         {
-            return GetEnumerator();
+            return GetStructEnumerator();
         }
 
-        public IEnumerator<T> GetEnumerator()
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new StructEnumerator<T>(GetStructEnumerator());
+            return new StructEnumerator<T, GenericEnumerator<T>>(GetStructEnumerator());
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return new StructEnumerator<T, GenericEnumerator<T>>(GetStructEnumerator());
         }
 
     }

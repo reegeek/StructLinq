@@ -5,10 +5,12 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public abstract class AbstractEnumerableTests<T>
+    public abstract class AbstractEnumerableTests<T, TStructEnumerable, TEnumerator> 
+        where TStructEnumerable : IStructEnumerable<T, TEnumerator>
+        where TEnumerator : struct, IStructEnumerator<T>
     {
         protected bool shouldReturnSameSequenceWhenResetIsCall = true; 
-        protected abstract IEnumerable<T> Build(int size);
+        protected abstract TStructEnumerable Build(int size);
 
         [Theory]
         [InlineData(0)]
@@ -116,6 +118,5 @@ namespace StructLinq.Tests
                 return list;
             }
         }
-
     }
 }

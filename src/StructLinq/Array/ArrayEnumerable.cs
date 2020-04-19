@@ -19,14 +19,22 @@ namespace StructLinq.Array
             return new ArrayStructEnumerator<T>(array);
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        /// <summary>
+        ///An enumerator, duck-typing-compatible with foreach.
+        /// </summary>
+        public ArrayStructEnumerator<T> GetEnumerator()
         {
-            return GetEnumerator();
+            return GetStructEnumerator();
         }
 
-        public IEnumerator<T> GetEnumerator()
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new StructEnumerator<T>(GetStructEnumerator());
+            return new StructEnumerator<T, ArrayStructEnumerator<T>>(GetStructEnumerator());
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return new StructEnumerator<T, ArrayStructEnumerator<T>>(GetStructEnumerator());
         }
     }
 }

@@ -166,7 +166,7 @@ namespace StructLinq.Benchmark
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new StructEnumerator<T>(GetStructEnumerator());
+            return new StructEnumerator<T, ArrayStructEnumeratorWithDispose<T>>(GetStructEnumerator());
         }
     }
 

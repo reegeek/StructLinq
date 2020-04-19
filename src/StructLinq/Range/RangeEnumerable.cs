@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.IEnumerable;
 
 namespace StructLinq.Range
@@ -16,19 +17,28 @@ namespace StructLinq.Range
             this.count = count;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RangeEnumerator GetStructEnumerator()
         {
             return new RangeEnumerator(start, count);
         }
 
+        /// <summary>
+        ///An enumerator, duck-typing-compatible with foreach.
+        /// </summary>
+        public RangeEnumerator GetEnumerator()
+        {
+            return GetStructEnumerator();
+        }
+        
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return new StructEnumerator<int, RangeEnumerator>(GetStructEnumerator());
         }
 
-        public IEnumerator<int> GetEnumerator()
+        IEnumerator<int> IEnumerable<int>.GetEnumerator()
         {
-            return new StructEnumerator<int>(GetStructEnumerator());
+            return new StructEnumerator<int, RangeEnumerator>(GetStructEnumerator());
         }
 
     }

@@ -28,14 +28,23 @@ namespace StructLinq.Select
             return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        /// <summary>
+        ///An enumerator, duck-typing-compatible with foreach.
+        /// </summary>
+        public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
-            return GetEnumerator();
+            return GetStructEnumerator();
         }
 
-        public IEnumerator<TOut> GetEnumerator()
+
+        IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new StructEnumerator<TOut>(GetStructEnumerator());
+            return new StructEnumerator<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(GetStructEnumerator());
+        }
+
+        IEnumerator<TOut> IEnumerable<TOut>.GetEnumerator()
+        {
+            return new StructEnumerator<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(GetStructEnumerator());
         }
     }
 }

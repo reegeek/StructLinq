@@ -25,15 +25,22 @@ namespace StructLinq.Where
             return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
         }
 
-
+        /// <summary>
+        ///An enumerator, duck-typing-compatible with foreach.
+        /// </summary>
+        public WhereEnumerator<TIn, TEnumerator, TFunction> GetEnumerator()
+        {
+            return GetStructEnumerator();
+        }
+        
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return new StructEnumerator<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>(GetStructEnumerator());
         }
 
-        public IEnumerator<TIn> GetEnumerator()
+        IEnumerator<TIn> IEnumerable<TIn>.GetEnumerator()
         {
-            return new StructEnumerator<TIn>(GetStructEnumerator());
+            return new StructEnumerator<TIn, WhereEnumerator<TIn, TEnumerator, TFunction>>(GetStructEnumerator());
         }
 
     }

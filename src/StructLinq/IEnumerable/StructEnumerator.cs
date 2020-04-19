@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 namespace StructLinq.IEnumerable
 {
-    public struct StructEnumerator<T> : IEnumerator<T>
+    public struct StructEnumerator<T, TStructEnumerator> : IEnumerator<T> where 
+        TStructEnumerator : IStructEnumerator<T>
     {
         private readonly IStructEnumerator<T> enumerator;
 
-        public StructEnumerator(IStructEnumerator<T> enumerator)
+        public StructEnumerator(TStructEnumerator enumerator)
         {
             this.enumerator = enumerator;
         }

@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using StructLinq.Range;
+using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class WhereTests : AbstractEnumerableTests<int>
+    public class WhereTests : AbstractEnumerableTests<int,
+        WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>,
+        WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>
     {
-        protected override IEnumerable<int> Build(int size)
+        protected override WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>> Build(int size)
         {
-            return StructEnumerable.Range(-1, size).Where(x => x >= -1, x=>x);
+            var whereEnumerable = StructEnumerable.Range(-1, size).Where(x => x >= -1, x=>x);
+            return whereEnumerable;
         }
 
         [Fact]

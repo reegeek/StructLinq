@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using StructLinq.Array;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class ArrayTests : AbstractEnumerableTests<int>
+    public class ArrayTests : AbstractEnumerableTests<int, ArrayEnumerable<int>, ArrayStructEnumerator<int>>
     {
         [Fact]
         public void ShouldSameAsSystem()
@@ -14,9 +14,22 @@ namespace StructLinq.Tests
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override IEnumerable<int> Build(int size)
+        protected override ArrayEnumerable<int> Build(int size)
         {
             return Enumerable.Range(-1, size).ToArray().ToStructEnumerable();
         }
+
+        [Fact]
+        public void ShouldUseDuckTypingCompatibilityForForEach()
+        {
+            var structArray = Build(5);
+            var count = 0;
+            foreach (var i in structArray)
+            {
+                count += 1;
+            }
+            Assert.Equal(5, count);
+        }
+
     }
 }
