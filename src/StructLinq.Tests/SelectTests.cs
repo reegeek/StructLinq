@@ -41,7 +41,7 @@ namespace StructLinq.Tests
 
         protected override IEnumerable<int> Build(int size)
         {
-            return StructEnumerable.Range(-1, size).Select(x => x * 2);
+            return StructEnumerable.Range(-1, size).Select(x => x * 2, x=>x);
         }
 
         struct MultFunction : IFunction<int, double>
