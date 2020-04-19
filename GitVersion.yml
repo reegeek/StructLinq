@@ -1,0 +1,15 @@
+mode: ContinuousDelivery
+
+assembly-versioning-scheme: MajorMinor
+assembly-file-versioning-scheme: MajorMinorPatch
+
+branches:
+  master:
+    tag: ''
+  develop:
+    tag: 'alpha'
+  release:
+    tag: 'beta'
+
+ignore:
+  sha: []

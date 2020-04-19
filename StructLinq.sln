@@ -5,18 +5,28 @@ VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq", "src\StructLinq\StructLinq.csproj", "{458ED1F2-37EC-4569-9958-728CEFA43D8C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{2987C571-432E-4640-8D24-A3F8C9341276}"
-	ProjectSection(SolutionItems) = preProject
-		Build\Common.Benchmark.props = Build\Common.Benchmark.props
-		Build\Common.props = Build\Common.props
-		Build\Common.Tests.props = Build\Common.Tests.props
-		Build\DeleteGenerateBindingRedirects.target = Build\DeleteGenerateBindingRedirects.target
-		src\Directory.Build.props = src\Directory.Build.props
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Build", "_Build", "{2987C571-432E-4640-8D24-A3F8C9341276}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.Tests", "src\StructLinq.Tests\StructLinq.Tests.csproj", "{355C025E-3001-40F0-A456-05C13AF94466}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.Benchmark", "src\StructLinq.Benchmark\StructLinq.Benchmark.csproj", "{363DB35F-7108-4DE4-AE6C-62950E53D84E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Props", "Props", "{9272A85F-FC64-4560-A88E-5362A37DA58E}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Common.Benchmark.props = Build\Common.Benchmark.props
+		Build\Common.props = Build\Common.props
+		Build\Common.Tests.props = Build\Common.Tests.props
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{C7B0C282-3057-4C71-9E89-6FF7B5609AA0}"
+	ProjectSection(SolutionItems) = preProject
+		Build\DeleteGenerateBindingRedirects.target = Build\DeleteGenerateBindingRedirects.target
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuke", "Nuke", "{8A638E83-2D0E-49BB-AE31-7207F54336E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NukeBuild", "Build\Nuke\NukeBuild.csproj", "{AC4A0A45-540D-4EE4-B01F-55702BA310E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,9 +46,17 @@ Global
 		{363DB35F-7108-4DE4-AE6C-62950E53D84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{363DB35F-7108-4DE4-AE6C-62950E53D84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{363DB35F-7108-4DE4-AE6C-62950E53D84E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC4A0A45-540D-4EE4-B01F-55702BA310E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC4A0A45-540D-4EE4-B01F-55702BA310E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9272A85F-FC64-4560-A88E-5362A37DA58E} = {2987C571-432E-4640-8D24-A3F8C9341276}
+		{C7B0C282-3057-4C71-9E89-6FF7B5609AA0} = {2987C571-432E-4640-8D24-A3F8C9341276}
+		{8A638E83-2D0E-49BB-AE31-7207F54336E7} = {2987C571-432E-4640-8D24-A3F8C9341276}
+		{AC4A0A45-540D-4EE4-B01F-55702BA310E2} = {8A638E83-2D0E-49BB-AE31-7207F54336E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {784B203D-5E08-4ABF-A436-EE9F11F80E40}
