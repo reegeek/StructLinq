@@ -14,15 +14,14 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $BuildProjectFile = "$PSScriptRoot\Build\Nuke\NukeBuild.csproj"
-$TempDirectory = "$PSScriptRoot\.tmp"
+$TempDirectory = "$PSScriptRoot\\.tmp"
 
-$DotNetGlobalFile = "$PSScriptRoot\global.json"
+$DotNetGlobalFile = "$PSScriptRoot\\global.json"
 $DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
 $DotNetChannel = "Current"
 
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
-$env:NUGET_XMLDOC_MODE = "skip"
 
 ###########################################################################
 # EXECUTION
@@ -31,14 +30,6 @@ $env:NUGET_XMLDOC_MODE = "skip"
 function ExecSafe([scriptblock] $cmd) {
     & $cmd
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
-}
-
-# Print environment variables
-Get-Item -Path Env:*
-
-# Check if any dotnet is installed
-if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
-    ExecSafe { & dotnet --info }
 }
 
 # If global.json exists, load expected version
@@ -61,6 +52,7 @@ else {
     # Download install script
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
 
     # Install by channel or version

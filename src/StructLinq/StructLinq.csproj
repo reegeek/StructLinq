@@ -4,6 +4,13 @@
     <TargetFrameworks>netstandard1.0</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup Label="Nuget">
+    <Description>Implementation in C# of LINQ concept with struct </Description>
+    <PackageTags>C#;linq;struct;allocation free;fast</PackageTags>
+    <Company />
+  </PropertyGroup>
+
+
   <ItemGroup>
     <None Update="Max\MaxStructEnumerable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

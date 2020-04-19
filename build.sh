@@ -9,17 +9,15 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 # CONFIGURATION
 ###########################################################################
 
-BUILD_PROJECT_FILE="$SCRIPT_DIR/Build/nuke/NukeBuild.csproj"
-TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
+BUILD_PROJECT_FILE="$SCRIPT_DIR/Build/Nuke/NukeBuild.csproj"
+TEMP_DIRECTORY="$SCRIPT_DIR//.tmp"
 
-DOTNET_GLOBAL_FILE="$SCRIPT_DIR/global.json"
+DOTNET_GLOBAL_FILE="$SCRIPT_DIR//global.json"
 DOTNET_INSTALL_URL="https://dot.net/v1/dotnet-install.sh"
 DOTNET_CHANNEL="Current"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-export NUGET_XMLDOC_MODE="skip"
-# Workaround according to https://github.com/dotnet/sdk/issues/335#issuecomment-371444503
 
 ###########################################################################
 # EXECUTION
@@ -28,14 +26,6 @@ export NUGET_XMLDOC_MODE="skip"
 function FirstJsonValue {
     perl -nle 'print $1 if m{"'$1'": "([^"]+)",?}' <<< ${@:2}
 }
-
-# Print environment variables
-set
-
-# Check if any dotnet is installed
-if [[ -x "$(command -v dotnet)" ]]; then
-    dotnet --info
-fi
 
 # If global.json exists, load expected version
 if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
