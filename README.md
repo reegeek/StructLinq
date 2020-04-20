@@ -77,6 +77,8 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 
 ## Features
 
+Duck typing with ForEach is available with zero allocation.
+
 ### BCL
 
 Following class have a `StructLinq` extension method:
