@@ -91,6 +91,9 @@ Following transformations are available:
   - `Where`
 ### Aggregators
 Following aggregators are available:
+  - `Count`
+  - `LongCount`
+  - `UIntCount`
   - `Aggregate`
   - `Sum`
   - `Min`
