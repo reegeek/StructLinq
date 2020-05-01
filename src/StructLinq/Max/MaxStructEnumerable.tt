@@ -33,7 +33,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static <#= t.Name #> Max<#= t.Name #><TEnumerator>(TEnumerator enumerator)
+        private static <#= t.Name #> Max<#= t.Name #><TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
 			if (!enumerator.MoveNext())
@@ -52,8 +52,8 @@ namespace StructLinq
         public static <#= t.Name #> Max<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetStructEnumerator();
-            return Max<#= t.Name #>(enumerator);
+            var enumerator = enumerable.GetEnumerator();
+            return Max<#= t.Name #>(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -61,8 +61,8 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetStructEnumerator();
-            return Max<#= t.Name #>(enumerator);
+            var enumerator = enumerable.GetEnumerator();
+            return Max<#= t.Name #>(ref enumerator);
         }
     }
 
