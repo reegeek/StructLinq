@@ -5,11 +5,13 @@
 [![continuous](https://github.com/reegeek/StructLinq/workflows/continuous/badge.svg)](https://github.com/reegeek/StructLinq/actions?query=workflow%3Acontinuous)  
 [![GitHub stars](https://img.shields.io/github/stars/reegeek/StructLinq)](https://github.com/reegeek/StructLinq/stargazers) [![GitHub forks](https://img.shields.io/github/forks/reegeek/StructLinq)](https://github.com/reegeek/StructLinq/network) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/reegeek/StructLinq/blob/master/LICENSE)
 
-Implementation in C# of LINQ concept with struct to reduce drastically memory allocation and improve performance.
+Implementation in C# of LINQ concept with struct to reduce drastically memory allocation and improve performance. 
+Introduce `IRefStructEnumerable` to improve performance.
 
 ---
 - [Installation](#Installation)
 - [Usage](#Usage)
+- [IRefStructEnumerable](#IRefStructEnumerable)
 - [Performances](#Performances)
 - [Features](#Features)
   - [BCL bindings](#BCL)
@@ -44,6 +46,26 @@ int result = array
 `x=>x` is used to avoid boxing and to help generic type parameters inference.
 You can also improve performance by using struct for Where predicate and select function.
 
+## IRefStructEnumerable
+
+```csharp
+    public interface IRefStructEnumerable<out T, out TEnumerator>
+        where TEnumerator : struct, IRefStructEnumerator<T>
+    {
+        TEnumerator GetEnumerator();
+    }
+
+    public interface IRefStructEnumerator<T>
+    {
+        bool MoveNext();
+
+        void Reset();
+
+        ref T Current { get; }
+    }
+```
+ `ref Current` allows to avoid copy. I should be very useful when `T` is a fat struct.
+
 ## Performances
 
 Benchmark are in [here](src/StructLinq.Benchmark).
@@ -77,7 +99,7 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 
 ## Features
 
-Duck typing with ForEach is available with zero allocation.
+Duck typing with `foreach` is available with zero allocation for `IStructEnumerable` and also with `Foreach` and `ref` for `IRefStructEnumerable`.
 
 ### BCL
 
@@ -86,7 +108,7 @@ Following class have a `StructLinq` extension method:
   - `T[]`
 
 ### Transformers
-Following transformations are available:
+Following transformations are available for :
   - `Select`
   - `Where`
 ### Aggregators
