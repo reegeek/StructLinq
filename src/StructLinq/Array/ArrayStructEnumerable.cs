@@ -9,5 +9,9 @@ namespace StructLinq
         {
             return new ArrayEnumerable<T>(array);
         }
+        public static ArrayRefEnumerable<T> ToRefStructEnumerable<T>(this T[] array)
+        {
+            return new ArrayRefEnumerable<T>(array);
+        }
     }
 }

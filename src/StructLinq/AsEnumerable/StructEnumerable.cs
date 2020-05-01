@@ -10,5 +10,11 @@ namespace StructLinq
         {
             return new EnumerableFromStructEnumerable<T, TEnumerator>(structEnumerable);
         }
+        public static EnumerableFromRefStructEnumerable<T, TEnumerator> ToEnumerable<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> structEnumerable)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return new EnumerableFromRefStructEnumerable<T, TEnumerator>(structEnumerable);
+        }
+
     }
 }
