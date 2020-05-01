@@ -28,6 +28,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SumStructEnumerable.cs</LastGenOutput>
     </None>
+    <None Update="Sum\SumRefStructEnumerable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SumRefStructEnumerable.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +67,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MinStructEnumerable.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Sum\SumRefStructEnumerable.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SumRefStructEnumerable.tt</DependentUpon>
     </Compile>
     <Compile Update="Sum\SumStructEnumerable.cs">
       <DesignTime>True</DesignTime>

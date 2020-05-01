@@ -1,0 +1,71 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+<#
+    var types = new[]
+    {
+        typeof(Int16),
+        typeof(Int32),
+        typeof(Int64),
+        typeof(UInt16),
+        typeof(UInt32),
+        typeof(UInt64),
+        typeof(Single),
+        typeof(Double),
+        typeof(byte), 
+        typeof(sbyte),
+    };
+#>
+
+// Generated code
+
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+ 
+
+// ReSharper disable once CheckNamespace
+namespace StructLinq
+{
+<# foreach(var t in types) {  #>
+
+    public static partial class StructEnumerable
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static <#= t.Name #> RefSum<#= t.Name #><TEnumerator>(ref TEnumerator enumerator)
+            where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
+        {
+            <#= t.Name #> result = 0;
+            while (enumerator.MoveNext())
+            {
+                ref var current = ref enumerator.Current;
+                result += current;
+            }
+            return result;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<TEnumerator>(this IRefStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
+            where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #>(ref enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
+            where TEnumerable : struct, IRefStructEnumerable<<#= t.Name #>, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #>(ref enumerator);
+        }
+
+    }
+
+<# } #>
+}
