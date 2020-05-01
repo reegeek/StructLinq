@@ -14,7 +14,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int16 SumInt16<TEnumerator>(TEnumerator enumerator)
+        private static Int16 SumInt16<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             Int16 result = 0;
@@ -30,7 +30,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumInt16(enumerator);
+            return SumInt16(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -39,7 +39,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int16, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumInt16(enumerator);
+            return SumInt16(ref enumerator);
         }
 
     }
@@ -48,7 +48,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int32 SumInt32<TEnumerator>(TEnumerator enumerator)
+        private static Int32 SumInt32<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             Int32 result = 0;
@@ -64,7 +64,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumInt32(enumerator);
+            return SumInt32(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -73,7 +73,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int32, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumInt32(enumerator);
+            return SumInt32(ref enumerator);
         }
 
     }
@@ -82,7 +82,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int64 SumInt64<TEnumerator>(TEnumerator enumerator)
+        private static Int64 SumInt64<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             Int64 result = 0;
@@ -98,7 +98,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumInt64(enumerator);
+            return SumInt64(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -107,7 +107,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int64, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumInt64(enumerator);
+            return SumInt64(ref enumerator);
         }
 
     }
@@ -116,7 +116,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt16 SumUInt16<TEnumerator>(TEnumerator enumerator)
+        private static UInt16 SumUInt16<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             UInt16 result = 0;
@@ -132,7 +132,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumUInt16(enumerator);
+            return SumUInt16(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -141,7 +141,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt16, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumUInt16(enumerator);
+            return SumUInt16(ref enumerator);
         }
 
     }
@@ -150,7 +150,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt32 SumUInt32<TEnumerator>(TEnumerator enumerator)
+        private static UInt32 SumUInt32<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             UInt32 result = 0;
@@ -166,7 +166,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumUInt32(enumerator);
+            return SumUInt32(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -175,7 +175,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt32, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumUInt32(enumerator);
+            return SumUInt32(ref enumerator);
         }
 
     }
@@ -184,7 +184,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt64 SumUInt64<TEnumerator>(TEnumerator enumerator)
+        private static UInt64 SumUInt64<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             UInt64 result = 0;
@@ -200,7 +200,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumUInt64(enumerator);
+            return SumUInt64(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -209,7 +209,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt64, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumUInt64(enumerator);
+            return SumUInt64(ref enumerator);
         }
 
     }
@@ -218,7 +218,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Single SumSingle<TEnumerator>(TEnumerator enumerator)
+        private static Single SumSingle<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             Single result = 0;
@@ -234,7 +234,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumSingle(enumerator);
+            return SumSingle(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -243,7 +243,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Single, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumSingle(enumerator);
+            return SumSingle(ref enumerator);
         }
 
     }
@@ -252,7 +252,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Double SumDouble<TEnumerator>(TEnumerator enumerator)
+        private static Double SumDouble<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             Double result = 0;
@@ -268,7 +268,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumDouble(enumerator);
+            return SumDouble(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -277,7 +277,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Double, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumDouble(enumerator);
+            return SumDouble(ref enumerator);
         }
 
     }
@@ -286,7 +286,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Byte SumByte<TEnumerator>(TEnumerator enumerator)
+        private static Byte SumByte<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             Byte result = 0;
@@ -302,7 +302,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumByte(enumerator);
+            return SumByte(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -311,7 +311,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Byte, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumByte(enumerator);
+            return SumByte(ref enumerator);
         }
 
     }
@@ -320,7 +320,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SByte SumSByte<TEnumerator>(TEnumerator enumerator)
+        private static SByte SumSByte<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             SByte result = 0;
@@ -336,7 +336,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumSByte(enumerator);
+            return SumSByte(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -345,7 +345,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<SByte, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return SumSByte(enumerator);
+            return SumSByte(ref enumerator);
         }
 
     }

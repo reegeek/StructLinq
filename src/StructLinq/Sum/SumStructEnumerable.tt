@@ -36,7 +36,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static <#= t.Name #> Sum<#= t.Name #><TEnumerator>(TEnumerator enumerator)
+        private static <#= t.Name #> Sum<#= t.Name #><TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
             <#= t.Name #> result = 0;
@@ -51,8 +51,8 @@ namespace StructLinq
         public static <#= t.Name #> Sum<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetStructEnumerator();
-            return Sum<#= t.Name #>(enumerator);
+            var enumerator = enumerable.GetEnumerator();
+            return Sum<#= t.Name #>(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -60,8 +60,8 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
             where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
-            return Sum<#= t.Name #>(enumerator);
+            var enumerator = enumerable.GetEnumerator();
+            return Sum<#= t.Name #>(ref enumerator);
         }
 
     }
