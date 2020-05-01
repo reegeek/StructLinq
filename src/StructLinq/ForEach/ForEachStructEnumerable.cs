@@ -20,7 +20,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TAction : struct, IAction<T>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             InternalForEach<T, TEnumerator, TAction>(ref action, enumerator);
         }
 
@@ -29,7 +29,7 @@ namespace StructLinq
             where TAction : struct, IAction<T>
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 action.Do(enumerator.Current);
@@ -48,7 +48,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 action(enumerator.Current);

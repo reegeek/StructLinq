@@ -30,7 +30,7 @@ namespace StructLinq
         public static Int16 Min<TEnumerator>(this IStructEnumerable<Int16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinInt16(enumerator);
         }
 
@@ -39,7 +39,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int16, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinInt16(enumerator);
         }
 
@@ -68,7 +68,7 @@ namespace StructLinq
         public static Int32 Min<TEnumerator>(this IStructEnumerable<Int32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinInt32(enumerator);
         }
 
@@ -77,7 +77,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int32, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinInt32(enumerator);
         }
 
@@ -106,7 +106,7 @@ namespace StructLinq
         public static Int64 Min<TEnumerator>(this IStructEnumerable<Int64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinInt64(enumerator);
         }
 
@@ -115,7 +115,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int64, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinInt64(enumerator);
         }
 
@@ -144,7 +144,7 @@ namespace StructLinq
         public static UInt16 Min<TEnumerator>(this IStructEnumerable<UInt16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinUInt16(enumerator);
         }
 
@@ -153,7 +153,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt16, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinUInt16(enumerator);
         }
 
@@ -182,7 +182,7 @@ namespace StructLinq
         public static UInt32 Min<TEnumerator>(this IStructEnumerable<UInt32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinUInt32(enumerator);
         }
 
@@ -191,7 +191,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt32, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinUInt32(enumerator);
         }
 
@@ -220,7 +220,7 @@ namespace StructLinq
         public static UInt64 Min<TEnumerator>(this IStructEnumerable<UInt64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinUInt64(enumerator);
         }
 
@@ -229,7 +229,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt64, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinUInt64(enumerator);
         }
 
@@ -258,7 +258,7 @@ namespace StructLinq
         public static Single Min<TEnumerator>(this IStructEnumerable<Single, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Single>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinSingle(enumerator);
         }
 
@@ -267,7 +267,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Single, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Single>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinSingle(enumerator);
         }
 
@@ -296,7 +296,7 @@ namespace StructLinq
         public static Double Min<TEnumerator>(this IStructEnumerable<Double, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Double>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinDouble(enumerator);
         }
 
@@ -305,7 +305,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Double, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Double>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinDouble(enumerator);
         }
 
@@ -334,7 +334,7 @@ namespace StructLinq
         public static Byte Min<TEnumerator>(this IStructEnumerable<Byte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinByte(enumerator);
         }
 
@@ -343,7 +343,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Byte, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinByte(enumerator);
         }
 
@@ -372,7 +372,7 @@ namespace StructLinq
         public static SByte Min<TEnumerator>(this IStructEnumerable<SByte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinSByte(enumerator);
         }
 
@@ -381,7 +381,7 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<SByte, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return MinSByte(enumerator);
         }
 

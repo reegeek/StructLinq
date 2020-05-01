@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.IEnumerable;
 
 namespace StructLinq.Array
@@ -14,17 +15,10 @@ namespace StructLinq.Array
             this.array = array;
         }
 
-        public ArrayStructEnumerator<T> GetStructEnumerator()
-        {
-            return new ArrayStructEnumerator<T>(array);
-        }
-
-        /// <summary>
-        ///An enumerator, duck-typing-compatible with foreach.
-        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ArrayStructEnumerator<T> GetEnumerator()
         {
-            return GetStructEnumerator();
+            return new ArrayStructEnumerator<T>(array);
         }
     }
 }

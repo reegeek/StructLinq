@@ -18,17 +18,10 @@ namespace StructLinq.Range
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RangeEnumerator GetStructEnumerator()
+        public RangeEnumerator GetEnumerator()
         {
             return new RangeEnumerator(start, count);
         }
 
-        /// <summary>
-        ///An enumerator, duck-typing-compatible with foreach.
-        /// </summary>
-        public RangeEnumerator GetEnumerator()
-        {
-            return GetStructEnumerator();
-        }
     }
 }

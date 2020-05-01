@@ -19,18 +19,10 @@ namespace StructLinq.Where
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public WhereEnumerator<TIn, TEnumerator, TFunction> GetStructEnumerator()
-        {
-            var enumerator = inner.GetStructEnumerator();
-            return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
-        }
-
-        /// <summary>
-        ///An enumerator, duck-typing-compatible with foreach.
-        /// </summary>
         public WhereEnumerator<TIn, TEnumerator, TFunction> GetEnumerator()
         {
-            return GetStructEnumerator();
+            var enumerator = inner.GetEnumerator();
+            return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
         }
     }
 }

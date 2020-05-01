@@ -84,7 +84,7 @@ namespace StructLinq.Benchmark
             where TEnumerator : struct, IStructEnumerator<T>, IDisposable
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             while (enumerator.MoveNext())
             {
             }
@@ -97,7 +97,7 @@ namespace StructLinq.Benchmark
             where TEnumerator : struct, IStructEnumerator<T>, IDisposable
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            using (var enumerator = enumerable.GetStructEnumerator())
+            using (var enumerator = enumerable.GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
@@ -111,7 +111,7 @@ namespace StructLinq.Benchmark
             where TEnumerator : struct, IStructEnumerator<T>, IDisposable
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
@@ -154,14 +154,14 @@ namespace StructLinq.Benchmark
             this.array = array;
         }
 
-        public ArrayStructEnumeratorWithDispose<T> GetStructEnumerator()
+        public ArrayStructEnumeratorWithDispose<T> GetEnumerator()
         {
             return new ArrayStructEnumeratorWithDispose<T>(array);
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<T> GetIEnumerator()
         {
-            return new StructEnumerator<T, ArrayStructEnumeratorWithDispose<T>>(GetStructEnumerator());
+            return new StructEnumerator<T, ArrayStructEnumeratorWithDispose<T>>(GetEnumerator());
         }
     }
 

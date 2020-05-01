@@ -118,5 +118,18 @@ namespace StructLinq.Tests
                 return list;
             }
         }
+
+        [Fact]
+        public void ShouldUseDuckTypingCompatibilityForForEach()
+        {
+            var structArray = Build(5);
+            var count = 0;
+            foreach (var i in structArray)
+            {
+                count += 1;
+            }
+            Assert.Equal(5, count);
+        }
+
     }
 }

@@ -29,7 +29,7 @@ namespace StructLinq
         public static Int16 Sum<TEnumerator>(this IStructEnumerable<Int16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumInt16(enumerator);
         }
 
@@ -38,7 +38,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
             where TEnumerable : struct, IStructEnumerable<Int16, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumInt16(enumerator);
         }
 
@@ -63,7 +63,7 @@ namespace StructLinq
         public static Int32 Sum<TEnumerator>(this IStructEnumerable<Int32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumInt32(enumerator);
         }
 
@@ -72,7 +72,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
             where TEnumerable : struct, IStructEnumerable<Int32, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumInt32(enumerator);
         }
 
@@ -97,7 +97,7 @@ namespace StructLinq
         public static Int64 Sum<TEnumerator>(this IStructEnumerable<Int64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumInt64(enumerator);
         }
 
@@ -106,7 +106,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
             where TEnumerable : struct, IStructEnumerable<Int64, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumInt64(enumerator);
         }
 
@@ -131,7 +131,7 @@ namespace StructLinq
         public static UInt16 Sum<TEnumerator>(this IStructEnumerable<UInt16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumUInt16(enumerator);
         }
 
@@ -140,7 +140,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
             where TEnumerable : struct, IStructEnumerable<UInt16, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumUInt16(enumerator);
         }
 
@@ -165,7 +165,7 @@ namespace StructLinq
         public static UInt32 Sum<TEnumerator>(this IStructEnumerable<UInt32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumUInt32(enumerator);
         }
 
@@ -174,7 +174,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
             where TEnumerable : struct, IStructEnumerable<UInt32, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumUInt32(enumerator);
         }
 
@@ -199,7 +199,7 @@ namespace StructLinq
         public static UInt64 Sum<TEnumerator>(this IStructEnumerable<UInt64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumUInt64(enumerator);
         }
 
@@ -208,7 +208,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
             where TEnumerable : struct, IStructEnumerable<UInt64, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumUInt64(enumerator);
         }
 
@@ -233,7 +233,7 @@ namespace StructLinq
         public static Single Sum<TEnumerator>(this IStructEnumerable<Single, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Single>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumSingle(enumerator);
         }
 
@@ -242,7 +242,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
             where TEnumerable : struct, IStructEnumerable<Single, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumSingle(enumerator);
         }
 
@@ -267,7 +267,7 @@ namespace StructLinq
         public static Double Sum<TEnumerator>(this IStructEnumerable<Double, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Double>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumDouble(enumerator);
         }
 
@@ -276,7 +276,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
             where TEnumerable : struct, IStructEnumerable<Double, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumDouble(enumerator);
         }
 
@@ -301,7 +301,7 @@ namespace StructLinq
         public static Byte Sum<TEnumerator>(this IStructEnumerable<Byte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumByte(enumerator);
         }
 
@@ -310,7 +310,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
             where TEnumerable : struct, IStructEnumerable<Byte, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumByte(enumerator);
         }
 
@@ -335,7 +335,7 @@ namespace StructLinq
         public static SByte Sum<TEnumerator>(this IStructEnumerable<SByte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumSByte(enumerator);
         }
 
@@ -344,7 +344,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
             where TEnumerable : struct, IStructEnumerable<SByte, TEnumerator>
         {
-            var enumerator = enumerable.GetStructEnumerator();
+            var enumerator = enumerable.GetEnumerator();
             return SumSByte(enumerator);
         }
 

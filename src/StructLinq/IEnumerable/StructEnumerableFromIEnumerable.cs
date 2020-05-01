@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.Array;
 
 namespace StructLinq.IEnumerable
@@ -14,14 +15,10 @@ namespace StructLinq.IEnumerable
             this.inner = inner;
         }
 
-        public GenericEnumerator<T> GetStructEnumerator()
-        {
-            return new GenericEnumerator<T>(inner.GetEnumerator());
-        }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericEnumerator<T> GetEnumerator()
         {
-            return GetStructEnumerator();
+            return new GenericEnumerator<T>(inner.GetEnumerator());
         }
     }
 }

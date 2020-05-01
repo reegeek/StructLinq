@@ -19,18 +19,10 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetStructEnumerator()
-        {
-            var typedEnumerator = inner.GetStructEnumerator();
-            return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
-        }
-
-        /// <summary>
-        ///An enumerator, duck-typing-compatible with foreach.
-        /// </summary>
         public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
-            return GetStructEnumerator();
+            var typedEnumerator = inner.GetEnumerator();
+            return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
     }
 }
