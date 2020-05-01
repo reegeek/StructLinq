@@ -6,7 +6,7 @@ namespace StructLinq.IEnumerable
     public struct StructEnumerator<T, TStructEnumerator> : IEnumerator<T> where 
         TStructEnumerator : IStructEnumerator<T>
     {
-        private readonly IStructEnumerator<T> enumerator;
+        private TStructEnumerator enumerator;
 
         public StructEnumerator(TStructEnumerator enumerator)
         {

@@ -5,10 +5,10 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        public static AsIEnumerable<T, TEnumerator> ToEnumerable<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> structEnumerable) 
+        public static EnumerableFromStructEnumerable<T,TEnumerator> ToEnumerable<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> structEnumerable) 
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return new AsIEnumerable<T, TEnumerator>(structEnumerable);
+            return new EnumerableFromStructEnumerable<T, TEnumerator>(structEnumerable);
         }
     }
 }
