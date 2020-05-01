@@ -11,7 +11,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int16 MinInt16<TEnumerator>(TEnumerator enumerator)
+        private static Int16 MinInt16<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
         	if (!enumerator.MoveNext())
@@ -31,7 +31,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinInt16(enumerator);
+            return MinInt16(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -40,7 +40,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinInt16(enumerator);
+            return MinInt16(ref enumerator);
         }
 
     }
@@ -49,7 +49,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int32 MinInt32<TEnumerator>(TEnumerator enumerator)
+        private static Int32 MinInt32<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
         	if (!enumerator.MoveNext())
@@ -69,7 +69,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinInt32(enumerator);
+            return MinInt32(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -78,7 +78,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinInt32(enumerator);
+            return MinInt32(ref enumerator);
         }
 
     }
@@ -87,7 +87,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int64 MinInt64<TEnumerator>(TEnumerator enumerator)
+        private static Int64 MinInt64<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
         	if (!enumerator.MoveNext())
@@ -107,7 +107,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinInt64(enumerator);
+            return MinInt64(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -116,7 +116,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinInt64(enumerator);
+            return MinInt64(ref enumerator);
         }
 
     }
@@ -125,7 +125,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt16 MinUInt16<TEnumerator>(TEnumerator enumerator)
+        private static UInt16 MinUInt16<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
         	if (!enumerator.MoveNext())
@@ -145,7 +145,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinUInt16(enumerator);
+            return MinUInt16(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -154,7 +154,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinUInt16(enumerator);
+            return MinUInt16(ref enumerator);
         }
 
     }
@@ -163,7 +163,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt32 MinUInt32<TEnumerator>(TEnumerator enumerator)
+        private static UInt32 MinUInt32<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
         	if (!enumerator.MoveNext())
@@ -183,7 +183,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinUInt32(enumerator);
+            return MinUInt32(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -192,7 +192,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinUInt32(enumerator);
+            return MinUInt32(ref enumerator);
         }
 
     }
@@ -201,7 +201,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt64 MinUInt64<TEnumerator>(TEnumerator enumerator)
+        private static UInt64 MinUInt64<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
         	if (!enumerator.MoveNext())
@@ -221,7 +221,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinUInt64(enumerator);
+            return MinUInt64(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -230,7 +230,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinUInt64(enumerator);
+            return MinUInt64(ref enumerator);
         }
 
     }
@@ -239,7 +239,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Single MinSingle<TEnumerator>(TEnumerator enumerator)
+        private static Single MinSingle<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Single>
         {
         	if (!enumerator.MoveNext())
@@ -259,7 +259,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinSingle(enumerator);
+            return MinSingle(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -268,7 +268,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinSingle(enumerator);
+            return MinSingle(ref enumerator);
         }
 
     }
@@ -277,7 +277,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Double MinDouble<TEnumerator>(TEnumerator enumerator)
+        private static Double MinDouble<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Double>
         {
         	if (!enumerator.MoveNext())
@@ -297,7 +297,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinDouble(enumerator);
+            return MinDouble(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -306,7 +306,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinDouble(enumerator);
+            return MinDouble(ref enumerator);
         }
 
     }
@@ -315,7 +315,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Byte MinByte<TEnumerator>(TEnumerator enumerator)
+        private static Byte MinByte<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
         	if (!enumerator.MoveNext())
@@ -335,7 +335,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinByte(enumerator);
+            return MinByte(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -344,7 +344,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinByte(enumerator);
+            return MinByte(ref enumerator);
         }
 
     }
@@ -353,7 +353,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SByte MinSByte<TEnumerator>(TEnumerator enumerator)
+        private static SByte MinSByte<TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
         	if (!enumerator.MoveNext())
@@ -373,7 +373,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinSByte(enumerator);
+            return MinSByte(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -382,7 +382,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var enumerator = enumerable.GetEnumerator();
-            return MinSByte(enumerator);
+            return MinSByte(ref enumerator);
         }
 
     }
