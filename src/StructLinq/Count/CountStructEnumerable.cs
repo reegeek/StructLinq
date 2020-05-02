@@ -37,7 +37,6 @@ namespace StructLinq
             return IntCount<T, TEnumerator>(ref enumerator);
         }
 
-
         private static long LongCount<T, TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<T>
         {
