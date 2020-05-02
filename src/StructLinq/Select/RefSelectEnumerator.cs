@@ -2,15 +2,15 @@
 
 namespace StructLinq.Select
 {
-    public struct SelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IStructEnumerator<TOut>
-        where TFunction : struct, IFunction<TIn, TOut>
-        where TEnumerator : struct, IStructEnumerator<TIn>
+    public struct RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IStructEnumerator<TOut>
+        where TFunction : struct, IInFunction<TIn, TOut>
+        where TEnumerator : struct, IRefStructEnumerator<TIn>
     {
         #region private fields
         private TFunction function;
         private TEnumerator enumerator;
         #endregion
-        public SelectEnumerator(ref TFunction function, ref TEnumerator enumerator)
+        public RefSelectEnumerator(ref TFunction function, ref TEnumerator enumerator)
         {
             this.function = function;
             this.enumerator = enumerator;
@@ -28,7 +28,11 @@ namespace StructLinq.Select
         public TOut Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => function.Eval(enumerator.Current);
+            get
+            {
+                ref var enumeratorCurrent = ref enumerator.Current;
+                return function.Eval(in enumeratorCurrent);
+            }
         }
     }
 }
