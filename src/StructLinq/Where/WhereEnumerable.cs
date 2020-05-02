@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using StructLinq.IEnumerable;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Where
 {
