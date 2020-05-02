@@ -5,18 +5,22 @@ namespace StructLinq.Benchmark
 {
 
     //BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
-    //Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-    //.NET Core SDK=3.1.101
-    //[Host]     : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
-    //DefaultJob : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+    //Intel Core i7-8750H CPU 2.20GHz(Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+    //.NET Core SDK = 3.1.201
+
+    //[Host]     : .NET Core 3.1.3 (CoreCLR 4.700.20.11803, CoreFX 4.700.20.12001), X64 RyuJIT
+    //DefaultJob : .NET Core 3.1.3 (CoreCLR 4.700.20.11803, CoreFX 4.700.20.12001), X64 RyuJIT
 
 
     //```
-    //|           Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-    //|----------------- |-----------:|---------:|---------:|------:|-------:|------:|------:|----------:|
-    //|           SysSum |   613.5 ns |  2.22 ns |  2.08 ns |  0.09 |      - |     - |     - |         - |
-    //| SysEnumerableSum | 6,813.1 ns | 26.47 ns | 23.46 ns |  1.00 | 0.0076 |     - |     - |      48 B |
-    //|        StructSum | 3,132.6 ns | 14.93 ns | 13.96 ns |  0.46 |      - |     - |     - |         - |
+    //|                Method |       Mean |     Error |    StdDev |     Median | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+    //|---------------------- |-----------:|----------:|----------:|-----------:|------:|-------:|------:|------:|----------:|
+    //|                ForSum |   560.3 ns |   5.25 ns |   4.10 ns |   559.9 ns |  0.10 |      - |     - |     - |         - |
+    //|      SysEnumerableSum | 5,579.8 ns | 104.36 ns |  97.62 ns | 5,538.8 ns |  1.00 |      - |     - |     - |      32 B |
+    //|             StructSum | 3,174.1 ns |  31.20 ns |  26.06 ns | 3,168.7 ns |  0.57 | 0.0038 |     - |     - |      24 B |
+    //|          RefStructSum | 1,827.7 ns |   3.72 ns |   3.48 ns | 1,827.6 ns |  0.33 | 0.0038 |     - |     - |      24 B |
+    //|    ZeroAllocStructSum | 2,180.6 ns |  43.34 ns | 106.31 ns | 2,238.1 ns |  0.36 |      - |     - |     - |         - |
+    //| ZeroAllocRefStructSum |   701.0 ns |   3.00 ns |   2.66 ns |   700.5 ns |  0.13 |      - |     - |     - |         - |
 
     [MemoryDiagnoser]
     public class ArrayOfBigStructSum
@@ -25,10 +29,10 @@ namespace StructLinq.Benchmark
         private readonly StructContainer[] array;
         public ArrayOfBigStructSum()
         {
-            array = Enumerable.Range(0, Count).Select(x => StructContainer.Create(x)).ToArray();
+            array = Enumerable.Range(0, Count).Select(StructContainer.Create).ToArray();
         }
         [Benchmark]
-        public int SysSum()
+        public int ForSum()
         {
             int sum = 0;
             for (int i = 0; i < Count; i++)
@@ -38,22 +42,52 @@ namespace StructLinq.Benchmark
             return sum;
         }
         [Benchmark(Baseline = true)]
-        public int SysEnumerableSum() => array.Select(x=> x.Element).Sum();
+        public int SysEnumerableSum() => array.Sum(x=> x.Element);
 
         [Benchmark]
         public int StructSum()
         {
+            return array.ToStructEnumerable()
+                .Sum(x=> x.Element);
+        }
+
+        [Benchmark]
+        public int RefStructSum()
+        {
+            return array.ToRefStructEnumerable()
+                .Sum((in StructContainer element) => element.Element);
+        }
+
+        [Benchmark]
+        public int ZeroAllocStructSum()
+        {
             var @select = new StructContainerSelect();
             return array.ToStructEnumerable()
-                        .Select(ref @select, x=>x, x=>x)
-                        .Sum(x=>x);
+                        .Sum(ref @select, x => x, x => x);
         }
+
+        [Benchmark]
+        public int ZeroAllocRefStructSum()
+        {
+            var @select = new InStructContainerSelect();
+            return array.ToRefStructEnumerable()
+                .Sum(ref @select, x => x, x => x);
+        }
+
     }
 
 
     internal struct StructContainerSelect : IFunction<StructContainer, int>
     {
         public readonly int Eval(StructContainer element)
+        {
+            return element.Element;
+        }
+    }
+
+    internal struct InStructContainerSelect : IInFunction<StructContainer, int>
+    {
+        public readonly int Eval(in StructContainer element)
         {
             return element.Element;
         }
