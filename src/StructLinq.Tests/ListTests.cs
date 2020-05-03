@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using StructLinq.Array;
+using StructLinq.List;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class ListTests : AbstractEnumerableTests<int, ArrayEnumerable<int>, ArrayStructEnumerator<int>>
+    public class ListTests : AbstractEnumerableTests<int, ListEnumerable<int>, ArrayStructEnumerator<int>>
     {
         [Fact]
         public void ShouldSameAsSystem()
@@ -14,7 +15,19 @@ namespace StructLinq.Tests
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override ArrayEnumerable<int> Build(int size)
+        [Fact]
+        public void ShouldHandleAddElementAfterEnumerableWasCreated()
+        {
+            var list = Enumerable.Range(0, 50).ToList();
+            var structList = list.ToStructEnumerable();
+            list.Add(50);
+
+            var expected = Enumerable.Range(0, 51).ToArray();
+            var enumerable = structList.ToEnumerable().ToArray();
+            Assert.Equal(expected, enumerable);
+        }
+
+        protected override ListEnumerable<int> Build(int size)
         {
             var list = Enumerable.Range(-1, size).ToList();
             return list.ToStructEnumerable();
