@@ -6,16 +6,18 @@ namespace StructLinq.Array
     {
         #region private fields
         private readonly T[] array;
+        private readonly int length;
         #endregion
-        public ArrayRefEnumerable(T[] array)
+        public ArrayRefEnumerable(T[] array, int length)
         {
             this.array = array;
+            this.length = length;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ArrayRefStructEnumerator<T> GetEnumerator()
         {
-            return new ArrayRefStructEnumerator<T>(array);
+            return new ArrayRefStructEnumerator<T>(array, length);
         }
     }
 }
