@@ -2,9 +2,7 @@
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using StructLinq.Array;
 using StructLinq.List;
-using StructLinq.Utils;
 
 namespace StructLinq
 {
