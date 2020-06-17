@@ -12,10 +12,11 @@ namespace StructLinq.Tests.Utils.Collections
         [Fact]
         public void ShouldIncreaseCapacity()
         {
+            var equalityComparer = EqualityComparer<int>.Default;
             var set = new PooledSet<int, IEqualityComparer<int>>(0, 
                 ArrayPool<int>.Shared, 
                 ArrayPool<Slot<int>>.Shared, 
-                EqualityComparer<int>.Default);
+                equalityComparer);
 
             var array = Enumerable.Range(0, 100).ToArray();
             foreach (var i in array)
