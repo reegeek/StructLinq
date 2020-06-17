@@ -175,6 +175,19 @@ namespace StructLinq.Utils.Collections
             return true;
         }
 
+        public void Clear()
+        {
+            if (lastIndex > 0)
+            {
+                // clear the elements so that the gc can reclaim the references.
+                // clear only up to _lastIndex for _slots 
+                System.Array.Clear(slots, 0, lastIndex);
+                System.Array.Clear(buckets, 0, buckets.Length);
+                lastIndex = 0;
+                count = 0;
+            }
+        }
+
         public void Dispose()
         {
             ReturnArrays();
