@@ -4,24 +4,24 @@ using System.Collections.Generic;
 
 namespace StructLinq.Utils.Collections
 {
-    internal struct PooledSet<T, TComparer> where TComparer : IEqualityComparer<T>, IDisposable
+    public struct PooledSet<T, TComparer> : IDisposable 
+        where TComparer : IEqualityComparer<T>
     {
         private const int Lower31BitMask = 0x7FFFFFFF;
 
         private readonly ArrayPool<int> bucketPool;
-        private readonly ArrayPool<Slot> slotPool;
+        private readonly ArrayPool<Slot<T>> slotPool;
         private readonly TComparer comparer;
 
         private int[] buckets;
-        private Slot[] slots;
+        private Slot<T>[] slots;
         private int size;
 
         private int count;
         private int lastIndex;
-        private int freeList;
 
 
-        public PooledSet(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot> slotPool, TComparer comparer)
+        public PooledSet(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer)
         {
             this.bucketPool = bucketPool;
             this.slotPool = slotPool;
@@ -32,7 +32,6 @@ namespace StructLinq.Utils.Collections
             slots = slotPool.Rent(size);
             count = 0;
             lastIndex = 0;
-            freeList = -1;
         }
 
         private int InternalGetHashCode(T item)
@@ -60,7 +59,7 @@ namespace StructLinq.Utils.Collections
         {
 
             int[] newBuckets;
-            Slot[] newSlots;
+            Slot<T>[] newSlots;
             bool replaceArrays;
 
             // Because ArrayPool might have given us larger arrays than we asked for, see if we can 
@@ -134,18 +133,17 @@ namespace StructLinq.Utils.Collections
             buckets = null;
         }
 
-
-        public void Add(T value)
+        public bool AddIfNotPresent(T value)
         {
             int hashCode = InternalGetHashCode(value);
             int bucket = hashCode % size;
             int collisionCount = 0;
-            Slot[] tmpSlots = slots;
+            Slot<T>[] tmpSlots = slots;
             for (int i = buckets[bucket] - 1; i >= 0; )
             {
                 ref var slot = ref tmpSlots[i];
                 if (slot.hashCode == hashCode && comparer.Equals(slot.value, value))
-                    return;
+                    return false;
 
                 if (collisionCount >= size)
                 {
@@ -157,24 +155,16 @@ namespace StructLinq.Utils.Collections
             }
 
             int index;
-            if (freeList >= 0)
+            if (lastIndex == size)
             {
-                index = freeList;
-                ref var slot = ref tmpSlots[index];
-                freeList = slot.next;
+                IncreaseCapacity();
+                // this will change during resize
+                tmpSlots = slots;
+                bucket = hashCode % size;
             }
-            else
-            {
-                if (lastIndex == size)
-                {
-                    IncreaseCapacity();
-                    // this will change during resize
-                    tmpSlots = slots;
-                    bucket = hashCode % size;
-                }
-                index = lastIndex;
-                lastIndex++;
-            }
+
+            index = lastIndex;
+            lastIndex++;
 
             ref var slot1 = ref tmpSlots[index];
             slot1.hashCode = hashCode;
@@ -182,8 +172,8 @@ namespace StructLinq.Utils.Collections
             slot1.next = buckets[bucket] - 1;
             buckets[bucket] = index + 1;
             count++;
+            return true;
         }
-
 
         public void Dispose()
         {
@@ -191,15 +181,13 @@ namespace StructLinq.Utils.Collections
             size = 0;
             lastIndex = 0;
             count = 0;
-            freeList = -1;
         }
+    }
 
-        internal struct Slot
-        {
-            internal int hashCode;      // Lower 31 bits of hash code, -1 if unused
-            internal int next;          // Index of next entry, -1 if last
-            internal T value;
-        }
-
+    public struct Slot<T>
+    {
+        internal int hashCode;      // Lower 31 bits of hash code, -1 if unused
+        internal int next;          // Index of next entry, -1 if last
+        internal T value;
     }
 }
