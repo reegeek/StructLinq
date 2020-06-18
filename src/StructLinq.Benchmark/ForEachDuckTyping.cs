@@ -25,7 +25,7 @@ namespace StructLinq.Benchmark
     [MemoryDiagnoser]
     public class ForEachDuckTyping
     {
-        private const int Count = 10000;
+        private const int Count = 10_000;
         private readonly int[] array;
         private readonly IEnumerable<int> sysEnumerable;
         private readonly ArrayEnumerable<int> arrayEnumerable;
