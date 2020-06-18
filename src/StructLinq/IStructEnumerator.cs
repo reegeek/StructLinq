@@ -1,4 +1,6 @@
-﻿namespace StructLinq
+﻿using System;
+
+namespace StructLinq
 {
     public interface IStructEnumerator<out T>
     {

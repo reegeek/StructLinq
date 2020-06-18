@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -9,7 +10,6 @@ namespace StructLinq.Benchmark
     {
         private const int Count = 10_000;
         private readonly int[] array;
-        private readonly IEqualityComparer<int> comparer = EqualityComparer<int>.Default;
         
         public Distinct()
         {
@@ -39,9 +39,36 @@ namespace StructLinq.Benchmark
             {
                 sum += i;
             }
-
             return sum;
         }
 
+        [Benchmark]
+        public int ZeroAllocStructLinq()
+        {
+            var sum = 0;
+            var comparer = new StructEqualityComparer();
+            foreach (var i in array.ToStructEnumerable().Distinct(comparer, x=>x))
+            {
+                sum += i;
+            }
+            return sum;
+        }
+        
+        [Benchmark]
+        public int ZeroAllocStructLinqSum()
+        {
+            var comparer = new StructEqualityComparer();
+            return array.ToStructEnumerable().Distinct(comparer, x => x).Sum(x=>x);
+        }
+
+
+        public readonly struct StructEqualityComparer : IEqualityComparer<int>
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Equals(int x, int y) => x == y;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public int GetHashCode(int value) => value.GetHashCode();
+        }
     }
 }
