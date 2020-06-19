@@ -30,5 +30,12 @@ namespace StructLinq.Range
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => index;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            
+        }
+
     }
 }

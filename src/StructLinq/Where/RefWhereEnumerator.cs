@@ -38,5 +38,12 @@ namespace StructLinq.Where
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => ref enumerator.Current;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            enumerator.Dispose();
+        }
+
     }
 }

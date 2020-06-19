@@ -24,6 +24,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -61,6 +62,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -98,6 +100,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -135,6 +138,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -172,6 +176,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -209,6 +214,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -246,6 +252,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -283,6 +290,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -320,6 +328,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 
@@ -357,6 +366,7 @@ namespace StructLinq
 				if (current > result)
 					result = current;
 			}
+            enumerator.Dispose();
 			return result;
         }
 

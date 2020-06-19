@@ -1,6 +1,8 @@
-﻿namespace StructLinq
+﻿using System;
+
+namespace StructLinq
 {
-    public interface IRefStructEnumerator<T>
+    public interface IRefStructEnumerator<T> : IDisposable
     {
         bool MoveNext();
 

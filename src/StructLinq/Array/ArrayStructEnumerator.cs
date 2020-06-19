@@ -30,5 +30,11 @@ namespace StructLinq.Array
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => array[index];
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            
+        }
     }
 }

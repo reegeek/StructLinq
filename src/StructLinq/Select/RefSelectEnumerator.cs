@@ -34,5 +34,12 @@ namespace StructLinq.Select
                 return function.Eval(in enumeratorCurrent);
             }
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            enumerator.Dispose();
+        }
+
     }
 }

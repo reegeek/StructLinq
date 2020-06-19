@@ -21,6 +21,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -35,6 +36,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -48,6 +50,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -123,6 +126,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -137,6 +141,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -150,6 +155,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -225,6 +231,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -239,6 +246,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -252,6 +260,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -327,6 +336,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -341,6 +351,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -354,6 +365,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -429,6 +441,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -443,6 +456,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -456,6 +470,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -531,6 +546,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -545,6 +561,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -558,6 +575,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -633,6 +651,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -647,6 +666,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -660,6 +680,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -735,6 +756,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -749,6 +771,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -762,6 +785,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -837,6 +861,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -851,6 +876,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -864,6 +890,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -939,6 +966,7 @@ namespace StructLinq
             {
                 result += enumerator.Current;
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -953,6 +981,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func.Eval(current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -966,6 +995,7 @@ namespace StructLinq
                 var current = enumerator.Current;
                 result += func(current);
             }
+            enumerator.Dispose();
             return result;
         }
 

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.IEnumerable
 {
-    public readonly struct GenericEnumerator<T> : IStructEnumerator<T>, IDisposable
+    public readonly struct GenericEnumerator<T> : IStructEnumerator<T>
     {
         #region private fields
         private readonly IEnumerator<T> inner;

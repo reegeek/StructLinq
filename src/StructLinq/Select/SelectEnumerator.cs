@@ -30,5 +30,12 @@ namespace StructLinq.Select
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => function.Eval(enumerator.Current);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            enumerator.Dispose();
+        }
+
     }
 }
