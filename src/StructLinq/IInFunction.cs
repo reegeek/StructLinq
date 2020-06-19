@@ -1,4 +1,5 @@
-﻿namespace StructLinq
+﻿
+namespace StructLinq
 {
     public interface IInFunction<TIn, out TOut>
     {

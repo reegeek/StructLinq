@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Buffers;
-using System.Collections.Generic;
 
 namespace StructLinq.Utils.Collections
 {
-    internal struct PooledSet<T, TComparer> : IDisposable 
-        where TComparer : IEqualityComparer<T>
+    internal struct InPooledSet<T, TComparer> : IDisposable 
+        where TComparer : IInEqualityComparer<T>
     {
         private const int Lower31BitMask = 0x7FFFFFFF;
 
@@ -21,7 +20,7 @@ namespace StructLinq.Utils.Collections
         private int lastIndex;
 
 
-        public PooledSet(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer)
+        public InPooledSet(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer)
         {
             this.bucketPool = bucketPool;
             this.slotPool = slotPool;
@@ -34,13 +33,13 @@ namespace StructLinq.Utils.Collections
             lastIndex = 0;
         }
 
-        private int InternalGetHashCode(T item)
+        private int InternalGetHashCode(in T item)
         {
             if (item == null)
             {
                 return 0;
             }
-            return comparer.GetHashCode(item) & Lower31BitMask;
+            return comparer.GetHashCode(in item) & Lower31BitMask;
         }
 
         private void IncreaseCapacity()
@@ -133,16 +132,16 @@ namespace StructLinq.Utils.Collections
             buckets = null;
         }
 
-        public bool AddIfNotPresent(T value)
+        public bool AddIfNotPresent(in T value)
         {
-            int hashCode = InternalGetHashCode(value);
+            int hashCode = InternalGetHashCode(in value);
             int bucket = hashCode % size;
             int collisionCount = 0;
             Slot<T>[] tmpSlots = slots;
             for (int i = buckets[bucket] - 1; i >= 0; )
             {
                 ref var slot = ref tmpSlots[i];
-                if (slot.hashCode == hashCode && comparer.Equals(slot.value, value))
+                if (slot.hashCode == hashCode && comparer.Equals(in slot.value, in value))
                     return false;
 
                 if (collisionCount >= size)

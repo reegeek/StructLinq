@@ -1,20 +1,19 @@
 ﻿using System.Buffers;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Distinct
 {
-    public struct DistinctEnumerator<T, TEnumerator, TComparer> : IStructEnumerator<T>
-        where TEnumerator : struct, IStructEnumerator<T>
-        where TComparer : IEqualityComparer<T>
+    public struct RefDistinctEnumerator<T, TEnumerator, TComparer> : IRefStructEnumerator<T>
+        where TEnumerator : struct, IRefStructEnumerator<T>
+        where TComparer : IInEqualityComparer<T>
     {
         private TEnumerator enumerator;
-        private PooledSet<T, TComparer> set;
-        public DistinctEnumerator(ref TEnumerator enumerator, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer)
+        private InPooledSet<T, TComparer> set;
+        public RefDistinctEnumerator(ref TEnumerator enumerator, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer)
         {
             this.enumerator = enumerator;
-            set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
+            set = new InPooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -22,8 +21,8 @@ namespace StructLinq.Distinct
         {
             while (enumerator.MoveNext())
             {
-                var current = enumerator.Current;
-                if (set.AddIfNotPresent(current))
+                ref var current = ref enumerator.Current;
+                if (set.AddIfNotPresent(in current))
                     return true;
             }
             return false;
@@ -36,10 +35,10 @@ namespace StructLinq.Distinct
             set.Clear();
         }
 
-        public T Current
+        public ref T Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => enumerator.Current;
+            get => ref enumerator.Current;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
