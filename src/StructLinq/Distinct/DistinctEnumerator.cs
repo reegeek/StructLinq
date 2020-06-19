@@ -1,12 +1,11 @@
-﻿using System;
-using System.Buffers;
+﻿using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Distinct
 {
-    public struct DistinctEnumerator<T, TEnumerator, TComparer> : IStructEnumerator<T>, IDisposable
+    public struct DistinctEnumerator<T, TEnumerator, TComparer> : IStructEnumerator<T>
         where TEnumerator : struct, IStructEnumerator<T>
         where TComparer : IEqualityComparer<T>
     {
@@ -40,6 +39,7 @@ namespace StructLinq.Distinct
             get => enumerator.Current;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             set.Dispose();

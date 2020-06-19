@@ -17,6 +17,7 @@ namespace StructLinq
             {
                 count++;
             }
+            enumerator.Dispose();
             return count;
         }
 
@@ -45,6 +46,7 @@ namespace StructLinq
             {
                 count++;
             }
+            enumerator.Dispose();
             return count;
         }
 
@@ -73,6 +75,7 @@ namespace StructLinq
             {
                 count++;
             }
+            enumerator.Dispose();
             return count;
         }
 

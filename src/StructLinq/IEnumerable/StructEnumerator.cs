@@ -27,6 +27,7 @@ namespace StructLinq.IEnumerable
 
         public void Dispose()
         {
+            enumerator.Dispose();
         }
 
         public T Current => enumerator.Current;

@@ -22,6 +22,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -36,6 +37,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -49,6 +51,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -122,6 +125,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -136,6 +140,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -149,6 +154,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -222,6 +228,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -236,6 +243,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -249,6 +257,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -322,6 +331,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -336,6 +346,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -349,6 +360,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -422,6 +434,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -436,6 +449,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -449,6 +463,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -522,6 +537,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -536,6 +552,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -549,6 +566,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -622,6 +640,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -636,6 +655,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -649,6 +669,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -722,6 +743,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -736,6 +758,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -749,6 +772,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -822,6 +846,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -836,6 +861,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -849,6 +875,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         
@@ -922,6 +949,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += current;
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -936,6 +964,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func.Eval(in current);
             }
+            enumerator.Dispose();
             return result;
         }
 
@@ -949,6 +978,7 @@ namespace StructLinq
                 ref var current = ref enumerator.Current;
                 result += func(in current);
             }
+            enumerator.Dispose();
             return result;
         }
         

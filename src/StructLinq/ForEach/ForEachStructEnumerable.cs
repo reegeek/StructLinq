@@ -14,6 +14,7 @@ namespace StructLinq
             {
                 action.Do(enumerator.Current);
             }
+            enumerator.Dispose();
         }
 
         public static void ForEach<T, TEnumerator, TAction>(this IStructEnumerable<T, TEnumerator> enumerable, ref TAction action) 
