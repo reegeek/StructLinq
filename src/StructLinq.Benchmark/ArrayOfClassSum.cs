@@ -3,20 +3,21 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
+    //``` ini
+
     //BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
     //Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-    //.NET Core SDK=3.1.101
-    //[Host]     : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
-    //DefaultJob : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+    //.NET Core SDK=3.1.301
+    //[Host]     : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
+    //DefaultJob : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
 
 
     //```
-    //|           Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-    //|----------------- |-----------:|---------:|---------:|------:|-------:|------:|------:|----------:|
-    //|           SysSum |   574.0 ns |  2.93 ns |  2.74 ns |  0.09 |      - |     - |     - |         - |
-    //| SysEnumerableSum | 6,617.1 ns | 11.55 ns | 10.24 ns |  1.00 | 0.0076 |     - |     - |      48 B |
-    //|        StructSum | 1,736.7 ns |  3.68 ns |  3.44 ns |  0.26 |      - |     - |     - |         - |
-
+    //|           Method |       Mean |   Error |  StdDev | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+    //|----------------- |-----------:|--------:|--------:|------:|-------:|------:|------:|----------:|
+    //|           SysSum |   511.5 ns | 1.09 ns | 1.02 ns |  0.09 |      - |     - |     - |         - |
+    //| SysEnumerableSum | 5,742.4 ns | 9.98 ns | 9.33 ns |  1.00 | 0.0076 |     - |     - |      48 B |
+    //|        StructSum | 1,732.9 ns | 0.41 ns | 0.34 ns |  0.30 |      - |     - |     - |         - |
     
     [MemoryDiagnoser]
     public class ArrayOfClassSum

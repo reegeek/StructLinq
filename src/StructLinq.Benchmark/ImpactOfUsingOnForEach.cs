@@ -1,31 +1,44 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 using StructLinq.IEnumerable;
 
 namespace StructLinq.Benchmark
 {
+    //``` ini
+
     //BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
     //Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-    //.NET Core SDK=3.1.101
-    //[Host]     : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
-    //DefaultJob : .NET Core 3.1.1 (CoreCLR 4.700.19.60701, CoreFX 4.700.19.60801), X64 RyuJIT
+    //.NET Core SDK=3.1.301
+    //[Host]     : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
+    //Job-BNPWEC : .NET Framework 4.8 (4.8.4180.0), X64 RyuJIT
+    //Job-AOFHFD : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
 
 
     //```
-    //|                              Method |      Mean |     Error |    StdDev |    Median | Ratio | RatioSD |
-    //|------------------------------------ |----------:|----------:|----------:|----------:|------:|--------:|
-    //|            ForEachWithUsingOnStruct |  5.976 us | 0.1193 us | 0.2645 us |  5.880 us |  1.00 |    0.00 |
-    //|         ForEachWithoutUsingOnStruct |  2.950 us | 0.0562 us | 0.0711 us |  2.921 us |  0.49 |    0.02 |
-    //|       ForEachWithTryFinallyOnStruct |  5.858 us | 0.1554 us | 0.1662 us |  5.796 us |  0.98 |    0.06 |
-    //|             ForEachWithUsingOnClass | 31.910 us | 0.6356 us | 0.6527 us | 31.543 us |  5.36 |    0.26 |
-    //|          ForEachWithoutUsingOnClass | 15.145 us | 0.1289 us | 0.1077 us | 15.123 us |  2.56 |    0.09 |
-    //|        ForEachWithTryFinallyOnClass | 32.244 us | 0.6352 us | 0.9889 us | 32.025 us |  5.38 |    0.35 |
+    //|                        Method |       Runtime |      Mean |     Error |    StdDev | Ratio |
+    //|------------------------------ |-------------- |----------:|----------:|----------:|------:|
+    //|      ForEachWithUsingOnStruct |      .NET 4.8 |  2.812 us | 0.0017 us | 0.0016 us |  1.00 |
+    //|   ForEachWithoutUsingOnStruct |      .NET 4.8 |  2.813 us | 0.0069 us | 0.0064 us |  1.00 |
+    //| ForEachWithTryFinallyOnStruct |      .NET 4.8 |  2.811 us | 0.0023 us | 0.0021 us |  1.00 |
+    //|       ForEachWithUsingOnClass |      .NET 4.8 | 30.821 us | 0.0089 us | 0.0074 us | 10.96 |
+    //|    ForEachWithoutUsingOnClass |      .NET 4.8 | 14.895 us | 0.0135 us | 0.0127 us |  5.30 |
+    //|  ForEachWithTryFinallyOnClass |      .NET 4.8 | 30.815 us | 0.0127 us | 0.0099 us | 10.96 |
+    //|                               |               |           |           |           |       |
+    //|      ForEachWithUsingOnStruct | .NET Core 3.1 |  2.813 us | 0.0019 us | 0.0018 us |  1.00 |
+    //|   ForEachWithoutUsingOnStruct | .NET Core 3.1 |  2.811 us | 0.0014 us | 0.0013 us |  1.00 |
+    //| ForEachWithTryFinallyOnStruct | .NET Core 3.1 |  2.811 us | 0.0025 us | 0.0022 us |  1.00 |
+    //|       ForEachWithUsingOnClass | .NET Core 3.1 | 28.011 us | 0.0236 us | 0.0209 us |  9.96 |
+    //|    ForEachWithoutUsingOnClass | .NET Core 3.1 | 14.949 us | 0.0196 us | 0.0183 us |  5.31 |
+    //|  ForEachWithTryFinallyOnClass | .NET Core 3.1 | 28.007 us | 0.0098 us | 0.0092 us |  9.96 |
 
 
+
+    [SimpleJob(RuntimeMoniker.Net48)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     [DisassemblyDiagnoser(recursiveDepth: 4)]
     public class ImpactOfUsingOnForEach
     {

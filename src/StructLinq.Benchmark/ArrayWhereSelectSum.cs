@@ -4,19 +4,22 @@ using BenchmarkDotNet.Attributes;
 namespace StructLinq.Benchmark
 {
 
-    //BenchmarkDotNet = v0.12.0, OS=Windows 10.0.18363
-    //Intel Core i7-8750H CPU 2.20GHz(Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-    //.NET Core SDK = 3.1.200
+    //``` ini
 
-    //[Host]     : .NET Core 3.1.2 (CoreCLR 4.700.20.6602, CoreFX 4.700.20.6702), X64 RyuJIT
-    //DefaultJob : .NET Core 3.1.2 (CoreCLR 4.700.20.6602, CoreFX 4.700.20.6702), X64 RyuJIT
+    //BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
+    //Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+    //.NET Core SDK=3.1.301
+    //[Host]     : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
+    //DefaultJob : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
 
-    //|                                Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
-    //|-------------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-    //|                         HandmadedCode |  5.579 us | 0.0414 us | 0.0346 us |  1.00 |    0.00 |     - |     - |     - |         - |
-    //|                               SysLinq | 48.360 us | 0.5377 us | 0.4767 us |  8.67 |    0.06 |     - |     - |     - |     104 B |
-    //| StructRangeWhereSelectSumWithDelegate | 40.848 us | 0.3137 us | 0.2935 us |  7.31 |    0.06 |     - |     - |     - |      40 B |
-    //|             StructRangeWhereSelectSum | 13.703 us | 0.0452 us | 0.0378 us |  2.46 |    0.02 |     - |     - |     - |         - |
+
+    //```
+    //|                                Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
+    //|-------------------------------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|
+    //|                         HandmadedCode | 12.58 us | 0.010 us | 0.010 us |  1.00 |     - |     - |     - |         - |
+    //|                               SysLinq | 44.92 us | 0.055 us | 0.052 us |  3.57 |     - |     - |     - |     104 B |
+    //| StructRangeWhereSelectSumWithDelegate | 44.88 us | 0.043 us | 0.040 us |  3.57 |     - |     - |     - |      48 B |
+    //|             StructRangeWhereSelectSum | 15.08 us | 0.054 us | 0.050 us |  1.20 |     - |     - |     - |         - |
 
     [MemoryDiagnoser]
     public class ArrayWhereSelectSum
