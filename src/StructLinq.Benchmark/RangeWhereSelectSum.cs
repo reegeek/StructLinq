@@ -27,6 +27,7 @@ namespace StructLinq.Benchmark
         public RangeWhereSelectSum()
         {
         }
+        
         [Benchmark(Baseline = true)]
         public int SysSum()
         {
@@ -41,6 +42,7 @@ namespace StructLinq.Benchmark
             }
             return sum;
         }
+
         [Benchmark]
         public int SysRangeWhereSelectSum() => Enumerable.Range(0, Count)
                                                          .Where(x=> (x & 1)==0)
@@ -81,5 +83,4 @@ namespace StructLinq.Benchmark
             return element * 2;
         }
     }
-
 }
