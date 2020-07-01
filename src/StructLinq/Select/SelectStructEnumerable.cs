@@ -17,7 +17,6 @@ namespace StructLinq
             return new SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator, TFunction>(ref function, ref enumerable);
         }
 
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SelectEnumerable<TIn, TOut, TEnumerable,  TEnumerator, StructFunction<TIn, TOut>>
             Select<TIn, TOut, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TIn, TOut> function, Func<TEnumerable, IStructEnumerable<TIn, TEnumerator>> _)
@@ -48,5 +47,20 @@ namespace StructLinq
             return new RefSelectEnumerable<TIn, TOut, TEnumerable, TEnumerator, StructInFunction<TIn, TOut>>(ref fct, ref enumerable);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IStructEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator, StructFunction<TIn, TOut>>> Select<TIn, TOut, TEnumerator>(this IStructEnumerable<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
+            where TEnumerator : struct, IStructEnumerator<TIn>
+        {
+            var fct = function.ToStruct();
+            return new SelectEnumerable<TIn,TOut,IStructEnumerable<TIn, TEnumerator>,TEnumerator,StructFunction<TIn,TOut>>(ref fct, ref enumerable);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IStructEnumerable<TOut, RefSelectEnumerator<TIn, TOut, TEnumerator, StructInFunction<TIn,TOut>>> Select<TIn, TOut, TEnumerator>(this IRefStructEnumerable<TIn, TEnumerator> enumerable, InFunc<TIn, TOut> function)
+            where TEnumerator : struct, IRefStructEnumerator<TIn>
+        {
+            var fct = function.ToStruct();
+            return new RefSelectEnumerable<TIn,TOut,IRefStructEnumerable<TIn, TEnumerator>,TEnumerator,StructInFunction<TIn,TOut>>(ref fct, ref enumerable);
+        }
     }
 }
