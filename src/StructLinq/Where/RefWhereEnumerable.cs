@@ -5,7 +5,7 @@ namespace StructLinq.Where
     public struct RefWhereEnumerable<TIn, TEnumerable, TEnumerator, TFunction> : IRefStructEnumerable<TIn, RefWhereEnumerator<TIn, TEnumerator, TFunction>>
         where TEnumerator : struct, IRefStructEnumerator<TIn>
         where TFunction : struct, IInFunction<TIn, bool>
-        where TEnumerable : struct, IRefStructEnumerable<TIn, TEnumerator>
+        where TEnumerable : IRefStructEnumerable<TIn, TEnumerator>
     {
         private TFunction function;
         private TEnumerable inner;

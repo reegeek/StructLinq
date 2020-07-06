@@ -32,7 +32,9 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int DelegateSelect()
         {
-            return StructEnumerable.Range(0, Count).Where(x => x > 0, x => x).Sum(x => x);
+            return StructEnumerable.Range(0, Count)
+                                   .Where(x => x > 0)
+                                   .Sum();
         }
 
         [Benchmark]
