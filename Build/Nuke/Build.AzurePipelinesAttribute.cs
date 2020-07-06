@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
@@ -48,11 +47,9 @@ partial class Build
             return base.GetStage(image, filterRelevantTargets);
         }
 
-        protected override AzurePipelinesJob GetJob(ExecutableTarget executableTarget,
-            LookupTable<ExecutableTarget, AzurePipelinesJob> jobs)
+        protected override AzurePipelinesJob GetJob(ExecutableTarget executableTarget, LookupTable<ExecutableTarget, AzurePipelinesJob> jobs, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var job = base.GetJob(executableTarget, jobs);
-
+            var job = base.GetJob(executableTarget, jobs, relevantTargets);
             var dictionary = new Dictionary<string, string>
             {
                 {nameof(Compile), "⚙️"},
