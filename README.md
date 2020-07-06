@@ -21,7 +21,7 @@ Introduce `IRefStructEnumerable` to improve performance.
 ---
 
 ## Installation
-This library is distributed via [NugGet](https://www.nuget.org/).
+This library is distributed via [NuGet](https://www.nuget.org/).
 To install [`StructLinq`](https://www.nuget.org/packages/StructLinq/) :
   ```
   PM> Install-Package StructLinq
@@ -89,7 +89,7 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 ```
 |                                Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
 |-------------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|                         HandmadedCode |  5.579 us | 0.0414 us | 0.0346 us |  1.00 |    0.00 |     - |     - |     - |         - |
+|                          HandmadeCode |  5.579 us | 0.0414 us | 0.0346 us |  1.00 |    0.00 |     - |     - |     - |         - |
 |                               SysLinq | 48.360 us | 0.5377 us | 0.4767 us |  8.67 |    0.06 |     - |     - |     - |     104 B |
 | StructRangeWhereSelectSumWithDelegate | 40.848 us | 0.3137 us | 0.2935 us |  7.31 |    0.06 |     - |     - |     - |      40 B |
 |             StructRangeWhereSelectSum | 13.703 us | 0.0452 us | 0.0378 us |  2.46 |    0.02 |     - |     - |     - |         - |
