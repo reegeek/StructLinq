@@ -41,9 +41,9 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.UbuntuLatest,
     AzurePipelinesImage.MacOsLatest,
-    InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack), nameof(PackCoreOnly) },
+    InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
-    ExcludedTargets = new[] { nameof(Clean)})]
+    ExcludedTargets = new[] { nameof(Clean), nameof(PackCoreOnly)})]
 
 partial class Build : Nuke.Common.NukeBuild
 {
