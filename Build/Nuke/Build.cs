@@ -126,6 +126,7 @@ partial class Build : Nuke.Common.NukeBuild
         .DependsOn(Compile)
         .Produces(TestResultDirectory / "*.trx")
         .Executes(() => ExecutesTest(false));
+
     void ExecutesTest(bool excludeNetFramework)
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
@@ -146,7 +147,7 @@ partial class Build : Nuke.Common.NukeBuild
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
                         .SetFramework(v.framework)
-                        .SetLogger($"trx;LogFileName={v.project.Name}.trx"));
+                        .SetLogger($"trx;LogFileName={v.project.Name}-{v.framework}.trx"));
             });
 
         TestResultDirectory.GlobFiles("*.trx").ForEach(x =>
