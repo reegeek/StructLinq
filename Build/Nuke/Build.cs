@@ -41,9 +41,9 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.UbuntuLatest,
     AzurePipelinesImage.MacOsLatest,
-    InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack), nameof(PackCoreOnly) },
+    InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
-    ExcludedTargets = new[] { nameof(Clean)})]
+    ExcludedTargets = new[] { nameof(Clean), nameof(PackCoreOnly)})]
 
 partial class Build : Nuke.Common.NukeBuild
 {
@@ -89,6 +89,7 @@ partial class Build : Nuke.Common.NukeBuild
     Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() => ExecutesCompile(false));
+
     void ExecutesCompile(bool excludeNetFramework)
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
@@ -126,13 +127,14 @@ partial class Build : Nuke.Common.NukeBuild
         .DependsOn(Compile)
         .Produces(TestResultDirectory / "*.trx")
         .Executes(() => ExecutesTest(false));
+
     void ExecutesTest(bool excludeNetFramework)
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
 
         var testConfigurations =
             from project in TestProjects
-            from framework in project.GetTargetFrameworks(excludeNetFramework)
+            from framework in project.GetTargetFrameworksForTest(excludeNetFramework)
             select new {project, framework};
 
         DotNetTest(_ =>
@@ -146,7 +148,7 @@ partial class Build : Nuke.Common.NukeBuild
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
                         .SetFramework(v.framework)
-                        .SetLogger($"trx;LogFileName={v.project.Name}.trx"));
+                        .SetLogger($"trx;LogFileName={v.project.Name}-{v.framework}.trx"));
             });
 
         TestResultDirectory.GlobFiles("*.trx").ForEach(x =>

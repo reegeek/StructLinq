@@ -21,8 +21,6 @@ namespace StructLinq.Benchmark
     //|   StructSelect | 19.29 us | 0.074 us | 0.070 us |  0.31 |    0.00 |     - |     - |     - |         - |
     //|  ConvertSelect | 47.77 us | 1.040 us | 1.316 us |  0.78 |    0.02 |     - |     - |     - |      40 B |
 
-
-
     [MemoryDiagnoser, DisassemblyDiagnoser(recursiveDepth: 4)]
     public class Select
     {
@@ -73,5 +71,4 @@ namespace StructLinq.Benchmark
             return element * 2.0;
         }
     }
-
 }

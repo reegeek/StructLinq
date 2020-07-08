@@ -36,7 +36,7 @@ partial class Build
                 case AzurePipelinesImage.MacOsLatest:
                 case AzurePipelinesImage.MacOs1014:
                 case AzurePipelinesImage.MacOs1013:
-                    targetToExcludes = new[] { nameof(Test), nameof(Compile), nameof(Pack) };
+                    targetToExcludes = new[] { nameof(Test), nameof(Compile), nameof(Pack), nameof(PackCoreOnly) };
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(image), image, null);

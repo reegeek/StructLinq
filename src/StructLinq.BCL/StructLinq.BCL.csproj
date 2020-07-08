@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netcoreapp1.0;netcoreapp2.0;netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Nuget">
+    <Description>Implementation in C# of LINQ concept with struct. Extension support for BCL containers</Description>
+    <PackageTags>C#;linq;struct;allocation free;fast</PackageTags>
+    <Company />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StructLinq\StructLinq.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fody" Version="6.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="InlineIL.Fody" Version="1.4.2">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

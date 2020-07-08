@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using StructLinq.Array;
-using StructLinq.Utils;
 
-namespace StructLinq.List
+namespace StructLinq.BCL.List
 {
-    public struct ListEnumerable<T> : IStructEnumerable<T, ArrayStructEnumerator<T>>
+    public readonly struct ListEnumerable<T> : IStructEnumerable<T, ArrayStructEnumerator<T>>
     {
-        private List<T> list;
-        private ListLayout<T> layout;
+        private readonly List<T> list;
+        private readonly ListLayout<T> layout;
         public ListEnumerable(List<T> list)
         {
             this.list = list;

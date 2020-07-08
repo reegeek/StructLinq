@@ -2,11 +2,11 @@
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using StructLinq.List;
+using StructLinq.BCL.List;
 
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public static partial class BCLStructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ListEnumerable<T> ToStructEnumerable<T>(this List<T> list)

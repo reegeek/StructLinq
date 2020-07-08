@@ -28,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuke", "Nuke", "{8A638E83-2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NukeBuild", "Build\Nuke\NukeBuild.csproj", "{486A956C-407B-410A-97C2-59D00DDEAE21}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.BCL", "src\StructLinq.BCL\StructLinq.BCL.csproj", "{ED389B67-44CE-41B4-8088-2CF1399F2C0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.BCL.Tests", "src\StructLinq.BCL.Tests\StructLinq.BCL.Tests.csproj", "{98D4E838-93BD-40B8-90AA-E8564318F1FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,14 @@ Global
 		{363DB35F-7108-4DE4-AE6C-62950E53D84E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{486A956C-407B-410A-97C2-59D00DDEAE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{486A956C-407B-410A-97C2-59D00DDEAE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98D4E838-93BD-40B8-90AA-E8564318F1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D4E838-93BD-40B8-90AA-E8564318F1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D4E838-93BD-40B8-90AA-E8564318F1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D4E838-93BD-40B8-90AA-E8564318F1FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

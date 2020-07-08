@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using StructLinq.Array;
-using StructLinq.Utils;
 
-namespace StructLinq.List
+namespace StructLinq.BCL.List
 {
     public struct ListRefEnumerable<T> : IRefStructEnumerable<T, ArrayRefStructEnumerator<T>>
     {
