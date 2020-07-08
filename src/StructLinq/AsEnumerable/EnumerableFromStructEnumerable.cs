@@ -4,7 +4,7 @@ using StructLinq.IEnumerable;
 
 namespace StructLinq.AsEnumerable
 {
-    public class EnumerableFromStructEnumerable<T, TEnumerator> : IEnumerable<T> 
+    public readonly struct EnumerableFromStructEnumerable<T, TEnumerator> : IEnumerable<T> 
         where TEnumerator : struct, IStructEnumerator<T>
     {
         private readonly IStructEnumerable<T, TEnumerator> structEnumerable;
@@ -18,7 +18,8 @@ namespace StructLinq.AsEnumerable
         }
         public IEnumerator<T> GetEnumerator()
         {
-            return new StructEnumerator<T,TEnumerator>(structEnumerable.GetEnumerator());
+            var structEnumerator = structEnumerable.GetEnumerator();
+            return new StructEnumerator<T,TEnumerator>(ref structEnumerator);
         }
     }
 }
