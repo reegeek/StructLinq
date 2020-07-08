@@ -19,7 +19,7 @@ namespace StructLinq.AsEnumerable
         public IEnumerator<T> GetEnumerator()
         {
             var refStructEnumerator = structEnumerable.GetEnumerator();
-            return new RefStructEnumerator<T, TEnumerator>(ref refStructEnumerator);
+            return new RefStructEnumerator<T, TEnumerator>(refStructEnumerator);
         }
     }
 }
