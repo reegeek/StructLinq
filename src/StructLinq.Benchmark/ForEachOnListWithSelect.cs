@@ -15,11 +15,13 @@ namespace StructLinq.Benchmark
 
 
     //```
-    //|                   Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
-    //|------------------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|
-    //|                  Default | 76.53 us | 1.020 us | 0.954 us |  1.00 |     - |     - |     - |      73 B |
-    //|       StructLinqWithFunc | 27.22 us | 0.518 us | 0.576 us |  0.36 |     - |     - |     - |         - |
-    //| StructLinqWithStructFunc | 15.60 us | 0.176 us | 0.165 us |  0.20 |     - |     - |     - |         - |
+    //|                               Method |      Mean |    Error |   StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
+    //|------------------------------------- |----------:|---------:|---------:|------:|--------:|------:|------:|------:|----------:|
+    //|                                 LINQ |  85.80 us | 1.685 us | 1.803 us |  1.00 |    0.00 |     - |     - |     - |      72 B |
+    //|                   StructLinqWithFunc |  30.48 us | 0.606 us | 0.787 us |  0.36 |    0.01 |     - |     - |     - |         - |
+    //|       StructLinqWithFuncAsEnumerable | 105.35 us | 2.056 us | 2.673 us |  1.24 |    0.03 |     - |     - |     - |      80 B |
+    //|             StructLinqWithStructFunc |  16.89 us | 0.332 us | 0.615 us |  0.20 |    0.01 |     - |     - |     - |         - |
+    //| StructLinqWithStructFuncAsEnumerable |  78.31 us | 1.049 us | 0.981 us |  0.91 |    0.02 |     - |     - |     - |      81 B |
 
 
     [MemoryDiagnoser]
@@ -32,7 +34,7 @@ namespace StructLinq.Benchmark
         }
 
         [Benchmark(Baseline = true)]
-        public int Default()
+        public int LINQ()
         {
             var sum = 0;
             foreach (var i in list.Select(x=> x * 2))
@@ -55,6 +57,17 @@ namespace StructLinq.Benchmark
         }
 
         [Benchmark]
+        public int StructLinqWithFuncAsEnumerable()
+        {
+            var sum = 0;
+            foreach (var i in list.ToStructEnumerable().Select(x=> x * 2, x=>x).ToEnumerable())
+            {
+                sum += i;
+            }
+            return sum;
+        }
+
+        [Benchmark]
         public int StructLinqWithStructFunc()
         {
             var sum = 0;
@@ -65,6 +78,19 @@ namespace StructLinq.Benchmark
             }
             return sum;
         }
+
+        [Benchmark]
+        public int StructLinqWithStructFuncAsEnumerable()
+        {
+            var sum = 0;
+            var func = new Mult2();
+            foreach (var i in list.ToStructEnumerable().Select(ref func, x=> x, x=> x).ToEnumerable())
+            {
+                sum += i;
+            }
+            return sum;
+        }
+
 
         public readonly struct Mult2 : IFunction<int, int>
         {

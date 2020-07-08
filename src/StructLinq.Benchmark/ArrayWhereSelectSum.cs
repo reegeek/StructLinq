@@ -31,6 +31,7 @@ namespace StructLinq.Benchmark
         {
             array = Enumerable.Range(0, Count).ToArray();
         }
+
         [Benchmark(Baseline = true)]
         public int HandmadedCode()
         {
@@ -46,6 +47,7 @@ namespace StructLinq.Benchmark
             }
             return sum;
         }
+        
         [Benchmark]
         public int SysLinq() => array
             .Where(x => (x & 1) == 0)
