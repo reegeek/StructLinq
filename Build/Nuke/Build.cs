@@ -89,6 +89,7 @@ partial class Build : Nuke.Common.NukeBuild
     Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() => ExecutesCompile(false));
+
     void ExecutesCompile(bool excludeNetFramework)
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
@@ -133,7 +134,7 @@ partial class Build : Nuke.Common.NukeBuild
 
         var testConfigurations =
             from project in TestProjects
-            from framework in project.GetTargetFrameworks(excludeNetFramework)
+            from framework in project.GetTargetFrameworksForTest(excludeNetFramework)
             select new {project, framework};
 
         DotNetTest(_ =>
