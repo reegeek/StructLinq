@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/reegeek/StructLinq)](https://github.com/reegeek/StructLinq/stargazers) [![GitHub forks](https://img.shields.io/github/forks/reegeek/StructLinq)](https://github.com/reegeek/StructLinq/network) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/reegeek/StructLinq/blob/master/LICENSE)
 
 Implementation in C# of LINQ concept with struct to reduce drastically memory allocation and improve performance. 
-Introduce `IRefStructEnumerable` to improve performance.
+Introduce `IRefStructEnumerable` to improve performance when element are fat struct.
 
 ---
 - [Installation](#Installation)
@@ -26,6 +26,11 @@ To install [`StructLinq`](https://www.nuget.org/packages/StructLinq/) :
   ```
   PM> Install-Package StructLinq
   ```
+To install BCL wrapper use [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/) :
+  ```
+  PM> Install-Package StructLinq.BCL
+  ```
+
 
 ## Usage
 
@@ -43,7 +48,7 @@ int result = array
                 .Sum();
 ```
 
-`x=>x` is used to avoid boxing and to help generic type parameters inference.
+`x=>x` is used to avoid boxing (and allocation) and to help generic type parameters inference.
 You can also improve performance by using struct for Where predicate and select function.
 
 ## IRefStructEnumerable
@@ -68,34 +73,54 @@ You can also improve performance by using struct for Where predicate and select 
 
 ## Performances
 
-Benchmark are in [here](src/StructLinq.Benchmark).
-For example on following linq sequence:
+All benchmark are in [here](src/StructLinq.Benchmark).
+For example following linq sequence:
  ```csharp
-    array
+    list
       .Where(x => (x & 1) == 0)
       .Select(x => x * 2)
       .Sum();
  ```
- [Benchmark](src/StructLinq.Benchmark/ArrayWhereSelectSum.cs) results are:
+ can be replace by:
+  ```csharp
+    list
+      .ToStructEnumerable()
+      .Where(x => (x & 1) == 0)
+      .Select(x => x * 2)
+      .Sum();
+ ```
+ or if you want zero allocation and better performance by:
+  ```csharp
+    var where = new WherePredicate();
+    var select = new SelectFunction();
+    list
+      .ToStructEnumerable()
+      .Where(ref @where, x => x)
+      .Select(ref @select, x => x, x => x)
+      .Sum(x => x);
+ ```
 
- ``` ini
+
+ [Benchmark](src/StructLinq.Benchmark/ListWhereSelectSum.cs) results are:
+
+``` ini
 
 BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
-Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=3.1.200
-  [Host]     : .NET Core 3.1.2 (CoreCLR 4.700.20.6602, CoreFX 4.700.20.6702), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.2 (CoreCLR 4.700.20.6602, CoreFX 4.700.20.6702), X64 RyuJIT
+Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+.NET Core SDK=3.1.301
+  [Host]     : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
+  DefaultJob : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
+
 
 ```
-|                                Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|-------------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|                          HandmadeCode |  5.579 us | 0.0414 us | 0.0346 us |  1.00 |    0.00 |     - |     - |     - |         - |
-|                               SysLinq | 48.360 us | 0.5377 us | 0.4767 us |  8.67 |    0.06 |     - |     - |     - |     104 B |
-| StructRangeWhereSelectSumWithDelegate | 40.848 us | 0.3137 us | 0.2935 us |  7.31 |    0.06 |     - |     - |     - |      40 B |
-|             StructRangeWhereSelectSum | 13.703 us | 0.0452 us | 0.0378 us |  2.46 |    0.02 |     - |     - |     - |         - |
+|                 Method |     Mean |    Error |   StdDev |   Median | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|----------------------- |---------:|---------:|---------:|---------:|------:|--------:|------:|------:|------:|----------:|
+|                   LINQ | 84.54 us | 1.676 us | 4.385 us | 82.60 us |  1.00 |    0.00 |     - |     - |     - |     152 B |
+| StructLinqWithDelegate | 53.25 us | 1.012 us | 1.083 us | 53.01 us |  0.60 |    0.03 |     - |     - |     - |      96 B |
+|    StructLinqZeroAlloc | 17.22 us | 0.343 us | 0.513 us | 17.12 us |  0.20 |    0.01 |     - |     - |     - |         - |
  
 
-`StructLinq` is 3.5 time faster than default `LINQ` implementation.
+`StructLinq` is significatively faster than default `LINQ` implementation.
 
 ## Features
 
@@ -103,14 +128,22 @@ Duck typing with `foreach` is available with zero allocation for `IStructEnumera
 
 ### BCL
 
-Following class have a `StructLinq` extension method:
+Following class have a `StructLinq` extension method for `IStructEnumerable`:
   - `IEnumerable<T>`
   - `T[]`
+  - `List<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+  - `Dictionary<TKey, TValue>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+
+Following class have a `StructLinq` extension method for `IRefStructEnumerable`:
+  - `T[]`
+  - `List<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+  
 
 ### Transformers
 Following transformations are available for :
   - `Select`
   - `Where`
+  - `Distinct` ([zero allocation](src/StructLinq.Benchmark/Distinct.cs))
 ### Aggregators
 Following aggregators are available:
   - `Count`
@@ -123,6 +156,7 @@ Following aggregators are available:
 ### Generators
 Following generators are available:
   - `Range`
+  - `Repeat`
 
 
 
