@@ -15,12 +15,12 @@ namespace StructLinq.Benchmark
 
 
     //```
-    //|                 Method |     Mean |    Error |   StdDev | Ratio | RatioSD |   Gen 0 |   Gen 1 |   Gen 2 | Allocated |
-    //|----------------------- |---------:|---------:|---------:|------:|--------:|--------:|--------:|--------:|----------:|
-    //|                   Linq | 558.6 us | 12.65 us | 18.94 us |  1.00 |    0.00 | 90.8203 | 90.8203 | 90.8203 |  524784 B |
-    //|             StructLinq | 311.2 us |  5.27 us |  4.67 us |  0.56 |    0.02 |       - |       - |       - |         - |
-    //|    ZeroAllocStructLinq | 240.0 us |  3.15 us |  2.95 us |  0.43 |    0.01 |       - |       - |       - |         - |
-    //| ZeroAllocStructLinqSum | 235.1 us |  1.97 us |  1.84 us |  0.43 |    0.01 |       - |       - |       - |         - |
+    //|                 Method |     Mean |   Error |  StdDev | Ratio |   Gen 0 |   Gen 1 |   Gen 2 | Allocated |
+    //|----------------------- |---------:|--------:|--------:|------:|--------:|--------:|--------:|----------:|
+    //|                   Linq | 578.8 us | 6.85 us | 6.40 us |  1.00 | 90.8203 | 90.8203 | 90.8203 |  524789 B |
+    //|             StructLinq | 323.3 us | 6.15 us | 6.58 us |  0.56 |       - |       - |       - |      32 B |
+    //|    StructLinqZeroAlloc | 234.3 us | 1.44 us | 1.20 us |  0.41 |       - |       - |       - |         - |
+    //| StructLinqZeroAllocSum | 238.2 us | 5.79 us | 5.42 us |  0.41 |       - |       - |       - |         - |
 
     [MemoryDiagnoser]
     public class Distinct
@@ -52,7 +52,7 @@ namespace StructLinq.Benchmark
         public int StructLinq()
         {
             var sum = 0;
-            foreach (var i in array.ToStructEnumerable().Distinct(x=>x))
+            foreach (var i in array.ToStructEnumerable().Distinct())
             {
                 sum += i;
             }
@@ -60,7 +60,7 @@ namespace StructLinq.Benchmark
         }
 
         [Benchmark]
-        public int ZeroAllocStructLinq()
+        public int StructLinqZeroAlloc()
         {
             var sum = 0;
             var comparer = new StructEqualityComparer();
@@ -72,10 +72,12 @@ namespace StructLinq.Benchmark
         }
         
         [Benchmark]
-        public int ZeroAllocStructLinqSum()
+        public int StructLinqZeroAllocSum()
         {
             var comparer = new StructEqualityComparer();
-            return array.ToStructEnumerable().Distinct(comparer, x => x).Sum(x=>x);
+            return array.ToStructEnumerable()
+                        .Distinct(comparer, x => x)
+                        .Sum(x=>x);
         }
 
 

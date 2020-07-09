@@ -21,7 +21,7 @@ namespace StructLinq
             Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _) 
             where TComparer : IEqualityComparer<T> 
             where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+            where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             return new DistinctEnumerable<T, TEnumerable, TEnumerator, TComparer>(ref enumerable, comparer, capacity, bucketPool, slotPool);
         }
@@ -33,7 +33,7 @@ namespace StructLinq
             Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TComparer : IEqualityComparer<T>
             where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+            where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             return enumerable.Distinct(comparer, capacity,
                 ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared, _);
@@ -55,7 +55,7 @@ namespace StructLinq
                                                                                                                                   IEqualityComparer<T> comparer,
                                                                                                                                   Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+            where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             return enumerable.Distinct(comparer, 0, _);
         }
@@ -64,9 +64,27 @@ namespace StructLinq
         public static DistinctEnumerable<T, TEnumerable, TEnumerator, IEqualityComparer<T>> Distinct<T, TEnumerable, TEnumerator>(this TEnumerable enumerable,
                                                                                                                                   Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+            where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
-            return enumerable.Distinct<T, TEnumerable, TEnumerator>(EqualityComparer<T>.Default, _);
+            return enumerable.Distinct(EqualityComparer<T>.Default, _);
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DistinctEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, IEqualityComparer<T>> Distinct<T,TEnumerator>(
+            this IStructEnumerable<T, TEnumerator> enumerable,
+            IEqualityComparer<T> comparer)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            return Distinct(enumerable, comparer, x => x);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DistinctEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, IEqualityComparer<T>> Distinct<T, TEnumerator>(
+            this IStructEnumerable<T, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            return enumerable.Distinct(EqualityComparer<T>.Default);
         }
 
 

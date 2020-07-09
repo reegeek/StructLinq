@@ -8,7 +8,7 @@ namespace StructLinq.Distinct
             DistinctEnumerator<T, TEnumerator, TComparer>>
         where TComparer : IEqualityComparer<T>
         where TEnumerator : struct, IStructEnumerator<T>
-        where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+        where TEnumerable : IStructEnumerable<T, TEnumerator>
 
     {
         private TEnumerable enumerable;
