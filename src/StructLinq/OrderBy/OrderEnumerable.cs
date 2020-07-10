@@ -30,6 +30,13 @@ namespace StructLinq.OrderBy
             var enumerator = enumerable.GetEnumerator();
             PoolLists.Fill(ref datas, ref enumerator);
             var size = datas.Size;
+
+            if (size == 0)
+            {
+                var empty = indexPool.Rent(0);
+                return new OrderByEnumerator<T>(empty, datas, size, indexPool);
+            }
+
             var indexes = indexPool.Rent(size);
             for (int i = 0; i < size; i++)
             {

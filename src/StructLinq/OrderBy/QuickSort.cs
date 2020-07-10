@@ -5,6 +5,15 @@ namespace StructLinq.OrderBy
 {
     internal class QuickSort
     {
+        private static int Compare<T, TComparer>(int x, int y, T[] keys, ref TComparer comparer)
+            where TComparer : IComparer<T>
+        {
+            var c = comparer.Compare(keys[x], keys[y]);
+            if (c == 0)
+                return x - y;
+            return c;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Sort<T, TComparer>(int[] map, int left, int right, T[] keys, ref TComparer comparer)
             where TComparer : IComparer<T>
@@ -16,9 +25,9 @@ namespace StructLinq.OrderBy
                 int x = map[i + ((j - i) >> 1)];
                 do
                 {
-                    while (i < map.Length && comparer.Compare(keys[x], keys[map[i]]) > 0)
+                    while (i < map.Length && Compare(x, map[i], keys, ref comparer) > 0)
                         i++;
-                    while (j >= 0 && comparer.Compare(keys[x], keys[map[j]]) < 0)
+                    while (j >= 0 && Compare(x, map[j], keys, ref comparer) < 0)
                         j--;
                     if (i > j)
                         break;
