@@ -25,7 +25,7 @@ namespace StructLinq.Tests
             int enumSize = enumerable.ToEnumerable().Count();
 
             //Assert
-            size.Should().Be(enumSize);
+            enumSize.Should().Be(size);
         }
 
         //[Fact]
