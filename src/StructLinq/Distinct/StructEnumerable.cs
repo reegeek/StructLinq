@@ -61,12 +61,13 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static DistinctEnumerable<T, TEnumerable, TEnumerator, IEqualityComparer<T>> Distinct<T, TEnumerable, TEnumerator>(this TEnumerable enumerable,
-                                                                                                                                  Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        public static DistinctEnumerable<T, TEnumerable, TEnumerator, EqualityComparer<T>> Distinct<T, TEnumerable, TEnumerator>(this TEnumerable enumerable,
+                                                                                                                                 Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
-            return enumerable.Distinct(EqualityComparer<T>.Default, _);
+            var equalityComparer = EqualityComparer<T>.Default;
+            return new DistinctEnumerable<T, TEnumerable, TEnumerator, EqualityComparer<T>>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
 
@@ -80,11 +81,12 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static DistinctEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, IEqualityComparer<T>> Distinct<T, TEnumerator>(
+        public static DistinctEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, EqualityComparer<T>> Distinct<T, TEnumerator>(
             this IStructEnumerable<T, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return enumerable.Distinct(EqualityComparer<T>.Default);
+            var equalityComparer = EqualityComparer<T>.Default;
+            return new DistinctEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, EqualityComparer<T>>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
 

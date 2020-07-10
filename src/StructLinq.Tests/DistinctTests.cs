@@ -7,10 +7,10 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class DistinctTests : AbstractEnumerableTests<int,
-        DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, IEqualityComparer<int>>,
-        DistinctEnumerator<int, RangeEnumerator, IEqualityComparer<int>>>
+        DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, EqualityComparer<int>>,
+        DistinctEnumerator<int, RangeEnumerator, EqualityComparer<int>>>
     {
-        protected override DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, IEqualityComparer<int>> Build(int size)
+        protected override DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, EqualityComparer<int>> Build(int size)
         {
             var selectEnumerable = StructEnumerable.Range(-1, size).Distinct(x=>x);
             return selectEnumerable;
