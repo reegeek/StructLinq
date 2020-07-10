@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -14,11 +16,12 @@ namespace StructLinq.Benchmark
 
 
     //```
-    //|              Method |       Mean |    Error |   StdDev | Ratio |   Gen 0 |  Gen 1 | Gen 2 | Allocated |
-    //|-------------------- |-----------:|---------:|---------:|------:|--------:|-------:|------:|----------:|
-    //|                LINQ | 1,775.5 us | 29.95 us | 26.55 us |  1.00 | 27.3438 | 1.9531 |     - |  120411 B |
-    //|          StructLinq |   854.7 us | 16.54 us | 15.48 us |  0.48 |       - |      - |     - |      41 B |
-    //| StructLinqZeroAlloc |   329.5 us |  6.50 us | 10.68 us |  0.19 |       - |      - |     - |         - |
+    //|              Method |     Mean |     Error |    StdDev | Ratio | RatioSD |   Gen 0 | Gen 1 | Gen 2 | Allocated |
+    //|-------------------- |---------:|----------:|----------:|------:|--------:|--------:|------:|------:|----------:|
+    //|                LINQ | 2.094 ms | 0.0417 ms | 0.0480 ms |  1.00 |    0.00 | 27.3438 |     - |     - |  120400 B |
+    //|          StructLinq | 1.703 ms | 0.0272 ms | 0.0227 ms |  0.81 |    0.02 |       - |     - |     - |      35 B |
+    //| StructLinqZeroAlloc | 1.089 ms | 0.0122 ms | 0.0114 ms |  0.52 |    0.01 |       - |     - |     - |         - |
+
     
 
     [MemoryDiagnoser, DisassemblyDiagnoser(recursiveDepth: 4)]
@@ -29,7 +32,13 @@ namespace StructLinq.Benchmark
 
         public OrderByArrayOfInt()
         {
-            array = Enumerable.Range(0, Count).Reverse().ToArray();
+            var rand = new Random(42);
+            var list = new List<int>();
+            for (int i = 0; i < Count; i++)
+            {
+                list.Add(rand.Next());
+            }
+            array = list.ToArray();
         }
 
         [Benchmark(Baseline = true)]

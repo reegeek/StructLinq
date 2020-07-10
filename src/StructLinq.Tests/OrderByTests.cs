@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using StructLinq.Array;
 using StructLinq.OrderBy;
@@ -20,11 +21,18 @@ namespace StructLinq.Tests
         [Fact]
         public void ShouldBeSameAsSystem()
         {
-            var array = Enumerable.Range(0, 100).Reverse().ToArray().ToStructEnumerable();
+            var rand = new Random(42);
+            var list = new List<int>();
+            for (int i = 0; i < 100; i++)
+            {
+                list.Add(rand.Next());
+            }
+            var array = list.ToArray();
 
-            var order = array.OrderBy(x => x).ToArray();
+            var order = array.ToStructEnumerable().OrderBy(x => x).ToArray();
+            var expected = array.OrderBy(x => x).ToArray();
 
-            Assert.Equal(Enumerable.Range(0, 100), order);
+            Assert.Equal(expected, order);
         }
     }
 }
