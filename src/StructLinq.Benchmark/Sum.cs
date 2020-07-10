@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -72,5 +73,13 @@ namespace StructLinq.Benchmark
             return Enumerable.Range(0, Count).ToStructEnumerable().Sum(x=>x);
         }
 
+    }
+
+    public struct IntComparer : IComparer<int>
+    {
+        public int Compare(int x, int y)
+        {
+            return x - y;
+        }
     }
 }
