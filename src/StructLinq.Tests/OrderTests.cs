@@ -7,17 +7,15 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class OrderByTests : AbstractEnumerableTests<
+    public class OrderTests : AbstractEnumerableTests<
         int,
-        OrderByKeyEnumerable<int, IStructEnumerable<int, ArrayStructEnumerator<int>>, ArrayStructEnumerator<int>, StructFunction<int, int>, int, Comparer<int>>,
+        OrderEnumerable<int, ArrayEnumerable<int>, ArrayStructEnumerator<int>, Comparer<int>>,
         OrderByEnumerator<int>>
     {
-        protected override OrderByKeyEnumerable<int, IStructEnumerable<int, ArrayStructEnumerator<int>>, ArrayStructEnumerator<int>, StructFunction<int, int>, int, Comparer<int>> Build(int size)
+        protected override OrderEnumerable<int, ArrayEnumerable<int>, ArrayStructEnumerator<int>, Comparer<int>> Build(int size)
         {
             var array = Enumerable.Range(-1, size).Reverse().ToArray().ToStructEnumerable();
-            Func<int, int> func = x => x;
-            var orderByKeyEnumerable = array.OrderBy(func);
-            return orderByKeyEnumerable;
+            return array.Order(x => x);
         }
 
         [Fact]

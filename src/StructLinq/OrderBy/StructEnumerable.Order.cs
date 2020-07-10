@@ -11,9 +11,9 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderEnumerable<T, TEnumerable, TEnumerator, TComparer> OrderBy<T, TEnumerable, TEnumerator, TComparer>(
+        public static OrderEnumerable<T, TEnumerable, TEnumerator, TComparer> Order<T, TEnumerable, TEnumerator, TComparer>(
             this TEnumerable enumerable,
-            TComparer comparer,
+            ref TComparer comparer,
             int capacity,
             ArrayPool<int> indexPool,
             ArrayPool<T> dataPool,
@@ -26,57 +26,56 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderEnumerable<T, TEnumerable, TEnumerator, TComparer> OrderBy<T, TEnumerable, TEnumerator, TComparer>(
+        public static OrderEnumerable<T, TEnumerable, TEnumerator, TComparer> Order<T, TEnumerable, TEnumerator, TComparer>(
             this TEnumerable enumerable,
-            TComparer comparer,
+            ref TComparer comparer,
             int capacity,
             Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
             where TComparer : IComparer<T>
         {
-            return enumerable.OrderBy(comparer, capacity, ArrayPool<int>.Shared, ArrayPool<T>.Shared, _);
+            return enumerable.Order(ref comparer, capacity, ArrayPool<int>.Shared, ArrayPool<T>.Shared, _);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderEnumerable<T, TEnumerable, TEnumerator, TComparer> OrderBy<T, TEnumerable, TEnumerator, TComparer>(
+        public static OrderEnumerable<T, TEnumerable, TEnumerator, TComparer> Order<T, TEnumerable, TEnumerator, TComparer>(
             this TEnumerable enumerable,
-            TComparer comparer,
+            ref TComparer comparer,
             Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
             where TComparer : IComparer<T>
         {
-            return enumerable.OrderBy(comparer, 0, _);
+            return enumerable.Order(ref comparer, 0, _);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderEnumerable<T, TEnumerable, TEnumerator, Comparer<T>> OrderBy<T, TEnumerable, TEnumerator>(
+        public static OrderEnumerable<T, TEnumerable, TEnumerator, Comparer<T>> Order<T, TEnumerable, TEnumerator>(
             this TEnumerable enumerable,
-
             Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return enumerable.OrderBy(Comparer<T>.Default, 0, _);
+            var structComparer = Comparer<T>.Default;
+            return enumerable.Order(ref structComparer, 0, _);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, IComparer<T>> OrderBy<T, TEnumerator>(
+        public static OrderEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, IComparer<T>> Order<T, TEnumerator>(
             this IStructEnumerable<T, TEnumerator> enumerable, IComparer<T> comparer)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return enumerable.OrderBy(comparer, 0, x=> x);
+            return enumerable.Order(ref comparer, 0, x=> x);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, Comparer<T>> OrderBy<T, TEnumerator>(
+        public static OrderEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, Comparer<T>> Order<T, TEnumerator>(
             this IStructEnumerable<T, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return enumerable.OrderBy(Comparer<T>.Default, 0, x=> x);
+            var comparer = Comparer<T>.Default;
+            return enumerable.Order(ref comparer, 0, x=> x);
         }
-
-
     }
 }
