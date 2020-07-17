@@ -82,5 +82,12 @@ namespace StructLinq.Utils.Collections
             ReturnArray();
             index = -1;
         }
+
+        public T[] ToArray()
+        {
+            var result = new T[Size];
+            System.Array.Copy(Items, result, Size);
+            return result;
+        }
     }
 }
