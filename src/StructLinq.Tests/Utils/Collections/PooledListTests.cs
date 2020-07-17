@@ -43,5 +43,19 @@ namespace StructLinq.Tests.Utils.Collections
             }
         }
 
+
+        [Fact]
+        public void ShouldCreateArray()
+        {
+            var list = new PooledList<int>(0, ArrayPool<int>.Shared);
+            var array = Enumerable.Range(0, 100).ToArray();
+            foreach (var i in array)
+            {
+                list.Add(i);
+            }
+
+            var enumerable = list.ToArray();
+            Assert.Equal(array, enumerable);
+        }
     }
 }
