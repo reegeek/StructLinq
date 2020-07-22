@@ -1,4 +1,6 @@
-﻿namespace StructLinq.Repeat
+﻿using System.Runtime.CompilerServices;
+
+namespace StructLinq.Repeat
 {
     public struct RepeatEnumerator<T> : IStructEnumerator<T>
     {
@@ -16,16 +18,22 @@
         {
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
             return index++ < count;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
             index = 0;
         }
 
-        public T Current => element;
+        public T Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => element;
+        }
     }
 }
