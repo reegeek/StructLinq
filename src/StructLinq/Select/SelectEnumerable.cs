@@ -24,6 +24,8 @@ namespace StructLinq.Select
             var typedEnumerator = inner.GetEnumerator();
             return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
+
+        internal TEnumerable Inner => inner;
     }
 }
 

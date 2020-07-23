@@ -25,5 +25,7 @@ namespace StructLinq.Reverse
             PoolLists.Fill(ref list, ref enumerator);
             return new ReverseEnumerator<T>(list);
         }
+
+        internal TEnumerable Enumerable => enumerable;
     }
 }

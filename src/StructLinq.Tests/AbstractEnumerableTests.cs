@@ -130,6 +130,5 @@ namespace StructLinq.Tests
             }
             Assert.Equal(5, count);
         }
-
     }
 }

@@ -93,6 +93,50 @@ namespace StructLinq
             return RefUintCount<T, TEnumerator>(ref enumerator);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Count<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
+            where TCollection : IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return collection.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Count<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return collection.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint UIntCount<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
+            where TCollection : IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return (uint)collection.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint UintCount<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return (uint)collection.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long LongCount<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
+            where TCollection : IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return collection.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long LongCount<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return collection.Count;
+        }
 
     }
 }

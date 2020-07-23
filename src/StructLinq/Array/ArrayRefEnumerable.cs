@@ -2,7 +2,7 @@
 
 namespace StructLinq.Array
 {
-    public readonly struct ArrayRefEnumerable<T> : IRefStructEnumerable<T, ArrayRefStructEnumerator<T>>
+    public readonly struct ArrayRefEnumerable<T> : IRefStructCollection<T, ArrayRefStructEnumerator<T>>
     {
         #region private fields
         private readonly T[] array;
@@ -19,5 +19,7 @@ namespace StructLinq.Array
         {
             return new ArrayRefStructEnumerator<T>(array, length);
         }
+
+        public int Count => length;
     }
 }

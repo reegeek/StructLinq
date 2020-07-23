@@ -11,5 +11,11 @@ namespace StructLinq
         {
             return new RepeatEnumerable<T>(element, count);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Count<T>(RepeatEnumerable<T> repeatEnumerable)
+        {
+            return (int)repeatEnumerable.Count;
+        }
     }
 }
