@@ -144,6 +144,7 @@ Following transformations are available for :
   - `Select`
   - `Where`
   - `Distinct` ([zero allocation](src/StructLinq.Benchmark/Distinct.cs))
+  - `Reverse`
 ### Aggregators
 Following aggregators are available:
   - `Count`
