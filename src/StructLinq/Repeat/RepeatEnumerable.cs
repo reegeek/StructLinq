@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace StructLinq.Repeat
+﻿namespace StructLinq.Repeat
 {
     public readonly struct RepeatEnumerable<T> : IStructEnumerable<T, RepeatEnumerator<T>>
     {
@@ -20,5 +15,7 @@ namespace StructLinq.Repeat
         {
             return new RepeatEnumerator<T>(element, count);
         }
+
+        internal uint Count => count;
     }
 }

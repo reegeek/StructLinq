@@ -3,7 +3,7 @@ using StructLinq.Array;
 
 namespace StructLinq.BCL.List
 {
-    public readonly struct ListEnumerable<T> : IStructEnumerable<T, ArrayStructEnumerator<T>>
+    public readonly struct ListEnumerable<T> : IStructCollection<T, ArrayStructEnumerator<T>>
     {
         private readonly List<T> list;
         private readonly ListLayout<T> layout;
@@ -17,5 +17,7 @@ namespace StructLinq.BCL.List
         {
             return new ArrayStructEnumerator<T>(layout.Items, list.Count);
         }
+
+        public int Count => list.Count;
     }
 }

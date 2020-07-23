@@ -11,5 +11,11 @@ namespace StructLinq
         {
             return new RangeEnumerable(start, count);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Count(RangeEnumerable rangeEnumerable)
+        {
+            return rangeEnumerable.Count;
+        }
     }
 }

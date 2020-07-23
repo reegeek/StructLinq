@@ -2,7 +2,7 @@
 
 namespace StructLinq.BCL.Dictionary
 {
-    public readonly struct DictionaryKeyEnumerable<TKey, TValue> : IStructEnumerable<TKey, DictionaryKeyEnumerator<TKey, TValue>>
+    public readonly struct DictionaryKeyEnumerable<TKey, TValue> : IStructCollection<TKey, DictionaryKeyEnumerator<TKey, TValue>>
     {
         private readonly Dictionary<TKey, TValue> dictionary;
         private readonly DictionaryLayout<TKey, TValue> dictionaryLayout;
@@ -17,5 +17,7 @@ namespace StructLinq.BCL.Dictionary
         {
             return new DictionaryKeyEnumerator<TKey, TValue>(dictionaryLayout.Entries, dictionary.Count);
         }
+
+        public int Count => dictionary.Count;
     }
 }

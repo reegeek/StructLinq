@@ -23,5 +23,6 @@ namespace StructLinq.Range
             return new RangeEnumerator(start, count);
         }
 
+        internal int Count => count;
     }
 }
