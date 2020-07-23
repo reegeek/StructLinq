@@ -12,5 +12,16 @@ namespace StructLinq
         {
             return selectEnumerable.Inner.Count(x=>x);
         }
+
+
+        public static int Count<TIn, TOut, TEnumerable, TEnumerator, TFunction>(this RefSelectEnumerable<TIn, TOut, TEnumerable, TEnumerator, TFunction> selectEnumerable)
+            where TEnumerator : struct, IRefStructEnumerator<TIn>
+            where TFunction : struct, IInFunction<TIn, TOut>
+            where TEnumerable : IRefStructEnumerable<TIn, TEnumerator>
+
+        {
+            return selectEnumerable.Inner.Count(x=>x);
+        }
+
     }
 }

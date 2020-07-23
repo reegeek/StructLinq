@@ -29,7 +29,7 @@ namespace StructLinq.Benchmark
 
         public ArraySelectCount()
         {
-            array = Enumerable.Range(0, Count).ToArray();;
+            array = Enumerable.Range(0, Count).ToArray();
         }
 
         [Benchmark]

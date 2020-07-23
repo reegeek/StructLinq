@@ -30,7 +30,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Count<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
+            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
