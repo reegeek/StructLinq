@@ -5,7 +5,7 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class RepeatTests : AbstractEnumerableTests<int, RepeatEnumerable<int>, RepeatEnumerator<int>>
+    public class RepeatTests : AbstractCollectionTests<int, RepeatEnumerable<int>, RepeatEnumerator<int>>
     {
         protected override RepeatEnumerable<int> Build(int size)
         {

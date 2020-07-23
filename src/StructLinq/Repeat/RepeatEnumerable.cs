@@ -1,6 +1,6 @@
 ﻿namespace StructLinq.Repeat
 {
-    public readonly struct RepeatEnumerable<T> : IStructEnumerable<T, RepeatEnumerator<T>>
+    public readonly struct RepeatEnumerable<T> : IStructCollection<T, RepeatEnumerator<T>>
     {
         private readonly T element;
         private readonly uint count;
@@ -16,6 +16,6 @@
             return new RepeatEnumerator<T>(element, count);
         }
 
-        internal uint Count => count;
+        public int Count => (int)count;
     }
 }
