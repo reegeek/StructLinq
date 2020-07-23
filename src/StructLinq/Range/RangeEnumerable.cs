@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using StructLinq.IEnumerable;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Range
 {
-    public readonly struct RangeEnumerable : IStructEnumerable<int, RangeEnumerator>
+    public readonly struct RangeEnumerable : IStructCollection<int, RangeEnumerator>
     {
         #region private fields
         private readonly int start;
@@ -23,6 +20,6 @@ namespace StructLinq.Range
             return new RangeEnumerator(start, count);
         }
 
-        internal int Count => count;
+        public int Count => count;
     }
 }

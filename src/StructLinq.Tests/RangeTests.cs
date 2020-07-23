@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Xunit;
 using FluentAssertions;
 using StructLinq.Range;
@@ -7,7 +6,7 @@ using StructLinq.Range;
 
 namespace StructLinq.Tests
 {
-    public class RangeTests : AbstractEnumerableTests<int, RangeEnumerable, RangeEnumerator>
+    public class RangeTests : AbstractCollectionTests<int, RangeEnumerable, RangeEnumerator>
     {
         protected override RangeEnumerable Build(int size)
         {
