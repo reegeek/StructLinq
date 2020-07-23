@@ -35,6 +35,13 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<T> ToList<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            return collection.ToList(collection.Count, ArrayPool<T>.Shared);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<T> ToList<T, TEnumerable, TEnumerator>(
             this TEnumerable enumerable, 
             int capacity, 
@@ -67,6 +74,17 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<T> ToList<T, TCollection, TEnumerator>(
+            this TCollection collection, 
+            Func<TCollection, IStructCollection<T, TEnumerator>> _)
+            where TCollection : IStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            return collection.ToList(collection.Count, ArrayPool<T>.Shared, _);
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<T> ToList<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
@@ -87,6 +105,13 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
             return enumerable.ToList(capacity, ArrayPool<T>.Shared);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<T> ToList<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> enumerable)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return enumerable.ToList(enumerable.Count, ArrayPool<T>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -121,5 +146,15 @@ namespace StructLinq
             return enumerable.ToList(capacity, ArrayPool<T>.Shared, _);
         }
 
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<T> ToList<T, TEnumerable, TEnumerator>(
+            this TEnumerable enumerable, 
+            Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
+            where TEnumerable : IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return enumerable.ToList(enumerable.Count, ArrayPool<T>.Shared, _);
+        }
     }
 }
