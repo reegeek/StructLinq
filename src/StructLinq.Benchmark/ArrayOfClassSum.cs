@@ -52,7 +52,7 @@ namespace StructLinq.Benchmark
     }
 
 
-    internal class Container
+    public class Container
     {
         public readonly int Element;
         public Container(int element)
