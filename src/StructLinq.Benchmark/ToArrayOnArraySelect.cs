@@ -13,12 +13,11 @@ namespace StructLinq.Benchmark
 
 
     //```
-    //|              Method |     Mean |    Error |   StdDev | Gen 0 | Gen 1 | Gen 2 | Allocated |
-    //|-------------------- |---------:|---------:|---------:|------:|------:|------:|----------:|
-    //|                Linq | 21.60 us | 0.256 us | 0.240 us |     - |     - |     - |      48 B |
-    //|          StructLinq | 15.13 us | 0.124 us | 0.116 us |     - |     - |     - |      32 B |
-    //| StructLinqZeroAlloc | 13.82 us | 0.057 us | 0.053 us |     - |     - |     - |         - |
-
+    //|           Method |     Mean |    Error |   StdDev | Ratio | RatioSD |  Gen 0 |  Gen 1 | Gen 2 | Allocated |
+    //|----------------- |---------:|---------:|---------:|------:|--------:|-------:|-------:|------:|----------:|
+    //|             Linq | 22.20 us | 0.425 us | 0.522 us |  1.00 |    0.00 | 9.5215 | 1.1902 |     - |  39.13 KB |
+    //|       StructLinq | 43.23 us | 0.853 us | 1.664 us |  1.98 |    0.10 | 9.5215 | 1.1597 |     - |  39.12 KB |
+    //| StructLinqFaster | 29.07 us | 0.284 us | 0.252 us |  1.30 |    0.03 | 9.5215 | 1.1902 |     - |  39.09 KB |
 
     [DisassemblyDiagnoser(recursiveDepth: 4), MemoryDiagnoser]
     public class ToArrayOnArraySelect
@@ -49,7 +48,7 @@ namespace StructLinq.Benchmark
             var select = new SelectFunction();
             return array
                    .ToStructEnumerable()
-                   .Select(ref select, x=>x, x=>x)
+                   .Select(ref @select, x=>x, x=>x)
                    .ToArray(x=>x);
         }
     }

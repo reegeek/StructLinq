@@ -9,6 +9,31 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static T[] ToArray<T, TEnumerator>(ref TEnumerator enumerator,
+                                                   int capacity,
+                                                   ArrayPool<T> pool)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            var list = new PooledList<T>(capacity, pool);
+            PoolLists.Fill(ref list, ref enumerator);
+            var array = list.ToArray();
+            list.Dispose();
+            return array;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static T[] ToRefArray<T, TEnumerator>(ref TEnumerator enumerator,
+                                                      int capacity,
+                                                      ArrayPool<T> pool)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var list = new PooledList<T>(capacity, pool);
+            PoolLists.FillRef(ref list, ref enumerator);
+            var array = list.ToArray();
+            list.Dispose();
+            return array;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T[] ToArray<T, TEnumerable, TEnumerator>(
@@ -19,12 +44,8 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
             var enumerator = enumerable.GetEnumerator();
-            PoolLists.Fill(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
-            return array;
+            return ToArray(ref enumerator, capacity, pool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -36,7 +57,8 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return enumerable.ToArray(capacity, ArrayPool<T>.Shared, _);
+            var enumerator = enumerable.GetEnumerator();
+            return ToArray(ref enumerator, capacity, ArrayPool<T>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,7 +69,8 @@ namespace StructLinq
             where TEnumerable : IStructCollection<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return enumerable.ToArray(enumerable.Count, ArrayPool<T>.Shared, _);
+            var enumerator = enumerable.GetEnumerator();
+            return ToArray(ref enumerator, enumerable.Count, ArrayPool<T>.Shared);
         }
 
 
@@ -55,12 +78,8 @@ namespace StructLinq
         public static T[] ToArray<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
             var enumerator = enumerable.GetEnumerator();
-            PoolLists.Fill(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
-            return array;
+            return ToArray(ref enumerator, capacity, pool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -86,12 +105,8 @@ namespace StructLinq
             where TEnumerable: IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
             var enumerator = enumerable.GetEnumerator();
-            PoolLists.FillRef(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
-            return array;
+            return ToRefArray(ref enumerator, capacity, pool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -103,7 +118,8 @@ namespace StructLinq
             where TEnumerable : IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            return enumerable.ToArray(capacity, ArrayPool<T>.Shared, _);
+            var enumerator = enumerable.GetEnumerator();
+            return ToRefArray(ref enumerator, capacity, ArrayPool<T>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -113,7 +129,8 @@ namespace StructLinq
             where TEnumerable : IRefStructCollection<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            return enumerable.ToArray(enumerable.Count, ArrayPool<T>.Shared, _);
+            var enumerator = enumerable.GetEnumerator();
+            return ToRefArray(ref enumerator, enumerable.Count, ArrayPool<T>.Shared);
         }
 
 
@@ -121,12 +138,8 @@ namespace StructLinq
         public static T[] ToArray<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
             var enumerator = enumerable.GetEnumerator();
-            PoolLists.FillRef(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
-            return array;
+            return ToRefArray(ref enumerator, capacity, pool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

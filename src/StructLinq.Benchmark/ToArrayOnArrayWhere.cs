@@ -3,7 +3,6 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-
     //``` ini
 
     //BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
@@ -14,11 +13,11 @@ namespace StructLinq.Benchmark
 
 
     //```
-    //|           Method |     Mean |    Error |   StdDev |   Median | Ratio | RatioSD |   Gen 0 |  Gen 1 | Gen 2 | Allocated |
-    //|----------------- |---------:|---------:|---------:|---------:|------:|--------:|--------:|-------:|------:|----------:|
-    //|             Linq | 33.29 us | 0.346 us | 0.324 us | 33.27 us |  1.00 |    0.00 | 12.6953 | 0.0610 |     - |  52.19 KB |
-    //|       StructLinq | 44.34 us | 0.645 us | 0.572 us | 44.20 us |  1.33 |    0.02 |  4.7607 |      - |     - |  19.62 KB |
-    //| StructLinqFaster | 26.38 us | 0.524 us | 1.194 us | 25.78 us |  0.82 |    0.05 |  4.7607 |      - |     - |  19.55 KB |
+    //|           Method |     Mean |    Error |   StdDev | Ratio | RatioSD |   Gen 0 |  Gen 1 | Gen 2 | Allocated |
+    //|----------------- |---------:|---------:|---------:|------:|--------:|--------:|-------:|------:|----------:|
+    //|             Linq | 34.67 us | 0.910 us | 1.305 us |  1.00 |    0.00 | 12.6953 | 0.0610 |     - |  52.19 KB |
+    //|       StructLinq | 46.26 us | 0.922 us | 1.616 us |  1.34 |    0.07 |  4.7607 |      - |     - |  19.62 KB |
+    //| StructLinqFaster | 26.08 us | 0.311 us | 0.276 us |  0.75 |    0.04 |  4.7607 |      - |     - |  19.55 KB |
     
     [MemoryDiagnoser]
     public class ToArrayOnArrayWhere
