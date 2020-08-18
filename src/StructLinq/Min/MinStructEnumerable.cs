@@ -398,4 +398,43 @@ namespace StructLinq
     }
 
 
+    public static partial class StructEnumerable
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static DateTime MinDateTime<TEnumerator>(ref TEnumerator enumerator)
+            where TEnumerator : struct, IStructEnumerator<DateTime>
+        {
+        	if (!enumerator.MoveNext())
+				throw new ArgumentOutOfRangeException("No elements");
+			DateTime result = enumerator.Current;
+			while (enumerator.MoveNext())
+			{
+				var current = enumerator.Current;
+				if (current < result)
+					result = current;
+			}
+            enumerator.Dispose();
+			return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateTime Min<TEnumerator>(this IStructEnumerable<DateTime, TEnumerator> enumerable)
+            where TEnumerator : struct, IStructEnumerator<DateTime>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return MinDateTime(ref enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateTime Min<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<DateTime, TEnumerator>> _)
+            where TEnumerable : struct, IStructEnumerable<DateTime, TEnumerator>
+            where TEnumerator : struct, IStructEnumerator<DateTime>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return MinDateTime(ref enumerator);
+        }
+
+    }
+
+
 }
