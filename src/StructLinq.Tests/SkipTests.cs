@@ -1,17 +1,20 @@
 ﻿using System.Linq;
 using StructLinq.Range;
 using StructLinq.Skip;
+using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
     public class SkipTests : AbstractEnumerableTests<int,
-        SkipEnumerable<int, RangeEnumerable, RangeEnumerator>,
-        SkipEnumerator<int, RangeEnumerator>>
+        SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>,
+        SkipEnumerator<int, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>>
     {
-        protected override SkipEnumerable<int, RangeEnumerable, RangeEnumerator> Build(int size)
+
+        protected override SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> Build(int size)
         {
-            return StructEnumerable.Range(-1, size + 5).Skip(5, x=> x);
+            SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> skipEnumerable = StructEnumerable.Range(-1, size + 5).Where(x=>true, x=>x).Skip(5, x=> x);
+            return skipEnumerable;
         }
 
         [Theory]
@@ -21,7 +24,7 @@ namespace StructLinq.Tests
         public void ShouldBeTheSameAsSystem(uint skipCount)
         {
             var expected = Enumerable.Range(0, 7).ToArray().Skip((int)skipCount).ToArray();
-            var value = Enumerable.Range(0, 7).ToArray().ToStructEnumerable().Skip(skipCount).ToArray();
+            var value = Enumerable.Range(0, 7).ToArray().ToStructEnumerable().Where(x=> true).Skip(skipCount).ToArray();
 
             Assert.Equal(expected, value);
         }
