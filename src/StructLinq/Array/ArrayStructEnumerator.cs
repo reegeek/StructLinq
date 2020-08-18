@@ -9,11 +9,11 @@ namespace StructLinq.Array
         private readonly int endIndex;
         private int index;
         #endregion
-        public ArrayStructEnumerator(T[] array, int length)
+        public ArrayStructEnumerator(T[] array, int start, int length)
         {
             this.array = array;
             endIndex = length - 1;
-            index = -1;
+            index =  start - 1;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()

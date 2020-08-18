@@ -9,11 +9,11 @@ namespace StructLinq.BCL.Dictionary
         private readonly int length;
         private int index;
 
-        internal DictionaryEnumerator(Entry<TKey, TValue>[] entries, int count)
+        internal DictionaryEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
         {
             this.entries = entries;
             length = count - 1;
-            index = -1;
+            index = start -1;
         }
 
 

@@ -1,9 +1,12 @@
-﻿namespace StructLinq.Repeat
+﻿using System.Runtime.CompilerServices;
+using StructLinq.Utils;
+
+namespace StructLinq.Repeat
 {
-    public readonly struct RepeatEnumerable<T> : IStructCollection<T, RepeatEnumerator<T>>
+    public struct RepeatEnumerable<T> : IStructCollection<T, RepeatEnumerator<T>>
     {
         private readonly T element;
-        private readonly uint count;
+        private uint count;
 
         public RepeatEnumerable(T element, uint count)
         {
@@ -11,11 +14,29 @@
             this.count = count;
         }
 
-        public RepeatEnumerator<T> GetEnumerator()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RepeatEnumerator<T> GetEnumerator()
         {
             return new RepeatEnumerator<T>(element, count);
         }
 
-        public int Count => (int)count;
+        public readonly int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (int) count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint length)
+        {
+            count = start > count ? (uint) 0 : MathHelpers.Min(length, count - start);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly object Clone()
+        {
+            return new RepeatEnumerable<T>(element, count);
+        }
+
     }
 }
