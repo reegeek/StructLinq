@@ -27,9 +27,13 @@ namespace StructLinq.Repeat
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Slice(uint start, uint length)
+        public void Slice(uint start, uint? length)
         {
-            count = start > count ? (uint) 0 : MathHelpers.Min(length, count - start);
+            checked
+            {
+                count = start > count ? 0 :
+                    length.HasValue ? MathHelpers.Min(length.Value, count - start) : count - start;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

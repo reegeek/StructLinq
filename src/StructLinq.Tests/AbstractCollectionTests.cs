@@ -6,7 +6,7 @@ namespace StructLinq.Tests
 {
     public abstract class AbstractCollectionTests<T, TStructCollection, TEnumerator> 
         : AbstractEnumerableTests<T, TStructCollection, TEnumerator> 
-        where TStructCollection : IStructCollection<T, TEnumerator>
+        where TStructCollection : struct, IStructCollection<T, TEnumerator>
         where TEnumerator : struct, IStructEnumerator<T>
     {
         [Theory]
@@ -78,6 +78,40 @@ namespace StructLinq.Tests
             obj.Should().BeOfType<TStructCollection>();
             var clone = (TStructCollection) obj;
             Assert.Equal(collection.ToEnumerable().ToArray(), clone.ToEnumerable().ToArray());
+        }
+
+        [Theory]
+        [InlineData(10, 2)]
+        [InlineData(7, 5)]
+        [InlineData(7, 0)]
+        [InlineData(7, 10)]
+        public void ShouldSkipAsEnumerable(int size, uint skip)
+        {
+            TStructCollection collection = Build(size);
+            var array = collection.ToEnumerable().ToArray();
+
+            var values = collection.Skip(skip, x => x).ToArray();
+
+            var expected = array.Skip((int) skip).ToArray();
+
+            Assert.Equal(expected, values);
+        }
+
+        [Theory]
+        [InlineData(10, 2)]
+        [InlineData(7, 5)]
+        [InlineData(7, 0)]
+        [InlineData(7, 10)]
+        public void ShouldSkipAsEnumerableWithInterface(int size, uint skip)
+        {
+            IStructCollection<T, TEnumerator> collection = Build(size);
+            var array = collection.ToEnumerable().ToArray();
+
+            var values = collection.Skip(skip).ToArray();
+
+            var expected = array.Skip((int) skip).ToArray();
+
+            Assert.Equal(expected, values);
         }
     }
 }

@@ -32,17 +32,21 @@ namespace StructLinq.BCL.Dictionary
             return new DictionaryValueEnumerator<TKey, TValue>(dictionaryLayout.Entries, start, Count);
         }
 
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => MathHelpers.Min(dictionary.Count, count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Slice(uint start, uint length)
+        public void Slice(uint start, uint? length)
         {
-            this.start = (int)start + this.start;
-            this.count = (int)length + this.start;
+            checked
+            {
+                this.start = (int) start + this.start;
+                if (length.HasValue)
+                    this.count = (int) length.Value + this.start;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

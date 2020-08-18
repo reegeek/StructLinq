@@ -28,10 +28,16 @@ namespace StructLinq.Range
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Slice(uint start, uint length)
+        public void Slice(uint start, uint? length)
         {
-            this.start = (int)start + this.start;
-            count = MathHelpers.Min((int)length, count - (int)start);
+            checked
+            {
+                this.start = (int) start + this.start;
+                if (length.HasValue)
+                    count = MathHelpers.Min((int) length, count - (int) start);
+                else
+                    count -= (int) start;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

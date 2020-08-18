@@ -39,10 +39,14 @@ namespace StructLinq.BCL.Dictionary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Slice(uint start, uint length)
+        public void Slice(uint start, uint? length)
         {
-            this.start = (int)start + this.start;
-            this.count = (int)length + this.start;
+            checked
+            {
+                this.start = (int) start + this.start;
+                if (length.HasValue)
+                    this.count = (int) length.Value + this.start;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

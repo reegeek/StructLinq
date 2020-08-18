@@ -6,7 +6,7 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public abstract class AbstractEnumerableTests<T, TStructEnumerable, TEnumerator> 
-        where TStructEnumerable : IStructEnumerable<T, TEnumerator>
+        where TStructEnumerable : struct, IStructEnumerable<T, TEnumerator>
         where TEnumerator : struct, IStructEnumerator<T>
     {
         protected bool shouldReturnSameSequenceWhenResetIsCall = true; 

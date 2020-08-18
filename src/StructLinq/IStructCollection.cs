@@ -4,7 +4,7 @@
         where TEnumerator : struct, IStructEnumerator<T>
     {
         int Count { get; }
-        void Slice(uint start, uint length);
+        void Slice(uint start, uint? length);
         object Clone();
     }
 }

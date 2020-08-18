@@ -30,10 +30,14 @@ namespace StructLinq.Array
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Slice(uint start, uint length)
+        public void Slice(uint start, uint? length)
         {
-            this.start = (int)start + this.start;
-            this.length = MathHelpers.Min((int)length + this.start, this.length);
+            checked
+            {
+                this.start = (int)start + this.start;
+                if (length.HasValue)
+                    this.length = MathHelpers.Min((int)length.Value + this.start, this.length);
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
