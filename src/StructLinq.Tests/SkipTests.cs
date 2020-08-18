@@ -13,7 +13,7 @@ namespace StructLinq.Tests
 
         protected override SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> Build(int size)
         {
-            SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> skipEnumerable = StructEnumerable.Range(-1, size + 5).Where(x=>true, x=>x).Skip(5, x=> x);
+            var skipEnumerable = StructEnumerable.Range(-1, size + 5).Where(x=>true, x=>x).Skip(5, x=> x);
             return skipEnumerable;
         }
 

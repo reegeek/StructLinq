@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using StructLinq.Skip;
 using StructLinq.Take;
 
+// ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TakeEnumerable<T, TEnumerable, TEnumerator> Take<T,TEnumerable, TEnumerator>(this TEnumerable enumerable, int count, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        public static TakeEnumerable<T, TEnumerable, TEnumerator> Take<T,TEnumerable, TEnumerator>(this TEnumerable enumerable, uint count, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
@@ -16,7 +16,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TakeEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator> Take<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int count)
+        public static TakeEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator> Take<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, uint count)
             where TEnumerator : struct, IStructEnumerator<T>
         {
             return new TakeEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator>(ref enumerable, count);

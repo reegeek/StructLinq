@@ -7,9 +7,9 @@ namespace StructLinq.Take
         where TEnumerable : IStructEnumerable<T, TEnumerator>
     {
         private readonly TEnumerable inner;
-        private readonly int count;
+        private readonly uint count;
 
-        public TakeEnumerable(ref TEnumerable inner, int count)
+        public TakeEnumerable(ref TEnumerable inner, uint count)
         {
             this.inner = inner;
             this.count = count;

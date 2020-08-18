@@ -113,5 +113,39 @@ namespace StructLinq.Tests
 
             Assert.Equal(expected, values);
         }
+
+        [Theory]
+        [InlineData(10, 2)]
+        [InlineData(7, 5)]
+        [InlineData(7, 0)]
+        [InlineData(7, 10)]
+        public void ShouldTakeAsEnumerable(int size, uint take)
+        {
+            TStructCollection collection = Build(size);
+            var array = collection.ToEnumerable().ToArray();
+
+            var values = collection.Take(take, x => x).ToArray();
+
+            var expected = array.Take((int) take).ToArray();
+
+            Assert.Equal(expected, values);
+        }
+
+        [Theory]
+        [InlineData(10, 2)]
+        [InlineData(7, 5)]
+        [InlineData(7, 0)]
+        [InlineData(7, 10)]
+        public void ShouldAsEnumerableWithInterface(int size, uint take)
+        {
+            IStructCollection<T, TEnumerator> collection = Build(size);
+            var array = collection.ToEnumerable().ToArray();
+
+            var values = collection.Take(take, x => x).ToArray();
+
+            var expected = array.Take((int) take).ToArray();
+
+            Assert.Equal(expected, values);
+        }
     }
 }
