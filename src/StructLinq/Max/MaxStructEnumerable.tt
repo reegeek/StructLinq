@@ -16,6 +16,7 @@
         typeof(Double),
         typeof(byte), 
         typeof(sbyte),
+        typeof(DateTime),
     };
 #>
 
