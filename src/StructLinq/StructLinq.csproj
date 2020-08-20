@@ -30,6 +30,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DefaultStructEqualityComparer.cs</LastGenOutput>
     </None>
+    <None Update="Distinct\StructEnumerable.Value.Distinct.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StructEnumerable.Value.Distinct.cs</LastGenOutput>
+    </None>
     <None Update="Max\MaxStructEnumerable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MaxStructEnumerable.cs</LastGenOutput>
@@ -80,6 +84,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DefaultStructInEqualityComparer.tt</DependentUpon>
+	  </Compile>
+	  <Compile Update="Distinct\StructEnumerable.Value.Distinct.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>StructEnumerable.Value.Distinct.tt</DependentUpon>
 	  </Compile>
     <Compile Update="Max\MaxStructEnumerable.cs">
       <DesignTime>True</DesignTime>

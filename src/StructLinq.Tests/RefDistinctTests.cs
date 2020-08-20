@@ -6,12 +6,12 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class RefDistinctTests : AbstractRefEnumerableTests<int,
-        RefDistinctEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, IInEqualityComparer<int>>,
-        RefDistinctEnumerator<int, ArrayRefStructEnumerator<int>, IInEqualityComparer<int>>>
+        RefDistinctEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, DefaultStructInEqualityComparer>,
+        RefDistinctEnumerator<int, ArrayRefStructEnumerator<int>, DefaultStructInEqualityComparer>>
     {
-        protected override RefDistinctEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, IInEqualityComparer<int>> Build(int size)
+        protected override RefDistinctEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, DefaultStructInEqualityComparer> Build(int size)
         {
-            var selectEnumerable = Enumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Distinct(x=>x);
+            var selectEnumerable = Enumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Distinct(x => x);
             return selectEnumerable;
         }
 
@@ -26,7 +26,7 @@ namespace StructLinq.Tests
                                   .Select(x => x % 10)
                                   .ToArray()
                                   .ToRefStructEnumerable()
-                                  .Distinct(x=> x)
+                                  .Distinct(x => x)
                                   .ToEnumerable();
             Assert.Equal(expected, value);
         }

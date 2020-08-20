@@ -7,12 +7,12 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class DistinctTests : AbstractEnumerableTests<int,
-        DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, EqualityComparer<int>>,
-        DistinctEnumerator<int, RangeEnumerator, EqualityComparer<int>>>
+        DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, DefaultStructEqualityComparer>,
+        DistinctEnumerator<int, RangeEnumerator, DefaultStructEqualityComparer>>
     {
-        protected override DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, EqualityComparer<int>> Build(int size)
+        protected override DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, DefaultStructEqualityComparer> Build(int size)
         {
-            var selectEnumerable = StructEnumerable.Range(-1, size).Distinct(x=>x);
+            var selectEnumerable = StructEnumerable.Range(-1, size).Distinct(x => x);
             return selectEnumerable;
         }
 
@@ -26,7 +26,7 @@ namespace StructLinq.Tests
             var value = Enumerable.Range(0, 100)
                 .Select(x => x % 10)
                 .ToStructEnumerable()
-                .Distinct(x=> x)
+                .Distinct(x => x)
                 .ToEnumerable();
             Assert.Equal(expected, value);
         }

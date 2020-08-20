@@ -7,7 +7,7 @@ namespace StructLinq.Distinct
         RefDistinctEnumerator<T, TEnumerator, TComparer>>
         where TComparer : IInEqualityComparer<T>
         where TEnumerator : struct, IRefStructEnumerator<T>
-        where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
+        where TEnumerable : IRefStructEnumerable<T, TEnumerator>
 
     {
         private TEnumerable enumerable;

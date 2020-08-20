@@ -147,6 +147,23 @@ namespace StructLinq
             return enumerable.Distinct(InEqualityComparer<T>.Default, _);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RefDistinctEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator, IInEqualityComparer<T>> Distinct<T,TEnumerator>(
+            this IRefStructEnumerable<T, TEnumerator> enumerable,
+            IInEqualityComparer<T> comparer)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return new RefDistinctEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator, IInEqualityComparer<T>>(ref enumerable, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
 
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static RefDistinctEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator, IInEqualityComparer<T>> Distinct<T, TEnumerator>(
+            this IRefStructEnumerable<T, TEnumerator> enumerable)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var equalityComparer = InEqualityComparer<T>.Default;
+            return new RefDistinctEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator, IInEqualityComparer<T>>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+        }
     }
 }
