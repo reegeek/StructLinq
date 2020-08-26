@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Utils.Collections
 {
@@ -32,6 +33,7 @@ namespace StructLinq.Utils.Collections
             187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263,
             1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559, 5999471, 7199369 };
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsPrime(int candidate)
         {
             if ((candidate & 1) != 0)
@@ -47,6 +49,7 @@ namespace StructLinq.Utils.Collections
             return (candidate == 2);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetPrime(int min)
         {
             if (min < 0)
@@ -70,6 +73,7 @@ namespace StructLinq.Utils.Collections
         }
 
         // Returns size of hashtable to grow to.
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ExpandPrime(int oldSize)
         {
             int newSize = 2 * oldSize;

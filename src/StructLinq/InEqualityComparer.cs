@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq
 {
@@ -9,29 +10,10 @@ namespace StructLinq
 
     public static class InEqualityComparer
     {
-        public static IInEqualityComparer<T> ToInEqualityComparer<T>(this IEqualityComparer<T> comparer)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static StructInEqualityComparer<T> ToInEqualityComparer<T>(this IEqualityComparer<T> comparer)
         {
             return new StructInEqualityComparer<T>(comparer);
-        }
-
-        private struct StructInEqualityComparer<T> : IInEqualityComparer<T>
-        {
-            private readonly IEqualityComparer<T> comparer;
-
-            public StructInEqualityComparer(IEqualityComparer<T> comparer)
-            {
-                this.comparer = comparer;
-            }
-
-            public bool Equals(in T x, in T y)
-            {
-                return comparer.Equals(x, y);
-            }
-
-            public int GetHashCode(in T obj)
-            {
-                return comparer.GetHashCode(obj);
-            }
         }
     }
 }

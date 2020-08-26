@@ -29,6 +29,7 @@ namespace StructLinq.IEnumerable
             get => inner.Current;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             inner.Dispose();

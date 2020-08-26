@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Reverse
@@ -18,6 +19,7 @@ namespace StructLinq.Reverse
             this.pool = pool;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ReverseEnumerator<T> GetEnumerator()
         {
             var list = new PooledList<T>(capacity, pool);
@@ -26,6 +28,10 @@ namespace StructLinq.Reverse
             return new ReverseEnumerator<T>(list);
         }
 
-        internal TEnumerable Enumerable => enumerable;
+        internal TEnumerable Enumerable
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => enumerable;
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace StructLinq.OrderBy
 {
     internal class QuickSort
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int Compare<T, TComparer>(int x, int y, T[] keys, ref TComparer comparer)
             where TComparer : IComparer<T>
         {

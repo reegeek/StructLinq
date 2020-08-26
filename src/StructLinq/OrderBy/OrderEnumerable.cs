@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.OrderBy
@@ -24,6 +25,7 @@ namespace StructLinq.OrderBy
             this.dataPool = dataPool;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public OrderByEnumerator<T> GetEnumerator()
         {
             var datas = new PooledList<T>(capacity, dataPool);

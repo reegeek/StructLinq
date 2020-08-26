@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.Array;
 
 namespace StructLinq.BCL.List
@@ -13,12 +14,16 @@ namespace StructLinq.BCL.List
             layout = Unsafe.As<List<T>, ListLayout<T>>(ref list);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ArrayRefStructEnumerator<T> GetEnumerator()
         {
             return new ArrayRefStructEnumerator<T>(layout.Items, list.Count);
         }
 
-        public int Count => list.Count;
-
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => list.Count;
+        }
     }
 }

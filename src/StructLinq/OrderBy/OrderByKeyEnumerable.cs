@@ -44,6 +44,7 @@ namespace StructLinq.OrderBy
         }
 
    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public OrderByEnumerator<T> GetEnumerator()
         {
             var datas = new PooledList<T>(capacity, dataPool);

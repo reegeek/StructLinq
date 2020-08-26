@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.IEnumerable
 {
@@ -13,23 +14,34 @@ namespace StructLinq.IEnumerable
             this.enumerator = enumerator;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
             return enumerator.MoveNext();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
             enumerator.Reset();
         }
 
-        object IEnumerator.Current => Current;
+        object IEnumerator.Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Current;
+        }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             enumerator.Dispose();
         }
 
-        public T Current => enumerator.Current;
+        public T Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => enumerator.Current;
+        }
     }
 }

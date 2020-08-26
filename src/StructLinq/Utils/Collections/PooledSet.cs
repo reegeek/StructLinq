@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Utils.Collections
 {
@@ -34,6 +35,7 @@ namespace StructLinq.Utils.Collections
             lastIndex = 0;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int InternalGetHashCode(T item)
         {
             if (item == null)
@@ -103,6 +105,7 @@ namespace StructLinq.Utils.Collections
             size = newSize;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ReturnArrays()
         {
             if (slots?.Length > 0)
@@ -175,6 +178,7 @@ namespace StructLinq.Utils.Collections
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
             if (lastIndex > 0)
@@ -188,6 +192,7 @@ namespace StructLinq.Utils.Collections
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             ReturnArrays();

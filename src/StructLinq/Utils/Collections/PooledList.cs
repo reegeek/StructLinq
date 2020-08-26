@@ -77,12 +77,14 @@ namespace StructLinq.Utils.Collections
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             ReturnArray();
             index = -1;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T[] ToArray()
         {
             var result = new T[Size];

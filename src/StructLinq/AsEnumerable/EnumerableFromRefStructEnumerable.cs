@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using StructLinq.IEnumerable;
 
 namespace StructLinq.AsEnumerable
@@ -12,10 +13,14 @@ namespace StructLinq.AsEnumerable
         {
             this.structEnumerable = structEnumerable;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+       
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerator<T> GetEnumerator()
         {
             var refStructEnumerator = structEnumerable.GetEnumerator();

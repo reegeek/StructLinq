@@ -20,6 +20,10 @@ namespace StructLinq.Array
             return new ArrayRefStructEnumerator<T>(array, length);
         }
 
-        public int Count => length;
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => length;
+        }
     }
 }

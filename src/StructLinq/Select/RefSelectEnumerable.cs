@@ -25,6 +25,10 @@ namespace StructLinq.Select
             return new RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
 
-        internal TEnumerable Inner => inner;
+        internal TEnumerable Inner
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => inner;
+        }
     }
 }

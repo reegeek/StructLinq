@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq
 {
@@ -11,6 +12,8 @@ namespace StructLinq
         {
             this.inner = inner;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly TOut Eval(TIn element)
         {
             return inner(element);

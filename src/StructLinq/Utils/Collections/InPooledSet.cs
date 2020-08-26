@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Utils.Collections
 {
@@ -33,6 +34,7 @@ namespace StructLinq.Utils.Collections
             lastIndex = 0;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int InternalGetHashCode(in T item)
         {
             if (item == null)
@@ -42,6 +44,7 @@ namespace StructLinq.Utils.Collections
             return comparer.GetHashCode(in item) & Lower31BitMask;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void IncreaseCapacity()
         {
             int newSize = HashHelpers.ExpandPrime(count);
@@ -102,6 +105,7 @@ namespace StructLinq.Utils.Collections
             size = newSize;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ReturnArrays()
         {
             if (slots?.Length > 0)
@@ -174,6 +178,7 @@ namespace StructLinq.Utils.Collections
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
             if (lastIndex > 0)
@@ -187,6 +192,7 @@ namespace StructLinq.Utils.Collections
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             ReturnArrays();

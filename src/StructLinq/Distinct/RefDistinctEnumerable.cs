@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Distinct
@@ -24,6 +25,8 @@ namespace StructLinq.Distinct
             this.bucketPool = bucketPool;
             this.slotPool = slotPool;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RefDistinctEnumerator<T, TEnumerator, TComparer> GetEnumerator()
         {
             var enumerator = enumerable.GetEnumerator();
