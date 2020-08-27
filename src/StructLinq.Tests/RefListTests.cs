@@ -6,7 +6,7 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class RefListTests : AbstractRefEnumerableTests<int, ListRefEnumerable<int>, ArrayRefStructEnumerator<int>>
+    public class RefListTests : AbstractRefCollectionTests<int, ListRefEnumerable<int>, ArrayRefStructEnumerator<int>>
     {
         [Fact]
         public void ShouldSameAsSystem()
