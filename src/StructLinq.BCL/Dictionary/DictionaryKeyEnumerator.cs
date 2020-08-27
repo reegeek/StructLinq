@@ -11,7 +11,7 @@ namespace StructLinq.BCL.Dictionary
         internal DictionaryKeyEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
         {
             this.entries = entries;
-            length = count - 1;
+            length = count - 1 + start;
             index = start - 1;
         }
 

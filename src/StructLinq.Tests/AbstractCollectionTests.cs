@@ -136,7 +136,7 @@ namespace StructLinq.Tests
         [InlineData(7, 5)]
         [InlineData(7, 0)]
         [InlineData(7, 10)]
-        public void ShouldAsEnumerableWithInterface(int size, uint take)
+        public void ShouldTakeAsEnumerableWithInterface(int size, uint take)
         {
             IStructCollection<T, TEnumerator> collection = Build(size);
             var array = collection.ToEnumerable().ToArray();
@@ -147,5 +147,40 @@ namespace StructLinq.Tests
 
             Assert.Equal(expected, values);
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(5)]
+        [InlineData(10)]
+        public void ShouldToArray(int size)
+        {
+            //Arrange
+            var collection = Build(size);
+            var expected = collection.ToEnumerable().ToArray();
+
+            //Act
+            var values = collection.ToArray(x=>x);
+
+            //Assert
+            Assert.Equal(expected, values);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(5)]
+        [InlineData(10)]
+        public void ShouldToArrayWithInterface(int size)
+        {
+            //Arrange
+            IStructCollection<T, TEnumerator> collection = Build(size);
+            var expected = collection.ToEnumerable().ToArray();
+
+            //Act
+            var values = collection.ToArray();
+
+            //Assert
+            Assert.Equal(expected, values);
+        }
+
     }
 }

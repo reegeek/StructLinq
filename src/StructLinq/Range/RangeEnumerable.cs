@@ -24,7 +24,7 @@ namespace StructLinq.Range
         public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => count;
+            get => MathHelpers.Max(0,  count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

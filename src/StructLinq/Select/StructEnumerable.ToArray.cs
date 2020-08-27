@@ -14,7 +14,7 @@ namespace StructLinq
             where TEnumerable : IStructCollection<TIn, TEnumerator>
         {
             var enumerator = selectEnumerable.GetEnumerator();
-            return ToArray(ref enumerator, selectEnumerable.Inner.Count, ArrayPool<TOut>.Shared);
+            return ToArray<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(ref enumerator, selectEnumerable.Inner.Count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -24,7 +24,7 @@ namespace StructLinq
             where TEnumerable : IStructCollection<TIn, TEnumerator>
         {
             var enumerator = selectEnumerable.GetEnumerator();
-            return ToArray(ref enumerator, selectEnumerable.Inner.Count, ArrayPool<TOut>.Shared);
+            return ToArray<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(ref enumerator, selectEnumerable.Inner.Count);
         }
 
 
@@ -35,7 +35,7 @@ namespace StructLinq
             where TEnumerable : IRefStructCollection<TIn, TEnumerator>
         {
             var enumerator = selectEnumerable.GetEnumerator();
-            return ToArray(ref enumerator, selectEnumerable.Inner.Count, ArrayPool<TOut>.Shared);
+            return ToArray<TOut, RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(ref enumerator, selectEnumerable.Inner.Count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -45,7 +45,7 @@ namespace StructLinq
             where TEnumerable : IRefStructCollection<TIn, TEnumerator>
         {
             var enumerator = selectEnumerable.GetEnumerator();
-            return ToArray(ref enumerator, selectEnumerable.Inner.Count, ArrayPool<TOut>.Shared);
+            return ToArray<TOut, RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction>>(ref enumerator, selectEnumerable.Inner.Count);
         }
 
     }

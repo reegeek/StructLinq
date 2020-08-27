@@ -12,7 +12,7 @@ namespace StructLinq.Array
         public ArrayStructEnumerator(T[] array, int start, int length)
         {
             this.array = array;
-            endIndex = length - 1;
+            endIndex = length - 1 + start;
             index =  start - 1;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

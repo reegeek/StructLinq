@@ -20,13 +20,13 @@ namespace StructLinq.Array
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly ArrayStructEnumerator<T> GetEnumerator()
         {
-            return new ArrayStructEnumerator<T>(array, start, length);
+            return new ArrayStructEnumerator<T>(array, start, Count);
         }
 
         public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => length;
+            get => MathHelpers.Max(0, length - start);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

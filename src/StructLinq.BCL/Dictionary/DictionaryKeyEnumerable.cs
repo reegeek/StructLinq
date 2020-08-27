@@ -35,7 +35,7 @@ namespace StructLinq.BCL.Dictionary
         public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => MathHelpers.Min(dictionary.Count, count);
+            get => MathHelpers.Max(0, MathHelpers.Min(dictionary.Count, count) - start);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
