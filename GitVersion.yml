@@ -13,3 +13,5 @@ branches:
 
 ignore:
   sha: []
+  
+ next-version: 0.20
