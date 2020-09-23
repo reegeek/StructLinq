@@ -23,7 +23,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RefTakeEnumerable<T, TEnumerable, TEnumerator> Take<T,TEnumerable, TEnumerator>(this TEnumerable enumerable, int count, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+        public static RefTakeEnumerable<T, TEnumerable, TEnumerator> Take<T,TEnumerable, TEnumerator>(this TEnumerable enumerable, uint count, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IRefStructEnumerator<T>
             where TEnumerable : IRefStructEnumerable<T, TEnumerator>
         {
@@ -31,7 +31,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RefTakeEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator> Take<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, int count)
+        public static RefTakeEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator> Take<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, uint count)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
             return new RefTakeEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator>(ref enumerable, count);

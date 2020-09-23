@@ -26,6 +26,25 @@ namespace StructLinq
             newCollection.Slice(0, count);
             return newCollection;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TRefStructCollection Take<T,TRefStructCollection, TEnumerator>(this TRefStructCollection collection, uint count, Func<TRefStructCollection, IRefStructCollection<T, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TRefStructCollection : struct, IRefStructCollection<T, TEnumerator>
+        {
+            var newCollection = collection;
+            newCollection.Slice(0, count);
+            return newCollection;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IRefStructCollection<T, TEnumerator> Take<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, uint count)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var newCollection = (IRefStructCollection<T, TEnumerator>)collection.Clone();
+            newCollection.Slice(0, count);
+            return newCollection;
+        }
     }
     
 }

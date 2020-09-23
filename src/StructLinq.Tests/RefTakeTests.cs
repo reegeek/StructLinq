@@ -1,18 +1,19 @@
 ﻿using System.Linq;
 using StructLinq.Array;
 using StructLinq.Take;
+using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
     public class RefTakeTests : AbstractRefEnumerableTests<int,
-        RefTakeEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>>,
-        RefTakeEnumerator<int, ArrayRefStructEnumerator<int>>>
+        RefTakeEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>,
+        RefTakeEnumerator<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>>
     {
-        protected override RefTakeEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>> Build(int size)
+        protected override RefTakeEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>  Build(int size)
         {
-            return StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Take(size, x=> x);
-
+            var refTakeEnumerable = StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Where((in int x)=> true, x=>x).Take((uint)size, x=> x);
+            return refTakeEnumerable;
         }
 
         [Theory]
@@ -22,7 +23,7 @@ namespace StructLinq.Tests
         public void ShouldBeTheSameAsSystem(int takeCount)
         {
             var expected = Enumerable.Range(0, 7).ToArray().Take((int)takeCount).ToArray();
-            var value = Enumerable.Range(0, 7).ToArray().ToRefStructEnumerable().Take(takeCount).ToArray();
+            var value = Enumerable.Range(0, 7).ToArray().ToRefStructEnumerable().Take((uint)takeCount).ToArray();
 
             Assert.Equal(expected, value);
         }
