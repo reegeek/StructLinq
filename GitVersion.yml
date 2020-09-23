@@ -1,3 +1,5 @@
+next-version: 0.20.0
+
 mode: ContinuousDelivery
 
 assembly-versioning-scheme: MajorMinor
@@ -14,4 +16,4 @@ branches:
 ignore:
   sha: []
   
- next-version: 0.20
+ 
