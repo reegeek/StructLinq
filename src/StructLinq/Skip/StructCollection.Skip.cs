@@ -24,5 +24,24 @@ namespace StructLinq
             newCollection.Slice(count, null);
             return newCollection;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TStructCollection Skip<T,TStructCollection, TEnumerator>(this TStructCollection collection, uint count, Func<TStructCollection, IRefStructCollection<T, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TStructCollection : struct, IRefStructCollection<T, TEnumerator>
+        {
+            var newCollection = collection;
+            newCollection.Slice(count, null);
+            return newCollection;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IRefStructCollection<T, TEnumerator> Skip<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, uint count)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var newCollection = (IRefStructCollection<T, TEnumerator>)collection.Clone();
+            newCollection.Slice(count, null);
+            return newCollection;
+        }
     }
 }

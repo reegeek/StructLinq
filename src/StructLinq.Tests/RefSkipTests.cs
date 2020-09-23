@@ -1,18 +1,19 @@
 ﻿using System.Linq;
 using StructLinq.Array;
 using StructLinq.Skip;
+using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
     public class RefSkipTests : AbstractRefEnumerableTests<int,
-        RefSkipEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>>,
-        RefSkipEnumerator<int, ArrayRefStructEnumerator<int>>>
+        RefSkipEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>> ,
+        RefSkipEnumerator<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>>
     {
-        protected override RefSkipEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>> Build(int size)
+        protected override RefSkipEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>  Build(int size)
         {
-            return StructEnumerable.Range(-1, size + 5).ToArray().ToRefStructEnumerable().Skip(5, x=> x);
-
+            var refSkipEnumerable = StructEnumerable.Range(-1, size + 5).ToArray().ToRefStructEnumerable().Where((in int x) => true, x=>x).Skip(5, x=> x);
+            return refSkipEnumerable;
         }
 
         [Theory]
