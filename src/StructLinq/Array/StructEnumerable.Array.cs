@@ -14,7 +14,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayRefEnumerable<T> ToRefStructEnumerable<T>(this T[] array)
         {
-            return new ArrayRefEnumerable<T>(array, array.Length);
+            return new ArrayRefEnumerable<T>(array, 0, array.Length);
         }
     }
 }

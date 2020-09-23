@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Array;
+using StructLinq.Utils;
 
 namespace StructLinq.BCL.List
 {
@@ -8,22 +10,48 @@ namespace StructLinq.BCL.List
     {
         private List<T> list;
         private ListLayout<T> layout;
-        public ListRefEnumerable(List<T> list)
+        private int count;
+        private int start;
+
+        internal ListRefEnumerable(List<T> list, int start, int count)
         {
             this.list = list;
             layout = Unsafe.As<List<T>, ListLayout<T>>(ref list);
+            this.start = start;
+            this.count = count;
+        }
+
+        public ListRefEnumerable(List<T> list) : this(list, 0, Int32.MaxValue)
+        {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ArrayRefStructEnumerator<T> GetEnumerator()
+        public readonly ArrayRefStructEnumerator<T> GetEnumerator()
         {
-            return new ArrayRefStructEnumerator<T>(layout.Items, list.Count);
+            return new ArrayRefStructEnumerator<T>(layout.Items, start, Count);
         }
 
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => list.Count;
+            get => MathHelpers.Max(0, MathHelpers.Min(list.Count, count) - start);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = (int)start + this.start;
+                if (length.HasValue)
+                    this.count = (int)length.Value + this.start;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly object Clone()
+        {
+            return new ListRefEnumerable<T>(list, start, count);
         }
     }
 }
