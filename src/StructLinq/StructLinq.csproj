@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Contains\StructEnumerable.Value.Contains.tt">
+      <LastGenOutput>StructEnumerable.Value.Contains.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="DefaultStructInEqualityComparer.tt">
       <LastGenOutput>DefaultStructInEqualityComparer.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -75,6 +79,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Contains\StructEnumerable.Value.Contains.cs">
+      <DependentUpon>StructEnumerable.Value.Contains.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="DefaultStructEqualityComparer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

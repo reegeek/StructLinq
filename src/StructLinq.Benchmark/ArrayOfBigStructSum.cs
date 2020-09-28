@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -98,9 +99,25 @@ namespace StructLinq.Benchmark
     }
 
 
-    internal struct StructContainer
+    internal struct StructContainer : IEquatable<StructContainer>
     {
         public readonly int Element;
+
+        public bool Equals(StructContainer other)
+        {
+            return Element == other.Element;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is StructContainer other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Element;
+        }
+
         public readonly int Element1;
         public readonly int Element2;
         public readonly int Element3;

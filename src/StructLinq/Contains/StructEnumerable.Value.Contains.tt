@@ -1,0 +1,79 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+    var types = new[]
+    {
+        typeof(Int16),
+        typeof(Int32),
+        typeof(Int64),
+        typeof(UInt16),
+        typeof(UInt32),
+        typeof(UInt64),
+        typeof(Single),
+        typeof(Double),
+        typeof(byte), 
+        typeof(sbyte),
+        typeof(DateTime),
+    };
+#>
+
+using System;
+using System.Runtime.CompilerServices;
+
+
+// ReSharper disable once CheckNamespace
+namespace StructLinq
+{
+    public static partial class StructEnumerable
+    {
+        <# foreach(var t in types) {  #>
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerable, TEnumerator>(this TEnumerable enumerable, <#= t.Name #> x,
+            Func<TEnumerable, IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+            where TEnumerable : IStructEnumerable<<#= t.Name #>, TEnumerator>
+        {
+            var comparer = new DefaultStructEqualityComparer();
+            var enumerator = enumerable.GetEnumerator();
+            return InnerContains(enumerator, x, comparer);
+        }
+
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(
+            this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+        {
+            var comparer = new DefaultStructEqualityComparer();
+            var enumerator = enumerable.GetEnumerator();
+            return InnerContains(enumerator, x, comparer);
+        }
+
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerable, TEnumerator>(this TEnumerable enumerable, <#= t.Name #> x,
+            Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
+            where TEnumerable : struct, IRefStructEnumerable<<#= t.Name #>, TEnumerator>
+        {
+            var comparer = new DefaultStructInEqualityComparer();
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerContains(enumerator, x, comparer);
+        }
+        
+                        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerable, TEnumerator>(
+            this IRefStructEnumerable<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
+        {
+            var comparer = new DefaultStructInEqualityComparer();
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerContains(enumerator, x, comparer);
+        }
+
+    <# } #>
+
+    }
+}
