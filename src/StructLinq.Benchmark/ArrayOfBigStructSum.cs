@@ -4,26 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-
-    //``` ini
-
-    //BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
-    //Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-    //.NET Core SDK=3.1.301
-    //[Host]     : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
-    //DefaultJob : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
-
-
-    //```
-    //|                Method |       Mean |    Error |    StdDev |     Median | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-    //|---------------------- |-----------:|---------:|----------:|-----------:|------:|--------:|-------:|------:|------:|----------:|
-    //|                ForSum |   610.5 ns |  0.51 ns |   0.48 ns |   610.7 ns |  0.09 |    0.00 |      - |     - |     - |         - |
-    //|      SysEnumerableSum | 6,481.6 ns | 14.74 ns |  13.79 ns | 6,475.0 ns |  1.00 |    0.00 | 0.0076 |     - |     - |      32 B |
-    //|             StructSum | 3,582.1 ns | 80.46 ns | 162.53 ns | 3,520.8 ns |  0.58 |    0.02 | 0.0076 |     - |     - |      32 B |
-    //|          RefStructSum | 1,999.9 ns |  5.37 ns |   5.02 ns | 2,001.4 ns |  0.31 |    0.00 | 0.0076 |     - |     - |      32 B |
-    //|    ZeroAllocStructSum | 2,637.2 ns | 52.64 ns | 147.61 ns | 2,725.4 ns |  0.40 |    0.02 |      - |     - |     - |         - |
-    //| ZeroAllocRefStructSum |   764.4 ns |  1.30 ns |   1.22 ns |   763.9 ns |  0.12 |    0.00 |      - |     - |     - |         - |
-    
+  
     [MemoryDiagnoser]
     public class ArrayOfBigStructSum
     {
