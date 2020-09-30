@@ -174,6 +174,7 @@ Following aggregators are available:
 Following generators are available:
   - `Range`
   - `Repeat`
+  - `Empty`
 ### Quantifiers
 Following quantifiers are available:
   - `Contains`
