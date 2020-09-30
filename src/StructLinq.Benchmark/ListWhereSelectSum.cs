@@ -31,6 +31,13 @@ namespace StructLinq.Benchmark
                .Select(x => x * 2)
                .Sum();
 
+        [Benchmark]
+        public int StructLinqWithDelegateZeroAlloc()
+            => list
+               .ToStructEnumerable()
+               .Where(x => (x & 1) == 0, x=>x)
+               .Select(x => x * 2, x=>x)
+               .Sum(x=>x);
 
         [Benchmark]
         public int StructLinqZeroAlloc()

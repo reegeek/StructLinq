@@ -14,8 +14,9 @@ Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical core
 
 
 ```
-|                 Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|
-|                   LINQ | 71.73 us | 0.146 us | 0.129 us |  1.00 |     - |     - |     - |     152 B |
-| StructLinqWithDelegate | 45.02 us | 0.025 us | 0.022 us |  0.63 |     - |     - |     - |     104 B |
-|    StructLinqZeroAlloc | 15.63 us | 0.132 us | 0.123 us |  0.22 |     - |     - |     - |         - |
+|                          Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|-------------------------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|
+|                            LINQ | 78.19 us | 1.615 us | 1.432 us |  1.00 |     - |     - |     - |     152 B |
+|          StructLinqWithDelegate | 45.97 us | 0.469 us | 0.439 us |  0.59 |     - |     - |     - |     104 B |
+| StructLinqWithDelegateZeroAlloc | 44.63 us | 0.411 us | 0.385 us |  0.57 |     - |     - |     - |         - |
+|             StructLinqZeroAlloc | 15.22 us | 0.031 us | 0.028 us |  0.19 |     - |     - |     - |         - |

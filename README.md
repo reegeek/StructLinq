@@ -73,7 +73,7 @@ You can also improve performance by using struct for Where predicate and select 
 
 ## Performances
 
-All benchmark are in [here](src/StructLinq.Benchmark).
+All benchmark results are in [here](Documents/BenchmarksResults).
 For example following linq sequence:
  ```csharp
     list
@@ -88,6 +88,14 @@ For example following linq sequence:
       .Where(x => (x & 1) == 0)
       .Select(x => x * 2)
       .Sum();
+ ```
+ or if you want zero allocation by:
+   ```csharp
+    list
+      .ToStructEnumerable()
+      .Where(x => (x & 1) == 0, x=>x)
+      .Select(x => x * 2, x=>x)
+      .Sum(x=>x);
  ```
  or if you want zero allocation and better performance by:
   ```csharp
@@ -105,19 +113,20 @@ For example following linq sequence:
 
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.18363
+BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
 Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.301
-  [Host]     : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.5 (CoreCLR 4.700.20.26901, CoreFX 4.700.20.27001), X64 RyuJIT
+.NET Core SDK=3.1.402
+  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
 
 
 ```
-|                 Method |     Mean |    Error |   StdDev |   Median | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------------------- |---------:|---------:|---------:|---------:|------:|--------:|------:|------:|------:|----------:|
-|                   LINQ | 84.54 us | 1.676 us | 4.385 us | 82.60 us |  1.00 |    0.00 |     - |     - |     - |     152 B |
-| StructLinqWithDelegate | 53.25 us | 1.012 us | 1.083 us | 53.01 us |  0.60 |    0.03 |     - |     - |     - |      96 B |
-|    StructLinqZeroAlloc | 17.22 us | 0.343 us | 0.513 us | 17.12 us |  0.20 |    0.01 |     - |     - |     - |         - |
+|                          Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|-------------------------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|
+|                            LINQ | 78.19 us | 1.615 us | 1.432 us |  1.00 |     - |     - |     - |     152 B |
+|          StructLinqWithDelegate | 45.97 us | 0.469 us | 0.439 us |  0.59 |     - |     - |     - |     104 B |
+| StructLinqWithDelegateZeroAlloc | 44.63 us | 0.411 us | 0.385 us |  0.57 |     - |     - |     - |         - |
+|             StructLinqZeroAlloc | 15.22 us | 0.031 us | 0.028 us |  0.19 |     - |     - |     - |         - |
  
 
 `StructLinq` is significatively faster than default `LINQ` implementation.
@@ -139,12 +148,19 @@ Following class have a `StructLinq` extension method for `IRefStructEnumerable`:
   - `List<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
   
 
+### Converters
+Following converters are available for :
+  - `ToArray`
+  - `ToList` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
 ### Transformers
 Following transformations are available for :
   - `Select`
   - `Where`
+  - `Take`
+  - `Skip`
   - `Distinct` ([zero allocation](src/StructLinq.Benchmark/Distinct.cs))
   - `Reverse`
+  - `OrderBy` ([zero allocation](src/StructLinq.Benchmark/OrderByArrayOfInt.cs))
 ### Aggregators
 Following aggregators are available:
   - `Count`
@@ -158,6 +174,11 @@ Following aggregators are available:
 Following generators are available:
   - `Range`
   - `Repeat`
+### Quantifiers
+Following quantifiers are available:
+  - `Contains`
+
+
 
 
 
