@@ -161,6 +161,7 @@ Following transformations are available for :
   - `Distinct` ([zero allocation](src/StructLinq.Benchmark/Distinct.cs))
   - `Reverse`
   - `OrderBy` ([zero allocation](src/StructLinq.Benchmark/OrderByArrayOfInt.cs))
+  - `Concat`
 ### Aggregators
 Following aggregators are available:
   - `Count`
