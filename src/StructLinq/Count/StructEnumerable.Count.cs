@@ -9,6 +9,7 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int IntCount<T,TEnumerator>(ref TEnumerator enumerator)
             where TEnumerator : struct, IStructEnumerator<T>
         {
