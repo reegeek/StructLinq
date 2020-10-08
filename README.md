@@ -171,7 +171,7 @@ Following aggregators are available:
   - `Sum`
   - `Min`
   - `Max`
-  - `All`
+
 ### Generators
 Following generators are available:
   - `Range`
@@ -180,7 +180,8 @@ Following generators are available:
 ### Quantifiers
 Following quantifiers are available:
   - `Contains`
-
+  - `All`
+  - `Any`
 
 
 
