@@ -171,6 +171,7 @@ Following aggregators are available:
   - `Sum`
   - `Min`
   - `Max`
+  - `All`
 ### Generators
 Following generators are available:
   - `Range`
