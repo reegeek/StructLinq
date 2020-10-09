@@ -5,7 +5,7 @@ namespace StructLinq
 {
     public class InEqualityComparer<T>
     {
-        public static readonly IInEqualityComparer<T> Default = EqualityComparer<T>.Default.ToInEqualityComparer();
+        public static readonly StructInEqualityComparer<T> Default = EqualityComparer<T>.Default.ToInEqualityComparer();
     }
 
     public static class InEqualityComparer

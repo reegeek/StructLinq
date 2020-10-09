@@ -139,8 +139,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RefDistinctEnumerable<T, TEnumerable, TEnumerator, IInEqualityComparer<T>> Distinct<T, TEnumerable, TEnumerator>(this TEnumerable enumerable,
-                                                                                                                                     Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+        public static RefDistinctEnumerable<T, TEnumerable, TEnumerator, StructInEqualityComparer<T>> Distinct<T, TEnumerable, TEnumerator>(this TEnumerable enumerable,
+                                                                                                                                            Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IRefStructEnumerator<T>
             where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
         {
