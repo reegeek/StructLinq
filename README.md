@@ -152,18 +152,19 @@ Following class have a `StructLinq` extension method for `IRefStructEnumerable`:
 Following converters are available for :
   - `ToArray`
   - `ToList` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
-### Transformers
-Following transformations are available for :
+### Extensions
+Following extensions are available for :
+  - `Range`
+  - `Repeat`
+  - `Empty`
   - `Select`
   - `Where`
   - `Take`
   - `Skip`
-  - `Distinct` ([zero allocation](src/StructLinq.Benchmark/Distinct.cs))
-  - `Reverse`
-  - `OrderBy` ([zero allocation](src/StructLinq.Benchmark/OrderByArrayOfInt.cs))
+  - `Distinct`([zero allocation](Documents/BenchmarksResults/Distinct.md))
+  - `Reverse`([zero allocation](Documents/BenchmarksResults/Reverse.md))
+  - `OrderBy`([zero allocation](Documents/BenchmarksResults/OrderByArrayOfInt.md))
   - `Concat`
-### Aggregators
-Following aggregators are available:
   - `Count`
   - `LongCount`
   - `UIntCount`
@@ -171,17 +172,11 @@ Following aggregators are available:
   - `Sum`
   - `Min`
   - `Max`
-
-### Generators
-Following generators are available:
-  - `Range`
-  - `Repeat`
-  - `Empty`
-### Quantifiers
-Following quantifiers are available:
   - `Contains`
   - `All`
   - `Any`
+  - `Except`([zero allocation](Documents/BenchmarksResults/Except.md))
+  - `Union`([zero allocation](Documents/BenchmarksResults/Union.md))	
 
 
 
