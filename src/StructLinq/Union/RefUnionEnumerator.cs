@@ -37,8 +37,8 @@ namespace StructLinq.Union
             {
                 while (enumerator1.MoveNext())
                 {
-                    var current = enumerator1.Current;
-                    if (set.AddIfNotPresent(current))
+                    ref var current = ref enumerator1.Current;
+                    if (set.AddIfNotPresent(in current))
                         return true;
                 }
             }
@@ -46,8 +46,8 @@ namespace StructLinq.Union
             first = false;
             while (enumerator2.MoveNext())
             {
-                var current = enumerator2.Current;
-                if (set.AddIfNotPresent(current))
+                ref var current = ref enumerator2.Current;
+                if (set.AddIfNotPresent(in current))
                     return true;
             }
 
