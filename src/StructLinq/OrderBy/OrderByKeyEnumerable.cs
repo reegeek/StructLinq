@@ -18,8 +18,9 @@ namespace StructLinq.OrderBy
         private readonly ArrayPool<int> indexPool;
         private readonly ArrayPool<T> dataPool;
         private readonly ArrayPool<TKey> keyPool;
+        private readonly bool ascending;
 
-        public OrderByKeyEnumerable(ref TEnumerable enumerable, ref TSelector selector, ref TComparer comparer, int capacity, ArrayPool<int> indexPool, ArrayPool<T> dataPool, ArrayPool<TKey> keyPool)
+        public OrderByKeyEnumerable(ref TEnumerable enumerable, ref TSelector selector, ref TComparer comparer, int capacity, ArrayPool<int> indexPool, ArrayPool<T> dataPool, ArrayPool<TKey> keyPool, bool ascending)
         {
             this.enumerable = enumerable;
             this.selector = selector;
@@ -28,6 +29,7 @@ namespace StructLinq.OrderBy
             this.indexPool = indexPool;
             this.dataPool = dataPool;
             this.keyPool = keyPool;
+            this.ascending = ascending;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -65,7 +67,7 @@ namespace StructLinq.OrderBy
                 indexes[i] = i;
             }
             var comp = comparer;
-            QuickSort.Sort(indexes, 0, size - 1, keys.Items, ref comp);
+            QuickSort.Sort(indexes, 0, size - 1, keys.Items, ref comp, ascending);
             keys.Dispose();
             return new OrderByEnumerator<T>(indexes, datas, size, indexPool);
         }

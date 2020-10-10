@@ -11,7 +11,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> OrderByDescending<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(
+        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> OrderBy<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(
             this TEnumerable enumerable,
             ref TSelector selector,
             ref TComparer comparer,
@@ -26,12 +26,12 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
             where TComparer : IComparer<TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, capacity, indexPool, dataPool, keyPool, false);
+            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, capacity, indexPool, dataPool, keyPool, true);
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> OrderByDescending<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(
+        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> OrderBy<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(
             this TEnumerable enumerable,
             ref TSelector selector,
             ref TComparer comparer,
@@ -42,11 +42,11 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
             where TComparer : IComparer<TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, capacity, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, false);
+            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, capacity, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> OrderByDescending<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(
+        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> OrderBy<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(
             this TEnumerable enumerable,
             ref TSelector selector,
             ref TComparer comparer,
@@ -57,11 +57,11 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
             where TComparer : IComparer<TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, false);
+            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, IComparer<TKey>> OrderByDescending<T, TEnumerable, TEnumerator, TSelector, TKey>(
+        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, IComparer<TKey>> OrderBy<T, TEnumerable, TEnumerator, TSelector, TKey>(
             this TEnumerable enumerable,
             ref TSelector selector,
             IComparer<TKey> comparer,
@@ -70,11 +70,11 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TSelector : IFunction<T, TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, IComparer<TKey>>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, false);
+            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, IComparer<TKey>>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, Comparer<TKey>> OrderByDescending<T, TEnumerable, TEnumerator, TSelector, TKey>(
+        public static OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, Comparer<TKey>> OrderBy<T, TEnumerable, TEnumerator, TSelector, TKey>(
             this TEnumerable enumerable,
             ref TSelector selector,
             Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
@@ -83,29 +83,29 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
         {
             var comparer = Comparer<TKey>.Default;
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, Comparer<TKey>>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, false);
+            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, Comparer<TKey>>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, IComparer<TKey>> OrderByDescending<T, TEnumerator, TKey>(
+        public static OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, IComparer<TKey>> OrderBy<T, TEnumerator, TKey>(
             this IStructEnumerable<T, TEnumerator> enumerable,
             Func<T, TKey> selector,
             IComparer<TKey> comparer)
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var structSelector = selector.ToStruct();
-            return new OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, IComparer<TKey>>(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, false);
+            return new OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, IComparer<TKey>>(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, Comparer<TKey>> OrderByDescending<T, TEnumerator, TKey>(
+        public static OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, Comparer<TKey>> OrderBy<T, TEnumerator, TKey>(
             this IStructEnumerable<T, TEnumerator> enumerable,
             Func<T, TKey> selector)
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var comparer = Comparer<TKey>.Default;
             var structSelector = selector.ToStruct();
-            return new OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, Comparer<TKey>>(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, false);
+            return new OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, Comparer<TKey>>(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
     }

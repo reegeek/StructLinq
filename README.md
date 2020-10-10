@@ -164,6 +164,7 @@ Following extensions are available for :
   - `Distinct`([zero allocation](Documents/BenchmarksResults/Distinct.md))
   - `Reverse`([zero allocation](Documents/BenchmarksResults/Reverse.md))
   - `OrderBy`([zero allocation](Documents/BenchmarksResults/OrderByArrayOfInt.md))
+  - `OrderByDescending`
   - `Concat`
   - `Count`
   - `LongCount`

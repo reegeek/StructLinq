@@ -22,7 +22,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TComparer : IComparer<T>
         {
-            return new OrderEnumerable<T, TEnumerable, TEnumerator, TComparer>(ref enumerable, ref comparer, capacity, indexPool, dataPool);
+            return new OrderEnumerable<T, TEnumerable, TEnumerator, TComparer>(ref enumerable, ref comparer, capacity, indexPool, dataPool, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

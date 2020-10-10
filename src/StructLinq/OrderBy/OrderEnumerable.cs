@@ -15,14 +15,16 @@ namespace StructLinq.OrderBy
         private readonly int capacity;
         private readonly ArrayPool<int> indexPool;
         private readonly ArrayPool<T> dataPool;
+        private readonly bool ascending;
 
-        public OrderEnumerable(ref TEnumerable enumerable, ref TComparer comparer, int capacity, ArrayPool<int> indexPool, ArrayPool<T> dataPool)
+        public OrderEnumerable(ref TEnumerable enumerable, ref TComparer comparer, int capacity, ArrayPool<int> indexPool, ArrayPool<T> dataPool, bool ascending)
         {
             this.enumerable = enumerable;
             this.comparer = comparer;
             this.capacity = capacity;
             this.indexPool = indexPool;
             this.dataPool = dataPool;
+            this.ascending = ascending;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -45,7 +47,7 @@ namespace StructLinq.OrderBy
                 indexes[i] = i;
             }
             var comp = comparer;
-            QuickSort.Sort(indexes, 0, size -1, datas.Items, ref comp); 
+            QuickSort.Sort(indexes, 0, size -1, datas.Items, ref comp, ascending); 
             return new OrderByEnumerator<T>(indexes, datas, size, indexPool);
         }
     }
