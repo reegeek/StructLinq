@@ -136,7 +136,8 @@ namespace StructLinq.Utils.Collections
             buckets = null;
         }
 
-        public bool AddIfNotPresent(T value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool AddIfNotPresent(T value) 
         {
             int hashCode = InternalGetHashCode(value);
             int bucket = hashCode % size;
@@ -176,6 +177,49 @@ namespace StructLinq.Utils.Collections
             buckets[bucket] = index + 1;
             count++;
             return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Remove(T item)
+        {
+            int hashCode = InternalGetHashCode(item);
+            int bucket = hashCode % size;
+            int last = -1;
+            int collisionCount = 0;
+            Slot<T>[] tmpSlots = slots;
+            for (int i = buckets[bucket] - 1; i >= 0; last = i, i = tmpSlots[i].next)
+            {
+                ref var tmpSlot = ref tmpSlots[i];
+                if (tmpSlot.hashCode == hashCode && comparer.Equals(tmpSlot.value, item))
+                {
+                    if (last < 0)
+                    {
+                        buckets[bucket] = tmpSlot.next + 1;
+                    }
+                    else
+                    {
+                        ref var lastSlot = ref tmpSlots[last];
+                        lastSlot.next = tmpSlot.next;
+                    }
+
+                    tmpSlot.hashCode = -1;
+
+                    count--;
+                    if (count == 0)
+                    {
+                        lastIndex = 0;
+                    }
+
+                    return true;
+                }
+
+                if (collisionCount >= size)
+                {
+                    throw new InvalidOperationException("Concurrent operations are not supported.");
+                }
+                collisionCount++;
+            }
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
