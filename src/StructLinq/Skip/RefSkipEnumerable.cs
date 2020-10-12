@@ -7,9 +7,9 @@ namespace StructLinq.Skip
         where TEnumerable : IRefStructEnumerable<T, TEnumerator>
     {
         private readonly TEnumerable inner;
-        private readonly uint count;
+        private readonly int count;
 
-        public RefSkipEnumerable(ref TEnumerable inner, uint count)
+        public RefSkipEnumerable(ref TEnumerable inner, int count)
         {
             this.inner = inner;
             this.count = count;

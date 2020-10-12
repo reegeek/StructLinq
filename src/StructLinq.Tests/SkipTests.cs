@@ -21,7 +21,7 @@ namespace StructLinq.Tests
         [InlineData(0)]
         [InlineData(5)]
         [InlineData(10)]
-        public void ShouldBeTheSameAsSystem(uint skipCount)
+        public void ShouldBeTheSameAsSystem(int skipCount)
         {
             var expected = Enumerable.Range(0, 7).ToArray().Skip((int)skipCount).ToArray();
             var value = Enumerable.Range(0, 7).ToArray().ToStructEnumerable().Where(x=> true).Skip(skipCount).ToArray();

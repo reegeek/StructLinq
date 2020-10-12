@@ -6,27 +6,20 @@ namespace StructLinq.Skip
         where TEnumerator : struct, IRefStructEnumerator<T>
     {
         private TEnumerator enumerator;
-        private bool skipDone;
-        private uint skipCount;
-        public RefSkipEnumerator(ref TEnumerator enumerator, uint count)
+        private int count;
+        private int skipCount;
+        public RefSkipEnumerator(ref TEnumerator enumerator, int count)
         {
             this.enumerator = enumerator;
             skipCount = count;
-            skipDone = false;
+            this.count = count;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            if (!skipDone)
-            {
-                for (uint i = 0; i < skipCount; i++)
-                {
-                    if (!enumerator.MoveNext())
-                        return false;
-                }
-                skipDone = true;
-            }
+            while (count-- > 0 && enumerator.MoveNext())
+            {}
             return enumerator.MoveNext();
         }
 
@@ -34,7 +27,7 @@ namespace StructLinq.Skip
         public void Reset()
         {
             enumerator.Reset();
-            skipDone = false;
+            count = skipCount;
         }
 
         public ref T Current

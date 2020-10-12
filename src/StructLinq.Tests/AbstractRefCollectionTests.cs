@@ -119,7 +119,7 @@ namespace StructLinq.Tests
         [InlineData(7, 5)]
         [InlineData(7, 0)]
         [InlineData(7, 10)]
-        public void ShouldSkipAsEnumerable(int size, uint skip)
+        public void ShouldSkipAsEnumerable(int size, int skip)
         {
             TStructCollection collection = Build(size);
             var array = collection.ToEnumerable().ToArray();
@@ -136,7 +136,7 @@ namespace StructLinq.Tests
         [InlineData(7, 5)]
         [InlineData(7, 0)]
         [InlineData(7, 10)]
-        public void ShouldSkipAsEnumerableWithInterface(int size, uint skip)
+        public void ShouldSkipAsEnumerableWithInterface(int size, int skip)
         {
             IRefStructCollection<T, TEnumerator> collection = Build(size);
             var array = collection.ToEnumerable().ToArray();
