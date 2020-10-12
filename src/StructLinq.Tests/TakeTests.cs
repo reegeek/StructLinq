@@ -12,14 +12,14 @@ namespace StructLinq.Tests
     {
         protected override TakeEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> Build(int size)
         {
-            return StructEnumerable.Range(-1, size).Where(x=>true, x=>x).Take((uint)size, x=> x);
+            return StructEnumerable.Range(-1, size).Where(x=>true, x=>x).Take(size, x=> x);
         }
 
         [Theory]
         [InlineData(0)]
         [InlineData(5)]
         [InlineData(10)]
-        public void ShouldBeTheSameAsSystem(uint takeCount)
+        public void ShouldBeTheSameAsSystem(int takeCount)
         {
             var expected = Enumerable.Range(0, 7).ToArray().Take((int)takeCount).ToArray();
             var value = Enumerable.Range(0, 7).ToArray().ToStructEnumerable().Take(takeCount).ToArray();

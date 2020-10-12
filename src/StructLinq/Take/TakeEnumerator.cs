@@ -8,17 +8,17 @@ namespace StructLinq.Take
         private TEnumerator enumerator;
         private readonly int endIndex;
         private int index;
-        public TakeEnumerator(ref TEnumerator enumerator, uint length)
+        public TakeEnumerator(ref TEnumerator enumerator, int length)
         {
             this.enumerator = enumerator;
-            endIndex = (int)length - 1;
+            endIndex = length - 1;
             index = -1;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
-            return enumerator.MoveNext() && ++index <= endIndex;
+            return ++index <= endIndex && enumerator.MoveNext();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

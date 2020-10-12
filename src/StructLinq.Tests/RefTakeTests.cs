@@ -12,7 +12,7 @@ namespace StructLinq.Tests
     {
         protected override RefTakeEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>  Build(int size)
         {
-            var refTakeEnumerable = StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Where((in int x)=> true, x=>x).Take((uint)size, x=> x);
+            var refTakeEnumerable = StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Where((in int x)=> true, x=>x).Take(size, x=> x);
             return refTakeEnumerable;
         }
 
@@ -23,7 +23,7 @@ namespace StructLinq.Tests
         public void ShouldBeTheSameAsSystem(int takeCount)
         {
             var expected = Enumerable.Range(0, 7).ToArray().Take((int)takeCount).ToArray();
-            var value = Enumerable.Range(0, 7).ToArray().ToRefStructEnumerable().Take((uint)takeCount).ToArray();
+            var value = Enumerable.Range(0, 7).ToArray().ToRefStructEnumerable().Take(takeCount).ToArray();
 
             Assert.Equal(expected, value);
         }

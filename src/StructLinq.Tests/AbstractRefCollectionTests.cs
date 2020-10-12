@@ -153,7 +153,7 @@ namespace StructLinq.Tests
         [InlineData(7, 5)]
         [InlineData(7, 0)]
         [InlineData(7, 10)]
-        public void ShouldTakeAsEnumerable(int size, uint take)
+        public void ShouldTakeAsEnumerable(int size, int take)
         {
             TStructCollection collection = Build(size);
             var array = collection.ToEnumerable().ToArray();
@@ -170,7 +170,7 @@ namespace StructLinq.Tests
         [InlineData(7, 5)]
         [InlineData(7, 0)]
         [InlineData(7, 10)]
-        public void ShouldTakeAsEnumerableWithInterface(int size, uint take)
+        public void ShouldTakeAsEnumerableWithInterface(int size, int take)
         {
             IRefStructCollection<T, TEnumerator> collection = Build(size);
             var array = collection.ToEnumerable().ToArray();
