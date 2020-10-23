@@ -28,8 +28,7 @@ namespace StructLinq
             enumerator.Dispose();
             return false;
         }
-
-
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryInnerLast<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate, ref T last)
             where TEnumerator : struct, IStructEnumerator<T>
@@ -125,7 +124,6 @@ namespace StructLinq
                 return last;
             throw new Exception("No Elements");
         }
-
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryLast<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)

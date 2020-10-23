@@ -16,7 +16,7 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 ```
 |              Method |      Mean |     Error |    StdDev | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
 |-------------------- |----------:|----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
-|                Linq | 29.253 ns | 0.3388 ns | 0.3169 ns |  1.00 |    0.00 |      - |     - |     - |         - |
-|      EnumerableLinq | 29.171 ns | 0.5949 ns | 0.6613 ns |  1.00 |    0.03 |      - |     - |     - |         - |
-|          StructLinq | 17.395 ns | 0.3803 ns | 0.4809 ns |  0.60 |    0.02 | 0.0068 |     - |     - |      32 B |
-| StructLinqZeroAlloc |  5.778 ns | 0.1087 ns | 0.1163 ns |  0.20 |    0.00 |      - |     - |     - |         - |
+|                Linq | 28.698 ns | 0.4468 ns | 0.4180 ns |  1.00 |    0.00 |      - |     - |     - |         - |
+|      EnumerableLinq | 28.787 ns | 0.6020 ns | 0.5631 ns |  1.00 |    0.03 |      - |     - |     - |         - |
+|          StructLinq | 14.799 ns | 0.2655 ns | 0.2484 ns |  0.52 |    0.01 | 0.0068 |     - |     - |      32 B |
+| StructLinqZeroAlloc |  3.737 ns | 0.0544 ns | 0.0482 ns |  0.13 |    0.00 |      - |     - |     - |         - |

@@ -69,7 +69,8 @@ namespace StructLinq
         {
             if (collection.Count == 0)
                 return false;
-            last = collection.Get(collection.Count - 1);
+            ref var result = ref collection.Get(collection.Count - 1);
+            last = result;
             return true;
         }
 
@@ -79,7 +80,8 @@ namespace StructLinq
         {
             if (collection.Count == 0)
                 return false;
-            last = collection.Get(collection.Count - 1);
+            ref var result = ref collection.Get(collection.Count - 1);
+            last = result;
             return true;
         }
 
@@ -92,9 +94,12 @@ namespace StructLinq
                 return false;
             for (int i = collection.Count - 1; i >= 0; i--)
             {
-                last = collection.Get(i);
-                if (predicate(last))
+                ref var result = ref collection.Get(i);
+                if (predicate(result))
+                {
+                    last = result;
                     return true;
+                }
             }
             return false;
         }
@@ -107,9 +112,12 @@ namespace StructLinq
                 return false;
             for (int i = collection.Count - 1; i >= 0; i--)
             {
-                last = collection.Get(i);
-                if (predicate(last))
+                ref var result = ref collection.Get(i);
+                if (predicate(result))
+                {
+                    last = result;
                     return true;
+                }
             }
             return false;
         }
@@ -124,9 +132,12 @@ namespace StructLinq
                 return false;
             for (int i = collection.Count - 1; i >= 0; i--)
             {
-                last = collection.Get(i);
-                if (predicate.Eval(in last))
+                ref var result = ref collection.Get(i);
+                if (predicate.Eval(in result))
+                {
+                    last = result;
                     return true;
+                }
             }
             return false;
         }
