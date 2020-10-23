@@ -52,5 +52,11 @@ namespace StructLinq.BCL.List
             return new ListEnumerable<T>(list, start, count);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return layout.Items[i];
+        }
+
     }
 }

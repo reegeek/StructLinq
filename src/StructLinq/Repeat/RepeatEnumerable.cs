@@ -42,5 +42,10 @@ namespace StructLinq.Repeat
             return new RepeatEnumerable<T>(element, count);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return element;
+        }
     }
 }

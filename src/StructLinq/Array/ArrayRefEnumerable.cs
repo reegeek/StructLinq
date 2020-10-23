@@ -45,5 +45,12 @@ namespace StructLinq.Array
         {
             return new ArrayRefEnumerable<T>(array, start, length);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref T Get(int i)
+        {
+            return ref array[i];
+        }
+
     }
 }

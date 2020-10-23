@@ -6,5 +6,6 @@
         int Count { get; }
         void Slice(uint start, uint? length);
         object Clone();
+        T Get(int i);
     }
 }

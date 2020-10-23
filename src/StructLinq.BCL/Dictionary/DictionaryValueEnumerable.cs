@@ -55,5 +55,12 @@ namespace StructLinq.BCL.Dictionary
             return new DictionaryValueEnumerable<TKey, TValue>(dictionary, start, count);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TValue Get(int i)
+        {
+            ref var entry = ref dictionaryLayout.Entries[i];
+            return entry.Value;
+        }
+
     }
 }

@@ -53,5 +53,11 @@ namespace StructLinq.BCL.List
         {
             return new ListRefEnumerable<T>(list, start, count);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref T Get(int i)
+        {
+            return ref layout.Items[i];
+        }
     }
 }

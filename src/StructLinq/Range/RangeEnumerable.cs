@@ -45,5 +45,11 @@ namespace StructLinq.Range
         {
             return new RangeEnumerable(start, count);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int Get(int i)
+        {
+            return start + i;
+        }
     }
 }

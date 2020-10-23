@@ -182,5 +182,19 @@ namespace StructLinq.Tests
             Assert.Equal(expected, values);
         }
 
+        [Fact]
+        public void ShouldRetunIthElement()
+        {
+            //Arrange
+            var collection = Build(10);
+            var expected = collection.ToEnumerable().ToArray();
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                collection.Get(i).Should().Be(expected[i]);
+            }
+
+        }
+
     }
 }
