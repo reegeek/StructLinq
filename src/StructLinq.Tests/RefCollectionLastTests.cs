@@ -4,7 +4,7 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class RefLastTests
+    public class RefCollectionLastTests
     {
         [Fact]
         public void ShouldReturnLastElement()
@@ -13,7 +13,6 @@ namespace StructLinq.Tests
             Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where((in int x)=> true)
                 .TryLast(ref last)
                 .Should()
                 .BeTrue();
@@ -27,8 +26,7 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where((in int x) => true)
-                .TryLast(ref last, x => x)
+                .TryLast(ref last, x=>x)
                 .Should()
                 .BeTrue();
             last.Should().Be(9);
@@ -41,7 +39,6 @@ namespace StructLinq.Tests
             StructEnumerable.Empty<int>()
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where((in int x) => true)
                 .TryLast(ref last)
                 .Should()
                 .BeFalse();
@@ -54,8 +51,7 @@ namespace StructLinq.Tests
             StructEnumerable.Empty<int>()
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where((in int x) => true)
-                .TryLast(ref last, x => x)
+                .TryLast(ref last, x=>x)
                 .Should()
                 .BeFalse();
         }
@@ -68,8 +64,7 @@ namespace StructLinq.Tests
             Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where((in int x) => true)
-                .TryLast(x => x > 5, ref last)
+                .TryLast(x=> x > 5, ref last)
                 .Should()
                 .BeTrue();
             last.Should().Be(9);
@@ -82,12 +77,10 @@ namespace StructLinq.Tests
             Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where((in int x) => true)
-                .TryLast(x => x > 5, ref last, x => x)
+                .TryLast(x => x > 5, ref last, x=> x)
                 .Should()
                 .BeTrue();
             last.Should().Be(9);
         }
     }
-
 }

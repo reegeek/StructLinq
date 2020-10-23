@@ -5,7 +5,7 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class LastTests
+    public class CollectionLastTests
     {
         [Fact]
         public void ShouldReturnLastElement()
@@ -13,7 +13,6 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                 .ToArray()
                 .ToStructEnumerable()
-                .Where(x=> true)
                 .Last()
                 .Should()
                 .Be(9);
@@ -25,7 +24,6 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                 .ToArray()
                 .ToStructEnumerable()
-                .Where(x=> true)
                 .Last(x => x)
                 .Should()
                 .Be(9);
@@ -50,7 +48,6 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                 .ToArray()
                 .ToStructEnumerable()
-                .Where(x=> true)
                 .Last(x => x > 5)
                 .Should()
                 .Be(9);
@@ -62,7 +59,6 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                 .ToArray()
                 .ToStructEnumerable()
-                .Where(x=> true)
                 .Last(x => x > 5, x => x)
                 .Should()
                 .Be(9);
