@@ -9,7 +9,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T InnerLast<T, TEnumerator>(ref TEnumerator enumerator)
+        private static bool TryInnerLast<T, TEnumerator>(ref TEnumerator enumerator, ref T last)
             where TEnumerator : struct, IStructEnumerator<T>
         {
             if (enumerator.MoveNext())
@@ -19,52 +19,52 @@ namespace StructLinq
                 {
                     result = enumerator.Current;
 
-                } 
+                }
                 while (enumerator.MoveNext());
                 enumerator.Dispose();
-                return result;
+                last = result;
+                return true;
             }
             enumerator.Dispose();
-            throw new Exception("No Elements");
+            return false;
         }
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T InnerLast<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
+        private static bool TryInnerLast<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate, ref T last)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            T result = default;
             bool found = false;
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
                 if (predicate(current))
                 {
-                    result = current;
+                    last = current;
                     found = true;
                 }
             }
             enumerator.Dispose();
-            if (found)
-                return result;
-            throw new Exception("No Match");
+            return found;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T InnerLast<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate)
+        private static bool TryInnerLast<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate, ref T last)
             where TEnumerator : struct, IStructEnumerator<T>
             where TFunc : struct, IFunction<T, bool>
         {
+            bool found = false;
             while (enumerator.MoveNext())
             {
                 var current = enumerator.Current;
                 if (predicate.Eval(current))
                 {
-                    enumerator.Dispose();
-                    return current;
+                    last = current;
+                    found = true;
                 }
             }
             enumerator.Dispose();
-            throw new Exception("No Match");
+            return found;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -73,7 +73,10 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLast<T, TEnumerator>(ref enumerator);
+            T last = default;
+            if (TryInnerLast(ref enumerator, ref last))
+                return last;
+            throw new Exception("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -81,7 +84,10 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLast<T, TEnumerator>(ref enumerator);
+            T last = default;
+            if (TryInnerLast(ref enumerator, ref last))
+                return last;
+            throw new Exception("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -90,7 +96,10 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLast(ref enumerator, predicate);
+            T last = default;
+            if (TryInnerLast(ref enumerator, predicate, ref last))
+                return last;
+            throw new Exception("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -98,7 +107,10 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLast(ref enumerator, predicate);
+            T last = default;
+            if (TryInnerLast(ref enumerator, predicate, ref last))
+                return last;
+            throw new Exception("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -108,7 +120,56 @@ namespace StructLinq
             where TFunc : struct, IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLast<T, TEnumerator, TFunc>(ref enumerator, ref predicate);
+            T last = default;
+            if (TryInnerLast(ref enumerator, ref predicate, ref last))
+                return last;
+            throw new Exception("No Elements");
         }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryLast<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryInnerLast(ref enumerator, ref last);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryLast<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, ref T last)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryInnerLast(ref enumerator, ref last);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryLast<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryInnerLast(ref enumerator, predicate, ref last);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryLast<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate, ref T last)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryInnerLast(ref enumerator, predicate, ref last);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Last<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerable : IStructEnumerable<T, TEnumerator>
+            where TFunc : struct, IFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryInnerLast(ref enumerator, ref predicate, ref last);
+        }
+
     }
 }

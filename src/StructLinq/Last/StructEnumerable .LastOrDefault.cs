@@ -9,65 +9,14 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T InnerLastOrDefault<T, TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<T>
-        {
-            if (enumerator.MoveNext())
-            {
-                T result;
-                do
-                {
-                    result = enumerator.Current;
-
-                }
-                while (enumerator.MoveNext());
-                enumerator.Dispose();
-                return result;
-            }
-            enumerator.Dispose();
-            return default;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T InnerLastOrDefault<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
-        {
-            T result = default;
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                if (predicate(current))
-                    result = current;
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T InnerLastOrDefault<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TFunc : struct, IFunction<T, bool>
-        {
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                if (predicate.Eval(current))
-                {
-                    enumerator.Dispose();
-                    return current;
-                }
-            }
-            enumerator.Dispose();
-            return default;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T LastOrDefault<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLastOrDefault<T, TEnumerator>(ref enumerator);
+            T last = default;
+            TryInnerLast(ref enumerator, ref last);
+            return last;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -75,7 +24,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLastOrDefault<T, TEnumerator>(ref enumerator);
+            T last = default;
+            TryInnerLast(ref enumerator, ref last);
+            return last;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -84,7 +35,9 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLastOrDefault(ref enumerator, predicate);
+            T last = default;
+            TryInnerLast(ref enumerator, predicate, ref last);
+            return last;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -92,7 +45,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLastOrDefault(ref enumerator, predicate);
+            T last = default;
+            TryInnerLast(ref enumerator, predicate, ref last);
+            return last;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -102,7 +57,9 @@ namespace StructLinq
             where TFunc : struct, IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerLastOrDefault<T, TEnumerator, TFunc>(ref enumerator, ref predicate);
+            T last = default;
+            TryInnerLast(ref enumerator, ref predicate, ref last);
+            return last;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -10,58 +9,78 @@ namespace StructLinq.Tests
         [Fact]
         public void ShouldReturnLastElement()
         {
-            var array = Enumerable.Range(0, 10)
+            int last = default;
+            Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Last()
+                .TryLast(ref last)
                 .Should()
-                .Be(9);
+                .BeTrue();
+            last.Should().Be(9);
         }
 
         [Fact]
         public void ShouldReturnLastElementZeroAlloc()
         {
+            int last = default;
             var array = Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Last(x => x)
+                .TryLast(ref last, x=>x)
                 .Should()
-                .Be(9);
+                .BeTrue();
+            last.Should().Be(9);
         }
 
         [Fact]
         public void ShouldThrowException()
         {
-            Assert.Throws<Exception>(() => StructEnumerable.Empty<int>().ToArray().ToRefStructEnumerable().Last());
+            int last = default;
+            StructEnumerable.Empty<int>()
+                .ToArray()
+                .ToRefStructEnumerable()
+                .TryLast(ref last)
+                .Should()
+                .BeFalse();
         }
 
         [Fact]
         public void ShouldThrowExceptionZeroAlloc()
         {
-            Assert.Throws<Exception>(() => StructEnumerable.Empty<int>().ToArray().ToRefStructEnumerable().Last(x => x));
+            int last = default;
+            StructEnumerable.Empty<int>()
+                .ToArray()
+                .ToRefStructEnumerable()
+                .TryLast(ref last, x=>x)
+                .Should()
+                .BeFalse();
         }
 
 
         [Fact]
         public void ShouldReturnLastElementWithFunc()
         {
-            var array = Enumerable.Range(0, 10)
+            int last = default;
+            Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Last(x => x > 5)
+                .TryLast(x=> x > 5, ref last)
                 .Should()
-                .Be(9);
+                .BeTrue();
+            last.Should().Be(9);
         }
 
         [Fact]
         public void ShouldReturnLastElementWithFuncZeroAlloc()
         {
-            var array = Enumerable.Range(0, 10)
+            int last = default;
+            Enumerable.Range(0, 10)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Last(x => x > 5, x => x)
+                .TryLast(x => x > 5, ref last, x=> x)
                 .Should()
-                .Be(9);
+                .BeTrue();
+            last.Should().Be(9);
         }
     }
 }
