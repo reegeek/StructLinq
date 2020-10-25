@@ -178,7 +178,10 @@ Following extensions are available for :
   - `Any`
   - `Except`([zero allocation](Documents/BenchmarksResults/Except.md))
   - `Union`([zero allocation](Documents/BenchmarksResults/Union.md))	
-  - `Intersect`([zero allocation](Documents/BenchmarksResults/Intersect.md))	
+  - `Intersect`([zero allocation](Documents/BenchmarksResults/Intersect.md))
+  - `First`
+  - `FirstOrDefault`
+  - `LastOrDefault`
 
 
 
