@@ -181,7 +181,10 @@ Following extensions are available for :
   - `Intersect`([zero allocation](Documents/BenchmarksResults/Intersect.md))
   - `First`
   - `FirstOrDefault`
+  - `Last`
   - `LastOrDefault`
+  - `ElementAt`
+  - `ElementAtOrDefault`
 
 
 

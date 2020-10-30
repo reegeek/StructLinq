@@ -13,6 +13,7 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                                   .ToArray()
                                   .ToStructEnumerable()
+                                  .Where(x=> true)
                                   .First()
                                   .Should()
                                   .Be(0);
@@ -24,6 +25,7 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                                   .ToArray()
                                   .ToStructEnumerable()
+                                  .Where(x=> true, x=> x)
                                   .First(x=>x)
                                   .Should()
                                   .Be(0);
@@ -48,6 +50,7 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                                   .ToArray()
                                   .ToStructEnumerable()
+                                  .Where(x=> true)
                                   .First(x=> x > 5)
                                   .Should()
                                   .Be(6);
@@ -59,6 +62,7 @@ namespace StructLinq.Tests
             var array = Enumerable.Range(0, 10)
                                   .ToArray()
                                   .ToStructEnumerable()
+                                  .Where(x=> true, x=>x)
                                   .First(x=> x > 5, x=> x)
                                   .Should()
                                   .Be(6);
