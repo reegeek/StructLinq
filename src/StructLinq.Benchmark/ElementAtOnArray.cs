@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
+using StructLinq.Array;
 
 namespace StructLinq.Benchmark
 {
@@ -28,6 +29,10 @@ namespace StructLinq.Benchmark
 
         [Benchmark]
         public int StructLinqZeroAlloc() => array.ToStructEnumerable().ElementAt(Count / 2, x=>x);
+
+        [Benchmark]
+        public int StructLinqZeroAllocWithEnumerator() => array.ToStructEnumerable().ElementAt(Count / 2, x => (IStructEnumerable<int, ArrayStructEnumerator<int>>)x);
+
 
     }
 }

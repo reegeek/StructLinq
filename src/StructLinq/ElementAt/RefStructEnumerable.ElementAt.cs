@@ -15,35 +15,45 @@ namespace StructLinq
             if (index < 0)
                 return false;
 
-            int i = 0;
-            while (enumerator.MoveNext()&& i<=index)
+            while (true)
             {
-                ref var current = ref enumerator.Current;
-                elementAt = current;
-                i++;
+                if (!enumerator.MoveNext())
+                {
+                    enumerator.Dispose();
+                    return false;
+                }
+                if (index == 0)
+                {
+                    elementAt = ref enumerator.Current;
+                    enumerator.Dispose();
+                    return true;
+                }
+                index--;
             }
-            enumerator.Dispose();
-            return i == index + 1;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static T RefInnerElementAt<T, TEnumerator>(ref TEnumerator enumerator, int index)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
+
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
-            int i = 0;
-            T result = default;
-            while (enumerator.MoveNext()&& i<=index)
+            while (true)
             {
-                ref var current = ref enumerator.Current;
-                result = current;
-                i++;
+                if (!enumerator.MoveNext())
+                {
+                    enumerator.Dispose();
+                    throw new ArgumentOutOfRangeException("index");
+                }
+                if (index == 0)
+                {
+                    ref var innerElementAt = ref enumerator.Current;
+                    enumerator.Dispose();
+                    return innerElementAt;
+                }
+                index--;
             }
-            enumerator.Dispose();
-            if (i == index + 1)
-                return result;
-            throw new ArgumentOutOfRangeException("index");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

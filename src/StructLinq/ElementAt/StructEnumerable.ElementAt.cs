@@ -14,15 +14,22 @@ namespace StructLinq
         {
             if (index < 0)
                 return false;
-            int i = 0;
-            while (enumerator.MoveNext()&& i<=index)
+
+            while (true)
             {
-                var current = enumerator.Current;
-                elementAt = current;
-                i++;
+                if (!enumerator.MoveNext())
+                {
+                    enumerator.Dispose();
+                    return false;
+                }
+                if (index == 0)
+                {
+                    elementAt = enumerator.Current;
+                    enumerator.Dispose();
+                    return true;
+                }
+                index--;
             }
-            enumerator.Dispose();
-            return i == index + 1;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -31,18 +38,21 @@ namespace StructLinq
         {
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
-            int i = 0;
-            T result = default;
-            while (enumerator.MoveNext()&& i<=index)
+            while (true)
             {
-                var current = enumerator.Current;
-                result = current;
-                i++;
+                if (!enumerator.MoveNext())
+                {
+                    enumerator.Dispose();
+                    throw new ArgumentOutOfRangeException("index");
+                }
+                if (index == 0)
+                {
+                    var innerElementAt = enumerator.Current;
+                    enumerator.Dispose();
+                    return innerElementAt;
+                }
+                index--;
             }
-            enumerator.Dispose();
-            if (i == index+1)
-                return result;
-            throw new ArgumentOutOfRangeException("index");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
