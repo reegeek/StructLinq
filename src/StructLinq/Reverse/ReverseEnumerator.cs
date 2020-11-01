@@ -38,4 +38,45 @@ namespace StructLinq.Reverse
             list.Dispose();
         }
     }
+
+    public struct ReverseEnumerator<T, TStructCollection, TEnumerator> : IStructEnumerator<T>
+        where TStructCollection : IStructCollection<T, TEnumerator> 
+        where TEnumerator : struct, IStructEnumerator<T>
+    {
+        private readonly TStructCollection structCollection;
+        private readonly int endIndex;
+        private readonly int start;
+        private readonly int offset;
+        private int index;
+
+        public ReverseEnumerator(TStructCollection structCollection, int start, int length)
+        {
+            this.structCollection = structCollection;
+            endIndex = length - 1 + start;
+            this.start = start;
+            index = start - 1;
+            offset = structCollection.Count - 1;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool MoveNext()
+        {
+            return ++index <= endIndex;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset()
+        {
+            index = start - 1;
+        }
+        public T Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => structCollection.Get(offset - index);
+        }
+    }
 }
