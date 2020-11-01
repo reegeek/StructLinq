@@ -7,6 +7,7 @@ namespace StructLinq.Array
         #region private fields
         private readonly T[] array;
         private readonly int endIndex;
+        private readonly int start;
         private int index;
         #endregion
         public ArrayRefStructEnumerator(T[] array, int start, int length)
@@ -14,6 +15,7 @@ namespace StructLinq.Array
             this.array = array;
             endIndex = length - 1 + start;
             index =  start - 1;
+            this.start = start;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
@@ -23,7 +25,7 @@ namespace StructLinq.Array
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            index = -1;
+            index = start-1;
         }
         public ref T Current
         {

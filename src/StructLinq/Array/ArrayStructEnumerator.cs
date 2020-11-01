@@ -7,12 +7,14 @@ namespace StructLinq.Array
         #region private fields
         private readonly T[] array;
         private readonly int endIndex;
+        private readonly int start;
         private int index;
         #endregion
         public ArrayStructEnumerator(T[] array, int start, int length)
         {
             this.array = array;
             endIndex = length - 1 + start;
+            this.start = start;
             index =  start - 1;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -23,7 +25,7 @@ namespace StructLinq.Array
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            index = -1;
+            index = start - 1;
         }
         public readonly T Current
         {

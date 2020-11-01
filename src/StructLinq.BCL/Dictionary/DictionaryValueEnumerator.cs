@@ -6,6 +6,7 @@ namespace StructLinq.BCL.Dictionary
     {
         private readonly Entry<TKey, TValue>[] entries;
         private readonly int length;
+        private readonly int start;
         private int index;
 
         internal DictionaryValueEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
@@ -13,6 +14,7 @@ namespace StructLinq.BCL.Dictionary
             this.entries = entries;
             length = count - 1 + start;
             index = start - 1;
+            this.start = start;
         }
 
 
@@ -32,7 +34,7 @@ namespace StructLinq.BCL.Dictionary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            index = -1;
+            index = start-1;
         }
 
         public readonly TValue Current

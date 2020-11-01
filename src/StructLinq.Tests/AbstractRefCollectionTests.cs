@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -129,6 +130,33 @@ namespace StructLinq.Tests
             var expected = array.Skip((int) skip).ToArray();
 
             Assert.Equal(expected, values);
+        }
+
+        [Fact]
+        public void ShouldSkipReturnSameSequenceWhenResetIsCall()
+        {
+            if (!shouldReturnSameSequenceWhenResetIsCall)
+                return;
+            //Arrange
+            var enumerable = Build(5).Skip(2);
+
+            //Act
+            using (var enumerator = enumerable.ToEnumerable().GetEnumerator())
+            {
+                var list1 = FillList(enumerator);
+                enumerator.Reset();
+                var list2 = FillList(enumerator);
+                list1.Should().Equal(list2);
+            }
+            List<T> FillList(IEnumerator<T> enumerator)
+            {
+                var list = new List<T>();
+                enumerator.MoveNext();
+                list.Add(enumerator.Current);
+                enumerator.MoveNext();
+                list.Add(enumerator.Current);
+                return list;
+            }
         }
 
         [Theory]

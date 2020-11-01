@@ -9,6 +9,7 @@ namespace StructLinq.IList
         #region private fields
         private readonly IList<T> list;
         private readonly int endIndex;
+        private readonly int start;
         private int index;
 
         #endregion
@@ -17,6 +18,7 @@ namespace StructLinq.IList
             this.list = list;
             endIndex = length - 1 + start;
             index = start - 1;
+            this.start = start;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
@@ -26,7 +28,7 @@ namespace StructLinq.IList
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            index = -1;
+            index = start-1;
         }
         public T Current
         {
