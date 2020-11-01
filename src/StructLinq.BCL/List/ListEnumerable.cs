@@ -55,7 +55,7 @@ namespace StructLinq.BCL.List
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Get(int i)
         {
-            return layout.Items[i];
+            return layout.Items[start + i];
         }
 
     }

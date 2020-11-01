@@ -48,7 +48,7 @@ namespace StructLinq.IList
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Get(int i)
         {
-            return list[i];
+            return list[start + i];
         }
     }
 }

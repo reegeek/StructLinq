@@ -221,7 +221,19 @@ namespace StructLinq.Tests
             {
                 collection.Get(i).Should().Be(expected[i]);
             }
+        }
 
+        [Fact]
+        public void ShouldSkipAndReturnIthElement()
+        {
+            //Arrange
+            var collection = Build(10).Skip(2);
+            var expected = collection.ToEnumerable().ToArray();
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                collection.Get(i).Should().Be(expected[i]);
+            }
         }
     }
 }

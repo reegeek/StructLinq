@@ -49,7 +49,7 @@ namespace StructLinq.Array
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ref T Get(int i)
         {
-            return ref array[i];
+            return ref array[start + i];
         }
 
     }

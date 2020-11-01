@@ -58,7 +58,7 @@ namespace StructLinq.BCL.Dictionary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TKey Get(int i)
         {
-            ref var entry = ref dictionaryLayout.Entries[i];
+            ref var entry = ref dictionaryLayout.Entries[start + i];
             return entry.Key;
         }
     }

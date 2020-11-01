@@ -57,7 +57,7 @@ namespace StructLinq.BCL.List
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ref T Get(int i)
         {
-            return ref layout.Items[i];
+            return ref layout.Items[start + i];
         }
     }
 }
