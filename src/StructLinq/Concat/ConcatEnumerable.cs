@@ -29,11 +29,8 @@ namespace StructLinq.Concat
         public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            foreach (var input in this)
-            {
-                if (!visitor.Visit(input))
-                    return;
-            }
+            enumerable1.Visit(ref visitor);
+            enumerable2.Visit(ref visitor);
         }
     }
 }

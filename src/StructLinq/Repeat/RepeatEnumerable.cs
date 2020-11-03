@@ -52,9 +52,9 @@ namespace StructLinq.Repeat
         public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            foreach (var input in this)
+            for (int i = 0; i < count; i++)
             {
-                if (!visitor.Visit(input))
+                if (!visitor.Visit(element))
                     return;
             }
         }

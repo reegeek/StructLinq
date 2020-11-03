@@ -56,10 +56,11 @@ namespace StructLinq.Range
         public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<int>
         {
-            for (int i = 0; i < Count; i++)
+            var n = Count;
+            var s = start;
+            for (int i = 0; i < n; i++)
             {
-                var input = start + i;
-                if (!visitor.Visit(input))
+                if (!visitor.Visit(s+i))
                     return;
             }
         }

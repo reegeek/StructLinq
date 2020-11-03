@@ -58,9 +58,11 @@ namespace StructLinq.Array
         public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            foreach (var input in this)
+            var count = Count;
+            var s = start;
+            for (int i = 0; i < count; i++)
             {
-                if (!visitor.Visit(input))
+                if (!visitor.Visit(array[s+i]))
                     return;
             }
         }
