@@ -55,7 +55,7 @@ namespace StructLinq.Array
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(ref TVisitor visitor)
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
             var count = Count;
@@ -63,8 +63,10 @@ namespace StructLinq.Array
             for (int i = 0; i < count; i++)
             {
                 if (!visitor.Visit(array[s+i]))
-                    return;
+                    return VisitStatus.VisitorFinished;
             }
+
+            return VisitStatus.EnumeratorFinished;
         }
     }
 }

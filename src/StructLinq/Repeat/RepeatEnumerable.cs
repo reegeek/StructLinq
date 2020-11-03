@@ -49,14 +49,16 @@ namespace StructLinq.Repeat
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(ref TVisitor visitor)
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
             for (int i = 0; i < count; i++)
             {
                 if (!visitor.Visit(element))
-                    return;
+                    return VisitStatus.VisitorFinished;
             }
+
+            return VisitStatus.EnumeratorFinished;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace StructLinq.IList
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(ref TVisitor visitor)
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
             var count = Count;
@@ -60,8 +60,10 @@ namespace StructLinq.IList
             for (int i = 0; i < count; i++)
             {
                 if (!visitor.Visit(list[s+i]))
-                    return;
+                    return VisitStatus.VisitorFinished;
             }
+
+            return VisitStatus.EnumeratorFinished;
         }
     }
 }

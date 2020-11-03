@@ -26,11 +26,13 @@ namespace StructLinq.Concat
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(ref TVisitor visitor)
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            enumerable1.Visit(ref visitor);
-            enumerable2.Visit(ref visitor);
+            var visitStatus = enumerable1.Visit(ref visitor);
+            if (visitStatus == VisitStatus.VisitorFinished)
+                return visitStatus;
+            return enumerable2.Visit(ref visitor);
         }
     }
 }

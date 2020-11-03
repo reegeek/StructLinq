@@ -23,14 +23,16 @@ namespace StructLinq.Where
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(ref TVisitor visitor)
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TIn>
         {
             foreach (var input in this)
             {
                 if (!visitor.Visit(input))
-                    return;
+                    return VisitStatus.VisitorFinished;
             }
+
+            return VisitStatus.EnumeratorFinished;
         }
     }
 }
