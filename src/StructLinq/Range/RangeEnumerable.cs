@@ -53,11 +53,12 @@ namespace StructLinq.Range
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(TVisitor visitor)
+        public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<int>
         {
-            foreach (var input in this)
+            for (int i = 0; i < Count; i++)
             {
+                var input = start + i;
                 if (!visitor.Visit(input))
                     return;
             }

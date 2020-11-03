@@ -63,7 +63,7 @@ namespace StructLinq.BCL.Dictionary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(TVisitor visitor)
+        public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TValue>
         {
             foreach (var input in this)

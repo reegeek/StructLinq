@@ -10,7 +10,7 @@ namespace StructLinq.Empty
             return new EmptyEnumerator<T>();
         }
 
-        public void Visit<TVisitor>(TVisitor visitor)
+        public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
             

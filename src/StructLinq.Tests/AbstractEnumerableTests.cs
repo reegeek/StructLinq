@@ -139,33 +139,29 @@ namespace StructLinq.Tests
         {
             //Arrange
             var enumerable = Build(size);
-            var visitor = new ListVisitor(new List<T>());
+            var visitor = new ListVisitor<T>(new List<T>());
 
             //Act
-            enumerable.Visit(visitor);
+            enumerable.Visit(ref visitor);
 
             //Assert
             var expected = enumerable.ToEnumerable().ToArray();
             Assert.Equal(expected, visitor.List.ToArray());
         }
-
-
-        private struct ListVisitor : IVisitor<T>
-        {
-            public List<T> List { get; }
-            public ListVisitor(List<T> list)
-            {
-                this.List = list;
-            }
-
-            public bool Visit(T input)
-            {
-                List.Add(input);
-                return true;
-            }
-        }
     }
 
+    internal struct ListVisitor<T> : IVisitor<T>
+    {
+        public List<T> List { get; }
+        public ListVisitor(List<T> list)
+        {
+            this.List = list;
+        }
 
-
+        public bool Visit(T input)
+        {
+            List.Add(input);
+            return true;
+        }
+    }
 }

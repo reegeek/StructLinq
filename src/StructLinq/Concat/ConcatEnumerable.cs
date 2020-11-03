@@ -26,7 +26,7 @@ namespace StructLinq.Concat
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(TVisitor visitor)
+        public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
             foreach (var input in this)

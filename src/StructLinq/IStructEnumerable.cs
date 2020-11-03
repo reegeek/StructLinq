@@ -5,7 +5,7 @@
     {
         TEnumerator GetEnumerator();
 
-        void Visit<TVisitor>(TVisitor visitor)
+        void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>;
     }
 }

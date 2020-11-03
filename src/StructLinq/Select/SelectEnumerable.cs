@@ -32,7 +32,7 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(TVisitor visitor)
+        public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TOut>
         {
             foreach (var input in this)

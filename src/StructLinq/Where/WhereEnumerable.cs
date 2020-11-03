@@ -23,7 +23,7 @@ namespace StructLinq.Where
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Visit<TVisitor>(TVisitor visitor)
+        public void Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TIn>
         {
             foreach (var input in this)

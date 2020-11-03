@@ -98,6 +98,28 @@ namespace StructLinq.Tests
             Assert.Equal(expected, values);
         }
 
+        [Theory]
+        [InlineData(10, 2)]
+        [InlineData(7, 5)]
+        [InlineData(7, 0)]
+        [InlineData(7, 10)]
+        public void ShouldSkipWithVisitor(int size, int skip)
+        {
+            TStructCollection collection = Build(size);
+            var array = collection.ToEnumerable().ToArray();
+
+            var list = new List<T>();
+            var visitor = new ListVisitor<T>(list);
+            
+            collection.Skip(skip, x => x)
+                                   .Visit(ref visitor);
+
+            
+            var values = list.ToArray();
+            var expected = array.Skip((int) skip).ToArray();
+
+            Assert.Equal(expected, values);
+        }
         [Fact]
         public void ShouldSkipReturnSameSequenceWhenResetIsCall()
         {
@@ -154,6 +176,28 @@ namespace StructLinq.Tests
 
             var values = collection.Take(take, x => x).ToArray();
 
+            var expected = array.Take((int) take).ToArray();
+
+            Assert.Equal(expected, values);
+        }
+
+        [Theory]
+        [InlineData(10, 2)]
+        [InlineData(7, 5)]
+        [InlineData(7, 0)]
+        [InlineData(7, 10)]
+        public void ShouldTakeWithVisitor(int size, int take)
+        {
+            TStructCollection collection = Build(size);
+            var array = collection.ToEnumerable().ToArray();
+
+            var list = new List<T>();
+            var visitor = new ListVisitor<T>(list);
+
+            collection.Take(take, x => x)
+                                   .Visit(ref visitor);
+
+            var values = list.ToArray();
             var expected = array.Take((int) take).ToArray();
 
             Assert.Equal(expected, values);
