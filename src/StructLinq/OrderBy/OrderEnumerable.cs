@@ -50,5 +50,16 @@ namespace StructLinq.OrderBy
             QuickSort.Sort(indexes, 0, size -1, datas.Items, ref comp, ascending); 
             return new OrderByEnumerator<T>(indexes, datas, size, indexPool);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 }

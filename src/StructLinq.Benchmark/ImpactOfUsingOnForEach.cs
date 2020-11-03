@@ -148,6 +148,17 @@ namespace StructLinq.Benchmark
         {
             return new StructEnumerator<T, ArrayStructEnumeratorWithDispose<T>>(GetEnumerator());
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 
     public struct ArrayStructEnumeratorWithDispose<T> : IStructEnumerator<T>, IDisposable

@@ -21,5 +21,16 @@ namespace StructLinq.Where
             var enumerator = inner.GetEnumerator();
             return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<TIn>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 }

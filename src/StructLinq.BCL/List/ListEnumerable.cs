@@ -58,5 +58,15 @@ namespace StructLinq.BCL.List
             return layout.Items[start + i];
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 }

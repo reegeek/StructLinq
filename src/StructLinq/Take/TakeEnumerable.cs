@@ -21,5 +21,16 @@ namespace StructLinq.Take
             var enumerator = inner.GetEnumerator();
             return new TakeEnumerator<T, TEnumerator>(ref enumerator, count);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 }

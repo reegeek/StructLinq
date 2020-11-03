@@ -39,5 +39,16 @@ namespace StructLinq.Intersect
             var set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
             return new IntersectEnumerator<T, TEnumerator1, TEnumerator2, TComparer>(ref enum1, ref  enum2, ref set);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 }

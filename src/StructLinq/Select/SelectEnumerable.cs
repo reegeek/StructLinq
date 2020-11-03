@@ -30,6 +30,17 @@ namespace StructLinq.Select
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => inner;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<TOut>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 }
 

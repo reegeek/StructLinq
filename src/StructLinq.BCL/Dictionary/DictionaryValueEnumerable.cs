@@ -62,5 +62,16 @@ namespace StructLinq.BCL.Dictionary
             return entry.Value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<TValue>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
+
     }
 }

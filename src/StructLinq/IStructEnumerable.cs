@@ -4,5 +4,8 @@
         where TEnumerator : struct, IStructEnumerator<T>
     {
         TEnumerator GetEnumerator();
+
+        void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<T>;
     }
 }

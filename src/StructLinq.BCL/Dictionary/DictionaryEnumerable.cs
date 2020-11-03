@@ -61,5 +61,16 @@ namespace StructLinq.BCL.Dictionary
             ref var entry = ref dictionaryLayout.Entries[start + i];
             return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Visit<TVisitor>(TVisitor visitor)
+            where TVisitor : IVisitor<KeyValuePair<TKey, TValue>>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return;
+            }
+        }
     }
 }
