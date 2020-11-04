@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Buffers;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+using StructLinq.BCL.List;
+using StructLinq.Utils.Collections;
 
 namespace StructLinq.Benchmark
 {
@@ -35,6 +39,25 @@ namespace StructLinq.Benchmark
                    .ToStructEnumerable()
                    .Where(ref where, x=> x)
                    .ToList(x=> x);
+        }
+
+        [Benchmark]
+        public List<int> WithVisit()
+        {
+            var where = new WherePredicate();
+            var visitor = new PooledListVisitor<int>(0, ArrayPool<int>.Shared);
+            var whereEnumerable = array
+                .ToStructEnumerable()
+                .Where(ref @where, x=> x)
+                .Visit(ref visitor);
+            var resultArray = visitor.PooledList.ToArray();
+            visitor.Dispose();
+            var result = new List<int>();
+            var listLayout = Unsafe.As<List<int>, ListLayout<int>>(ref result);
+            listLayout.Items = resultArray;
+            listLayout.Size = resultArray.Length;
+            return result;
+
         }
     }
 }
