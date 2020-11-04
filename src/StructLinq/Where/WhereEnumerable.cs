@@ -26,13 +26,28 @@ namespace StructLinq.Where
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TIn>
         {
-            foreach (var input in this)
-            {
-                if (!visitor.Visit(input))
-                    return VisitStatus.VisitorFinished;
-            }
+            var selector = new WhereVisitor<TVisitor>(ref function, ref visitor);
+            var visitStatus = inner.Visit(ref selector);
+            visitor = selector.visitor;
+            return visitStatus;
+        }
 
-            return VisitStatus.EnumeratorFinished;
+        private struct WhereVisitor<TVisitor> : IVisitor<TIn>
+            where TVisitor : IVisitor<TIn>
+        {
+            public TFunction function;
+            public TVisitor visitor;
+            public WhereVisitor(ref TFunction function, ref TVisitor visitor)
+            {
+                this.function = function;
+                this.visitor = visitor;
+            }
+            public bool Visit(TIn input)
+            {
+                if (function.Eval(input))
+                    return visitor.Visit(input);
+                return true;
+            }
         }
     }
 }

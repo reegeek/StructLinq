@@ -48,8 +48,12 @@ namespace StructLinq.Reverse
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            foreach (var input in this)
+            var c = structCollection.Count;
+            var s = start;
+            var count = Count;
+            for (int i = 0; i < count; i++)
             {
+                var input = structCollection.Get(c - 1 - s - i);
                 if (!visitor.Visit(input))
                     return VisitStatus.VisitorFinished;
             }

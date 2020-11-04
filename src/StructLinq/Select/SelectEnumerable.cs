@@ -35,13 +35,29 @@ namespace StructLinq.Select
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TOut>
         {
-            foreach (var input in this)
-            {
-                if (!visitor.Visit(input))
-                    return VisitStatus.VisitorFinished;
-            }
+            var selectVisitor = new SelectVisitor<TVisitor>(ref function, ref visitor);
+            var visitStatus = inner.Visit(ref selectVisitor);
+            visitor = selectVisitor.visitor;
+            return visitStatus;
+        }
 
-            return VisitStatus.EnumeratorFinished;
+        private struct SelectVisitor<TVisitor> : IVisitor<TIn>
+            where TVisitor : IVisitor<TOut>
+        {
+            public TFunction function;
+            public TVisitor visitor;
+
+            public SelectVisitor(ref TFunction function, ref TVisitor visitor)
+            {
+                this.function = function;
+                this.visitor = visitor;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(TIn input)
+            {
+                var output = function.Eval(input);
+                return visitor.Visit(output);
+            }
         }
     }
 }

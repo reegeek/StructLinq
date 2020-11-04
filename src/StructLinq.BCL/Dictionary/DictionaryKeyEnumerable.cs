@@ -66,9 +66,12 @@ namespace StructLinq.BCL.Dictionary
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TKey>
         {
-            foreach (var input in this)
+            var count = Count;
+            var s = start;
+            var array = dictionaryLayout.Entries;
+            for (int i = 0; i < count; i++)
             {
-                if (!visitor.Visit(input))
+                if (!visitor.Visit(array[s+i].Key))
                     return VisitStatus.VisitorFinished;
             }
 
