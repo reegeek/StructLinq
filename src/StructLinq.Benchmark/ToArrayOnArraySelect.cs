@@ -1,9 +1,10 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [DisassemblyDiagnoser(recursiveDepth: 4), MemoryDiagnoser]
+    [MemoryDiagnoser]
     public class ToArrayOnArraySelect
     {
         private const int Count = 10000;
@@ -34,6 +35,36 @@ namespace StructLinq.Benchmark
                    .ToStructEnumerable()
                    .Select(ref @select, x=>x, x=>x)
                    .ToArray(x=>x);
+        }
+
+        [Benchmark]
+        public int[] WithVisitor()
+        {
+            var select = new SelectFunction();
+            var selectEnumerable = array
+                .ToStructEnumerable()
+                .Select(ref @select, x=>x, x=>x);
+            var visitor = new ToArrayVisitor<int>(array.Length);
+            selectEnumerable.Visit(ref visitor);
+            return visitor.array;
+        }
+    }
+
+    public struct ToArrayVisitor<T> : IVisitor<T>
+    {
+        public T[] array;
+        private int i;
+        public ToArrayVisitor(int count)
+        {
+            array = new T[count];
+            i = 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Visit(T input)
+        {
+            array[i++] = input;
+            return true;
         }
     }
 }

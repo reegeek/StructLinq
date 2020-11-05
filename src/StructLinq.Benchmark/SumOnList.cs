@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -41,6 +42,7 @@ namespace StructLinq.Benchmark
         {
             this.sum = 0;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Visit(int input)
         {
             sum += input;

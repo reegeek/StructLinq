@@ -4,7 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(recursiveDepth: 4)]
+    [MemoryDiagnoser]
     public class Sum
     {
         private const int Count = 10000;
@@ -51,6 +51,15 @@ namespace StructLinq.Benchmark
         public int ConvertSum()
         {
             return Enumerable.Range(0, Count).ToStructEnumerable().Sum(x=>x);
+        }
+
+        [Benchmark]
+        public int WithVisitor()
+        {
+            var visitor = new SumVisitor(0);
+            StructEnumerable.Range(0, Count)
+                .Visit(ref visitor);
+            return visitor.sum;
         }
 
     }
