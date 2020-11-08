@@ -14,7 +14,7 @@ namespace StructLinq.Benchmark
             array = Enumerable.Range(0, Count).Select(x => new Container(x)).ToArray();
         }
         [Benchmark]
-        public int SysSum()
+        public int Handmaded()
         {
             int sum = 0;
             for (int i = 0; i < Count; i++)

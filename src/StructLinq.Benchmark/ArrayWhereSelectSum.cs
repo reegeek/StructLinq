@@ -55,19 +55,5 @@ namespace StructLinq.Benchmark
                 .Select(ref @select, x => x, x => x)
                 .Sum(x => x);
         }
-
-        [Benchmark]
-        public int WithVisitor()
-        {
-            var where = new WherePredicate();
-            var select = new SelectFunction();
-            var visitor = new SumVisitor(0);
-            array
-                .ToStructEnumerable()
-                .Where(ref @where, x => x)
-                .Select(ref @select, x => x, x => x)
-                .Visit(ref visitor);
-            return visitor.sum;
-        }
     }
 }

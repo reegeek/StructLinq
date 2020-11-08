@@ -25,28 +25,6 @@ namespace StructLinq.Benchmark
         {
             return list.ToStructEnumerable().Sum(x => x);
         }
-
-        [Benchmark]
-        public int WithVisit()
-        {
-            var sumVisitor = new SumVisitor(0);
-            list.ToStructEnumerable().Visit(ref sumVisitor);
-            return sumVisitor.sum;
-        }
     }
 
-    public struct SumVisitor : IVisitor<int>
-    {
-        public int sum;
-        public SumVisitor(int sum)
-        {
-            this.sum = 0;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Visit(int input)
-        {
-            sum += input;
-            return true;
-        }
-    }
 }

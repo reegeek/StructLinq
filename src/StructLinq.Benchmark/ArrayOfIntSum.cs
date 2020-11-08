@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BenchmarkDotNet.Attributes;
 using Enumerable = System.Linq.Enumerable;
 
@@ -8,7 +9,7 @@ namespace StructLinq.Benchmark
     public class ArrayOfIntSum
     {
         private readonly IEnumerable<int> sysArray;
-        private readonly int Count = 100;
+        private readonly int Count = 1_000;
         private readonly int[] array;
         public ArrayOfIntSum()
         {
@@ -16,7 +17,7 @@ namespace StructLinq.Benchmark
             array = Enumerable.ToArray(Enumerable.Range(0, Count));
         }
         [Benchmark(Baseline = true)]
-        public int SysSum()
+        public int Handmaded()
         {
             int sum = 0;
             foreach (var i in array)
@@ -25,21 +26,11 @@ namespace StructLinq.Benchmark
             }
             return sum;
         }
-        //[Benchmark(Baseline = true)]
-        //public int SysEnumerableSum() => Enumerable.Sum(sysArray);
-
-        //[Benchmark]
-        //public int ConvertSum() => sysArray.ToStructEnumerable().Sum(x=>x);
+        [Benchmark]
+        public int LINQ() => sysArray.Sum();
 
         [Benchmark]
-        public int StructSum() => array.ToStructEnumerable().Sum(x=>x);
+        public int StructLinq() => array.ToStructEnumerable().Sum(x=>x);
 
-        [Benchmark]
-        public int WithVisit()
-        {
-            var sumVisitor = new SumVisitor(0);
-            array.ToStructEnumerable().Visit(ref sumVisitor);
-            return sumVisitor.sum;
-        }
     }
 }

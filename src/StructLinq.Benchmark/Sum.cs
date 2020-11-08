@@ -52,16 +52,6 @@ namespace StructLinq.Benchmark
         {
             return Enumerable.Range(0, Count).ToStructEnumerable().Sum(x=>x);
         }
-
-        [Benchmark]
-        public int WithVisitor()
-        {
-            var visitor = new SumVisitor(0);
-            StructEnumerable.Range(0, Count)
-                .Visit(ref visitor);
-            return visitor.sum;
-        }
-
     }
 
     public struct IntComparer : IComparer<int>

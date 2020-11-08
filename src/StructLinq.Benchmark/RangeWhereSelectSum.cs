@@ -49,30 +49,6 @@ namespace StructLinq.Benchmark
                                    .Select(ref @select, x => x, x => x)
                                    .Sum(x=>x);
         }
-
-        [Benchmark]
-        public int WithVisit()
-        {
-            var where = new WherePredicate();
-            var select = new SelectFunction();
-            var visit = new SumVisitor(0);
-            StructEnumerable.Range(0, Count)
-                .Where(ref @where, x => x)
-                .Select(ref @select, x => x, x => x)
-                .Visit(ref visit);
-            return visit.sum;
-        }
-
-        [Benchmark]
-        public int WithVisit2()
-        {
-            var visit = new SumVisitor(0);
-            StructEnumerable.Range(0, Count)
-                .Where(x => (x & 1) == 0, x=>x)
-                .Select(x => x *2, x => x)
-                .Visit(ref visit);
-            return visit.sum;
-        }
     }
 
     struct WherePredicate : IFunction<int, bool>

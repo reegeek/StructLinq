@@ -3,7 +3,7 @@ using StructLinq.Utils;
 
 namespace StructLinq.Repeat
 {
-    public struct RepeatEnumerable<T> : IStructCollection<T, RepeatEnumerator<T>>
+    public struct RepeatEnumerable<T> : IDirectStructCollection<T, RepeatEnumerator<T>>
     {
         private readonly T element;
         private uint count;

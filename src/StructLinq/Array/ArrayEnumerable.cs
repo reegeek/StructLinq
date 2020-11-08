@@ -4,7 +4,7 @@ using StructLinq.Utils;
 
 namespace StructLinq.Array
 {
-    public struct ArrayEnumerable<T> : IStructCollection<T, ArrayStructEnumerator<T>>
+    public struct ArrayEnumerable<T> : IDirectStructCollection<T, ArrayStructEnumerator<T>>
     {
         #region private fields
         private readonly T[] array;
