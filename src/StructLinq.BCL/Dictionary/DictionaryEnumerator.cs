@@ -25,7 +25,7 @@ namespace StructLinq.BCL.Dictionary
             while (++index <= length)
             {
                 ref var entry = ref entries[index];
-#if (NETCOREAPP3_0 )
+#if (NETCOREAPP3_0 || NET5_0)
                 if (entry.Next >= -1)
 #endif
 #if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0)

@@ -5,7 +5,7 @@ using BenchmarkDotNet.Jobs;
 namespace StructLinq.Benchmark
 {
 
-    [DisassemblyDiagnoser(recursiveDepth: 4), MemoryDiagnoser]
+    [DisassemblyDiagnoser( 4), MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net48)]
     [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     public class EnumeratorsOfClassComparison

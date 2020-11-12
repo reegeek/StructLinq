@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.0;netcoreapp2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp1.0;netcoreapp2.0;netcoreapp3.0;net50</TargetFrameworks>
+	<NoWarn>NETSDK1138;CS1701</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Label="Nuget">
