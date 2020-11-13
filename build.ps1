@@ -16,7 +16,7 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 $BuildProjectFile = "$PSScriptRoot\Build\Nuke\NukeBuild.csproj"
 $TempDirectory = "$PSScriptRoot\\.tmp"
 
-$DotNetGlobalFile = "$PSScriptRoot\\global.json"
+$DotNetGlobalFile = "PSScriptRoot\Build\Nuke\global.json"
 $DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
 $DotNetChannel = "Current"
 
@@ -31,6 +31,10 @@ function ExecSafe([scriptblock] $cmd) {
     & $cmd
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
+
+
+# Print environment variables
+Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
 
 # If global.json exists, load expected version
 if (Test-Path $DotNetGlobalFile) {
