@@ -83,7 +83,8 @@ partial class Build : Nuke.Common.NukeBuild
         .Executes(() =>
         {
             DotNetRestore(s => s
-                .SetProjectFile(Solution));
+                .SetProjectFile(Solution)
+                .AddProperty("CheckEolTargetFramework", false));
         });
 
     Target Compile => _ => _
@@ -107,6 +108,7 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion)
+                .AddProperty("CheckEolTargetFramework", false)
                 .CombineWith(frameworks, (s, f) => s
                     .SetFramework(f.framework)
                     .SetProjectFile(f.project)));
@@ -117,6 +119,7 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore()
+                .AddProperty("CheckEolTargetFramework", false)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
@@ -144,6 +147,7 @@ partial class Build : Nuke.Common.NukeBuild
                     .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetNoBuild(InvokedTargets.Contains(Compile))
                     .ResetVerbosity()
+                    .AddProperty("CheckEolTargetFramework", false)
                     .SetResultsDirectory(TestResultDirectory)
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
