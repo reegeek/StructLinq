@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(recursiveDepth: 4)]
+    [MemoryDiagnoser, DisassemblyDiagnoser(4)]
     public class Max
     {
         private const int Count = 10000;
