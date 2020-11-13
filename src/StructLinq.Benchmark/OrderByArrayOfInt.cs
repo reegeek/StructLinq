@@ -6,7 +6,7 @@ using BenchmarkDotNet.Attributes;
 namespace StructLinq.Benchmark
 {
 
-    [MemoryDiagnoser, DisassemblyDiagnoser( 4)]
+    [MemoryDiagnoser, DisassemblyDiagnoser(recursiveDepth: 4)]
     public class OrderByArrayOfInt
     {
         private const int Count = 10_000;

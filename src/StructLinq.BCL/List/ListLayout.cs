@@ -14,7 +14,7 @@ namespace StructLinq.BCL.List
     }
 #endif
 
-#if (NETCOREAPP3_0 || NET5_0)
+#if (NETCOREAPP3_0)
     
     internal class ListLayout<T>
     {
