@@ -13,12 +13,12 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 # CONFIGURATION
 ###########################################################################
 
-$BuildProjectFile = "$PSScriptRoot\Build\Nuke\NukeBuild.csproj"
 
-$DotNetGlobalFile = "$PSScriptRoot\Build\Nuke\global.json"
+$BuildProjectFile = "$PSScriptRoot\Build\Nuke\NukeBuild.csproj"
 
 $TempDirectory = "$PSScriptRoot\.tmp"
 
+$DotNetGlobalFile = "$PSScriptRoot\global.json"
 $DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
 $DotNetChannel = "Current"
 
@@ -36,30 +36,28 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 
-# # Print environment variables
-# Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
-
-    # If global.json exists, load expected version
-    if (Test-Path $DotNetGlobalFile) {
-        $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
-        if ($DotNetGlobal.PSObject.Properties["sdk"] -and $DotNetGlobal.sdk.PSObject.Properties["version"]) {
-            $DotNetVersion = $DotNetGlobal.sdk.version
-			Write-Output "Request DotNetVersion $($DotNetVersion)..."
-        }
-    }
+# Print environment variables
+Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
-# if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
-    # $(dotnet --version) -and $LASTEXITCODE -eq 0) {
-    # $env:DOTNET_EXE = (Get-Command "dotnet").Path
-# }
-# else {
+if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
+    $(dotnet --version) -and $LASTEXITCODE -eq 0) {
+    $env:DOTNET_EXE = (Get-Command "dotnet").Path
+}
+else {
     # Download install script
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
 
+    # If global.json exists, load expected version
+    if (Test-Path $DotNetGlobalFile) {
+        $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
+        if ($DotNetGlobal.PSObject.Properties["sdk"] -and $DotNetGlobal.sdk.PSObject.Properties["version"]) {
+            $DotNetVersion = $DotNetGlobal.sdk.version
+        }
+    }
 
     # Install by channel or version
     $DotNetDirectory = "$TempDirectory\dotnet-win"
@@ -69,9 +67,7 @@ function ExecSafe([scriptblock] $cmd) {
         ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
     }
     $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
-# }
-
-Write-Output "dotnet path $($env:DOTNET_EXE)"
+}
 
 Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
 
