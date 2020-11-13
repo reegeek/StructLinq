@@ -13,6 +13,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Tools.Xunit;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -93,6 +94,7 @@ partial class Build : Nuke.Common.NukeBuild
 
     void ExecutesCompile(bool excludeNetFramework)
     {
+        DotNetTasks.DotNet(" --info");
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
         if (excludeNetFramework)
         {

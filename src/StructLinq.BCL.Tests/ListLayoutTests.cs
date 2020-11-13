@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using StructLinq.BCL.List;
@@ -14,6 +15,9 @@ namespace StructLinq.BCL.Tests
         [InlineData(100)]
         public void ShouldCountMustBe(int size)
         {
+#if !NETCOREAPP1_1 && !NETCOREAPP1_0
+            Console.WriteLine($"Version: {Environment.Version}");
+#endif
             var list = Enumerable.Range(-1, size).ToList();
             var layout = Unsafe.As<List<int>, ListLayout<int>>(ref list);
             layout.Size.Should().Be(size);
