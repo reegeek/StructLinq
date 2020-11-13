@@ -6,27 +6,27 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
-Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.100
-  [Host]        : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
-  .NET 4.8      : .NET Framework 4.8 (4.8.4250.0), X64 RyuJIT
-  .NET Core 5.0 : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
+BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
+Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+.NET Core SDK=3.1.402
+  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+  Job-ILXHKQ : .NET Framework 4.8 (4.8.4220.0), X64 RyuJIT
+  Job-DKIKQP : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
 
 
 ```
-|                        Method |           Job |       Runtime |      Mean |     Error |    StdDev | Ratio | RatioSD | Code Size |
-|------------------------------ |-------------- |-------------- |----------:|----------:|----------:|------:|--------:|----------:|
-|      ForEachWithUsingOnStruct |      .NET 4.8 |      .NET 4.8 |  5.171 μs | 0.0378 μs | 0.0335 μs |  1.00 |    0.00 |     379 B |
-|   ForEachWithoutUsingOnStruct |      .NET 4.8 |      .NET 4.8 |  2.585 μs | 0.0139 μs | 0.0130 μs |  0.50 |    0.00 |     360 B |
-| ForEachWithTryFinallyOnStruct |      .NET 4.8 |      .NET 4.8 |  5.174 μs | 0.0327 μs | 0.0273 μs |  1.00 |    0.01 |     379 B |
-|       ForEachWithUsingOnClass |      .NET 4.8 |      .NET 4.8 | 36.166 μs | 0.3454 μs | 0.3231 μs |  6.99 |    0.10 |     591 B |
-|    ForEachWithoutUsingOnClass |      .NET 4.8 |      .NET 4.8 | 14.167 μs | 0.1337 μs | 0.1250 μs |  2.74 |    0.03 |     457 B |
-|  ForEachWithTryFinallyOnClass |      .NET 4.8 |      .NET 4.8 | 35.867 μs | 0.2252 μs | 0.1997 μs |  6.94 |    0.05 |     591 B |
-|                               |               |               |           |           |           |       |         |           |
-|      ForEachWithUsingOnStruct | .NET Core 5.0 | .NET Core 5.0 |  2.610 μs | 0.0173 μs | 0.0161 μs |  1.00 |    0.00 |     153 B |
-|   ForEachWithoutUsingOnStruct | .NET Core 5.0 | .NET Core 5.0 |  5.164 μs | 0.0298 μs | 0.0264 μs |  1.98 |    0.01 |     142 B |
-| ForEachWithTryFinallyOnStruct | .NET Core 5.0 | .NET Core 5.0 |  2.590 μs | 0.0192 μs | 0.0180 μs |  0.99 |    0.01 |     153 B |
-|       ForEachWithUsingOnClass | .NET Core 5.0 | .NET Core 5.0 | 37.933 μs | 0.3035 μs | 0.2839 μs | 14.53 |    0.12 |     393 B |
-|    ForEachWithoutUsingOnClass | .NET Core 5.0 | .NET Core 5.0 |  5.146 μs | 0.0281 μs | 0.0234 μs |  1.97 |    0.02 |     142 B |
-|  ForEachWithTryFinallyOnClass | .NET Core 5.0 | .NET Core 5.0 | 37.696 μs | 0.2270 μs | 0.2123 μs | 14.44 |    0.12 |     393 B |
+|                        Method |       Runtime |      Mean |     Error |    StdDev | Ratio | RatioSD |
+|------------------------------ |-------------- |----------:|----------:|----------:|------:|--------:|
+|      ForEachWithUsingOnStruct |      .NET 4.8 |  2.827 us | 0.0047 us | 0.0044 us |  1.00 |    0.00 |
+|   ForEachWithoutUsingOnStruct |      .NET 4.8 |  2.830 us | 0.0051 us | 0.0047 us |  1.00 |    0.00 |
+| ForEachWithTryFinallyOnStruct |      .NET 4.8 |  2.825 us | 0.0042 us | 0.0040 us |  1.00 |    0.00 |
+|       ForEachWithUsingOnClass |      .NET 4.8 | 30.887 us | 0.0653 us | 0.0611 us | 10.93 |    0.03 |
+|    ForEachWithoutUsingOnClass |      .NET 4.8 | 14.860 us | 0.0121 us | 0.0113 us |  5.26 |    0.01 |
+|  ForEachWithTryFinallyOnClass |      .NET 4.8 | 30.897 us | 0.0442 us | 0.0414 us | 10.93 |    0.02 |
+|                               |               |           |           |           |       |         |
+|      ForEachWithUsingOnStruct | .NET Core 3.1 |  2.825 us | 0.0049 us | 0.0046 us |  1.00 |    0.00 |
+|   ForEachWithoutUsingOnStruct | .NET Core 3.1 |  2.826 us | 0.0057 us | 0.0054 us |  1.00 |    0.00 |
+| ForEachWithTryFinallyOnStruct | .NET Core 3.1 |  2.827 us | 0.0069 us | 0.0064 us |  1.00 |    0.00 |
+|       ForEachWithUsingOnClass | .NET Core 3.1 | 28.087 us | 0.0307 us | 0.0272 us |  9.94 |    0.02 |
+|    ForEachWithoutUsingOnClass | .NET Core 3.1 | 14.930 us | 0.0457 us | 0.0428 us |  5.29 |    0.01 |
+|  ForEachWithTryFinallyOnClass | .NET Core 3.1 | 28.085 us | 0.0325 us | 0.0304 us |  9.94 |    0.01 |

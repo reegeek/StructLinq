@@ -11,7 +11,7 @@ namespace StructLinq.Benchmark
    
     [DisassemblyDiagnoser( 4), MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     public class ToArrayComparison
     {
         private RangeEnumerable enumerable;

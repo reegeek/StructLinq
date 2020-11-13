@@ -6,18 +6,18 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
-Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.100
-  [Host]     : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
+BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
+Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+.NET Core SDK=3.1.402
+  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
 
 
 ```
 |                      Method |      Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
 |---------------------------- |----------:|---------:|---------:|------:|------:|------:|------:|----------:|
-|                  ClrForEach | 376.05 μs | 1.870 μs | 1.749 μs |  1.00 |     - |     - |     - |      40 B |
-|                  WithAction | 158.81 μs | 0.750 μs | 0.701 μs |  0.42 |     - |     - |     - |      24 B |
-|                  WithStruct |  25.32 μs | 0.079 μs | 0.070 μs |  0.07 |     - |     - |     - |      24 B |
-|         ZeroAllocWithStruct | 136.73 μs | 0.900 μs | 0.841 μs |  0.36 |     - |     - |     - |         - |
-| ToTypedEnumerableWithStruct | 375.81 μs | 1.591 μs | 1.488 μs |  1.00 |     - |     - |     - |      64 B |
+|                  ClrForEach | 392.67 us | 0.417 us | 0.348 us |  1.00 |     - |     - |     - |      41 B |
+|                  WithAction | 280.16 us | 0.314 us | 0.294 us |  0.71 |     - |     - |     - |      25 B |
+|                  WithStruct |  28.34 us | 0.040 us | 0.037 us |  0.07 |     - |     - |     - |      24 B |
+|         ZeroAllocWithStruct | 152.45 us | 0.074 us | 0.062 us |  0.39 |     - |     - |     - |         - |
+| ToTypedEnumerableWithStruct | 420.96 us | 0.360 us | 0.319 us |  1.07 |     - |     - |     - |      65 B |

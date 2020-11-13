@@ -6,28 +6,28 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
-Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.100
-  [Host]        : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
-  .NET 4.8      : .NET Framework 4.8 (4.8.4250.0), X64 RyuJIT
-  .NET Core 5.0 : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
+BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
+Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+.NET Core SDK=3.1.402
+  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+  Job-ILXHKQ : .NET Framework 4.8 (4.8.4220.0), X64 RyuJIT
+  Job-DKIKQP : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
 
 
 ```
-|     Method |           Job |       Runtime | ItemCount |         Mean |      Error |     StdDev | Ratio | RatioSD | Code Size | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------- |-------------- |-------------- |---------- |-------------:|-----------:|-----------:|------:|--------:|----------:|------:|------:|------:|----------:|
-|       **LINQ** |      **.NET 4.8** |      **.NET 4.8** |         **2** |    **26.642 ns** |  **0.1956 ns** |  **0.1830 ns** |  **1.00** |    **0.00** |    **1322 B** |     **-** |     **-** |     **-** |         **-** |
-| StructLINQ |      .NET 4.8 |      .NET 4.8 |         2 |     4.031 ns |  0.0507 ns |  0.0474 ns |  0.15 |    0.00 |     129 B |     - |     - |     - |         - |
-|       LINQ | .NET Core 5.0 | .NET Core 5.0 |         2 |    18.439 ns |  0.1449 ns |  0.1355 ns |  0.69 |    0.01 |     348 B |     - |     - |     - |         - |
-| StructLINQ | .NET Core 5.0 | .NET Core 5.0 |         2 |     5.238 ns |  0.0396 ns |  0.0370 ns |  0.20 |    0.00 |     125 B |     - |     - |     - |         - |
-|            |               |               |           |              |            |            |       |         |           |       |       |       |           |
-|       **LINQ** |      **.NET 4.8** |      **.NET 4.8** |       **100** |   **517.662 ns** |  **5.5493 ns** |  **5.1908 ns** |  **1.00** |    **0.00** |    **1322 B** |     **-** |     **-** |     **-** |         **-** |
-| StructLINQ |      .NET 4.8 |      .NET 4.8 |       100 |   128.530 ns |  1.5881 ns |  1.4855 ns |  0.25 |    0.00 |     129 B |     - |     - |     - |         - |
-|       LINQ | .NET Core 5.0 | .NET Core 5.0 |       100 |   446.103 ns |  3.0140 ns |  2.6718 ns |  0.86 |    0.01 |     348 B |     - |     - |     - |         - |
-| StructLINQ | .NET Core 5.0 | .NET Core 5.0 |       100 |   122.727 ns |  0.6960 ns |  0.6510 ns |  0.24 |    0.00 |     125 B |     - |     - |     - |         - |
-|            |               |               |           |              |            |            |       |         |           |       |       |       |           |
-|       **LINQ** |      **.NET 4.8** |      **.NET 4.8** |      **1000** | **4,996.247 ns** | **67.5138 ns** | **63.1524 ns** |  **1.00** |    **0.00** |    **1322 B** |     **-** |     **-** |     **-** |         **-** |
-| StructLINQ |      .NET 4.8 |      .NET 4.8 |      1000 | 1,242.466 ns | 15.8836 ns | 14.0804 ns |  0.25 |    0.00 |     129 B |     - |     - |     - |         - |
-|       LINQ | .NET Core 5.0 | .NET Core 5.0 |      1000 | 4,278.529 ns | 58.2323 ns | 54.4706 ns |  0.86 |    0.02 |     348 B |     - |     - |     - |         - |
-| StructLINQ | .NET Core 5.0 | .NET Core 5.0 |      1000 | 1,237.477 ns |  8.2719 ns |  6.9074 ns |  0.25 |    0.00 |     125 B |     - |     - |     - |         - |
+|     Method |       Runtime | ItemCount |         Mean |      Error |     StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|----------- |-------------- |---------- |-------------:|-----------:|-----------:|------:|------:|------:|------:|----------:|
+|       **LINQ** |      **.NET 4.8** |         **2** |    **27.489 ns** |  **0.0391 ns** |  **0.0366 ns** |  **1.00** |     **-** |     **-** |     **-** |         **-** |
+| StructLINQ |      .NET 4.8 |         2 |     4.237 ns |  0.0116 ns |  0.0108 ns |  0.15 |     - |     - |     - |         - |
+|       LINQ | .NET Core 3.1 |         2 |    26.421 ns |  0.0404 ns |  0.0338 ns |  0.96 |     - |     - |     - |         - |
+| StructLINQ | .NET Core 3.1 |         2 |     5.720 ns |  0.0144 ns |  0.0134 ns |  0.21 |     - |     - |     - |         - |
+|            |               |           |              |            |            |       |       |       |       |           |
+|       **LINQ** |      **.NET 4.8** |       **100** |   **473.446 ns** |  **0.8406 ns** |  **0.7863 ns** |  **1.00** |     **-** |     **-** |     **-** |         **-** |
+| StructLINQ |      .NET 4.8 |       100 |   127.077 ns |  0.1941 ns |  0.1621 ns |  0.27 |     - |     - |     - |         - |
+|       LINQ | .NET Core 3.1 |       100 |   417.060 ns |  0.8111 ns |  0.7587 ns |  0.88 |     - |     - |     - |         - |
+| StructLINQ | .NET Core 3.1 |       100 |   137.737 ns |  0.1382 ns |  0.1154 ns |  0.29 |     - |     - |     - |         - |
+|            |               |           |              |            |            |       |       |       |       |           |
+|       **LINQ** |      **.NET 4.8** |      **1000** | **4,729.685 ns** |  **6.6869 ns** |  **6.2549 ns** |  **1.00** |     **-** |     **-** |     **-** |         **-** |
+| StructLINQ |      .NET 4.8 |      1000 | 1,306.087 ns |  3.2112 ns |  3.0037 ns |  0.28 |     - |     - |     - |         - |
+|       LINQ | .NET Core 3.1 |      1000 | 3,980.738 ns | 12.6089 ns | 11.1774 ns |  0.84 |     - |     - |     - |         - |
+| StructLINQ | .NET Core 3.1 |      1000 | 1,319.680 ns |  2.4587 ns |  2.2998 ns |  0.28 |     - |     - |     - |         - |
