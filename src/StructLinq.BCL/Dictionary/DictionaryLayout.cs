@@ -6,7 +6,7 @@
         public Entry<TKey, TValue>[] Entries;
     }
 
-#if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0)
+#if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0 || NETCOREAPP2_2)
     internal struct Entry<TKey, TValue>
     {
         public int HashCode;

@@ -1,7 +1,7 @@
 ﻿// ReSharper disable InconsistentNaming
 namespace StructLinq.BCL.List
 {
-#if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0)
+#if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0 || NETCOREAPP2_2)
     
     internal class ListLayout<T>
     {
