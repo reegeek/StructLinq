@@ -6,18 +6,18 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
-Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.402
-  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=5.0.100
+  [Host]     : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.0 (CoreCLR 5.0.20.51904, CoreFX 5.0.20.51904), X64 RyuJIT
 
 
 ```
-|             Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|             RawMin |  9.837 us | 0.0442 us | 0.0414 us |  1.00 |    0.00 |     - |     - |     - |         - |
-|             SysMin | 48.108 us | 0.0786 us | 0.0735 us |  4.89 |    0.02 |     - |     - |     - |      40 B |
-|          StructMin | 14.684 us | 0.0146 us | 0.0137 us |  1.49 |    0.01 |     - |     - |     - |      24 B |
-| ZeroAllocStructMin | 14.675 us | 0.0159 us | 0.0149 us |  1.49 |    0.01 |     - |     - |     - |         - |
-|         ConvertMin | 47.821 us | 0.0856 us | 0.0715 us |  4.86 |    0.02 |     - |     - |     - |      64 B |
+|             Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated | Code Size |
+|------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|----------:|
+|             RawMin |  7.522 μs | 0.0376 μs | 0.0352 μs |  1.00 |    0.00 |     - |     - |     - |         - |      24 B |
+|             SysMin | 40.263 μs | 0.1849 μs | 0.1639 μs |  5.35 |    0.03 |     - |     - |     - |      40 B |     519 B |
+|          StructMin | 13.080 μs | 0.0613 μs | 0.0574 μs |  1.74 |    0.01 |     - |     - |     - |      24 B |     177 B |
+| ZeroAllocStructMin | 13.155 μs | 0.0440 μs | 0.0412 μs |  1.75 |    0.01 |     - |     - |     - |         - |     257 B |
+|         ConvertMin | 40.179 μs | 0.1489 μs | 0.1320 μs |  5.34 |    0.02 |     - |     - |     - |      64 B |     526 B |
