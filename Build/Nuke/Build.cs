@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -131,10 +132,11 @@ partial class Build : Nuke.Common.NukeBuild
     void ExecutesTest(bool excludeNetFramework)
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
+        Logger.Info($"OS: {Environment.OSVersion.Platform}");
 
         var testConfigurations =
             from project in TestProjects
-            from framework in project.GetTargetFrameworksForTest(excludeNetFramework)
+            from framework in project.GetTargetFrameworksForTest(excludeNetFramework, IsLocalBuild)
             select new {project, framework};
 
         DotNetTest(_ =>
