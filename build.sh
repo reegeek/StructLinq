@@ -35,8 +35,6 @@ if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
     fi
 fi
 
-DOTNET_VERSION="3.1.403"
-
 # If dotnet is installed locally, and expected version is not set or installation matches the expected version
 if [[ -x "$(command -v dotnet)" && (-z ${DOTNET_VERSION+x} || $(dotnet --version 2>&1) == "$DOTNET_VERSION") ]]; then
     export DOTNET_EXE="$(command -v dotnet)"
