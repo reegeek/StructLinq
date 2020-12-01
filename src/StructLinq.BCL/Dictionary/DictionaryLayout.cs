@@ -6,21 +6,20 @@
         public Entry<TKey, TValue>[] Entries;
     }
 
-#if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0)
-    internal struct Entry<TKey, TValue>
-    {
-        public int HashCode;
-        public int Next;
-        internal TKey Key;           // Key of entry
-        internal TValue Value;         // Value of entry
-    }
-#endif
-#if (NETCOREAPP3_0 )
+#if (NETCOREAPP3_0 || NETCOREAPP3_1)
     
     internal struct Entry<TKey, TValue>
     {
         public int Next;
         public uint HashCode;
+        internal TKey Key;           // Key of entry
+        internal TValue Value;         // Value of entry
+    }
+#else
+    internal struct Entry<TKey, TValue>
+    {
+        public int HashCode;
+        public int Next;
         internal TKey Key;           // Key of entry
         internal TValue Value;         // Value of entry
     }

@@ -50,10 +50,9 @@ namespace StructLinq.Benchmark
             PoolLists.Fill(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
-            var result = new List<int>();
+            var result = new List<int>(array.Length);
             var listLayout = Unsafe.As<List<int>, ListLayout<int>>(ref result);
             listLayout.Items = array;
-            listLayout.Size = array.Length;
             return result;
         }
 

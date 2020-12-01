@@ -6,19 +6,8 @@ using Xunit;
 
 namespace StructLinq.BCL.Tests
 {
-    public class ListLayoutTests
+    public unsafe class ListLayoutTests
     {
-        [Theory]
-        [InlineData(0)]
-        [InlineData(10)]
-        [InlineData(100)]
-        public void ShouldCountMustBe(int size)
-        {
-            var list = Enumerable.Range(-1, size).ToList();
-            var layout = Unsafe.As<List<int>, ListLayout<int>>(ref list);
-            layout.Size.Should().Be(size);
-        }
-
         [Theory]
         [InlineData(0)]
         [InlineData(10)]

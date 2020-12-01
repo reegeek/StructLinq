@@ -20,10 +20,9 @@ namespace StructLinq
             PoolLists.Fill(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
-            var result = new List<T>();
+            var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
-            listLayout.Size = array.Length;
             return result;
         }
 
@@ -55,10 +54,9 @@ namespace StructLinq
             PoolLists.Fill(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
-            var result = new List<T>();
+            var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
-            listLayout.Size = array.Length;
             return result;
         }
 
@@ -93,10 +91,9 @@ namespace StructLinq
             PoolLists.FillRef(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
-            var result = new List<T>();
+            var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
-            listLayout.Size = array.Length;
             return result;
         }
 
@@ -128,10 +125,9 @@ namespace StructLinq
             PoolLists.FillRef(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
-            var result = new List<T>();
+            var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
-            listLayout.Size = array.Length;
             return result;
         }
 
