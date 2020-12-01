@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using StructLinq.BCL.List;
@@ -6,7 +7,7 @@ using Xunit;
 
 namespace StructLinq.BCL.Tests
 {
-    public unsafe class ListLayoutTests
+    public class ListLayoutTests
     {
         [Theory]
         [InlineData(0)]
@@ -35,7 +36,28 @@ namespace StructLinq.BCL.Tests
                 layout.Items[i].Should().Be((i - 1).ToString());
             }
         }
-
-
     }
+
+#if IS_X86
+    public class BitnessTests
+    {
+        [Fact]
+        public void Checkx86Bitness()
+        {
+            Assert.Equal(4, IntPtr.Size);
+        }
+    }
+#endif
+
+#if IS_X64
+    public class BitnessTests
+    {
+        [Fact]
+        public void Checkx64Bitness()
+        {
+            Assert.Equal(8, IntPtr.Size);
+        }
+    }
+#endif
+
 }
