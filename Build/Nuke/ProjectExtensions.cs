@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.ProjectModel;
@@ -13,14 +12,12 @@ public static class ProjectExtensions
         return frameworks.Where(x => x.Contains("standard") || x.Contains("core")).ToList();
     }
 
-    public static IReadOnlyCollection<string> GetTargetFrameworksForTest(this Project project, bool excludeNetFramework, bool isLocalbuild)
+    public static IReadOnlyCollection<string> GetTargetFrameworksForTest(this Project project, bool excludeNetFramework)
     {
         var frameworks = project
                          .GetTargetFrameworks()
                          //because github actions and azure pipeline does not handle it.
                          .Where(x=> !(x.Contains("netcoreapp1") || x.Contains("netcoreapp2.2")));
-        if (!isLocalbuild && Environment.OSVersion.Platform != PlatformID.Win32NT)
-            frameworks = frameworks.Where(x => !x.Contains("netcoreapp2.0"));
         if (!excludeNetFramework)
             return frameworks.ToList();
         return frameworks.Where(x => x.Contains("standard") || x.Contains("core")).ToList();
