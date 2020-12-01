@@ -11,4 +11,19 @@ public static class ProjectExtensions
             return frameworks.ToList();
         return frameworks.Where(x => x.Contains("standard") || x.Contains("core")).ToList();
     }
+
+    public static IReadOnlyCollection<string> GetPlatforms(this Project project)
+    {
+        var msbuildProject = project.GetMSBuildProject();
+        var targetFrameworkProperty = msbuildProject.GetProperty("Platform");
+        if (targetFrameworkProperty != null)
+            return new[] { targetFrameworkProperty.EvaluatedValue };
+
+        var targetFrameworksProperty = msbuildProject.GetProperty("Platforms");
+        if (targetFrameworksProperty != null)
+            return targetFrameworksProperty.EvaluatedValue.Split(';');
+
+        return new string[0];
+    }
+
 }

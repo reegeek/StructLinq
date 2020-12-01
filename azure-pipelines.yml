@@ -26,11 +26,6 @@ stages:
         dependsOn: [  ]
         steps:
         - task: UseDotNet@2
-          displayName: 'Setup .NET Core 1.1'
-          inputs:
-            packageType: sdk
-            version: 1.1.x
-        - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
             packageType: sdk
@@ -77,11 +72,6 @@ stages:
         dependsOn: [  ]
         steps:
         - task: UseDotNet@2
-          displayName: 'Setup .NET Core 1.1'
-          inputs:
-            packageType: sdk
-            version: 1.1.x
-        - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
             packageType: sdk
@@ -115,11 +105,6 @@ stages:
         displayName: 'Setup'
         dependsOn: [  ]
         steps:
-        - task: UseDotNet@2
-          displayName: 'Setup .NET Core 1.1'
-          inputs:
-            packageType: sdk
-            version: 1.1.x
         - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:

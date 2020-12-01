@@ -103,7 +103,8 @@ partial class Build : Nuke.Common.NukeBuild
             var frameworks =
                 from project in AllProjects
                 from framework in project.GetTargetFrameworks(true)
-                select new {project, framework};
+                from platform in project.GetPlatforms()
+                select new {project, framework, platform};
 
 
             DotNetBuild(s => s
@@ -114,6 +115,7 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetInformationalVersion(GitVersion.InformationalVersion)
                 .CombineWith(frameworks, (s, f) => s
                     .SetFramework(f.framework)
+                    .SetProperty("Platform", f.platform)
                     .SetProjectFile(f.project)));
         }
         else
@@ -140,7 +142,8 @@ partial class Build : Nuke.Common.NukeBuild
         var testConfigurations =
             from project in TestProjects
             from framework in project.GetTargetFrameworks(excludeNetFramework)
-            select new {project, framework};
+            from platform in project.GetPlatforms()
+            select new {project, framework, platform};
 
         DotNetTest(_ =>
             {
@@ -153,6 +156,8 @@ partial class Build : Nuke.Common.NukeBuild
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
                         .SetFramework(v.framework)
+                        .DisableNoBuild()
+                        .SetProperty("Platform", v.platform)
                         .SetLogger($"trx;LogFileName={v.project.Name}-{v.framework}.trx"));
             });
 
