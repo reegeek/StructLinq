@@ -21,6 +21,27 @@ stages:
     pool:
       vmImage: 'windows-latest'
     jobs:
+      - job: Setup
+        displayName: 'Setup'
+        dependsOn: [  ]
+        steps:
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 1.0'
+          inputs:
+            packageType: sdk
+            version: 1.0.*
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 1.1'
+          inputs:
+            packageType: sdk
+            version: 1.1.*
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 2.2'
+          inputs:
+            packageType: sdk
+            version: 2.2.*
+
+       
       - job: Compile
         displayName: '⚙️ Compile'
         dependsOn: [  ]
@@ -56,6 +77,26 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
+      - job: Setup
+        displayName: 'Setup'
+        dependsOn: [  ]
+        steps:
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 1.0'
+          inputs:
+            packageType: sdk
+            version: 1.0.*
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 1.1'
+          inputs:
+            packageType: sdk
+            version: 1.1.*
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 2.2'
+          inputs:
+            packageType: sdk
+            version: 2.2.*
+
       - job: CompileCoreOnly
         displayName: '⚙️ CompileCoreOnly'
         dependsOn: [  ]
@@ -80,6 +121,26 @@ stages:
     pool:
       vmImage: 'macOS-latest'
     jobs:
+      - job: Setup
+        displayName: 'Setup'
+        dependsOn: [  ]
+        steps:
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 1.0'
+          inputs:
+            packageType: sdk
+            version: 1.0.*
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 1.1'
+          inputs:
+            packageType: sdk
+            version: 1.1.*
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 2.2'
+          inputs:
+            packageType: sdk
+            version: 2.2.*
+
       - job: CompileCoreOnly
         displayName: '⚙️ CompileCoreOnly'
         dependsOn: [  ]

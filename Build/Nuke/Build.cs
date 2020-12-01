@@ -85,6 +85,8 @@ partial class Build : Nuke.Common.NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
+            DotNet("--info");
+
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
