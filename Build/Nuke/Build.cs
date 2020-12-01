@@ -22,6 +22,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 [GitHubActions(
     "continuous",
     GitHubActionsImage.WindowsLatest,
+    AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
     ImportGitHubTokenAs = nameof(GitHubToken),
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
@@ -29,6 +30,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     "continuousCore",
     GitHubActionsImage.UbuntuLatest,
     GitHubActionsImage.MacOsLatest,
+    AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
     ImportGitHubTokenAs = nameof(GitHubToken),
     InvokedTargets = new[] { nameof(TestCoreOnly) })]
@@ -41,6 +43,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.UbuntuLatest,
     AzurePipelinesImage.MacOsLatest,
+    AutoGenerate = false,
     InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
     ExcludedTargets = new[] { nameof(Clean), nameof(PackCoreOnly)})]
@@ -124,7 +127,7 @@ partial class Build : Nuke.Common.NukeBuild
     }
 
     Target Test => _ => _
-        .DependsOn(Compile)
+        .DependsOn(Compile) 
         .Produces(TestResultDirectory / "*.trx")
         .Executes(() => ExecutesTest(false));
 
@@ -134,7 +137,7 @@ partial class Build : Nuke.Common.NukeBuild
 
         var testConfigurations =
             from project in TestProjects
-            from framework in project.GetTargetFrameworksForTest(excludeNetFramework)
+            from framework in project.GetTargetFrameworks(excludeNetFramework)
             select new {project, framework};
 
         DotNetTest(_ =>
