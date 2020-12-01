@@ -26,19 +26,14 @@ stages:
         dependsOn: [  ]
         steps:
         - task: UseDotNet@2
-          displayName: 'Setup .NET Core 1.0'
-          inputs:
-            packageType: runtime
-            version: 1.0.x
-        - task: UseDotNet@2
           displayName: 'Setup .NET Core 1.1'
           inputs:
-            packageType: runtime
+            packageType: sdk
             version: 1.1.x
         - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
-            packageType: runtime
+            packageType: sdk
             version: 2.2.x
 
        
@@ -82,19 +77,14 @@ stages:
         dependsOn: [  ]
         steps:
         - task: UseDotNet@2
-          displayName: 'Setup .NET Core 1.0'
-          inputs:
-            packageType: runtime
-            version: 1.0.x
-        - task: UseDotNet@2
           displayName: 'Setup .NET Core 1.1'
           inputs:
-            packageType: runtime
+            packageType: sdk
             version: 1.1.x
         - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
-            packageType: runtime
+            packageType: sdk
             version: 2.2.x
 
       - job: CompileCoreOnly
@@ -126,19 +116,14 @@ stages:
         dependsOn: [  ]
         steps:
         - task: UseDotNet@2
-          displayName: 'Setup .NET Core 1.0'
-          inputs:
-            packageType: runtime
-            version: 1.0.x
-        - task: UseDotNet@2
           displayName: 'Setup .NET Core 1.1'
           inputs:
-            packageType: runtime
+            packageType: sdk
             version: 1.1.x
         - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
-            packageType: runtime
+            packageType: sdk
             version: 2.2.x
 
       - job: CompileCoreOnly

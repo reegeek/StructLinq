@@ -25,11 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       
-      - name: Setup .NET 1.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 1.0.*
-
       - name: Setup .NET 1.1
         uses: actions/setup-dotnet@v1
         with:
