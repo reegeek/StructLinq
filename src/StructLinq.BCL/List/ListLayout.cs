@@ -19,7 +19,7 @@ namespace StructLinq.BCL.List
     {
         internal T[] Items;
 #pragma warning disable 169
-        private int Size;
+        internal int Size;
         private int Version;
         private object SyncRoot;
 #pragma warning restore 169
