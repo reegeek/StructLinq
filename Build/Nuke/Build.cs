@@ -83,8 +83,7 @@ partial class Build : Nuke.Common.NukeBuild
         .Executes(() =>
         {
             DotNetRestore(s => s
-                .SetProjectFile(Solution)
-                .AddProperty("CheckEolTargetFramework", false));
+                .SetProjectFile(Solution));
         });
 
     Target Compile => _ => _
@@ -108,7 +107,6 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion)
-                .AddProperty("CheckEolTargetFramework", false)
                 .CombineWith(frameworks, (s, f) => s
                     .SetFramework(f.framework)
                     .SetProjectFile(f.project)));
@@ -121,7 +119,6 @@ partial class Build : Nuke.Common.NukeBuild
                 .EnableNoRestore()
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
-                .AddProperty("CheckEolTargetFramework", false)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
         }
     }
@@ -147,7 +144,6 @@ partial class Build : Nuke.Common.NukeBuild
                     .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetNoBuild(InvokedTargets.Contains(Compile))
                     .ResetVerbosity()
-                    .AddProperty("CheckEolTargetFramework", false)
                     .SetResultsDirectory(TestResultDirectory)
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
@@ -204,7 +200,6 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetNoBuild(InvokedTargets.Contains(Compile))
                 .SetConfiguration(Configuration)
                 .SetOutputDirectory(PackagesDirectory)
-                .AddProperty("CheckEolTargetFramework", false)
                 .DisablePackageRequireLicenseAcceptance()
                 .SetRepositoryType("git")
                 .SetRepositoryUrl(repositoryUrl)
