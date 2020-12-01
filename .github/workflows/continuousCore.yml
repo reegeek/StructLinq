@@ -35,6 +35,16 @@ jobs:
         with:
           dotnet-version: 2.2.*
 
+      - name: Setup .NET 3.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.*
+
+      - name: Setup .NET 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.*
+
       - name: Run './build.cmd TestCoreOnly'
         run: ./build.cmd TestCoreOnly
         env:
@@ -58,6 +68,16 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 2.2.*
+
+      - name: Setup .NET 3.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.*
+
+      - name: Setup .NET 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.*
 
       - name: Run './build.cmd TestCoreOnly'
         run: ./build.cmd TestCoreOnly
