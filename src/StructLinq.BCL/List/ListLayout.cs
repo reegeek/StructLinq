@@ -1,4 +1,7 @@
 ﻿// ReSharper disable InconsistentNaming
+
+using System;
+
 namespace StructLinq.BCL.List
 {
 #if (NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0)
@@ -12,11 +15,10 @@ namespace StructLinq.BCL.List
     internal class ListLayout<T>
     {
         internal T[] Items;
+#pragma warning disable 649
+        internal Object SyncRoot;
+#pragma warning restore 649
         internal int Size;
-#pragma warning disable 169
-        private int Version;
-        private object SyncRoot;
-#pragma warning restore 169
     }
 #endif
 
