@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI;
-using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
@@ -13,7 +12,6 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.Xunit;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -61,6 +59,7 @@ partial class Build : Nuke.Common.NukeBuild
     [GitVersion] readonly GitVersion GitVersion;
 
     [CI] readonly AzurePipelines AzurePipelines;
+
     [Parameter("GitHub Token")] readonly string GitHubToken;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
@@ -124,21 +123,31 @@ partial class Build : Nuke.Common.NukeBuild
         }
     }
 
+    [Partition(4)] readonly Partition TestPartition;
+
     Target Test => _ => _
         .DependsOn(Compile) 
         .Produces(TestResultDirectory / "*.trx")
+        .Partition(() => TestPartition)
         .Executes(() => ExecutesTest(false));
 
     void ExecutesTest(bool excludeNetFramework)
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
 
-        var testConfigurations =
+        var groupTestConfigurations =
             (from project in TestProjects
             from framework in project.GetTargetFrameworks(excludeNetFramework)
             from platform in project.GetPlatformsForTests()
             select (project, framework, platform))
-                .Filter(IsLocalBuild);
+                .Filter(IsLocalBuild, AzurePipelines)
+            .Group()
+            .ToList();
+
+        var testConfigurations = 
+            TestPartition
+                .GetCurrent(groupTestConfigurations)
+                .SelectMany(x=>x);
 
         DotNetTest(_ =>
             {

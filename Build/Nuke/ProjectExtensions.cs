@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.ProjectModel;
 
 public static class ProjectExtensions
@@ -37,13 +38,19 @@ public static class ProjectExtensions
         return platforms.Where(x=> x != "x86").ToList();
     }
 
-    public static IEnumerable<(Project project, string framework, string platform)> Filter(this IEnumerable<(Project project, string framework, string platform)> list, bool isLocal)
+    public static IEnumerable<(Project project, string framework, string platform)> Filter(
+        this IEnumerable<(Project project, string framework, string platform)> list, bool isLocal,
+        AzurePipelines azurePipelines)
     {
         if (isLocal)
             return list;
-        //exclude netcore 2.1 and 2.2 in x86 because is not well handle by azure pipelines and github actions on windows
         return list.Where(x =>
         {
+            // exclude netcore 2.2 for azure pipelines
+            if (azurePipelines != null && x.framework.Contains("2.2"))
+                return false;
+
+            //exclude netcore 2.1 and 2.2 in x86 because is not well handle by azure pipelines and github actions on windows
             if (x.platform != "x86")
                 return true;
             if (x.framework == null)
@@ -54,6 +61,19 @@ public static class ProjectExtensions
                 return false;
             return true;
         });
+    }
+
+
+    public static IEnumerable<IEnumerable<(Project project, string framework, string platform)>> Group(
+        this IEnumerable<(Project project, string framework, string platform)> list)
+    {
+        var toList = list.ToList();
+        foreach (var element in toList.Where(x=> x.project.Name.Contains("StructLinq.Tests")))
+        {
+            yield return new[] {element};
+        }
+
+        yield return toList.Where(x => !x.project.Name.Contains("StructLinq.Tests"));
     }
 
 }
