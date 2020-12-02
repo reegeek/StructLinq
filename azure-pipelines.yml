@@ -28,7 +28,7 @@ stages:
         - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
-            packageType: sdk
+            packageType: runtime
             version: 2.2.x
 
        
@@ -74,7 +74,7 @@ stages:
         - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
-            packageType: sdk
+            packageType: runtime
             version: 2.2.x
 
       - job: CompileCoreOnly
@@ -108,7 +108,7 @@ stages:
         - task: UseDotNet@2
           displayName: 'Setup .NET Core 2.2'
           inputs:
-            packageType: sdk
+            packageType: runtime
             version: 2.2.x
 
       - job: CompileCoreOnly
