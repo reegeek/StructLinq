@@ -11,7 +11,7 @@ public static class ProjectExtensions
         var frameworks = project.GetTargetFrameworks();
         if (!excludeNetFramework)
             return frameworks.ToList();
-        return frameworks.Where(x => x.Contains("standard") || x.Contains("core")).ToList();
+        return frameworks.Where(x => x.Contains("standard") || x.Contains("core") || x.Contains("net50")).ToList();
     }
 
     public static IReadOnlyCollection<string> GetPlatforms(this Project project)

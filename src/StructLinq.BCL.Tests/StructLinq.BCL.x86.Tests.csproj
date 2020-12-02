@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;net472;net48;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net452;net472;net48;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net50</TargetFrameworks>
     <Platform>x86</Platform>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>x86</Platforms>
     <RunSettingsFilePath>$(RootDir)\Build\x86.runsettings</RunSettingsFilePath>
     <DefineConstants>IS_X86</DefineConstants>
+    <RootNamespace>StructLinq.BCL.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

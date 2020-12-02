@@ -81,8 +81,7 @@ partial class Build : Nuke.Common.NukeBuild
         .Executes(() =>
         {
             DotNetRestore(s => s
-                .SetProjectFile(Solution)
-                .AddProperty("CheckEolTargetFramework", false));
+                .SetProjectFile(Solution));
         });
 
     Target Compile => _ => _
@@ -119,7 +118,6 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore()
-                .AddProperty("CheckEolTargetFramework", false)
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion));
@@ -148,7 +146,6 @@ partial class Build : Nuke.Common.NukeBuild
                     .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetNoBuild(InvokedTargets.Contains(Compile))
                     .ResetVerbosity()
-                    .AddProperty("CheckEolTargetFramework", false)
                     .SetResultsDirectory(TestResultDirectory)
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
@@ -170,7 +167,7 @@ partial class Build : Nuke.Common.NukeBuild
         .Executes(() =>
         {
             var excludeNetFramework = AllProjects.SelectMany(x => x.GetTargetFrameworks()).Distinct()
-                .Any(x => !x.Contains("standard") || !x.Contains("core"));
+                .Any(x => !x.Contains("standard") || !x.Contains("core") || !x.Contains("net50"));
             ExecutesCompile(excludeNetFramework);
         });
 
@@ -180,7 +177,7 @@ partial class Build : Nuke.Common.NukeBuild
         .Executes(() =>
         {
             var excludeNetFramework = AllProjects.SelectMany(x => x.GetTargetFrameworks()).Distinct()
-                .Any(x => !x.Contains("standard") || !x.Contains("core"));
+                .Any(x => !x.Contains("standard") || !x.Contains("core") || !x.Contains("net50"));
             ExecutesTest(excludeNetFramework);
         });
 
