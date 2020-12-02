@@ -30,6 +30,7 @@ stages:
           inputs:
             packageType: runtime
             version: 2.2.x
+            performMultiLevelLookup: true 
 
       - job: Compile
         displayName: '⚙️ Compile'
