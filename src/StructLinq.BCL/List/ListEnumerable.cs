@@ -32,7 +32,7 @@ namespace StructLinq.BCL.List
         public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => MathHelpers.Max(0, MathHelpers.Min(list.Count, count) - start);
+            get => MathHelpers.Max(0, MathHelpers.Min(layout.Size, count) - start);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
