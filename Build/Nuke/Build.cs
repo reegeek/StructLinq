@@ -134,10 +134,11 @@ partial class Build : Nuke.Common.NukeBuild
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
 
         var testConfigurations =
-            from project in TestProjects
+            (from project in TestProjects
             from framework in project.GetTargetFrameworks(excludeNetFramework)
             from platform in project.GetPlatformsForTests()
-            select new {project, framework, platform};
+            select (project, framework, platform))
+                .Filter(IsLocalBuild);
 
         DotNetTest(_ =>
             {

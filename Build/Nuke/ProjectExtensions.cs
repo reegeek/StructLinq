@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -36,6 +35,25 @@ public static class ProjectExtensions
         if (isWindows)
             return platforms;
         return platforms.Where(x=> x != "x86").ToList();
+    }
+
+    public static IEnumerable<(Project project, string framework, string platform)> Filter(this IEnumerable<(Project project, string framework, string platform)> list, bool isLocal)
+    {
+        if (isLocal)
+            return list;
+        //exclude netcore 2.1 and 2.2 in x86 because is not well handle by azure pipelines and github actions on windows
+        return list.Where(x =>
+        {
+            if (x.platform != "x86")
+                return true;
+            if (x.framework == null)
+                return false;
+            if (x.framework.Contains("2.1"))
+                return false;
+            if (x.framework.Contains("2.2"))
+                return false;
+            return true;
+        });
     }
 
 }

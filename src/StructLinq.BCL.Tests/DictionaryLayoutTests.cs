@@ -1,27 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using ObjectLayoutInspector;
 using StructLinq.BCL.Dictionary;
 using Xunit;
 
 namespace StructLinq.BCL.Tests
 {
-    public abstract class DictionaryLayoutTests<TKey, TValue>
-    {
-        protected abstract TKey buildKey(int i);
-        protected abstract TValue buildValue(int i);
-
-        Dictionary<TKey, TValue> Dictionary(int size)
-        {
-            var dico = Enumerable.Range(0, 5)
-                                 .ToDictionary(buildKey, buildValue);
-            return dico;
-        }
-    }
-
 
     public class DictionaryLayoutTests
     {
+        [Fact]
+        public void PrintLayout()
+        {
+            TypeLayout.PrintLayout<Dictionary<string, int>>();
+            TypeLayout.PrintLayout<DictionaryLayout<string, int>>();
+        }
+
         [Fact]
         public void EntryShouldMatch()
         {
