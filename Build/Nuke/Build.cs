@@ -85,8 +85,6 @@ partial class Build : Nuke.Common.NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            DotNet("--info");
-
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
@@ -97,6 +95,8 @@ partial class Build : Nuke.Common.NukeBuild
 
     void ExecutesCompile(bool excludeNetFramework)
     {
+        DotNet("--info");
+
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
         if (excludeNetFramework)
         {
