@@ -34,15 +34,9 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     On = new[] { GitHubActionsTrigger.Push },
     ImportGitHubTokenAs = nameof(GitHubToken),
     InvokedTargets = new[] { nameof(TestCoreOnly) })]
-[AppVeyor(
-    AppVeyorImage.VisualStudio2019,
-    SkipTags = true,
-    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AzurePipelines(
     suffix: null,
     AzurePipelinesImage.WindowsLatest,
-    AzurePipelinesImage.UbuntuLatest,
-    AzurePipelinesImage.MacOsLatest,
     AutoGenerate = false,
     InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
