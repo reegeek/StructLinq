@@ -4,7 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [DisassemblyDiagnoser( 4),MemoryDiagnoser]
+    [DisassemblyDiagnoser(4),MemoryDiagnoser]
     public class Contains
     {
         private const int Count = 10_000;

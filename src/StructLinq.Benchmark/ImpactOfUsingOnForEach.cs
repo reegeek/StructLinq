@@ -10,8 +10,8 @@ namespace StructLinq.Benchmark
 {
     
     [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
-    [DisassemblyDiagnoser( 4)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
+    [DisassemblyDiagnoser(4)]
     public class ImpactOfUsingOnForEach
     {
         private const int Count = 10000;

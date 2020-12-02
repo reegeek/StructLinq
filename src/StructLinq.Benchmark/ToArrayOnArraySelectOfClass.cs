@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [DisassemblyDiagnoser( 4), MemoryDiagnoser]
+    [DisassemblyDiagnoser(4), MemoryDiagnoser]
     public class ToArrayOnArraySelectOfClass
     {
         private const int Count = 10000;

@@ -15,9 +15,6 @@ namespace StructLinq.BCL.Tests
         [InlineData(100)]
         public void ShouldCountMustBe(int size)
         {
-#if !NETCOREAPP1_1 && !NETCOREAPP1_0
-            Console.WriteLine($"Version: {Environment.Version}");
-#endif
             var list = Enumerable.Range(-1, size).ToList();
             var layout = Unsafe.As<List<int>, ListLayout<int>>(ref list);
             layout.Size.Should().Be(size);
@@ -50,7 +47,28 @@ namespace StructLinq.BCL.Tests
                 layout.Items[i].Should().Be((i - 1).ToString());
             }
         }
-
-
     }
+
+#if IS_X86
+    public class BitnessTests
+    {
+        [Fact]
+        public void Checkx86Bitness()
+        {
+            Assert.Equal(4, IntPtr.Size);
+        }
+    }
+#endif
+
+#if IS_X64
+    public class BitnessTests
+    {
+        [Fact]
+        public void Checkx64Bitness()
+        {
+            Assert.Equal(8, IntPtr.Size);
+        }
+    }
+#endif
+
 }

@@ -10,9 +10,9 @@ using StructLinq.Utils.Collections;
 namespace StructLinq.Benchmark
 {
 
-    [DisassemblyDiagnoser( 4), MemoryDiagnoser]
+    [DisassemblyDiagnoser(4), MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     public class ToListComparison
     {
         private RangeEnumerable enumerable;
@@ -50,10 +50,9 @@ namespace StructLinq.Benchmark
             PoolLists.Fill(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
-            var result = new List<int>();
+            var result = new List<int>(array.Length);
             var listLayout = Unsafe.As<List<int>, ListLayout<int>>(ref result);
             listLayout.Items = array;
-            listLayout.Size = array.Length;
             return result;
         }
 

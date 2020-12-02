@@ -39,12 +39,14 @@ function ExecSafe([scriptblock] $cmd) {
 # Print environment variables
 Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
 
+$DotNetVersion = "3.1.403"
+
 # If dotnet CLI is installed globally and it matches requested version, use for execution
-if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
-    $(dotnet --version) -and $LASTEXITCODE -eq 0) {
-    $env:DOTNET_EXE = (Get-Command "dotnet").Path
-}
-else {
+# if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
+    # $(dotnet --version) -and $LASTEXITCODE -eq 0) {
+    # $env:DOTNET_EXE = (Get-Command "dotnet").Path
+# }
+# else {
     # Download install script
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
@@ -67,7 +69,9 @@ else {
         ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
     }
     $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
-}
+# }
+
+Write-Output "Path: $($env:DOTNET_EXE)"
 
 Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
 
