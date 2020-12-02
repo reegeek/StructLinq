@@ -59,6 +59,7 @@ partial class Build : Nuke.Common.NukeBuild
     [GitVersion] readonly GitVersion GitVersion;
 
     [CI] readonly AzurePipelines AzurePipelines;
+
     [Parameter("GitHub Token")] readonly string GitHubToken;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
@@ -134,14 +135,19 @@ partial class Build : Nuke.Common.NukeBuild
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
 
-        var testConfigurations =
+        var groupTestConfigurations =
             (from project in TestProjects
             from framework in project.GetTargetFrameworks(excludeNetFramework)
             from platform in project.GetPlatformsForTests()
             select (project, framework, platform))
-                .Filter(IsLocalBuild);
+                .Filter(IsLocalBuild, AzurePipelines)
+            .Group()
+            .ToList();
 
-        testConfigurations = TestPartition.GetCurrent(testConfigurations);
+        var testConfigurations = 
+            TestPartition
+                .GetCurrent(groupTestConfigurations)
+                .SelectMany(x=>x);
 
         DotNetTest(_ =>
             {
