@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Nuke.Common.ProjectModel;
 
 public static class ProjectExtensions
@@ -24,6 +26,16 @@ public static class ProjectExtensions
             return targetFrameworksProperty.EvaluatedValue.Split(';');
 
         return new string[0];
+    }
+
+    public static IReadOnlyCollection<string> GetPlatformsForTests(this Project project)
+    {
+
+        var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        var platforms = project.GetPlatforms();
+        if (isWindows)
+            return platforms;
+        return platforms.Where(x=> x != "x86").ToList();
     }
 
 }

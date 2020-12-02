@@ -94,7 +94,7 @@ partial class Build : Nuke.Common.NukeBuild
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
         if (excludeNetFramework)
         {
-            var frameworks =
+            var projectWithFrameworkAndPlatform =
                 from project in AllProjects
                 from framework in project.GetTargetFrameworks(true)
                 from platform in project.GetPlatforms()
@@ -107,7 +107,7 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion)
-                .CombineWith(frameworks, (s, f) => s
+                .CombineWith(projectWithFrameworkAndPlatform, (s, f) => s
                     .SetFramework(f.framework)
                     .SetProperty("Platform", f.platform)
                     .SetProjectFile(f.project)));
@@ -136,7 +136,7 @@ partial class Build : Nuke.Common.NukeBuild
         var testConfigurations =
             from project in TestProjects
             from framework in project.GetTargetFrameworks(excludeNetFramework)
-            from platform in project.GetPlatforms()
+            from platform in project.GetPlatformsForTests()
             select new {project, framework, platform};
 
         DotNetTest(_ =>
