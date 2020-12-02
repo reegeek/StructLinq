@@ -22,6 +22,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 [GitHubActions(
     "continuous",
     GitHubActionsImage.WindowsLatest,
+    AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
     ImportGitHubTokenAs = nameof(GitHubToken),
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
@@ -29,18 +30,14 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     "continuousCore",
     GitHubActionsImage.UbuntuLatest,
     GitHubActionsImage.MacOsLatest,
+    AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
     ImportGitHubTokenAs = nameof(GitHubToken),
     InvokedTargets = new[] { nameof(TestCoreOnly) })]
-[AppVeyor(
-    AppVeyorImage.VisualStudio2019,
-    SkipTags = true,
-    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AzurePipelines(
     suffix: null,
     AzurePipelinesImage.WindowsLatest,
-    AzurePipelinesImage.UbuntuLatest,
-    AzurePipelinesImage.MacOsLatest,
+    AutoGenerate = false,
     InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
     ExcludedTargets = new[] { nameof(Clean), nameof(PackCoreOnly)})]
@@ -92,13 +89,16 @@ partial class Build : Nuke.Common.NukeBuild
 
     void ExecutesCompile(bool excludeNetFramework)
     {
+        DotNet("--info");
+
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
         if (excludeNetFramework)
         {
-            var frameworks =
+            var projectWithFrameworkAndPlatform =
                 from project in AllProjects
                 from framework in project.GetTargetFrameworks(true)
-                select new {project, framework};
+                from platform in project.GetPlatforms()
+                select new {project, framework, platform};
 
 
             DotNetBuild(s => s
@@ -107,8 +107,9 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion)
-                .CombineWith(frameworks, (s, f) => s
+                .CombineWith(projectWithFrameworkAndPlatform, (s, f) => s
                     .SetFramework(f.framework)
+                    .SetProperty("Platform", f.platform)
                     .SetProjectFile(f.project)));
         }
         else
@@ -124,7 +125,7 @@ partial class Build : Nuke.Common.NukeBuild
     }
 
     Target Test => _ => _
-        .DependsOn(Compile)
+        .DependsOn(Compile) 
         .Produces(TestResultDirectory / "*.trx")
         .Executes(() => ExecutesTest(false));
 
@@ -134,8 +135,9 @@ partial class Build : Nuke.Common.NukeBuild
 
         var testConfigurations =
             from project in TestProjects
-            from framework in project.GetTargetFrameworksForTest(excludeNetFramework)
-            select new {project, framework};
+            from framework in project.GetTargetFrameworks(excludeNetFramework)
+            from platform in project.GetPlatformsForTests()
+            select new {project, framework, platform};
 
         DotNetTest(_ =>
             {
@@ -148,6 +150,8 @@ partial class Build : Nuke.Common.NukeBuild
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
                         .SetFramework(v.framework)
+                        .DisableNoBuild()
+                        .SetProperty("Platform", v.platform)
                         .SetLogger($"trx;LogFileName={v.project.Name}-{v.framework}.trx"));
             });
 

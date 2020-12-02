@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Nuke.Common.ProjectModel;
 
 public static class ProjectExtensions
@@ -12,14 +14,28 @@ public static class ProjectExtensions
         return frameworks.Where(x => x.Contains("standard") || x.Contains("core")).ToList();
     }
 
-    public static IReadOnlyCollection<string> GetTargetFrameworksForTest(this Project project, bool excludeNetFramework)
+    public static IReadOnlyCollection<string> GetPlatforms(this Project project)
     {
-        var frameworks = project
-                         .GetTargetFrameworks()
-                         //because github actions and azure pipeline does not handle it.
-                         .Where(x=> !(x.Contains("netcoreapp1") || x.Contains("netcoreapp2.2")));
-        if (!excludeNetFramework)
-            return frameworks.ToList();
-        return frameworks.Where(x => x.Contains("standard") || x.Contains("core")).ToList();
+        var msbuildProject = project.GetMSBuildProject();
+        var targetFrameworkProperty = msbuildProject.GetProperty("Platform");
+        if (targetFrameworkProperty != null)
+            return new[] { targetFrameworkProperty.EvaluatedValue };
+
+        var targetFrameworksProperty = msbuildProject.GetProperty("Platforms");
+        if (targetFrameworksProperty != null)
+            return targetFrameworksProperty.EvaluatedValue.Split(';');
+
+        return new string[0];
     }
+
+    public static IReadOnlyCollection<string> GetPlatformsForTests(this Project project)
+    {
+
+        var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        var platforms = project.GetPlatforms();
+        if (isWindows)
+            return platforms;
+        return platforms.Where(x=> x != "x86").ToList();
+    }
+
 }
