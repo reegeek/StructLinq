@@ -30,7 +30,7 @@ stages:
           inputs:
             packageType: runtime
             version: 2.2.x
-
+            installationPath: $(Agent.ToolsDirectory)/dotnet2-2
        
       - job: Compile
         displayName: '⚙️ Compile'
@@ -76,6 +76,7 @@ stages:
           inputs:
             packageType: runtime
             version: 2.2.x
+            installationPath: $(Agent.ToolsDirectory)/dotnet2-2
 
       - job: CompileCoreOnly
         displayName: '⚙️ CompileCoreOnly'
@@ -110,6 +111,7 @@ stages:
           inputs:
             packageType: runtime
             version: 2.2.x
+            installationPath: $(Agent.ToolsDirectory)/dotnet2-2
 
       - job: CompileCoreOnly
         displayName: '⚙️ CompileCoreOnly'
