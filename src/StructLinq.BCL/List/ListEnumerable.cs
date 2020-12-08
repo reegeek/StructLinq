@@ -7,14 +7,12 @@ namespace StructLinq.BCL.List
 {
     public struct ListEnumerable<T> : IStructCollection<T, ArrayStructEnumerator<T>>
     {
-        private readonly List<T> list;
         private readonly ListLayout<T> layout;
         private int count;
         private int start;
 
         internal ListEnumerable(List<T> list, int start, int count)
         {
-            this.list = list;
             layout = Unsafe.As<List<T>, ListLayout<T>>(ref list);
             this.count = count;
             this.start = start;
