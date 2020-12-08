@@ -9,138 +9,192 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
+        private static bool TryRefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator, ref T first)
             where TEnumerator : struct, IRefStructEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
         {
-            T first = default;
-            if (TryFirst(collection, ref first, x => x))
-                return first;
-            throw new Exception("No Elements");
+            if (enumerator.MoveNext())
+            {
+                ref var current = ref enumerator.Current;
+                enumerator.Dispose();
+                first = current;
+                return true;
+            }
+            enumerator.Dispose();
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection)
+        private static bool TryRefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate, ref T first)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            T first = default;
-            if (TryFirst(collection, ref first))
-                return first;
-            throw new Exception("No Elements");
+            while (enumerator.MoveNext())
+            {
+                ref var current = ref enumerator.Current;
+                if (predicate(current))
+                {
+                    first = current;
+                    enumerator.Dispose();
+                    return true;
+                }
+            }
+            enumerator.Dispose();
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TCollection, TEnumerator>(this TCollection collection, Func<T, bool> predicate, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
+        private static bool TryRefInnerFirst<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate, ref T first)
             where TEnumerator : struct, IRefStructEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
-        {
-            T first = default;
-            if (TryFirst(collection, predicate, ref first, x => x))
-                return first;
-            throw new Exception("No Elements");
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, Func<T, bool> predicate)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-        {
-            T first = default;
-            if (TryFirst(collection, predicate, ref first))
-                return first;
-            throw new Exception("No Elements");
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TCollection, TEnumerator, TFunc>(this TCollection collection, ref TFunc predicate, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
             where TFunc : struct, IInFunction<T, bool>
         {
-            T first = default;
-            if (TryFirst(collection, ref predicate, ref first, x => x))
-                return first;
+            while (enumerator.MoveNext())
+            {
+                ref var current = ref enumerator.Current;
+                if (predicate.Eval(in current))
+                {
+                    first = current;
+                    enumerator.Dispose();
+                    return true;
+                }
+            }
+            enumerator.Dispose();
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static T RefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            if (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                enumerator.Dispose();
+                return current;
+            }
+            enumerator.Dispose();
             throw new Exception("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TCollection, TEnumerator>(this TCollection collection, ref T first, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
-        {
-            if (collection.Count == 0)
-                return false;
-            ref var result = ref collection.Get(0);
-            first = result;
-            return true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, ref T first)
+        private static T RefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            if (collection.Count == 0)
-                return false;
-            ref var result = ref collection.Get(0);
-            first = result;
-            return true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TCollection, TEnumerator>(this TCollection collection, Func<T, bool> predicate, ref T first, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
-        {
-            if (collection.Count == 0)
-                return false;
-            for (int i = 0; i < collection.Count; i++)
+            while (enumerator.MoveNext())
             {
-                ref var result = ref collection.Get(i);
-                if (predicate(result))
+                var current = enumerator.Current;
+                if (predicate(current))
                 {
-                    first = result;
-                    return true;
+                    enumerator.Dispose();
+                    return current;
                 }
             }
-            return false;
+            enumerator.Dispose();
+            throw new Exception("No Match");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, Func<T, bool> predicate, ref T first)
+        private static T RefInnerFirst<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate)
             where TEnumerator : struct, IRefStructEnumerator<T>
+            where TFunc : struct, IFunction<T, bool>
         {
-            if (collection.Count == 0)
-                return false;
-            for (int i = 0; i < collection.Count; i++)
+            while (enumerator.MoveNext())
             {
-                ref var result = ref collection.Get(i);
-                if (predicate(result))
+                var current = enumerator.Current;
+                if (predicate.Eval(current))
                 {
-                    first = result;
-                    return true;
+                    enumerator.Dispose();
+                    return current;
                 }
             }
-            return false;
+            enumerator.Dispose();
+            throw new Exception("No Match");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TCollection, TEnumerator, TFunc>(this TCollection collection, ref TFunc predicate, ref T first, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
+        public static T First<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IRefStructEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerFirst<T, TEnumerator>(ref enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T First<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerFirst<T, TEnumerator>(ref enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T First<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerFirst(ref enumerator, predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T First<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerFirst(ref enumerator, predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T First<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+            where TFunc : struct, IFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerFirst<T, TEnumerator, TFunc>(ref enumerator, ref predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryFirst<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryRefInnerFirst(ref enumerator, ref first);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryFirst<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, ref T first)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryRefInnerFirst(ref enumerator, ref first);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryFirst<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryRefInnerFirst(ref enumerator, predicate, ref first);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryFirst<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate, ref T first)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryRefInnerFirst(ref enumerator, predicate, ref first);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryFirst<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
             where TFunc : struct, IInFunction<T, bool>
         {
-            if (collection.Count == 0)
-                return false;
-
-            for (int i = 0; i < collection.Count; i++)
-            {
-                ref var result = ref collection.Get(i);
-                if (predicate.Eval(in result))
-                {
-                    first = result;
-                    return true;
-                }
-            }
-            return false;
+            var enumerator = enumerable.GetEnumerator();
+            return TryRefInnerFirst(ref enumerator, ref predicate, ref first);
         }
 
     }

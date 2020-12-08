@@ -152,6 +152,7 @@ namespace StructLinq
             var enumerator = enumerable.GetEnumerator();
             return InnerFirst<T, TEnumerator, TFunc>(ref enumerator, ref predicate);
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFirst<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, ref T first, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
