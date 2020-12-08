@@ -39,7 +39,7 @@ namespace StructLinq.Repeat
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly object Clone()
         {
-            return new RepeatEnumerable<T>(element, count);
+            return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

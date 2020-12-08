@@ -43,7 +43,7 @@ namespace StructLinq.Range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly object Clone()
         {
-            return new RangeEnumerable(start, count);
+            return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

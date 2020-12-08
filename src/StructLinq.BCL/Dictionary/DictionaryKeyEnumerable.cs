@@ -52,7 +52,7 @@ namespace StructLinq.BCL.Dictionary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly object Clone()
         {
-            return new DictionaryKeyEnumerable<TKey, TValue>(dictionary, start, count);
+            return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

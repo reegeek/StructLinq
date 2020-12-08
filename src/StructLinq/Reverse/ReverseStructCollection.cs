@@ -37,7 +37,7 @@ namespace StructLinq.Reverse
         }
         public object Clone()
         {
-            return new ReverseStructCollection<T, TStructCollection, TEnumerator>(structCollection, start, length);
+            return this;
         }
         public T Get(int i)
         {
