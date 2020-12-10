@@ -44,7 +44,7 @@ namespace StructLinq.Array
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly object Clone()
         {
-            return new ArrayEnumerable<T>(array, start, length);
+            return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,13 +1,73 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using FluentAssertions;
+using ObjectLayoutInspector;
 using StructLinq.BCL.List;
 using Xunit;
 
 namespace StructLinq.BCL.Tests
 {
+
     public class ListLayoutTests
     {
+        [Fact]
+        public void PrintLayout()
+        {
+            TypeLayout.PrintLayout<List<int>>();
+            TypeLayout.PrintLayout<ListLayout<int>>();
+        }
+
+        [Fact]
+        public void ItemsOffsetForInt()
+        {
+            var fieldOffsets = TypeInspector.GetFieldOffsets(typeof(List<int>));
+            var layoutFieldOffsets = TypeInspector.GetFieldOffsets(typeof(ListLayout<int>));
+
+            var (_, offset) = fieldOffsets.Single(x=> x.fieldInfo.Name == "_items");
+            var (_, layoutOffset) = layoutFieldOffsets.Single(x=> x.fieldInfo.Name == "Items");
+            layoutOffset.Should().Be(offset);
+        }
+
+        [Fact]
+        public void SizeOffsetForInt()
+        {
+            var fieldOffsets = TypeInspector.GetFieldOffsets(typeof(List<int>));
+            var layoutFieldOffsets = TypeInspector.GetFieldOffsets(typeof(ListLayout<int>));
+
+            var (_, offset) = fieldOffsets.Single(x=> x.fieldInfo.Name == "_size");
+            var (_, layoutOffset) = layoutFieldOffsets.Single(x=> x.fieldInfo.Name == "Size");
+            layoutOffset.Should().Be(offset);
+        }
+
+        [Fact]
+        public void ItemsOffsetForString()
+        {
+            var fieldOffsets = TypeInspector.GetFieldOffsets(typeof(List<string>));
+            var layoutFieldOffsets = TypeInspector.GetFieldOffsets(typeof(ListLayout<string>));
+
+            var (_, offset) = fieldOffsets.Single(x=> x.fieldInfo.Name == "_items");
+            var (_, layoutOffset) = layoutFieldOffsets.Single(x=> x.fieldInfo.Name == "Items");
+            layoutOffset.Should().Be(offset);
+        }
+
+        [Fact]
+        public void SizeOffsetForString()
+        {
+            var fieldOffsets = TypeInspector.GetFieldOffsets(typeof(List<string>));
+            var layoutFieldOffsets = TypeInspector.GetFieldOffsets(typeof(ListLayout<string>));
+
+            var (_, offset) = fieldOffsets.Single(x=> x.fieldInfo.Name == "_size");
+            var (_, layoutOffset) = layoutFieldOffsets.Single(x=> x.fieldInfo.Name == "Size");
+            layoutOffset.Should().Be(offset);
+        }
+
+
         [Theory]
         [InlineData(0)]
         [InlineData(10)]
@@ -16,7 +76,9 @@ namespace StructLinq.BCL.Tests
         {
             var list = Enumerable.Range(-1, size).ToList();
             var layout = Unsafe.As<List<int>, ListLayout<int>>(ref list);
-            layout.Size.Should().Be(size);
+            var typeLayout = TypeLayout.GetLayout(list.GetType());
+            var layoutLayout = TypeLayout.GetLayout<ListLayout<int>>();
+            layout.Size.Should().Be(size, typeLayout.ToString() + layoutLayout);
         }
 
         [Theory]
@@ -46,7 +108,28 @@ namespace StructLinq.BCL.Tests
                 layout.Items[i].Should().Be((i - 1).ToString());
             }
         }
-
-
     }
+
+#if IS_X86
+    public class BitnessTests
+    {
+        [Fact]
+        public void Checkx86Bitness()
+        {
+            Assert.Equal(4, IntPtr.Size);
+        }
+    }
+#endif
+
+#if IS_X64
+    public class BitnessTests
+    {
+        [Fact]
+        public void Checkx64Bitness()
+        {
+            Assert.Equal(8, IntPtr.Size);
+        }
+    }
+#endif
+
 }

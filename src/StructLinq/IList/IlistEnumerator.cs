@@ -4,16 +4,17 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.IList
 {
-    public struct IListEnumerator<T> : IStructEnumerator<T>
+    public struct IListEnumerator<T, TList> : IStructEnumerator<T>
+        where TList : IList<T>
     {
         #region private fields
-        private readonly IList<T> list;
+        private readonly TList list;
         private readonly int endIndex;
         private readonly int start;
         private int index;
 
         #endregion
-        public IListEnumerator(IList<T> list, int start, int length)
+        public IListEnumerator(TList list, int start, int length)
         {
             this.list = list;
             endIndex = length - 1 + start;

@@ -24,6 +24,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
+      - name: Setup .NET 2.2
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.2.*
+
+      - name: Setup .NET 3.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.*
+
+      - name: Setup .NET 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.*
+
+      - name: Setup .NET 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.*
+
       - name: Run './build.cmd TestCoreOnly'
         run: ./build.cmd TestCoreOnly
         env:
@@ -37,6 +58,27 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
+
+      - name: Setup .NET 2.2
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.2.*
+
+      - name: Setup .NET 3.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.*
+
+      - name: Setup .NET 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.*
+
+      - name: Setup .NET 5.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.*
+
       - name: Run './build.cmd TestCoreOnly'
         run: ./build.cmd TestCoreOnly
         env:

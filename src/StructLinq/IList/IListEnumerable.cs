@@ -4,14 +4,15 @@ using StructLinq.Utils;
 
 namespace StructLinq.IList
 {
-    public struct IListEnumerable<T> : IStructCollection<T, IListEnumerator<T>>
+    public struct IListEnumerable<T, TList> : IStructCollection<T, IListEnumerator<T, TList>>
+        where TList : IList<T>
     {
         #region private fields
-        private readonly IList<T> list;
+        private readonly TList list;
         private int length;
         private int start;
         #endregion
-        public IListEnumerable(IList<T> list, int start, int length)
+        public IListEnumerable(TList list, int start, int length)
         {
             this.list = list;
             this.length = length;
@@ -19,9 +20,9 @@ namespace StructLinq.IList
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly IListEnumerator<T> GetEnumerator()
+        public readonly IListEnumerator<T, TList> GetEnumerator()
         {
-            return new IListEnumerator<T>(list, start, Count);
+            return new IListEnumerator<T, TList>(list, start, Count);
         }
         public readonly int Count
         {
@@ -42,7 +43,7 @@ namespace StructLinq.IList
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public object Clone()
         {
-            return new IListEnumerable<T>(list, start, length);
+            return new IListEnumerable<T, TList>(list, start, length);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -51,7 +51,7 @@ namespace StructLinq.BCL.List
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly object Clone()
         {
-            return new ListRefEnumerable<T>(list, start, count);
+            return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

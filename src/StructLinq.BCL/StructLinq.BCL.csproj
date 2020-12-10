@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.0;netcoreapp2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net452;net472;net48;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net50</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Label="Nuget">
@@ -22,6 +22,7 @@
     <PackageReference Include="InlineIL.Fody" Version="1.6.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

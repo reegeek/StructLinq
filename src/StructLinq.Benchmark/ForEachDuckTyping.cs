@@ -5,7 +5,7 @@ using BenchmarkDotNet.Attributes;
 namespace StructLinq.Benchmark
 {
     
-    [DisassemblyDiagnoser(recursiveDepth: 4), MemoryDiagnoser]
+    [DisassemblyDiagnoser(4), MemoryDiagnoser]
     public class ForEachDuckTyping
     {
         private const int Count = 10_000;

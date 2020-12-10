@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net472;net48;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net50</TargetFrameworks>
+    <Platform>x86</Platform>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>x86</Platforms>
+    <RunSettingsFilePath>$(RootDir)\Build\x86.runsettings</RunSettingsFilePath>
+    <DefineConstants>IS_X86</DefineConstants>
+    <RootNamespace>StructLinq.BCL.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StructLinq.BCL\StructLinq.BCL.csproj" />
+    <PackageReference Include="ObjectLayoutInspector" Version="0.1.2" />
+  </ItemGroup>
+
+</Project>

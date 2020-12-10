@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI;
-using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
@@ -22,6 +21,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 [GitHubActions(
     "continuous",
     GitHubActionsImage.WindowsLatest,
+    AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
     ImportGitHubTokenAs = nameof(GitHubToken),
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
@@ -29,18 +29,14 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     "continuousCore",
     GitHubActionsImage.UbuntuLatest,
     GitHubActionsImage.MacOsLatest,
+    AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
     ImportGitHubTokenAs = nameof(GitHubToken),
     InvokedTargets = new[] { nameof(TestCoreOnly) })]
-[AppVeyor(
-    AppVeyorImage.VisualStudio2019,
-    SkipTags = true,
-    InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [AzurePipelines(
     suffix: null,
     AzurePipelinesImage.WindowsLatest,
-    AzurePipelinesImage.UbuntuLatest,
-    AzurePipelinesImage.MacOsLatest,
+    AutoGenerate = false,
     InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
     ExcludedTargets = new[] { nameof(Clean), nameof(PackCoreOnly)})]
@@ -63,6 +59,7 @@ partial class Build : Nuke.Common.NukeBuild
     [GitVersion] readonly GitVersion GitVersion;
 
     [CI] readonly AzurePipelines AzurePipelines;
+
     [Parameter("GitHub Token")] readonly string GitHubToken;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
@@ -92,13 +89,15 @@ partial class Build : Nuke.Common.NukeBuild
 
     void ExecutesCompile(bool excludeNetFramework)
     {
+
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
         if (excludeNetFramework)
         {
-            var frameworks =
+            var projectWithFrameworkAndPlatform =
                 from project in AllProjects
                 from framework in project.GetTargetFrameworks(true)
-                select new {project, framework};
+                from platform in project.GetPlatforms()
+                select new {project, framework, platform};
 
 
             DotNetBuild(s => s
@@ -107,8 +106,9 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion)
-                .CombineWith(frameworks, (s, f) => s
+                .CombineWith(projectWithFrameworkAndPlatform, (s, f) => s
                     .SetFramework(f.framework)
+                    .SetProperty("Platform", f.platform)
                     .SetProjectFile(f.project)));
         }
         else
@@ -123,19 +123,31 @@ partial class Build : Nuke.Common.NukeBuild
         }
     }
 
+    [Partition(4)] readonly Partition TestPartition;
+
     Target Test => _ => _
-        .DependsOn(Compile)
+        .DependsOn(Compile) 
         .Produces(TestResultDirectory / "*.trx")
+        .Partition(() => TestPartition)
         .Executes(() => ExecutesTest(false));
 
     void ExecutesTest(bool excludeNetFramework)
     {
         Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
 
-        var testConfigurations =
-            from project in TestProjects
-            from framework in project.GetTargetFrameworksForTest(excludeNetFramework)
-            select new {project, framework};
+        var groupTestConfigurations =
+            (from project in TestProjects
+            from framework in project.GetTargetFrameworks(excludeNetFramework)
+            from platform in project.GetPlatformsForTests()
+            select (project, framework, platform))
+                .Filter(IsLocalBuild, AzurePipelines)
+            .Group()
+            .ToList();
+
+        var testConfigurations = 
+            TestPartition
+                .GetCurrent(groupTestConfigurations)
+                .SelectMany(x=>x);
 
         DotNetTest(_ =>
             {
@@ -148,6 +160,8 @@ partial class Build : Nuke.Common.NukeBuild
                     .CombineWith(testConfigurations, (_, v) => _
                         .SetProjectFile(v.project)
                         .SetFramework(v.framework)
+                        .DisableNoBuild()
+                        .SetProperty("Platform", v.platform)
                         .SetLogger($"trx;LogFileName={v.project.Name}-{v.framework}.trx"));
             });
 
@@ -163,7 +177,7 @@ partial class Build : Nuke.Common.NukeBuild
         .Executes(() =>
         {
             var excludeNetFramework = AllProjects.SelectMany(x => x.GetTargetFrameworks()).Distinct()
-                .Any(x => !x.Contains("standard") || !x.Contains("core"));
+                .Any(x => !x.Contains("standard") || !x.Contains("core") || !x.Contains("net50"));
             ExecutesCompile(excludeNetFramework);
         });
 
@@ -173,7 +187,7 @@ partial class Build : Nuke.Common.NukeBuild
         .Executes(() =>
         {
             var excludeNetFramework = AllProjects.SelectMany(x => x.GetTargetFrameworks()).Distinct()
-                .Any(x => !x.Contains("standard") || !x.Contains("core"));
+                .Any(x => !x.Contains("standard") || !x.Contains("core") || !x.Contains("net50"));
             ExecutesTest(excludeNetFramework);
         });
 

@@ -21,20 +21,33 @@ stages:
     pool:
       vmImage: 'windows-latest'
     jobs:
+      - job: Setup
+        displayName: 'Setup'
+        dependsOn: [  ]
+        steps:
+        - task: UseDotNet@2
+          displayName: 'Setup .NET Core 2.2'
+          inputs:
+            packageType: runtime
+            version: 2.2.x
+            performMultiLevelLookup: true 
+
       - job: Compile
         displayName: '⚙️ Compile'
-        dependsOn: [  ]
+        dependsOn: [ Setup ]
         steps:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
       - job: Test
-        displayName: '🚦 Test'
+        displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
+        strategy:
+          parallel: 4
         steps:
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip'
+              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -50,51 +63,3 @@ stages:
             inputs:
               artifactName: packages
               pathtoPublish: '.result/packages'
-  - stage: ubuntu_latest
-    displayName: 'ubuntu-latest'
-    dependsOn: [  ]
-    pool:
-      vmImage: 'ubuntu-latest'
-    jobs:
-      - job: CompileCoreOnly
-        displayName: '⚙️ CompileCoreOnly'
-        dependsOn: [  ]
-        steps:
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Restore CompileCoreOnly --skip'
-      - job: TestCoreOnly
-        displayName: '🚦 TestCoreOnly'
-        dependsOn: [ CompileCoreOnly ]
-        steps:
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd TestCoreOnly --skip'
-          - task: PublishBuildArtifacts@1
-            inputs:
-              artifactName: test-results
-              pathtoPublish: '.result/test-results'
-  - stage: macOS_latest
-    displayName: 'macOS-latest'
-    dependsOn: [  ]
-    pool:
-      vmImage: 'macOS-latest'
-    jobs:
-      - job: CompileCoreOnly
-        displayName: '⚙️ CompileCoreOnly'
-        dependsOn: [  ]
-        steps:
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Restore CompileCoreOnly --skip'
-      - job: TestCoreOnly
-        displayName: '🚦 TestCoreOnly'
-        dependsOn: [ CompileCoreOnly ]
-        steps:
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd TestCoreOnly --skip'
-          - task: PublishBuildArtifacts@1
-            inputs:
-              artifactName: test-results
-              pathtoPublish: '.result/test-results'

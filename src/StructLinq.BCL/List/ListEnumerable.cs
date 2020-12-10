@@ -7,14 +7,12 @@ namespace StructLinq.BCL.List
 {
     public struct ListEnumerable<T> : IStructCollection<T, ArrayStructEnumerator<T>>
     {
-        private readonly List<T> list;
         private readonly ListLayout<T> layout;
         private int count;
         private int start;
 
         internal ListEnumerable(List<T> list, int start, int count)
         {
-            this.list = list;
             layout = Unsafe.As<List<T>, ListLayout<T>>(ref list);
             this.count = count;
             this.start = start;
@@ -32,7 +30,7 @@ namespace StructLinq.BCL.List
         public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => MathHelpers.Max(0, MathHelpers.Min(list.Count, count) - start);
+            get => MathHelpers.Max(0, MathHelpers.Min(layout.Size, count) - start);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -49,7 +47,7 @@ namespace StructLinq.BCL.List
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly object Clone()
         {
-            return new ListEnumerable<T>(list, start, count);
+            return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

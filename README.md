@@ -16,8 +16,9 @@ Introduce `IRefStructEnumerable` to improve performance when element are fat str
 - [Features](#Features)
   - [BCL bindings](#BCL)
   - [Transformers](#Transformers)
-  - [Aggregators](#Aggregators)
-  - [Generators](#Generators)
+  - [Converters](#Converters)
+  - [LINQ Extensions](#LINQ-Extensions)
+  - [Other Extensions](#Other-Extensions)
 ---
 
 ## Installation
@@ -142,6 +143,8 @@ Following class have a `StructLinq` extension method for `IStructEnumerable`:
   - `T[]`
   - `List<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
   - `Dictionary<TKey, TValue>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+  - `Hashset<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+  - `ImmutableArray<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
 
 Following class have a `StructLinq` extension method for `IRefStructEnumerable`:
   - `T[]`
@@ -152,40 +155,42 @@ Following class have a `StructLinq` extension method for `IRefStructEnumerable`:
 Following converters are available for :
   - `ToArray`
   - `ToList` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
-### Extensions
+### LINQ Extensions
 Following extensions are available for :
-  - `Range`
-  - `Repeat`
-  - `Empty`
-  - `Select`
-  - `Where`
-  - `Take`
-  - `Skip`
-  - `Distinct`([zero allocation](Documents/BenchmarksResults/Distinct.md))
-  - `Reverse`([zero allocation](Documents/BenchmarksResults/Reverse.md))
-  - `OrderBy`([zero allocation](Documents/BenchmarksResults/OrderByArrayOfInt.md))
-  - `OrderByDescending`
-  - `Concat`
-  - `Count`
-  - `LongCount`
-  - `UIntCount`
   - `Aggregate`
-  - `Sum`
-  - `Min`
-  - `Max`
-  - `Contains`
   - `All`
   - `Any`
-  - `Except`([zero allocation](Documents/BenchmarksResults/Except.md))
-  - `Union`([zero allocation](Documents/BenchmarksResults/Union.md))	
-  - `Intersect`([zero allocation](Documents/BenchmarksResults/Intersect.md))
-  - `First`
-  - `FirstOrDefault`
-  - `Last`
-  - `LastOrDefault`
+  - `Concat`
+  - `Contains`
+  - `Count`
+  - `Distinct`([zero allocation](Documents/BenchmarksResults/Distinct.md))
   - `ElementAt`
   - `ElementAtOrDefault`
-
+  - `Empty`
+  - `Except`([zero allocation](Documents/BenchmarksResults/Except.md))
+  - `First`
+  - `FirstOrDefault`
+  - `Intersect`([zero allocation](Documents/BenchmarksResults/Intersect.md))
+  - `Last`
+  - `LastOrDefault`
+  - `Max`
+  - `Min`
+  - `OrderBy`([zero allocation](Documents/BenchmarksResults/OrderByArrayOfInt.md))
+  - `OrderByDescending`
+  - `Range`
+  - `Repeat`
+  - `Reverse`([zero allocation](Documents/BenchmarksResults/Reverse.md))
+  - `Select`
+  - `Skip`
+  - `Sum`
+  - `Take`
+  - `Union`([zero allocation](Documents/BenchmarksResults/Union.md))	
+  - `Where`
+### Other Extensions
+  - `LongCount`
+  - `UIntCount`
+  - `Order`
+  - `TryFirst`
 
 
 

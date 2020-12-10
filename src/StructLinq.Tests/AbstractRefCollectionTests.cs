@@ -109,7 +109,9 @@ namespace StructLinq.Tests
             var obj = collection.Clone();
 
             //Assert
+#pragma warning disable CA2013 // Do not use ReferenceEquals with value types
             Assert.False(object.ReferenceEquals(collection, obj));
+#pragma warning restore CA2013 // Do not use ReferenceEquals with value types
             obj.Should().BeOfType<TStructCollection>();
             var clone = (TStructCollection) obj;
             Assert.Equal(collection.ToEnumerable().ToArray(), clone.ToEnumerable().ToArray());

@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup Label="Framework">
-    <DefaultTargetFrameworks>netcoreapp3.1;net48</DefaultTargetFrameworks>
+    <DefaultTargetFrameworks>netcoreapp3.1;net48;net50</DefaultTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.0" />
-    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.12.0" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.12.1" />
   </ItemGroup>
 
   <Import Project="$(RootDir)\Build\DeleteGenerateBindingRedirects.target"/>
