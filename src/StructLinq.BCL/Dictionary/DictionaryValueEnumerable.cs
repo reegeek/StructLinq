@@ -71,7 +71,8 @@ namespace StructLinq.BCL.Dictionary
             var array = dictionaryLayout.Entries;
             for (int i = 0; i < count; i++)
             {
-                if (!visitor.Visit(array[s+i].Value))
+                ref var entry = ref array[s+i];
+                if (!visitor.Visit(entry.Value))
                     return VisitStatus.VisitorFinished;
             }
 
