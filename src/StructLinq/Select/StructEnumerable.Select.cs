@@ -18,13 +18,11 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SelectEnumerable<TIn, TOut, TEnumerable,  TEnumerator, StructFunction<TIn, TOut>>
-            Select<TIn, TOut, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TIn, TOut> function, Func<TEnumerable, IStructEnumerable<TIn, TEnumerator>> _)
+        public static SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator> Select<TIn, TOut, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TIn, TOut> function, Func<TEnumerable, IStructEnumerable<TIn, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<TIn>
             where TEnumerable : struct, IStructEnumerable<TIn, TEnumerator>
         {
-            var fct = function.ToStruct();
-            return new SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator, StructFunction<TIn, TOut>>(ref fct, ref enumerable);
+            return new SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator>(function, ref enumerable);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -48,19 +46,17 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SelectEnumerable<TIn, TOut, IStructEnumerable<TIn, TEnumerator>,  TEnumerator, StructFunction<TIn, TOut>> Select<TIn, TOut, TEnumerator>(this IStructEnumerable<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
+        public static SelectEnumerable<TIn, TOut, IStructEnumerable<TIn, TEnumerator>, TEnumerator> Select<TIn, TOut, TEnumerator>(this IStructEnumerable<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
             where TEnumerator : struct, IStructEnumerator<TIn>
         {
-            var fct = function.ToStruct();
-            return new SelectEnumerable<TIn,TOut,IStructEnumerable<TIn, TEnumerator>,TEnumerator,StructFunction<TIn,TOut>>(ref fct, ref enumerable);
+            return new SelectEnumerable<TIn,TOut,IStructEnumerable<TIn, TEnumerator>,TEnumerator>(function, ref enumerable);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SelectEnumerable<TIn, TOut, IStructCollection<TIn, TEnumerator>,  TEnumerator, StructFunction<TIn, TOut>> Select<TIn, TOut, TEnumerator>(this IStructCollection<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
+        public static SelectEnumerable<TIn, TOut, IStructCollection<TIn, TEnumerator>, TEnumerator> Select<TIn, TOut, TEnumerator>(this IStructCollection<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
             where TEnumerator : struct, IStructEnumerator<TIn>
         {
-            var fct = function.ToStruct();
-            return new SelectEnumerable<TIn,TOut,IStructCollection<TIn, TEnumerator>,TEnumerator,StructFunction<TIn,TOut>>(ref fct, ref enumerable);
+            return new SelectEnumerable<TIn,TOut,IStructCollection<TIn, TEnumerator>,TEnumerator>(function, ref enumerable);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -6,9 +6,9 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class SelectTests : AbstractEnumerableTests<int,
-        SelectEnumerable<int, int, IStructCollection<int, RangeEnumerator>, RangeEnumerator, StructFunction<int, int>>,
-        SelectEnumerator<int, int, RangeEnumerator, StructFunction<int, int>>>
+    public class SelectTests : AbstractEnumerableTests<double,
+        SelectEnumerable<int, double, RangeEnumerable, RangeEnumerator, MultFunction>,
+        SelectEnumerator<int, double, RangeEnumerator, MultFunction>>
     {
         [Fact]
         public void DelegateTest()
@@ -18,26 +18,30 @@ namespace StructLinq.Tests
                       .Range(-50, 100)
                       .Select(selector)
                       .ToArray();
+            var func = new MultFunction();
             var structEnum = StructEnumerable
                              .Range(-50, 100)
-                             .Select(selector)
+                             .Select(ref func, x=>x, x=> x)
                              .ToEnumerable()
                              .ToArray();
             Assert.Equal(sys, structEnum);
         }
 
-        protected override SelectEnumerable<int, int, IStructCollection<int, RangeEnumerator>, RangeEnumerator, StructFunction<int, int>> Build(int size)
+        protected override SelectEnumerable<int, double, RangeEnumerable, RangeEnumerator, MultFunction> Build(int size)
         {
-            SelectEnumerable<int, int, IStructCollection<int, RangeEnumerator>, RangeEnumerator, StructFunction<int, int>> selectEnumerable = StructEnumerable.Range(-1, size).Select(x => x * 2);
+            var func = new MultFunction();
+            SelectEnumerable<int, double, RangeEnumerable, RangeEnumerator, MultFunction> selectEnumerable = 
+                StructEnumerable.Range(-1, size).Select(ref func, x=>x, x => x);
             return selectEnumerable;
         }
 
-        struct MultFunction : IFunction<int, double>
+    }
+    
+    public struct MultFunction : IFunction<int, double>
+    {
+        public double Eval(int element)
         {
-            public double Eval(int element)
-            {
-                return element * 2.0;
-            }
+            return element * 2.0;
         }
     }
 }
