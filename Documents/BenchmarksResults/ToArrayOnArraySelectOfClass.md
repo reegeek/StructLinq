@@ -6,16 +6,16 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
-Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.402
-  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=5.0.101
+  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
 
 
 ```
-|           Method |     Mean |    Error |   StdDev | Ratio |  Gen 0 |  Gen 1 | Gen 2 | Allocated |
-|----------------- |---------:|---------:|---------:|------:|-------:|-------:|------:|----------:|
-|             Linq | 19.89 us | 0.072 us | 0.068 us |  1.00 | 9.5215 | 1.1902 |     - |  39.13 KB |
-|       StructLinq | 28.17 us | 0.054 us | 0.048 us |  1.42 | 9.5215 | 1.1902 |     - |  39.12 KB |
-| StructLinqFaster | 19.13 us | 0.068 us | 0.064 us |  0.96 | 9.5215 | 1.1902 |     - |  39.09 KB |
+|           Method |     Mean |    Error |   StdDev | Ratio | RatioSD | Code Size |  Gen 0 |  Gen 1 | Gen 2 | Allocated |
+|----------------- |---------:|---------:|---------:|------:|--------:|----------:|-------:|-------:|------:|----------:|
+|             Linq | 22.50 μs | 0.077 μs | 0.072 μs |  1.00 |    0.00 |   0.15 KB | 8.4534 | 1.0376 |     - |  39.13 KB |
+|       StructLinq | 34.01 μs | 0.340 μs | 0.392 μs |  1.51 |    0.02 |   0.05 KB | 8.4229 | 0.0610 |     - |  39.16 KB |
+| StructLinqFaster | 17.36 μs | 0.091 μs | 0.085 μs |  0.77 |    0.00 |   0.05 KB | 8.4534 | 1.0376 |     - |  39.09 KB |
