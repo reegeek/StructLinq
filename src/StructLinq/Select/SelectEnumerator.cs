@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Select
 {
@@ -29,6 +30,42 @@ namespace StructLinq.Select
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => function.Eval(enumerator.Current);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            enumerator.Dispose();
+        }
+
+    }
+    
+    public struct SelectEnumerator<TIn, TOut, TEnumerator> : IStructEnumerator<TOut>
+        where TEnumerator : struct, IStructEnumerator<TIn>
+    {
+        #region private fields
+        private Func<TIn, TOut> function;
+        private TEnumerator enumerator;
+        #endregion
+        public SelectEnumerator(Func<TIn, TOut> function, ref TEnumerator enumerator)
+        {
+            this.function = function;
+            this.enumerator = enumerator;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool MoveNext()
+        {
+            return enumerator.MoveNext();
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset()
+        {
+            enumerator.Reset();
+        }
+        public TOut Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => function(enumerator.Current);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
