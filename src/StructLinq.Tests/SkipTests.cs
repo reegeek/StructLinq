@@ -7,11 +7,11 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class SkipTests : AbstractEnumerableTests<int,
-        SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>,
-        SkipEnumerator<int, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>>
+        SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>,
+        SkipEnumerator<int, WhereEnumerator<int, RangeEnumerator>>>
     {
 
-        protected override SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> Build(int size)
+        protected override SkipEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>> Build(int size)
         {
             var skipEnumerable = StructEnumerable.Range(-1, size + 5).Where(x=>true, x=>x).Skip(5, x=> x);
             return skipEnumerable;

@@ -7,10 +7,10 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class WhereTests : AbstractEnumerableTests<int,
-        WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>,
-        WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>
+        WhereEnumerable<int, RangeEnumerable, RangeEnumerator>,
+        WhereEnumerator<int, RangeEnumerator>>
     {
-        protected override WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>> Build(int size)
+        protected override WhereEnumerable<int, RangeEnumerable, RangeEnumerator> Build(int size)
         {
             var whereEnumerable = StructEnumerable.Range(-1, size).Where(x => x >= -1, x=>x);
             return whereEnumerable;

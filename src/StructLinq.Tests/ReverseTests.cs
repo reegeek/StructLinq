@@ -8,12 +8,12 @@ namespace StructLinq.Tests
 {
     public class ReverseTests : AbstractEnumerableTests<
         int,
-        ReverseEnumerable<int, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>,
+        ReverseEnumerable<int, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>,
         ReverseEnumerator<int>>
     {
 
         protected override
-            ReverseEnumerable<int, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> Build(int size)
+            ReverseEnumerable<int, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>> Build(int size)
         {
             return StructEnumerable.Range(0, size).Where(x => true).Reverse(x => x);
         }

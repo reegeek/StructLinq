@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Where
 {
@@ -20,6 +21,26 @@ namespace StructLinq.Where
         {
             var enumerator = inner.GetEnumerator();
             return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
+        }
+    }
+    
+    public struct WhereEnumerable<TIn, TEnumerable, TEnumerator> : IStructEnumerable<TIn, WhereEnumerator<TIn, TEnumerator>>
+        where TEnumerator : struct, IStructEnumerator<TIn> 
+        where TEnumerable : IStructEnumerable<TIn, TEnumerator>
+    {
+        private Func<TIn, bool> function;
+        private TEnumerable inner;
+        public WhereEnumerable(Func<TIn, bool> function, ref TEnumerable inner)
+        {
+            this.function = function;
+            this.inner = inner;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public WhereEnumerator<TIn, TEnumerator> GetEnumerator()
+        {
+            var enumerator = inner.GetEnumerator();
+            return new WhereEnumerator<TIn, TEnumerator>(function, ref enumerator);
         }
     }
 }
