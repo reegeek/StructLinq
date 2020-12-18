@@ -27,8 +27,15 @@ namespace StructLinq.Benchmark
                                      .Select(x => x * 2)
                                      .ToArray();
 
+        
         [Benchmark]
-        public int[] StructLinqFaster()
+        public int[] StructLinqFaster() => array
+                                     .ToStructEnumerable()
+                                     .Select(x => x * 2)
+                                     .ToArray(x=>x);
+
+        [Benchmark]
+        public int[] StructLinqWithFunction()
         {
             var select = new SelectFunction();
             return array
