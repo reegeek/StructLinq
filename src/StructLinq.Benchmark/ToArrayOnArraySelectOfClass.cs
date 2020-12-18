@@ -27,7 +27,14 @@ namespace StructLinq.Benchmark
                                      .ToArray();
 
         [Benchmark]
-        public int[] StructLinqFaster()
+        public int[] StructLinqFaster() => array
+                                     .ToStructEnumerable()
+                                     .Select(x => x.Element)
+                                     .ToArray(x=>x);
+
+        
+        [Benchmark]
+        public int[] StructLinqWithFunction()
         {
             var select = new ContainerSelect();
             return array
