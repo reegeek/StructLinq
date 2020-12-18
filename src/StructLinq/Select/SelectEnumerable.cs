@@ -89,6 +89,35 @@ namespace StructLinq.Select
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => inner;
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TOut>
+        {
+            var selectVisitor = new SelectVisitor<TVisitor>(function, ref visitor);
+            var visitStatus = inner.Visit(ref selectVisitor);
+            visitor = selectVisitor.visitor;
+            return visitStatus;
+        }
+        
+        private struct SelectVisitor<TVisitor> : IVisitor<TIn>
+            where TVisitor : IVisitor<TOut>
+        {
+            public Func<TIn, TOut> function;
+            public TVisitor visitor;
+
+            public SelectVisitor(Func<TIn, TOut> function, ref TVisitor visitor)
+            {
+                this.function = function;
+                this.visitor = visitor;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(TIn input)
+            {
+                var output = function(input);
+                return visitor.Visit(output);
+            }
+        }
     }
 
 }

@@ -70,5 +70,36 @@ namespace StructLinq.Where
             var enumerator = inner.GetEnumerator();
             return new WhereEnumerator<TIn, TEnumerator>(function, ref enumerator);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TIn>
+        {
+            var whereVisitor = new WhereVisitor<TIn, TVisitor>(function, ref visitor);
+            var visitStatus = inner.Visit(ref whereVisitor);
+            visitor = whereVisitor.visitor;
+            return visitStatus;
+        }
+    }
+    
+    internal struct WhereVisitor<TIn, TVisitor> : IVisitor<TIn>
+            where TVisitor : IVisitor<TIn>
+    {
+        public Func<TIn, bool> function;
+        public TVisitor visitor;
+
+        public WhereVisitor(Func<TIn, bool> function, ref TVisitor visitor)
+        {
+            this.function = function;
+            this.visitor = visitor;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Visit(TIn input)
+        {
+            if (function(input))
+                return visitor.Visit(input);
+            return true;
+        }
     }
 }
