@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Where
 {
@@ -46,4 +47,49 @@ namespace StructLinq.Where
         }
 
     }
+    
+    public struct WhereEnumerator<TIn, TEnumerator> : IStructEnumerator<TIn>
+        where TEnumerator : struct, IStructEnumerator<TIn>
+    {
+        #region private fields
+        private Func<TIn, bool> predicate;
+        private TEnumerator enumerator;
+        #endregion
+        public WhereEnumerator(Func<TIn, bool> predicate, ref TEnumerator enumerator)
+        {
+            this.predicate = predicate;
+            this.enumerator = enumerator;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool MoveNext()
+        {
+            while (enumerator.MoveNext())
+            {
+                var current = enumerator.Current;
+                if (!predicate(current))
+                    continue;
+                return true;
+            }
+
+            return false;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Reset()
+        {
+            enumerator.Reset();
+        }
+        public readonly TIn Current
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => enumerator.Current; 
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            enumerator.Dispose();
+        }
+
+    }
+    
 }

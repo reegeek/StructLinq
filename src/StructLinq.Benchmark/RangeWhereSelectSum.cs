@@ -37,7 +37,7 @@ namespace StructLinq.Benchmark
                                                                     .ToStructEnumerable()
                                                                     .Where(x => (x & 1) == 0, x=>x)
                                                                     .Select(x => x *2, x => x)
-                                                                    .Sum();
+                                                                    .Sum(x=>x);
 
         [Benchmark]
         public int StructRangeWhereSelectSum()

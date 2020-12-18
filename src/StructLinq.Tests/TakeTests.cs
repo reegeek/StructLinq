@@ -7,10 +7,10 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class TakeTests : AbstractEnumerableTests<int,
-        TakeEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>,
-        TakeEnumerator<int, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>>>
+        TakeEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>,
+        TakeEnumerator<int, WhereEnumerator<int, RangeEnumerator>>>
     {
-        protected override TakeEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator, StructFunction<int, bool>>, WhereEnumerator<int, RangeEnumerator, StructFunction<int, bool>>> Build(int size)
+        protected override TakeEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>> Build(int size)
         {
             return StructEnumerable.Range(-1, size).Where(x=>true, x=>x).Take(size, x=> x);
         }
