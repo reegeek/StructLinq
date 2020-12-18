@@ -18,13 +18,12 @@ namespace StructLinq
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static WhereEnumerable<T, TEnumerable, TEnumerator, StructFunction<T, bool>> Where<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, 
+        public static WhereEnumerable<T, TEnumerable, TEnumerator> Where<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, 
                                                                                                                                Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            var structPredicate = predicate.ToStruct();
-            return new WhereEnumerable<T, TEnumerable, TEnumerator, StructFunction<T, bool>>(ref structPredicate, ref enumerable);
+            return new WhereEnumerable<T, TEnumerable, TEnumerator>(predicate, ref enumerable);
 
         }
 
@@ -50,11 +49,10 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static WhereEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, bool>> Where<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
+        public static WhereEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator> Where<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var structPredicate = predicate.ToStruct();
-            return new WhereEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, bool>>(ref structPredicate, ref enumerable);
+            return new WhereEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator>(predicate, ref enumerable);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
