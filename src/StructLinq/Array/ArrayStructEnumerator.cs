@@ -38,5 +38,17 @@ namespace StructLinq.Array
         {
             
         }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => endIndex + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return array[start + i];
+        }
     }
 }

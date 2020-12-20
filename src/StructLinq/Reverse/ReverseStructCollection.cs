@@ -3,7 +3,7 @@ using StructLinq.Utils;
 
 namespace StructLinq.Reverse
 {
-    public struct ReverseStructCollection<T, TStructCollection, TEnumerator> : IStructCollection<T, ReverseEnumerator<T, TStructCollection, TEnumerator>> 
+    public struct ReverseStructCollection<T, TStructCollection, TEnumerator> : IStructCollection<T, ReverseEnumerator<T, TEnumerator>> 
         where TStructCollection : IStructCollection<T, TEnumerator> 
         where TEnumerator : struct, ICollectionEnumerator<T>
     {
@@ -17,9 +17,10 @@ namespace StructLinq.Reverse
             this.start = start;
             this.length = length;
         }
-        public ReverseEnumerator<T, TStructCollection, TEnumerator> GetEnumerator()
+        public ReverseEnumerator<T, TEnumerator> GetEnumerator()
         {
-            return new ReverseEnumerator<T, TStructCollection, TEnumerator>(structCollection, start, Count);
+            var inner = structCollection.GetEnumerator();
+            return new ReverseEnumerator<T, TEnumerator>(inner, start, Count);
         }
         public int Count
         {

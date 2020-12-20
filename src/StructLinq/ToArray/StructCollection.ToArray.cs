@@ -7,29 +7,29 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T[] ToArray<T, TEnumerator>(ref TEnumerator enumerator, int size)
-            where TEnumerator : struct, IStructEnumerator<T>
+        private static T[] ToArray<T, TEnumerator>(ref TEnumerator enumerator)
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
-            var result = new T[size];
-            var i = 0;
-            while (enumerator.MoveNext())
+            var count = enumerator.Count;
+            var result = new T[count];
+            for (int i = 0; i < count; i++)
             {
-                result[i++] = enumerator.Current;
+                result[i] = enumerator.Get(i);
             }
             enumerator.Dispose();
             return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T[] ToRefArray<T, TEnumerator>(ref TEnumerator enumerator, int size)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private static T[] ToRefArray<T, TEnumerator>(ref TEnumerator enumerator)
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
-            var result = new T[size];
-            var i = 0;
-            while (enumerator.MoveNext())
+            var count = enumerator.Count;
+            var result = new T[count];
+            for (int i = 0; i < count; i++)
             {
-                ref var item = ref result[i++];
-                ref var elt = ref enumerator.Current;
+                ref var item = ref result[i];
+                ref var elt = ref enumerator.Get(i);
                 item = elt;
             }
             enumerator.Dispose();
@@ -39,10 +39,10 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T[] ToArray<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
             var refStructEnumerator = collection.GetEnumerator();
-            return ToRefArray<T, TEnumerator>(ref refStructEnumerator, collection.Count);
+            return ToRefArray<T, TEnumerator>(ref refStructEnumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -50,10 +50,10 @@ namespace StructLinq
             this TCollection collection,
             Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
             where TCollection : IRefStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
             var enumerator = collection.GetEnumerator();
-            return ToRefArray<T, TEnumerator>(ref enumerator, collection.Count);
+            return ToRefArray<T, TEnumerator>(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -64,7 +64,7 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = collection.GetEnumerator();
-            return ToArray<T, TEnumerator>(ref enumerator, collection.Count);
+            return ToArray<T, TEnumerator>(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -72,7 +72,7 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = collection.GetEnumerator();
-            return ToArray<T, TEnumerator>(ref enumerator, collection.Count);
+            return ToArray<T, TEnumerator>(ref enumerator);
         }
 
 

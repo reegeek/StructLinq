@@ -35,5 +35,17 @@ namespace StructLinq.Repeat
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => element;
         }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (int) count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return element;
+        }
     }
 }

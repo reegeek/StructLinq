@@ -45,5 +45,16 @@ namespace StructLinq.IList
                 dispose.Dispose();
             }
         }
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => endIndex + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return list[start + i];
+        }
     }
 }

@@ -37,5 +37,17 @@ namespace StructLinq.Range
             
         }
 
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => end + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int Get(int i)
+        {
+            return start + i;
+        }
+
     }
 }

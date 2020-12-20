@@ -39,7 +39,11 @@ namespace StructLinq
         public static List<T> ToList<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
-            return collection.ToList(collection.Count, ArrayPool<T>.Shared);
+            var array = collection.ToArray(x => x);
+            var result = new List<T>(array.Length);
+            var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            listLayout.Items = array;
+            return result;
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -80,7 +84,11 @@ namespace StructLinq
             where TCollection : IStructCollection<T, TEnumerator>
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
-            return collection.ToList(collection.Count, ArrayPool<T>.Shared, _);
+            var array = collection.ToArray(x => x);
+            var result = new List<T>(array.Length);
+            var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            listLayout.Items = array;
+            return result;
         }
 
 
@@ -109,9 +117,13 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<T> ToList<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> enumerable)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
-            return enumerable.ToList(enumerable.Count, ArrayPool<T>.Shared);
+            var array = enumerable.ToArray(x => x);
+            var result = new List<T>(array.Length);
+            var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            listLayout.Items = array;
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -151,9 +163,13 @@ namespace StructLinq
             this TEnumerable enumerable, 
             Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
             where TEnumerable : IRefStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
-            return enumerable.ToList(enumerable.Count, ArrayPool<T>.Shared, _);
+            var array = enumerable.ToArray(x => x);
+            var result = new List<T>(array.Length);
+            var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            listLayout.Items = array;
+            return result;
         }
     }
 }

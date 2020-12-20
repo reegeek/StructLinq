@@ -51,5 +51,19 @@ namespace StructLinq.BCL.Dictionary
         public void Dispose()
         {
         }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => length + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TKey Get(int i)
+        {
+            ref var entry = ref entries[start + i];
+            return entry.Key;
+        }
+
     }
 }

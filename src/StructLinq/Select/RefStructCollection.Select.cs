@@ -13,7 +13,7 @@ namespace StructLinq
             ref TFunction function, 
             Func<TEnumerable, IRefStructCollection<TIn, TEnumerator>> _,
             Func<TFunction, IInFunction<TIn, TOut>> __)
-            where TEnumerator : struct, IRefStructEnumerator<TIn>
+            where TEnumerator : struct, IRefCollectionEnumerator<TIn>
             where TFunction : struct, IInFunction<TIn, TOut>
             where TEnumerable : struct, IRefStructCollection<TIn, TEnumerator>
         {
@@ -25,7 +25,7 @@ namespace StructLinq
             this TEnumerable enumerable, 
             InFunc<TIn, TOut> function, 
             Func<TEnumerable, IRefStructCollection<TIn, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<TIn>
+            where TEnumerator : struct, IRefCollectionEnumerator<TIn>
             where TEnumerable : struct, IRefStructCollection<TIn, TEnumerator>
         {
             var fct = function.ToStruct();
@@ -36,7 +36,7 @@ namespace StructLinq
         public static RefSelectCollection<TIn, TOut, IRefStructCollection<TIn, TEnumerator>, TEnumerator, StructInFunction<TIn, TOut>> Select<TIn, TOut, TEnumerator>(
             this IRefStructCollection<TIn, TEnumerator> enumerable, 
             InFunc<TIn, TOut> function)
-            where TEnumerator : struct, IRefStructEnumerator<TIn>
+            where TEnumerator : struct, IRefCollectionEnumerator<TIn>
         {
             var fct = function.ToStruct();
             return new RefSelectCollection<TIn, TOut, IRefStructCollection<TIn, TEnumerator>, TEnumerator, StructInFunction<TIn, TOut>>(ref fct, ref enumerable);
