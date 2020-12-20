@@ -25,6 +25,7 @@ namespace StructLinq
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
 
@@ -40,9 +41,11 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var array = collection.ToArray(x => x);
-            var result = new List<T>(array.Length);
+            var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
+            listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
         
@@ -63,6 +66,8 @@ namespace StructLinq
             var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
+            listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
 
@@ -88,6 +93,8 @@ namespace StructLinq
             var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
+            listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
 
@@ -105,6 +112,7 @@ namespace StructLinq
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
 
@@ -123,6 +131,8 @@ namespace StructLinq
             var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
+            listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
 
@@ -143,6 +153,8 @@ namespace StructLinq
             var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
+            listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
 
@@ -169,6 +181,8 @@ namespace StructLinq
             var result = new List<T>(array.Length);
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
+            listLayout.Size = array.Length;
+            result.Capacity = array.Length;
             return result;
         }
     }
