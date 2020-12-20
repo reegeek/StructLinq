@@ -25,12 +25,6 @@ namespace StructLinq.Select
             var typedEnumerator = inner.GetEnumerator();
             return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
-
-        internal TEnumerable Inner
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => inner;
-        }
     }
     
     public struct SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator> : IStructEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator>>
@@ -54,14 +48,7 @@ namespace StructLinq.Select
             var typedEnumerator = inner.GetEnumerator();
             return new SelectEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
         }
-
-        internal TEnumerable Inner
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => inner;
-        }
     }
-
 }
 
     
