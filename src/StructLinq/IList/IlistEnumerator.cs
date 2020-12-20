@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.IList
 {
-    public struct IListEnumerator<T, TList> : IStructEnumerator<T>
+    public struct IListEnumerator<T, TList> : ICollectionEnumerator<T>
         where TList : IList<T>
     {
         #region private fields

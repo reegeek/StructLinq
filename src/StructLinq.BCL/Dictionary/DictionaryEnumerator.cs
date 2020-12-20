@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.BCL.Dictionary
 {
-    public struct DictionaryEnumerator<TKey, TValue> : IStructEnumerator<KeyValuePair<TKey, TValue>>
+    public struct DictionaryEnumerator<TKey, TValue> : ICollectionEnumerator<KeyValuePair<TKey, TValue>>
     {
         private readonly Entry<TKey, TValue>[] entries;
         private readonly int length;

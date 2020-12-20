@@ -2,7 +2,7 @@
 
 namespace StructLinq.Array
 {
-    public struct ArrayStructEnumerator<T> : IStructEnumerator<T>
+    public struct ArrayStructEnumerator<T> : ICollectionEnumerator<T>
     {
         #region private fields
         private readonly T[] array;

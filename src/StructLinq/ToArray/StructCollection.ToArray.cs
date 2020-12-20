@@ -61,7 +61,7 @@ namespace StructLinq
             this TCollection collection,
             Func<TCollection, IStructCollection<T, TEnumerator>> _)
             where TCollection : IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = collection.GetEnumerator();
             return ToArray<T, TEnumerator>(ref enumerator, collection.Count);
@@ -69,7 +69,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T[] ToArray<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = collection.GetEnumerator();
             return ToArray<T, TEnumerator>(ref enumerator, collection.Count);

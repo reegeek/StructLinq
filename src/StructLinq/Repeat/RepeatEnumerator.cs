@@ -2,7 +2,7 @@
 
 namespace StructLinq.Repeat
 {
-    public struct RepeatEnumerator<T> : IStructEnumerator<T>
+    public struct RepeatEnumerator<T> : ICollectionEnumerator<T>
     {
         private readonly T element;
         private readonly uint count;

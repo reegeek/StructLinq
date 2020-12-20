@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.Select
 {
-    public struct SelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IStructEnumerator<TOut>
+    public struct SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction> : ICollectionEnumerator<TOut>
         where TFunction : struct, IFunction<TIn, TOut>
         where TEnumerator : struct, IStructEnumerator<TIn>
     {
@@ -11,7 +11,7 @@ namespace StructLinq.Select
         private TFunction function;
         private TEnumerator enumerator;
         #endregion
-        public SelectEnumerator(ref TFunction function, ref TEnumerator enumerator)
+        public SelectCollectionEnumerator(ref TFunction function, ref TEnumerator enumerator)
         {
             this.function = function;
             this.enumerator = enumerator;
@@ -38,15 +38,15 @@ namespace StructLinq.Select
             enumerator.Dispose();
         }
     }
-    
-    public struct SelectEnumerator<TIn, TOut, TEnumerator> : IStructEnumerator<TOut>
+
+    public struct SelectCollectionEnumerator<TIn, TOut, TEnumerator> : ICollectionEnumerator<TOut>
         where TEnumerator : struct, IStructEnumerator<TIn>
     {
         #region private fields
         private Func<TIn, TOut> function;
         private TEnumerator enumerator;
         #endregion
-        public SelectEnumerator(Func<TIn, TOut> function, ref TEnumerator enumerator)
+        public SelectCollectionEnumerator(Func<TIn, TOut> function, ref TEnumerator enumerator)
         {
             this.function = function;
             this.enumerator = enumerator;

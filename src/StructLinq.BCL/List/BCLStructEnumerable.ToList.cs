@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using StructLinq.BCL.List;
 using StructLinq.Utils.Collections;
 
+// ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     public static partial class BCLStructEnumerable
@@ -36,7 +37,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<T> ToList<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return collection.ToList(collection.Count, ArrayPool<T>.Shared);
         }
@@ -77,7 +78,7 @@ namespace StructLinq
             this TCollection collection, 
             Func<TCollection, IStructCollection<T, TEnumerator>> _)
             where TCollection : IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return collection.ToList(collection.Count, ArrayPool<T>.Shared, _);
         }

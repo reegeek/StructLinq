@@ -2,7 +2,7 @@
 
 namespace StructLinq.Range
 {
-    public struct RangeEnumerator : IStructEnumerator<int>
+    public struct RangeEnumerator : ICollectionEnumerator<int>
     {
         #region private fields
         private int index;

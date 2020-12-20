@@ -2,7 +2,7 @@
 
 namespace StructLinq.Select
 {
-    public struct RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IStructEnumerator<TOut>
+    public struct RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> : ICollectionEnumerator<TOut>
         where TFunction : struct, IInFunction<TIn, TOut>
         where TEnumerator : struct, IRefStructEnumerator<TIn>
     {

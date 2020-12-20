@@ -2,7 +2,7 @@
 
 namespace StructLinq.BCL.Hashset
 {
-    public struct HashsetEnumerator<T> : IStructEnumerator<T>
+    public struct HashsetEnumerator<T> : ICollectionEnumerator<T>
     {
         private readonly Slot<T>[] entries;
         private readonly int length;

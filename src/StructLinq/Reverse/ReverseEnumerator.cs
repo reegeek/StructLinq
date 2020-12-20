@@ -39,9 +39,9 @@ namespace StructLinq.Reverse
         }
     }
 
-    public struct ReverseEnumerator<T, TStructCollection, TEnumerator> : IStructEnumerator<T>
+    public struct ReverseEnumerator<T, TStructCollection, TEnumerator> : ICollectionEnumerator<T>
         where TStructCollection : IStructCollection<T, TEnumerator> 
-        where TEnumerator : struct, IStructEnumerator<T>
+        where TEnumerator : struct, ICollectionEnumerator<T>
     {
         private readonly TStructCollection structCollection;
         private readonly int endIndex;

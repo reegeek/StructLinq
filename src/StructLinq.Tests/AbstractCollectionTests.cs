@@ -8,7 +8,7 @@ namespace StructLinq.Tests
     public abstract class AbstractCollectionTests<T, TStructCollection, TEnumerator> 
         : AbstractEnumerableTests<T, TStructCollection, TEnumerator> 
         where TStructCollection : struct, IStructCollection<T, TEnumerator>
-        where TEnumerator : struct, IStructEnumerator<T>
+        where TEnumerator : struct, ICollectionEnumerator<T>
     {
         [Theory]
         [InlineData(0)]

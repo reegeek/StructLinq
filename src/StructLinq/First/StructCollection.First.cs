@@ -10,7 +10,7 @@ namespace StructLinq
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T First<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (collection.Count == 0)
@@ -20,7 +20,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T First<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (collection.Count == 0)
                 throw new Exception("No Elements");
@@ -29,7 +29,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T First<T, TCollection, TEnumerator>(this TCollection collection, Func<T, bool> predicate, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (collection.Count == 0)
@@ -45,7 +45,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T First<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection, Func<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (collection.Count == 0)
                 throw new Exception("No Elements");
@@ -60,7 +60,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T First<T, TCollection, TEnumerator, TFunc>(this TCollection collection, ref TFunc predicate, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
             where TFunc : struct, IFunction<T, bool>
         {
@@ -77,7 +77,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFirst<T, TCollection, TEnumerator>(this TCollection collection, ref T first, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (collection.Count == 0)
@@ -88,7 +88,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFirst<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection, ref T first)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (collection.Count == 0)
                 return false;
@@ -98,7 +98,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFirst<T, TCollection, TEnumerator>(this TCollection collection, Func<T, bool> predicate, ref T first, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (collection.Count == 0)
@@ -114,7 +114,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFirst<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection, Func<T, bool> predicate, ref T first)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (collection.Count == 0)
                 return false;
@@ -129,7 +129,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryFirst<T, TCollection, TEnumerator, TFunc>(this TCollection collection, ref TFunc predicate, ref T first, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
             where TFunc : struct, IFunction<T, bool>
         {

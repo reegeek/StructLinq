@@ -2,7 +2,7 @@
 
 namespace StructLinq.BCL.Dictionary
 {
-    public struct DictionaryKeyEnumerator<TKey, TValue> : IStructEnumerator<TKey>
+    public struct DictionaryKeyEnumerator<TKey, TValue> : ICollectionEnumerator<TKey>
     {
         private readonly Entry<TKey, TValue>[] entries;
         private readonly int length;

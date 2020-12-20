@@ -8,7 +8,7 @@ namespace StructLinq.Tests
 {
     public class SelectCollectionFuncTests : AbstractCollectionTests<double,
         SelectCollection<int, double, RangeEnumerable, RangeEnumerator>,
-        SelectEnumerator<int, double, RangeEnumerator>>
+        SelectCollectionEnumerator<int, double, RangeEnumerator>>
     {
         [Fact]
         public void DelegateTest()

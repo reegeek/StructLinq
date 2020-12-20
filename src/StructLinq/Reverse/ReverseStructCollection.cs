@@ -5,7 +5,7 @@ namespace StructLinq.Reverse
 {
     public struct ReverseStructCollection<T, TStructCollection, TEnumerator> : IStructCollection<T, ReverseEnumerator<T, TStructCollection, TEnumerator>> 
         where TStructCollection : IStructCollection<T, TEnumerator> 
-        where TEnumerator : struct, IStructEnumerator<T>
+        where TEnumerator : struct, ICollectionEnumerator<T>
     {
         private readonly TStructCollection structCollection;
         private int length;

@@ -3,8 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.Select
 {
-    public struct SelectCollection<TIn, TOut, TEnumerable, TEnumerator> : IStructCollection<TOut, SelectEnumerator<TIn, TOut, TEnumerator>>
-        where TEnumerator : struct, IStructEnumerator<TIn>
+    public struct SelectCollection<TIn, TOut, TEnumerable, TEnumerator> : IStructCollection<TOut, SelectCollectionEnumerator<TIn, TOut, TEnumerator>>
+        where TEnumerator : struct, ICollectionEnumerator<TIn>
         where TEnumerable : IStructCollection<TIn, TEnumerator>
     {
         #region private fields
@@ -19,10 +19,10 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SelectEnumerator<TIn, TOut, TEnumerator> GetEnumerator()
+        public SelectCollectionEnumerator<TIn, TOut, TEnumerator> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new SelectEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
+            return new SelectCollectionEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
         }
 
         public int Count
@@ -50,9 +50,9 @@ namespace StructLinq.Select
         }
     }
 
-    public struct SelectCollection<TIn, TOut, TEnumerable, TEnumerator, TFunction> : IStructCollection<TOut, SelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
+    public struct SelectCollection<TIn, TOut, TEnumerable, TEnumerator, TFunction> : IStructCollection<TOut, SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>>
         where TFunction : struct, IFunction<TIn, TOut>
-        where TEnumerator : struct, IStructEnumerator<TIn>
+        where TEnumerator : struct, ICollectionEnumerator<TIn>
         where TEnumerable : IStructCollection<TIn, TEnumerator>
     {
         #region private fields
@@ -67,10 +67,10 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
+        public SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
+            return new SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
 
         public int Count
