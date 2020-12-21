@@ -2,7 +2,7 @@
 
 namespace StructLinq.BCL.Dictionary
 {
-    public struct DictionaryValueEnumerator<TKey, TValue> : IStructEnumerator<TValue>
+    public struct DictionaryValueEnumerator<TKey, TValue> : ICollectionEnumerator<TValue>
     {
         private readonly Entry<TKey, TValue>[] entries;
         private readonly int length;
@@ -51,5 +51,19 @@ namespace StructLinq.BCL.Dictionary
         public void Dispose()
         {
         }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => length + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TValue Get(int i)
+        {
+            ref var entry = ref entries[start + i];
+            return entry.Value;
+        }
+
     }
 }

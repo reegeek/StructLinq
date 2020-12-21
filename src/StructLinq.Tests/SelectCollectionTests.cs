@@ -2,14 +2,13 @@
 using System.Linq;
 using StructLinq.Range;
 using StructLinq.Select;
-using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class SelectFuncTests : AbstractEnumerableTests<double,
-        SelectEnumerable<int, double, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>,
-        SelectEnumerator<int, double, WhereEnumerator<int, RangeEnumerator>>>
+    public class SelectCollectionTests : AbstractCollectionTests<double,
+        SelectCollection<int, double, RangeEnumerable, RangeEnumerator, MultFunction>,
+        SelectCollectionEnumerator<int, double, RangeEnumerator, MultFunction>>
     {
         [Fact]
         public void DelegateTest()
@@ -19,21 +18,21 @@ namespace StructLinq.Tests
                 .Range(-50, 100)
                 .Select(selector)
                 .ToArray();
+            var func = new MultFunction();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Select(selector)
+                .Select(ref func, x=>x, x=> x)
                 .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
         }
 
-        protected override SelectEnumerable<int, double, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>> Build(int size)
+        protected override SelectCollection<int, double, RangeEnumerable, RangeEnumerator, MultFunction> Build(int size)
         {
+            var func = new MultFunction();
             var selectEnumerable = 
-                StructEnumerable.Range(-1, size).Where(x=> true).Select(x=> x * 2.0, x=> x);
+                StructEnumerable.Range(-1, size).Select(ref func, x=>x, x => x);
             return selectEnumerable;
         }
-
     }
-
 }

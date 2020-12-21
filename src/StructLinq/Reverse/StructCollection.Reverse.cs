@@ -16,7 +16,7 @@ namespace StructLinq
             this TCollection collection, 
             Func<TCollection, IStructCollection<T, TEnumerator>> _)
             where TCollection : IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return new ReverseStructCollection<T, TCollection, TEnumerator>(collection, 0, collection.Count);
         }
@@ -24,7 +24,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ReverseStructCollection<T, IStructCollection<T, TEnumerator>, TEnumerator> Reverse<T, TEnumerator>(
             this IStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return new ReverseStructCollection<T, IStructCollection<T, TEnumerator>, TEnumerator>(collection, 0, collection.Count);
         }

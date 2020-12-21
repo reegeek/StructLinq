@@ -2,7 +2,7 @@
 
 namespace StructLinq.Array
 {
-    public struct ArrayRefStructEnumerator<T> : IRefStructEnumerator<T>
+    public struct ArrayRefStructEnumerator<T> : IRefCollectionEnumerator<T>
     {
         #region private fields
         private readonly T[] array;
@@ -37,6 +37,18 @@ namespace StructLinq.Array
         public void Dispose()
         {
             
+        }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => endIndex + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref T Get(int i)
+        {
+            return ref array[start + i];
         }
 
     }

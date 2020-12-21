@@ -2,7 +2,7 @@
 
 namespace StructLinq.Repeat
 {
-    public struct RepeatEnumerator<T> : IStructEnumerator<T>
+    public struct RepeatEnumerator<T> : ICollectionEnumerator<T>
     {
         private readonly T element;
         private readonly uint count;
@@ -34,6 +34,18 @@ namespace StructLinq.Repeat
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => element;
+        }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (int) count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return element;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace StructLinq.Tests
     public class ReverseStructCollectionTests : AbstractCollectionTests<
         int,
         ReverseStructCollection<int, RangeEnumerable, RangeEnumerator>,
-        ReverseEnumerator<int, RangeEnumerable, RangeEnumerator>>
+        ReverseEnumerator<int, RangeEnumerator>>
     {
 
         protected override

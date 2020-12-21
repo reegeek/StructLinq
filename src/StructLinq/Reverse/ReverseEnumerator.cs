@@ -39,30 +39,30 @@ namespace StructLinq.Reverse
         }
     }
 
-    public struct ReverseEnumerator<T, TStructCollection, TEnumerator> : IStructEnumerator<T>
-        where TStructCollection : IStructCollection<T, TEnumerator> 
-        where TEnumerator : struct, IStructEnumerator<T>
+    public struct ReverseEnumerator<T, TEnumerator> : ICollectionEnumerator<T>
+        where TEnumerator : struct, ICollectionEnumerator<T>
     {
-        private readonly TStructCollection structCollection;
+        private readonly TEnumerator inner;
         private readonly int endIndex;
         private readonly int start;
         private readonly int offset;
         private int index;
 
-        public ReverseEnumerator(TStructCollection structCollection, int start, int length)
+        public ReverseEnumerator(TEnumerator inner, int start, int length)
         {
-            this.structCollection = structCollection;
+            this.inner = inner;
             endIndex = length - 1 + start;
             this.start = start;
             index = start - 1;
-            offset = structCollection.Count - 1;
+            offset = inner.Count - 1;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
-            
+            inner.Dispose();
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
@@ -76,7 +76,19 @@ namespace StructLinq.Reverse
         public T Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => structCollection.Get(offset - index);
+            get => inner.Get(offset - index);
+        }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => endIndex + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return inner.Get(offset - start - i);
         }
     }
 }

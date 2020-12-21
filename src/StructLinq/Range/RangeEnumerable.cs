@@ -18,7 +18,7 @@ namespace StructLinq.Range
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly RangeEnumerator GetEnumerator()
         {
-            return new RangeEnumerator(start, count);
+            return new RangeEnumerator(start, Count);
         }
 
         public readonly int Count

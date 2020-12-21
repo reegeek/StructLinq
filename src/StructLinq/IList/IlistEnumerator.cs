@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.IList
 {
-    public struct IListEnumerator<T, TList> : IStructEnumerator<T>
+    public struct IListEnumerator<T, TList> : ICollectionEnumerator<T>
         where TList : IList<T>
     {
         #region private fields
@@ -44,6 +44,17 @@ namespace StructLinq.IList
             {
                 dispose.Dispose();
             }
+        }
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => endIndex + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            return list[start + i];
         }
     }
 }

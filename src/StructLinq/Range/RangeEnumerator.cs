@@ -2,7 +2,7 @@
 
 namespace StructLinq.Range
 {
-    public struct RangeEnumerator : IStructEnumerator<int>
+    public struct RangeEnumerator : ICollectionEnumerator<int>
     {
         #region private fields
         private int index;
@@ -35,6 +35,18 @@ namespace StructLinq.Range
         public void Dispose()
         {
             
+        }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => end + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int Get(int i)
+        {
+            return start + i;
         }
 
     }

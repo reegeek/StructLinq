@@ -5,6 +5,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
+// ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     public static partial class StructEnumerable
@@ -100,14 +101,14 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Count<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IStructCollection<T, TEnumerator>> _)
             where TCollection : IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return collection.Count;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Count<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return collection.Count;
         }
@@ -115,14 +116,14 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint UIntCount<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IStructCollection<T, TEnumerator>> _)
             where TCollection : IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return (uint)collection.Count;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint UIntCount<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return (uint)collection.Count;
         }
@@ -130,14 +131,14 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long LongCount<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IStructCollection<T, TEnumerator>> _)
             where TCollection : IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return collection.Count;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long LongCount<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             return collection.Count;
         }

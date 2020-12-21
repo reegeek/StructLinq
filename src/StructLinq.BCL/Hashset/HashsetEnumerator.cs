@@ -2,7 +2,7 @@
 
 namespace StructLinq.BCL.Hashset
 {
-    public struct HashsetEnumerator<T> : IStructEnumerator<T>
+    public struct HashsetEnumerator<T> : ICollectionEnumerator<T>
     {
         private readonly Slot<T>[] entries;
         private readonly int length;
@@ -56,5 +56,19 @@ namespace StructLinq.BCL.Hashset
         public void Dispose()
         {
         }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => length + 1 - start;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            ref var entry = ref entries[start + i];
+            return entry.Value;
+        }
+
     }
 }

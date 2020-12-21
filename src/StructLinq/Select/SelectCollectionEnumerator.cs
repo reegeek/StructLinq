@@ -3,15 +3,15 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.Select
 {
-    public struct SelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IStructEnumerator<TOut>
+    public struct SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction> : ICollectionEnumerator<TOut>
         where TFunction : struct, IFunction<TIn, TOut>
-        where TEnumerator : struct, IStructEnumerator<TIn>
+        where TEnumerator : struct, ICollectionEnumerator<TIn>
     {
         #region private fields
         private TFunction function;
         private TEnumerator enumerator;
         #endregion
-        public SelectEnumerator(ref TFunction function, ref TEnumerator enumerator)
+        public SelectCollectionEnumerator(ref TFunction function, ref TEnumerator enumerator)
         {
             this.function = function;
             this.enumerator = enumerator;
@@ -37,16 +37,30 @@ namespace StructLinq.Select
         {
             enumerator.Dispose();
         }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => enumerator.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TOut Get(int i)
+        {
+            var element = enumerator.Get(i);
+            return function.Eval(element);
+        }
+
     }
-    
-    public struct SelectEnumerator<TIn, TOut, TEnumerator> : IStructEnumerator<TOut>
-        where TEnumerator : struct, IStructEnumerator<TIn>
+
+    public struct SelectCollectionEnumerator<TIn, TOut, TEnumerator> : ICollectionEnumerator<TOut>
+        where TEnumerator : struct, ICollectionEnumerator<TIn>
     {
         #region private fields
         private Func<TIn, TOut> function;
         private TEnumerator enumerator;
         #endregion
-        public SelectEnumerator(Func<TIn, TOut> function, ref TEnumerator enumerator)
+        public SelectCollectionEnumerator(Func<TIn, TOut> function, ref TEnumerator enumerator)
         {
             this.function = function;
             this.enumerator = enumerator;
@@ -72,5 +86,19 @@ namespace StructLinq.Select
         {
             enumerator.Dispose();
         }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => enumerator.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TOut Get(int i)
+        {
+            var element = enumerator.Get(i);
+            return function(element);
+        }
+
     }
 }

@@ -2,9 +2,9 @@
 
 namespace StructLinq.Select
 {
-    public struct RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> : IStructEnumerator<TOut>
+    public struct RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> : ICollectionEnumerator<TOut>
         where TFunction : struct, IInFunction<TIn, TOut>
-        where TEnumerator : struct, IRefStructEnumerator<TIn>
+        where TEnumerator : struct, IRefCollectionEnumerator<TIn>
     {
         #region private fields
         private TFunction function;
@@ -41,5 +41,17 @@ namespace StructLinq.Select
             enumerator.Dispose();
         }
 
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => enumerator.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TOut Get(int i)
+        {
+            var element = enumerator.Get(i);
+            return function.Eval(element);
+        }
     }
 }

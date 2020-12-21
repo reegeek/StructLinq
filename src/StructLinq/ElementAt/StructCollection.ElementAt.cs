@@ -10,7 +10,7 @@ namespace StructLinq
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T ElementAt<T, TCollection, TEnumerator>(this TCollection collection, int index, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (index >= collection.Count || index < 0)
@@ -20,7 +20,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T ElementAt<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection, int index)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (index >= collection.Count  || index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -29,7 +29,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryElementAt<T, TCollection, TEnumerator>(this TCollection collection, ref T elementAt, int index, Func<TCollection, IStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (index >= collection.Count || index < 0)
@@ -40,7 +40,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryElementAt<T, TEnumerator>(this IStructCollection<T, TEnumerator> collection, ref T elementAt, int index)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (index >= collection.Count || index < 0)
                 return false;
