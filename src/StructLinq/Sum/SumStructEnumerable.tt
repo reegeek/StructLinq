@@ -192,7 +192,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Sum<TEnumerator>(this IDirectStructCollection<<#= t.Name #>, TEnumerator> enumerable)
-            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, ICollectionEnumerator<<#= t.Name #>>
         {
             var enumerator = enumerable.GetEnumerator();
             return Sum<#= t.Name #>(ref enumerator);
@@ -200,7 +200,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IDirectStructCollection<<#= t.Name #>, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+            where TEnumerator : struct, ICollectionEnumerator<<#= t.Name #>>
             where TEnumerable : struct, IDirectStructCollection<<#= t.Name #>, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
@@ -209,7 +209,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Sum<T,TEnumerator>(this IDirectStructCollection<T, TEnumerator> enumerable, Func<T, <#= t.Name #>> func)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
             return Sum<#= t.Name #>(ref enumerator, func);
@@ -220,7 +220,7 @@ namespace StructLinq
         Func<T, <#= t.Name #>> func, 
         Func<TEnumerable, IDirectStructCollection<T, TEnumerator>> _)
             where TEnumerable : struct, IDirectStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
             return Sum<#= t.Name #>(ref enumerator, func);
@@ -229,7 +229,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Sum<T,TEnumerator>(this IDirectStructCollection<T, TEnumerator> enumerable, 
         IFunction<T,<#= t.Name #>> func)
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
             return Sum<#= t.Name #><T,TEnumerator, IFunction<T,<#= t.Name #>>>(ref enumerator, ref func);
@@ -241,7 +241,7 @@ namespace StructLinq
             Func<TEnumerable, IDirectStructCollection<T, TEnumerator>> _,
             Func<TFunc, IFunction<T,<#= t.Name #>>> __)
             where TEnumerable : struct, IDirectStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator : struct, ICollectionEnumerator<T>
             where TFunc : IFunction<T,<#= t.Name #>>
         {
             var enumerator = enumerable.GetEnumerator();

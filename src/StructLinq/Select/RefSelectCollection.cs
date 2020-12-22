@@ -49,5 +49,9 @@ namespace StructLinq.Select
             return function.Eval(inner.Get(i));
         }
 
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

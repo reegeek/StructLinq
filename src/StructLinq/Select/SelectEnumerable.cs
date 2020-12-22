@@ -30,33 +30,35 @@ namespace StructLinq.Select
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TOut>
         {
-            var selectVisitor = new SelectVisitor<TVisitor>(ref function, ref visitor);
+            var selectVisitor = new SelectVisitor<TIn, TOut, TFunction, TVisitor>(ref function, ref visitor);
             var visitStatus = inner.Visit(ref selectVisitor);
             visitor = selectVisitor.visitor;
             return visitStatus;
         }
+    }
 
-        private struct SelectVisitor<TVisitor> : IVisitor<TIn>
-            where TVisitor : IVisitor<TOut>
+    internal struct SelectVisitor<TIn, TOut, TFunction, TVisitor> : IVisitor<TIn> 
+        where TFunction : struct, IFunction<TIn, TOut> where TVisitor : IVisitor<TOut>
+    {
+        public TFunction function;
+        public TVisitor visitor;
+
+        public SelectVisitor(ref TFunction function, ref TVisitor visitor)
         {
-            public TFunction function;
-            public TVisitor visitor;
-
-            public SelectVisitor(ref TFunction function, ref TVisitor visitor)
-            {
-                this.function = function;
-                this.visitor = visitor;
-            }
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public bool Visit(TIn input)
-            {
-                var output = function.Eval(input);
-                return visitor.Visit(output);
-            }
+            this.function = function;
+            this.visitor = visitor;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Visit(TIn input)
+        {
+            var output = function.Eval(input);
+            return visitor.Visit(output);
         }
     }
-    
-    public struct SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator> : IStructEnumerable<TOut, SelectEnumerator<TIn, TOut, TEnumerator>>
+
+    public struct
+        SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator> : IStructEnumerable<TOut,
+            SelectEnumerator<TIn, TOut, TEnumerator>>
         where TEnumerator : struct, IStructEnumerator<TIn>
         where TEnumerable : IStructEnumerable<TIn, TEnumerator>
     {
@@ -77,35 +79,35 @@ namespace StructLinq.Select
             var typedEnumerator = inner.GetEnumerator();
             return new SelectEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
         }
-        }
-        
+
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<TOut>
         {
-            var selectVisitor = new SelectVisitor<TVisitor>(function, ref visitor);
+            var selectVisitor = new SelectVisitor<TIn, TOut, TVisitor>(function, ref visitor);
             var visitStatus = inner.Visit(ref selectVisitor);
             visitor = selectVisitor.visitor;
             return visitStatus;
         }
-        
-        private struct SelectVisitor<TVisitor> : IVisitor<TIn>
-            where TVisitor : IVisitor<TOut>
-        {
-            public Func<TIn, TOut> function;
-            public TVisitor visitor;
+    }
 
-            public SelectVisitor(Func<TIn, TOut> function, ref TVisitor visitor)
-            {
-                this.function = function;
-                this.visitor = visitor;
-            }
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public bool Visit(TIn input)
-            {
-                var output = function(input);
-                return visitor.Visit(output);
-            }
+    internal struct SelectVisitor<TIn, TOut, TVisitor> : IVisitor<TIn> where TVisitor : IVisitor<TOut>
+    {
+        public Func<TIn, TOut> function;
+        public TVisitor visitor;
+
+        public SelectVisitor(Func<TIn, TOut> function, ref TVisitor visitor)
+        {
+            this.function = function;
+            this.visitor = visitor;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Visit(TIn input)
+        {
+            var output = function(input);
+            return visitor.Visit(output);
+        }
     }
 }
 
