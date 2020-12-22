@@ -16,7 +16,7 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 ```
 |                            Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
 |---------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|                            SysSum |  6.937 μs | 0.0217 μs | 0.0170 μs |  1.00 |    0.00 |     - |     - |     - |         - |
-|            SysRangeWhereSelectSum | 84.396 μs | 0.6779 μs | 0.6010 μs | 12.18 |    0.11 |     - |     - |     - |     160 B |
-| ConvertWhereSelectSumWithDelegate | 72.316 μs | 0.3989 μs | 0.3732 μs | 10.43 |    0.06 |     - |     - |     - |      40 B |
-|         StructRangeWhereSelectSum | 15.050 μs | 0.0400 μs | 0.0374 μs |  2.17 |    0.01 |     - |     - |     - |         - |
+|                            SysSum |  7.019 μs | 0.0157 μs | 0.0147 μs |  1.00 |    0.00 |     - |     - |     - |         - |
+|            SysRangeWhereSelectSum | 83.535 μs | 0.5238 μs | 0.4900 μs | 11.90 |    0.08 |     - |     - |     - |     160 B |
+| ConvertWhereSelectSumWithDelegate | 64.815 μs | 0.2524 μs | 0.2238 μs |  9.23 |    0.03 |     - |     - |     - |      40 B |
+|         StructRangeWhereSelectSum |  7.437 μs | 0.0332 μs | 0.0310 μs |  1.06 |    0.00 |     - |     - |     - |         - |
