@@ -51,7 +51,14 @@ namespace StructLinq.Select
 
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
         {
-            throw new System.NotImplementedException();
+            var count = Count;
+            for (int i = 0; i < count; i++)
+            {
+                var tout = Get(i);
+                if (!visitor.Visit(tout))
+                    return VisitStatus.VisitorFinished;
+            }
+            return VisitStatus.EnumeratorFinished;
         }
     }
 }
