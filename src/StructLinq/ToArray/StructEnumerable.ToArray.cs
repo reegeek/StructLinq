@@ -5,23 +5,11 @@ using System.Buffers;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
+// ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T[] ToArray<T, TEnumerator>(ref TEnumerator enumerator,
-                                                   int capacity,
-                                                   ArrayPool<T> pool)
-            where TEnumerator : struct, IStructEnumerator<T>
-        {
-            var list = new PooledList<T>(capacity, pool);
-            PoolLists.Fill(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
-            return array;
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static T[] ToRefArray<T, TEnumerator>(ref TEnumerator enumerator,
                                                       int capacity,
@@ -44,8 +32,11 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return ToArray(ref enumerator, capacity, pool);
+            var visitor = new PooledListVisitor<T>(capacity, pool);
+            enumerable.Visit(ref visitor);
+            var array = visitor.PooledList.ToArray();
+            visitor.Dispose();
+            return array;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -57,16 +48,22 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return ToArray(ref enumerator, capacity, ArrayPool<T>.Shared);
+            var visitor = new PooledListVisitor<T>(capacity, ArrayPool<T>.Shared);
+            enumerable.Visit(ref visitor);
+            var array = visitor.PooledList.ToArray();
+            visitor.Dispose();
+            return array;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T[] ToArray<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return ToArray(ref enumerator, capacity, pool);
+            var visitor = new PooledListVisitor<T>(capacity, pool);
+            enumerable.Visit(ref visitor);
+            var array = visitor.PooledList.ToArray();
+            visitor.Dispose();
+            return array;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
