@@ -3,7 +3,7 @@ using StructLinq.Utils;
 
 namespace StructLinq.Range
 {
-    public struct RangeEnumerable : IDirectStructCollection<int, RangeEnumerator>
+    public struct RangeEnumerable : IStructCollection<int, RangeEnumerator>
     {
         #region private fields
         private int start;
