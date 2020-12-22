@@ -33,6 +33,12 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int StructSum()
         {
+            return StructEnumerable.Range(0, Count).Sum();
+        }
+
+        [Benchmark]
+        public int StructSumZeroAlloc()
+        {
             return StructEnumerable.Range(0, Count).Sum(x=>x);
         }
 

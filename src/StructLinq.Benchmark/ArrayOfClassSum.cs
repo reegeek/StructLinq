@@ -30,6 +30,15 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int StructSum()
         {
+            return array.ToStructEnumerable()
+                        .Select(x=> x.Element)
+                        .Sum();
+        }
+
+        
+        [Benchmark]
+        public int StructSumZeroAlloc()
+        {
             var @select = new ContainerSelect();
             return array.ToStructEnumerable()
                         .Select(ref @select, x=>x, x=>x)

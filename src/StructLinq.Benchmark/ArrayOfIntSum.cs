@@ -16,7 +16,7 @@ namespace StructLinq.Benchmark
             sysArray = Enumerable.ToArray(Enumerable.Range(0,Count));
             array = Enumerable.ToArray(Enumerable.Range(0, Count));
         }
-        [Benchmark(Baseline = true)]
+        [Benchmark]
         public int Handmaded()
         {
             int sum = 0;
@@ -26,11 +26,14 @@ namespace StructLinq.Benchmark
             }
             return sum;
         }
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public int LINQ() => sysArray.Sum();
 
         [Benchmark]
-        public int StructLinq() => array.ToStructEnumerable().Sum(x=>x);
+        public int StructLinqZeroAlloc() => array.ToStructEnumerable().Sum(x=>x);
+
+        [Benchmark]
+        public int StructLinq() => array.ToStructEnumerable().Sum();
 
     }
 }
