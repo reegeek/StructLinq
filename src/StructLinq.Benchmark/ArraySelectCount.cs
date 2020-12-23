@@ -14,7 +14,7 @@ namespace StructLinq.Benchmark
             array = Enumerable.Range(0, Count).ToArray();
         }
 
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public int Linq()
         {
             return array.Select(x => x * 2).Count();
