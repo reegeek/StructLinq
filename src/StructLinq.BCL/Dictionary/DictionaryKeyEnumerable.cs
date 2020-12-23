@@ -61,5 +61,22 @@ namespace StructLinq.BCL.Dictionary
             ref var entry = ref dictionaryLayout.Entries[start + i];
             return entry.Key;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TKey>
+        {
+            var count = Count;
+            var s = start;
+            var array = dictionaryLayout.Entries;
+            for (int i = 0; i < count; i++)
+            {
+                ref var entry = ref array[s+i];
+                if (!visitor.Visit(entry.Key))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

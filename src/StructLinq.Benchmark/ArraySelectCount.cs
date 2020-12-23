@@ -14,7 +14,7 @@ namespace StructLinq.Benchmark
             array = Enumerable.Range(0, Count).ToArray();
         }
 
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public int Linq()
         {
             return array.Select(x => x * 2).Count();
@@ -32,6 +32,5 @@ namespace StructLinq.Benchmark
             var select = new SelectFunction();
             return array.ToStructEnumerable().Select(ref select, x=> x, x=> x).Count(x=>x);
         }
-
     }
 }

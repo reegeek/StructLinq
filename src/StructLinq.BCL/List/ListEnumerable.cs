@@ -56,5 +56,20 @@ namespace StructLinq.BCL.List
             return layout.Items[start + i];
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var count = Count;
+            var s = start;
+            var array = layout.Items;
+            for (int i = 0; i < count; i++)
+            {
+                if (!visitor.Visit(array[s+i]))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

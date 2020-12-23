@@ -9,5 +9,11 @@ namespace StructLinq.Empty
         {
             return new EmptyEnumerator<T>();
         }
+
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

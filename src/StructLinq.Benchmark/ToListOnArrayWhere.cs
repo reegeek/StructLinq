@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Buffers;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+using StructLinq.BCL.List;
+using StructLinq.Utils.Collections;
 
 namespace StructLinq.Benchmark
 {
@@ -28,7 +32,14 @@ namespace StructLinq.Benchmark
                                          .ToList();
 
         [Benchmark]
-        public List<int> StructLinqFaster()
+        public List<int> StructLinqZeroAlloc() => array
+                                         .ToStructEnumerable()
+                                         .Where(x => (x & 1) == 0, x=>x)
+                                         .ToList(x=>x);
+
+        
+        [Benchmark]
+        public List<int> StructLinqWithFunction()
         {
             var where = new WherePredicate();
             return array

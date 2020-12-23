@@ -5,22 +5,19 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.BCL.List;
-using StructLinq.Utils.Collections;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    // ReSharper disable once InconsistentNaming
+    // ReSharper disable once UnusedType.Global
     public static partial class BCLStructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<T> ToList<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
-            var enumerator = enumerable.GetEnumerator();
-            PoolLists.Fill(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
+            var array = enumerable.ToArray(capacity, pool, x => x);
             var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
@@ -58,12 +55,8 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
-            var enumerator = enumerable.GetEnumerator();
-            PoolLists.Fill(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
-            var result = new List<T>(array.Length);
+            var array = enumerable.ToArray(capacity, pool, x=>x);
+            var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
@@ -90,7 +83,7 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var array = collection.ToArray(x => x);
-            var result = new List<T>(array.Length);
+            var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
@@ -103,11 +96,7 @@ namespace StructLinq
         public static List<T> ToList<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
-            var enumerator = enumerable.GetEnumerator();
-            PoolLists.FillRef(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
+            var array = enumerable.ToArray(capacity, pool, x => x);
             var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
@@ -128,7 +117,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
             var array = enumerable.ToArray(x => x);
-            var result = new List<T>(array.Length);
+            var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
@@ -145,12 +134,8 @@ namespace StructLinq
             where TEnumerable : IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            var list = new PooledList<T>(capacity, pool);
-            var enumerator = enumerable.GetEnumerator();
-            PoolLists.FillRef(ref list, ref enumerator);
-            var array = list.ToArray();
-            list.Dispose();
-            var result = new List<T>(array.Length);
+            var array = enumerable.ToArray(capacity, pool, x => x);
+            var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
@@ -178,7 +163,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
             var array = enumerable.ToArray(x => x);
-            var result = new List<T>(array.Length);
+            var result = new List<T>();
             var listLayout = BCL.Unsafe.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;

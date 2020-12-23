@@ -51,5 +51,20 @@ namespace StructLinq.Range
         {
             return start + i;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<int>
+        {
+            var n = Count;
+            var s = start;
+            for (int i = 0; i < n; i++)
+            {
+                if (!visitor.Visit(s+i))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

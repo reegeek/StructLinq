@@ -28,7 +28,14 @@ namespace StructLinq.Benchmark
                                      .ToArray();
 
         [Benchmark]
-        public int[] StructLinqFaster()
+        public int[] StructLinqZeroAlloc() => array
+                                     .ToStructEnumerable()
+                                     .Where(x => (x & 1) == 0, x=>x)
+                                     .ToArray(x=>x);
+
+        
+        [Benchmark]
+        public int[] StructLinqWithFunction()
         {
             var where = new WherePredicate();
             return array

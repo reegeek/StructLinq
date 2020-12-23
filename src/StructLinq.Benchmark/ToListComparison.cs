@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using StructLinq.BCL.List;
-using StructLinq.Range;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Benchmark
@@ -15,18 +14,18 @@ namespace StructLinq.Benchmark
     [SimpleJob(RuntimeMoniker.NetCoreApp31)]
     public class ToListComparison
     {
-        private RangeEnumerable enumerable;
+        private int[] enumerable;
 
         public ToListComparison()
         {
-            enumerable = StructEnumerable.Range(0, 10_000);
+            enumerable = StructEnumerable.Range(0, 10_000).ToArray();
         }
 
         [Benchmark]
         public List<int> AddInList()
         {
             var list = new List<int>();
-            var rangeEnumerator = enumerable.GetEnumerator();
+            var rangeEnumerator = enumerable.ToStructEnumerable().GetEnumerator();
             FillList(list, ref rangeEnumerator);
             return list;
         }
@@ -35,7 +34,7 @@ namespace StructLinq.Benchmark
         public List<int> ToArrayThenNewList()
         {
             var list = new PooledList<int>(0, ArrayPool<int>.Shared);
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.ToStructEnumerable().GetEnumerator();
             PoolLists.Fill(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
@@ -46,13 +45,27 @@ namespace StructLinq.Benchmark
         public List<int> ToArrayThenNewListAndLayout()
         {
             var list = new PooledList<int>(0, ArrayPool<int>.Shared);
-            var enumerator = enumerable.GetEnumerator();
+            var enumerator = enumerable.ToStructEnumerable().GetEnumerator();
             PoolLists.Fill(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
             var result = new List<int>(array.Length);
             var listLayout = Unsafe.As<List<int>, ListLayout<int>>(ref result);
             listLayout.Items = array;
+            return result;
+        }
+
+        [Benchmark]
+        public List<int> WithVisitor()
+        {
+            var visitor = new PooledListVisitor<int>(0, ArrayPool<int>.Shared);
+            enumerable.ToStructEnumerable().Visit(ref visitor);
+            var array = visitor.PooledList.ToArray();
+            visitor.Dispose();
+            var result = new List<int>();
+            var listLayout = Unsafe.As<List<int>, ListLayout<int>>(ref result);
+            listLayout.Items = array;
+            listLayout.Size = array.Length;
             return result;
         }
 

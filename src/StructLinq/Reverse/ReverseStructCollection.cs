@@ -44,5 +44,22 @@ namespace StructLinq.Reverse
         {
             return structCollection.Get(structCollection.Count - 1 - start - i);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var c = structCollection.Count;
+            var s = start;
+            var count = Count;
+            for (int i = 0; i < count; i++)
+            {
+                var input = structCollection.Get(c - 1 - s - i);
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

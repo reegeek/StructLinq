@@ -22,6 +22,34 @@ namespace StructLinq.Where
             var enumerator = inner.GetEnumerator();
             return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TIn>
+        {
+            var selector = new WhereVisitor<TVisitor>(ref function, ref visitor);
+            var visitStatus = inner.Visit(ref selector);
+            visitor = selector.visitor;
+            return visitStatus;
+        }
+
+        private struct WhereVisitor<TVisitor> : IVisitor<TIn>
+            where TVisitor : IVisitor<TIn>
+        {
+            public TFunction function;
+            public TVisitor visitor;
+            public WhereVisitor(ref TFunction function, ref TVisitor visitor)
+            {
+                this.function = function;
+                this.visitor = visitor;
+            }
+            public bool Visit(TIn input)
+            {
+                if (function.Eval(input))
+                    return visitor.Visit(input);
+                return true;
+            }
+        }
     }
     
     public struct WhereEnumerable<TIn, TEnumerable, TEnumerator> : IStructEnumerable<TIn, WhereEnumerator<TIn, TEnumerator>>
@@ -41,6 +69,37 @@ namespace StructLinq.Where
         {
             var enumerator = inner.GetEnumerator();
             return new WhereEnumerator<TIn, TEnumerator>(function, ref enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TIn>
+        {
+            var whereVisitor = new WhereVisitor<TIn, TVisitor>(function, ref visitor);
+            var visitStatus = inner.Visit(ref whereVisitor);
+            visitor = whereVisitor.visitor;
+            return visitStatus;
+        }
+    }
+    
+    internal struct WhereVisitor<TIn, TVisitor> : IVisitor<TIn>
+            where TVisitor : IVisitor<TIn>
+    {
+        public Func<TIn, bool> function;
+        public TVisitor visitor;
+
+        public WhereVisitor(Func<TIn, bool> function, ref TVisitor visitor)
+        {
+            this.function = function;
+            this.visitor = visitor;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Visit(TIn input)
+        {
+            if (function(input))
+                return visitor.Visit(input);
+            return true;
         }
     }
 }

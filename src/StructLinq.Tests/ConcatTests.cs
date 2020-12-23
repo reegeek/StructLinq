@@ -41,6 +41,5 @@ namespace StructLinq.Tests
             var value = array1.ToStructEnumerable().Concat(array2.ToStructEnumerable()).ToArray();
             Assert.Equal(expected, value);
         }
-
     }
 }

@@ -49,5 +49,17 @@ namespace StructLinq.Select
             return function.Eval(inner.Get(i));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
+        {
+            var count = Count;
+            for (int i = 0; i < count; i++)
+            {
+                var tout = Get(i);
+                if (!visitor.Visit(tout))
+                    return VisitStatus.VisitorFinished;
+            }
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

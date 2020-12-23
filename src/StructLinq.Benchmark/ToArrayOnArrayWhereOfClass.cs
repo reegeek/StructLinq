@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -27,7 +28,13 @@ namespace StructLinq.Benchmark
                                            .ToArray();
 
         [Benchmark]
-        public Container[] StructLinqFaster()
+        public Container[] StructLinqZeroAlloc() => array
+                                           .ToStructEnumerable()
+                                           .Where(x => (x.Element & 1) == 0, x=>x)
+                                           .ToArray(x=>x);
+
+        [Benchmark]
+        public Container[] StructLinqWithFunction()
         {
             var where = new WhereContainerPredicate();
             return array
@@ -39,6 +46,7 @@ namespace StructLinq.Benchmark
 
     public readonly struct WhereContainerPredicate : IFunction<Container, bool>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Eval(Container element)
         {
             return (element.Element & 1) == 0;
