@@ -27,9 +27,9 @@ namespace StructLinq.Benchmark
                                      .ToArray();
 
         [Benchmark]
-        public int[] StructLinqFaster() => array
+        public int[] StructLinqZeroAlloc() => array
                                      .ToStructEnumerable()
-                                     .Select(x => x.Element)
+                                     .Select(x => x.Element, x=> x)
                                      .ToArray(x=>x);
 
         

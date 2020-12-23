@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -30,7 +28,7 @@ namespace StructLinq.Benchmark
 
         
         [Benchmark]
-        public int[] StructLinqFaster() => array
+        public int[] StructLinqZeroAlloc() => array
                                      .ToStructEnumerable()
                                      .Select(x => x * 2)
                                      .ToArray(x=>x);
@@ -45,34 +43,5 @@ namespace StructLinq.Benchmark
                    .ToArray(x=>x);
         }
 
-        [Benchmark]
-        public int[] WithVisitor()
-        {
-            var selectEnumerable = array
-                .ToStructEnumerable();
-            var visitor = new SelectAndToArrayVisitor<int, int>(array.Length, x=> x * 2);
-            selectEnumerable.Visit(ref visitor);
-            return visitor.array;
-        }
-    }
-
-    public struct SelectAndToArrayVisitor<TIn, TOut> : IVisitor<TIn>
-    {
-        private readonly Func<TIn, TOut> func;
-        public TOut[] array;
-        private int i;
-        public SelectAndToArrayVisitor(int count, Func<TIn, TOut> func)
-        {
-            this.func = func;
-            array = new TOut[count];
-            i = 0;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Visit(TIn input)
-        {
-            array[i++] = func(input);
-            return true;
-        }
     }
 }

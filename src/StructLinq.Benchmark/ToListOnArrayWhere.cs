@@ -32,32 +32,20 @@ namespace StructLinq.Benchmark
                                          .ToList();
 
         [Benchmark]
-        public List<int> StructLinqFaster()
+        public List<int> StructLinqZeroAlloc() => array
+                                         .ToStructEnumerable()
+                                         .Where(x => (x & 1) == 0, x=>x)
+                                         .ToList(x=>x);
+
+        
+        [Benchmark]
+        public List<int> StructLinqWithFunction()
         {
             var where = new WherePredicate();
             return array
                    .ToStructEnumerable()
                    .Where(ref where, x=> x)
                    .ToList(x=> x);
-        }
-
-        [Benchmark]
-        public List<int> WithVisit()
-        {
-            var where = new WherePredicate();
-            var visitor = new PooledListVisitor<int>(0, ArrayPool<int>.Shared);
-            var whereEnumerable = array
-                .ToStructEnumerable()
-                .Where(ref @where, x=> x)
-                .Visit(ref visitor);
-            var resultArray = visitor.PooledList.ToArray();
-            visitor.Dispose();
-            var result = new List<int>();
-            var listLayout = Unsafe.As<List<int>, ListLayout<int>>(ref result);
-            listLayout.Items = resultArray;
-            listLayout.Size = resultArray.Length;
-            return result;
-
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
-using StructLinq.Count;
 
 namespace StructLinq.Benchmark
 {
@@ -33,16 +32,5 @@ namespace StructLinq.Benchmark
             var select = new SelectFunction();
             return array.ToStructEnumerable().Select(ref select, x=> x, x=> x).Count(x=>x);
         }
-
-        [Benchmark]
-        public int WithVisitor()
-        {
-            var select = new SelectFunction();
-            var visitor = new CountVisitor<int>();
-            array.ToStructEnumerable().Select(ref select, x => x, x => x)
-                .Visit(ref visitor);
-            return visitor.count;
-        }
-
     }
 }
