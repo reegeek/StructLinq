@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
+using StructLinq.Range;
 
 namespace StructLinq.Benchmark
 {
@@ -10,32 +11,40 @@ namespace StructLinq.Benchmark
         private const int Count = 10000;
 
         [Benchmark(Baseline = true)]
-        public int RawMin()
+        public int Handmaded()
         {
-            var max = int.MaxValue;
+            var min = int.MaxValue;
             for (var index = 0; index < Count; index++)
             {
-                if (index < max)
-                    max = index;
+                if (index < min)
+                    min = index;
             }
 
-            return max;
+            return min;
         } 
 
         [Benchmark]
-        public int SysMin()
+        public int LINQ()
         {
             return Enumerable.Range(0, Count).Min();
         }
 
         [Benchmark]
-        public int StructMin()
+        public int StructLINQ()
         {
             return StructEnumerable.Range(0, Count).Min();
         }
 
+
         [Benchmark]
-        public int ZeroAllocStructMin()
+        public int ZeroAllocStructLINQ()
+        {
+            return StructEnumerable.Range(0, Count).Min(x=> (IStructEnumerable<int, RangeEnumerator>)x);
+        }
+
+
+        [Benchmark]
+        public int ZeroAllocStructLINQOnCollection()
         {
             return StructEnumerable.Range(0, Count).Min(x=>x);
         }

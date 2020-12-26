@@ -10,29 +10,34 @@ namespace StructLinq
 {
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int16 MinInt16<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<Int16>
+        private struct MinInt16Visitor : IVisitor<Int16>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			Int16 result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public Int16 Min;
+            public MinInt16Visitor(bool hasMin, Int16 min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(Int16 input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Int16 Min<TEnumerator>(this IStructEnumerable<Int16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinInt16(ref enumerator);
+            var minVisitor = new MinInt16Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -40,8 +45,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int16, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinInt16(ref enumerator);
+            var minVisitor = new MinInt16Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -49,29 +57,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int32 MinInt32<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<Int32>
+        private struct MinInt32Visitor : IVisitor<Int32>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			Int32 result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public Int32 Min;
+            public MinInt32Visitor(bool hasMin, Int32 min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(Int32 input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Int32 Min<TEnumerator>(this IStructEnumerable<Int32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinInt32(ref enumerator);
+            var minVisitor = new MinInt32Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -79,8 +92,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int32, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinInt32(ref enumerator);
+            var minVisitor = new MinInt32Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -88,29 +104,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int64 MinInt64<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<Int64>
+        private struct MinInt64Visitor : IVisitor<Int64>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			Int64 result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public Int64 Min;
+            public MinInt64Visitor(bool hasMin, Int64 min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(Int64 input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Int64 Min<TEnumerator>(this IStructEnumerable<Int64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinInt64(ref enumerator);
+            var minVisitor = new MinInt64Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -118,8 +139,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int64, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinInt64(ref enumerator);
+            var minVisitor = new MinInt64Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -127,29 +151,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt16 MinUInt16<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<UInt16>
+        private struct MinUInt16Visitor : IVisitor<UInt16>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			UInt16 result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public UInt16 Min;
+            public MinUInt16Visitor(bool hasMin, UInt16 min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(UInt16 input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt16 Min<TEnumerator>(this IStructEnumerable<UInt16, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinUInt16(ref enumerator);
+            var minVisitor = new MinUInt16Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -157,8 +186,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt16, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinUInt16(ref enumerator);
+            var minVisitor = new MinUInt16Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -166,29 +198,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt32 MinUInt32<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<UInt32>
+        private struct MinUInt32Visitor : IVisitor<UInt32>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			UInt32 result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public UInt32 Min;
+            public MinUInt32Visitor(bool hasMin, UInt32 min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(UInt32 input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt32 Min<TEnumerator>(this IStructEnumerable<UInt32, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinUInt32(ref enumerator);
+            var minVisitor = new MinUInt32Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -196,8 +233,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt32, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinUInt32(ref enumerator);
+            var minVisitor = new MinUInt32Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -205,29 +245,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt64 MinUInt64<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<UInt64>
+        private struct MinUInt64Visitor : IVisitor<UInt64>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			UInt64 result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public UInt64 Min;
+            public MinUInt64Visitor(bool hasMin, UInt64 min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(UInt64 input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt64 Min<TEnumerator>(this IStructEnumerable<UInt64, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinUInt64(ref enumerator);
+            var minVisitor = new MinUInt64Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -235,8 +280,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt64, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinUInt64(ref enumerator);
+            var minVisitor = new MinUInt64Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -244,29 +292,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Single MinSingle<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<Single>
+        private struct MinSingleVisitor : IVisitor<Single>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			Single result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public Single Min;
+            public MinSingleVisitor(bool hasMin, Single min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(Single input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Single Min<TEnumerator>(this IStructEnumerable<Single, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Single>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinSingle(ref enumerator);
+            var minVisitor = new MinSingleVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -274,8 +327,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Single, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Single>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinSingle(ref enumerator);
+            var minVisitor = new MinSingleVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -283,29 +339,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Double MinDouble<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<Double>
+        private struct MinDoubleVisitor : IVisitor<Double>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			Double result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public Double Min;
+            public MinDoubleVisitor(bool hasMin, Double min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(Double input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Double Min<TEnumerator>(this IStructEnumerable<Double, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Double>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinDouble(ref enumerator);
+            var minVisitor = new MinDoubleVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -313,8 +374,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Double, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Double>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinDouble(ref enumerator);
+            var minVisitor = new MinDoubleVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -322,29 +386,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Byte MinByte<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<Byte>
+        private struct MinByteVisitor : IVisitor<Byte>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			Byte result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public Byte Min;
+            public MinByteVisitor(bool hasMin, Byte min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(Byte input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Byte Min<TEnumerator>(this IStructEnumerable<Byte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinByte(ref enumerator);
+            var minVisitor = new MinByteVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -352,8 +421,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Byte, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinByte(ref enumerator);
+            var minVisitor = new MinByteVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -361,29 +433,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SByte MinSByte<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<SByte>
+        private struct MinSByteVisitor : IVisitor<SByte>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			SByte result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public SByte Min;
+            public MinSByteVisitor(bool hasMin, SByte min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(SByte input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SByte Min<TEnumerator>(this IStructEnumerable<SByte, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinSByte(ref enumerator);
+            var minVisitor = new MinSByteVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -391,8 +468,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<SByte, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinSByte(ref enumerator);
+            var minVisitor = new MinSByteVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }
@@ -400,29 +480,34 @@ namespace StructLinq
 
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static DateTime MinDateTime<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<DateTime>
+        private struct MinDateTimeVisitor : IVisitor<DateTime>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			DateTime result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public DateTime Min;
+            public MinDateTimeVisitor(bool hasMin, DateTime min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(DateTime input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateTime Min<TEnumerator>(this IStructEnumerable<DateTime, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<DateTime>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinDateTime(ref enumerator);
+            var minVisitor = new MinDateTimeVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -430,8 +515,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<DateTime, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<DateTime>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return MinDateTime(ref enumerator);
+            var minVisitor = new MinDateTimeVisitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }

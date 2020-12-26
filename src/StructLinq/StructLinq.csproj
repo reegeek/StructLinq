@@ -46,6 +46,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MaxStructEnumerable.cs</LastGenOutput>
     </None>
+    <None Update="Min\MinStructCollection.tt">
+      <LastGenOutput>MinStructCollection.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
     <None Update="Min\MinStructEnumerable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MinStructEnumerable.cs</LastGenOutput>
@@ -108,6 +112,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MaxStructEnumerable.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Min\MinStructEnumerable.cs">
+      <DependentUpon>MinStructEnumerable.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Min\MinStructCollection.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MinStructCollection.tt</DependentUpon>
     </Compile>
     <Compile Update="Min\MinStructEnumerable.cs">
       <DesignTime>True</DesignTime>

@@ -32,29 +32,34 @@ namespace StructLinq
 <# foreach(var t in types) {  #>
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static <#= t.Name #> Min<#= t.Name #><TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+        private struct Min<#= t.Name #>Visitor : IVisitor<<#= t.Name #>>
         {
-        	if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			<#= t.Name #> result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current < result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMin;
+            public <#= t.Name #> Min;
+            public Min<#= t.Name #>Visitor(bool hasMin, <#= t.Name #> min)
+            {
+                HasMin = hasMin;
+                Min = min;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(<#= t.Name #> input)
+            {
+                HasMin = true;
+                if (Min > input)
+                    Min = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Min<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return Min<#= t.Name #>(ref enumerator);
+            var minVisitor = new Min<#= t.Name #>Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -62,8 +67,11 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return Min<#= t.Name #>(ref enumerator);
+            var minVisitor = new Min<#= t.Name #>Visitor(false, default);
+            enumerable.Visit(ref minVisitor);
+            if (!minVisitor.HasMin)
+                throw new ArgumentOutOfRangeException("No elements");
+            return minVisitor.Min;
         }
 
     }

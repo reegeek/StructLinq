@@ -6,18 +6,19 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
-Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.402
-  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=5.0.101
+  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
 
 
 ```
-|             Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|             RawMin |  9.837 us | 0.0442 us | 0.0414 us |  1.00 |    0.00 |     - |     - |     - |         - |
-|             SysMin | 48.108 us | 0.0786 us | 0.0735 us |  4.89 |    0.02 |     - |     - |     - |      40 B |
-|          StructMin | 14.684 us | 0.0146 us | 0.0137 us |  1.49 |    0.01 |     - |     - |     - |      24 B |
-| ZeroAllocStructMin | 14.675 us | 0.0159 us | 0.0149 us |  1.49 |    0.01 |     - |     - |     - |         - |
-|         ConvertMin | 47.821 us | 0.0856 us | 0.0715 us |  4.86 |    0.02 |     - |     - |     - |      64 B |
+|                          Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated | Code Size |
+|-------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|----------:|
+|                       Handmaded |  7.672 μs | 0.0242 μs | 0.0189 μs |  1.00 |    0.00 |     - |     - |     - |         - |      24 B |
+|                            LINQ | 40.852 μs | 0.1407 μs | 0.1175 μs |  5.32 |    0.02 |     - |     - |     - |      40 B |     519 B |
+|                      StructLINQ |  8.812 μs | 0.1692 μs | 0.1662 μs |  1.15 |    0.02 |     - |     - |     - |      24 B |     188 B |
+|             ZeroAllocStructLINQ |  9.339 μs | 0.0282 μs | 0.0250 μs |  1.22 |    0.00 |     - |     - |     - |         - |     278 B |
+| ZeroAllocStructLINQOnCollection |  7.656 μs | 0.0218 μs | 0.0170 μs |  1.00 |    0.00 |     - |     - |     - |         - |     273 B |
+|                      ConvertMin | 43.490 μs | 0.2209 μs | 0.2066 μs |  5.67 |    0.03 |     - |     - |     - |      64 B |     418 B |
