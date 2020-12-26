@@ -11,7 +11,6 @@ Introduce `IRefStructEnumerable` to improve performance when element are fat str
 ---
 - [Installation](#Installation)
 - [Usage](#Usage)
-- [IRefStructEnumerable](#IRefStructEnumerable)
 - [Performances](#Performances)
 - [Features](#Features)
   - [BCL bindings](#BCL)
@@ -19,6 +18,7 @@ Introduce `IRefStructEnumerable` to improve performance when element are fat str
   - [Converters](#Converters)
   - [LINQ Extensions](#LINQ-Extensions)
   - [Other Extensions](#Other-Extensions)
+- [IRefStructEnumerable](#IRefStructEnumerable)
 ---
 
 ## Installation
@@ -51,26 +51,6 @@ int result = array
 
 `x=>x` is used to avoid boxing (and allocation) and to help generic type parameters inference.
 You can also improve performance by using struct for Where predicate and select function.
-
-## IRefStructEnumerable
-
-```csharp
-    public interface IRefStructEnumerable<out T, out TEnumerator>
-        where TEnumerator : struct, IRefStructEnumerator<T>
-    {
-        TEnumerator GetEnumerator();
-    }
-
-    public interface IRefStructEnumerator<T>
-    {
-        bool MoveNext();
-
-        void Reset();
-
-        ref T Current { get; }
-    }
-```
- `ref Current` allows to avoid copy. I should be very useful when `T` is a fat struct.
 
 ## Performances
 
@@ -114,27 +94,27 @@ For example following linq sequence:
 
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
-Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.402
-  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=5.0.101
+  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
 
 
 ```
-|                          Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|-------------------------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|
-|                            LINQ | 78.19 us | 1.615 us | 1.432 us |  1.00 |     - |     - |     - |     152 B |
-|          StructLinqWithDelegate | 45.97 us | 0.469 us | 0.439 us |  0.59 |     - |     - |     - |     104 B |
-| StructLinqWithDelegateZeroAlloc | 44.63 us | 0.411 us | 0.385 us |  0.57 |     - |     - |     - |         - |
-|             StructLinqZeroAlloc | 15.22 us | 0.031 us | 0.028 us |  0.19 |     - |     - |     - |         - |
+|                          Method |      Mean |     Error |    StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|-------------------------------- |----------:|----------:|----------:|------:|------:|------:|------:|----------:|
+|                            LINQ | 65.116 μs | 0.6153 μs | 0.5756 μs |  1.00 |     - |     - |     - |     152 B |
+|          StructLinqWithDelegate | 26.146 μs | 0.2402 μs | 0.2247 μs |  0.40 |     - |     - |     - |      96 B |
+| StructLinqWithDelegateZeroAlloc | 27.854 μs | 0.0938 μs | 0.0783 μs |  0.43 |     - |     - |     - |         - |
+|             StructLinqZeroAlloc |  6.872 μs | 0.0155 μs | 0.0137 μs |  0.11 |     - |     - |     - |         - |
  
 
 `StructLinq` is significatively faster than default `LINQ` implementation.
 
 ## Features
 
-Duck typing with `foreach` is available with zero allocation for `IStructEnumerable` and also with `Foreach` and `ref` for `IRefStructEnumerable`.
+Duck typing with `foreach` is available with zero allocation for `IStructEnumerable`.
 
 ### BCL
 
@@ -146,15 +126,11 @@ Following class have a `StructLinq` extension method for `IStructEnumerable`:
   - `Hashset<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
   - `ImmutableArray<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
 
-Following class have a `StructLinq` extension method for `IRefStructEnumerable`:
-  - `T[]`
-  - `List<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
-  
-
 ### Converters
 Following converters are available for :
   - `ToArray`
   - `ToList` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+  - `ToEnumerable`
 ### LINQ Extensions
 Following extensions are available for :
   - `Aggregate`
@@ -190,6 +166,65 @@ Following extensions are available for :
   - `LongCount`
   - `UIntCount`
   - `Order`
+  - `TryFirst`
+
+## IRefStructEnumerable
+
+```csharp
+    public interface IRefStructEnumerable<out T, out TEnumerator>
+        where TEnumerator : struct, IRefStructEnumerator<T>
+    {
+        TEnumerator GetEnumerator();
+    }
+
+    public interface IRefStructEnumerator<T>
+    {
+        bool MoveNext();
+
+        void Reset();
+
+        ref T Current { get; }
+    }
+```
+ `ref Current` allows to avoid copy. I should be very useful when `T` is a fat struct.
+
+ Duck typing with `foreach` with `ref` is available with zero allocation for `IRefStructEnumerable`.
+
+ ### BCL
+
+Following class have a `StructLinq` extension method for `IRefStructEnumerable`:
+  - `T[]`
+  - `List<T>` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+
+  ### Converters
+Following converters are available for :
+  - `ToArray`
+  - `ToList` (in [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/))
+  - `ToEnumerable`
+### LINQ Extensions
+Following extensions are available for :
+  - `All`
+  - `Any`
+  - `Concat`
+  - `Contains`
+  - `Count`
+  - `Distinct`
+  - `ElementAt`
+  - `ElementAtOrDefault`
+  - `Except`
+  - `First`
+  - `FirstOrDefault`
+  - `Intersect`
+  - `Last`
+  - `Select`
+  - `Skip`
+  - `Sum`
+  - `Take`
+  - `Union`
+  - `Where`
+### Other Extensions
+  - `LongCount`
+  - `UIntCount`
   - `TryFirst`
 
 
