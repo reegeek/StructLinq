@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+using StructLinq.Array;
 
 namespace StructLinq.Benchmark
 {
@@ -17,9 +18,11 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public bool For()
         {
-            for (int i = 0; i < Count; i++)
+            var ints = array;
+            var arrayLength = ints.Length;
+            for (int i = 0; i < arrayLength; i++)
             {
-                if (array[i] >= Count / 2)
+                if (ints[i] >= arrayLength / 2)
                     return false;
             }
 
@@ -41,6 +44,14 @@ namespace StructLinq.Benchmark
             var func = new AllFunction();
             return array.ToStructEnumerable().All(ref func, x => x);
         }
+
+        [Benchmark]
+        public bool StructLinqIFunctionZeroAllocOnStructEnumerable()
+        {
+            var func = new AllFunction();
+            return array.ToStructEnumerable().All(ref func, x => (IStructEnumerable<int, ArrayStructEnumerator<int>>)x);
+        }
+
 
         private struct AllFunction : IFunction<int, bool>
         {

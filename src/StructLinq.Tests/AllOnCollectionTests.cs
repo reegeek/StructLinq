@@ -1,15 +1,14 @@
 ﻿using FluentAssertions;
 using StructLinq.Range;
-using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class AllTests
+    public class AllOnCollectionTests
     {
-        private static WhereEnumerable<int, RangeEnumerable, RangeEnumerator> StructEnumerable()
+        private static RangeEnumerable StructEnumerable()
         {
-            return StructLinq.StructEnumerable.Range(0, 10).Where(x=> true, x=> x);
+            return StructLinq.StructEnumerable.Range(0, 10);
         }
 
         [Fact]
@@ -70,5 +69,4 @@ namespace StructLinq.Tests
             StructEnumerable().All(func).Should().BeFalse();
         }
     }
-
 }

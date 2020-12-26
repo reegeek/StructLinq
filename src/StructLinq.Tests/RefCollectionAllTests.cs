@@ -1,15 +1,14 @@
 ﻿using FluentAssertions;
 using StructLinq.Array;
-using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class RefAllTests
+    public class RefCollectionAllTests
     {
-        private static RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>> Enumerable()
+        private static ArrayRefEnumerable<int> Enumerable()
         {
-            return StructEnumerable.Range(0, 10).ToArray().ToRefStructEnumerable().Where((in int x) => true, _ => _);
+            return StructEnumerable.Range(0, 10).ToArray().ToRefStructEnumerable();
         }
 
         [Fact]
