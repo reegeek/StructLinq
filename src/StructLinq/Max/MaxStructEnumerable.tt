@@ -20,7 +20,6 @@
     };
 #>
 
-
 // Generated code
 
 using System;
@@ -33,39 +32,48 @@ namespace StructLinq
 <# foreach(var t in types) {  #>
     public static partial class StructEnumerable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static <#= t.Name #> Max<#= t.Name #><TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+        private struct Max<#= t.Name #>Visitor : IVisitor<<#= t.Name #>>
         {
-			if (!enumerator.MoveNext())
-				throw new ArgumentOutOfRangeException("No elements");
-			<#= t.Name #> result = enumerator.Current;
-			while (enumerator.MoveNext())
-			{
-				var current = enumerator.Current;
-				if (current > result)
-					result = current;
-			}
-            enumerator.Dispose();
-			return result;
+            public bool HasMax;
+            public <#= t.Name #> Max;
+            public Max<#= t.Name #>Visitor(bool hasMax, <#= t.Name #> max)
+            {
+                HasMax = hasMax;
+                Max = max;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(<#= t.Name #> input)
+            {
+                HasMax = true;
+                if (Max < input)
+                    Max = input;
+                return true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static <#= t.Name #> Max<TEnumerator>(this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return Max<#= t.Name #>(ref enumerator);
+            var maxVisitor = new Max<#= t.Name #>Visitor(false, default);
+            enumerable.Visit(ref maxVisitor);
+            if (!maxVisitor.HasMax)
+                throw new ArgumentOutOfRangeException("No elements");
+            return maxVisitor.Max;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-       public static <#= t.Name #> Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+        public static <#= t.Name #> Max<TEnumerable,TEnumerator>(this TEnumerable enumerable, Func<TEnumerable,IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
             where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return Max<#= t.Name #>(ref enumerator);
+            var maxVisitor = new Max<#= t.Name #>Visitor(false, default);
+            enumerable.Visit(ref maxVisitor);
+            if (!maxVisitor.HasMax)
+                throw new ArgumentOutOfRangeException("No elements");
+            return maxVisitor.Max;
         }
+
     }
 
 

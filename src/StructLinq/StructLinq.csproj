@@ -38,26 +38,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>StructEnumerable.Value.Distinct.cs</LastGenOutput>
     </None>
-    <None Update="Max\MaxStructEnumerable.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MaxStructEnumerable.cs</LastGenOutput>
-    </None>
-    <None Update="Min\MaxStructEnumerable.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MaxStructEnumerable.cs</LastGenOutput>
-    </None>
-    <None Update="Min\MinStructCollection.tt">
-      <LastGenOutput>MinStructCollection.cs</LastGenOutput>
+    <None Update="Max\MinStructCollection.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Min\MinStructEnumerable.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MinStructEnumerable.cs</LastGenOutput>
-    </None>
-    <None Update="Sum\SumStructEnumerable.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SumStructEnumerable.cs</LastGenOutput>
-    </None>
+    
+
     <None Update="Sum\SumRefStructEnumerable.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SumRefStructEnumerable.cs</LastGenOutput>
@@ -65,21 +50,58 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Max\MaxStructEnumerable.cs">
+    <None Update="Max\MaxStructEnumerable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MaxStructEnumerable.cs</LastGenOutput>
+    </None>
+    <Compile Update="Max\MaxStructEnumerable.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MaxStructEnumerable.tt</DependentUpon>
+    </Compile>
+
+    <None Update="Max\MaxStructCollection.tt">
+      <LastGenOutput>MaxStructCollection.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Min\MinStructEnumerable.cs">
+    <Compile Update="Max\MaxStructCollection.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>MinStructEnumerable.tt</DependentUpon>
+      <DependentUpon>MaxStructCollection.tt</DependentUpon>
+    </Compile>
+
+
+    <None Update="Min\MinStructEnumerable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MinStructEnumerable.cs</LastGenOutput>
     </None>
-    <None Update="Sum\SumStructEnumerable.cs">
+    <Compile Update="Min\MinStructEnumerable.cs">
+      <DependentUpon>MinStructEnumerable.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
+    <None Update="Min\MinStructCollection.tt">
+      <LastGenOutput>MinStructCollection.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <Compile Update="Min\MinStructCollection.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MinStructCollection.tt</DependentUpon>
+    </Compile>
+
+    
+    <None Update="Sum\SumStructEnumerable.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SumStructEnumerable.cs</LastGenOutput>
+    </None>
+    <Compile Update="Sum\SumStructEnumerable.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SumStructEnumerable.tt</DependentUpon>
-    </None>
+    </Compile>
+
   </ItemGroup>
 
   <ItemGroup>
@@ -103,40 +125,10 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>StructEnumerable.Value.Distinct.tt</DependentUpon>
 	  </Compile>
-    <Compile Update="Max\MaxStructEnumerable.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MaxStructEnumerable.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Min\MaxStructEnumerable.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MaxStructEnumerable.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Min\MinStructEnumerable.cs">
-      <DependentUpon>MinStructEnumerable.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Min\MinStructCollection.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MinStructCollection.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Min\MinStructEnumerable.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MinStructEnumerable.tt</DependentUpon>
-    </Compile>
     <Compile Update="Sum\SumRefStructEnumerable.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SumRefStructEnumerable.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Sum\SumStructEnumerable.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SumStructEnumerable.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
