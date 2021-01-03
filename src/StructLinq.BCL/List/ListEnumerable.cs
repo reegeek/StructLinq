@@ -61,16 +61,19 @@ namespace StructLinq.BCL.List
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            var count = Count;
-            var s = start;
-            var array = layout.Items;
-            for (int i = 0; i < count; i++)
+            unchecked
             {
-                if (!visitor.Visit(array[s+i]))
-                    return VisitStatus.VisitorFinished;
-            }
+                var s = start;
+                var end = Count + s;
+                var array = layout.Items;
+                for (int i = s; i < end; i++)
+                {
+                    if (!visitor.Visit(array[i]))
+                        return VisitStatus.VisitorFinished;
+                }
 
-            return VisitStatus.EnumeratorFinished;
+                return VisitStatus.EnumeratorFinished;
+            }
         }
     }
 }
