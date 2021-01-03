@@ -16,9 +16,9 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 ```
 |                                         Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
 |----------------------------------------------- |-----------:|---------:|---------:|------:|-------:|------:|------:|----------:|
-|                                            For |   265.3 ns |  2.03 ns |  1.80 ns |  0.10 |      - |     - |     - |         - |
-|                                           Linq | 2,577.2 ns |  7.17 ns |  6.35 ns |  1.00 | 0.0038 |     - |     - |      32 B |
-|                                     StructLinq | 1,076.8 ns | 19.39 ns | 17.19 ns |  0.42 | 0.0057 |     - |     - |      32 B |
-|                            StructLinqZeroAlloc |   905.9 ns |  2.40 ns |  2.12 ns |  0.35 |      - |     - |     - |         - |
-|                   StructLinqIFunctionZeroAlloc |   287.5 ns |  2.15 ns |  2.01 ns |  0.11 |      - |     - |     - |         - |
-| StructLinqIFunctionZeroAllocOnStructEnumerable |   390.4 ns |  1.34 ns |  1.26 ns |  0.15 |      - |     - |     - |         - |
+|                                            For |   175.7 ns |  0.37 ns |  0.32 ns |  0.07 |      - |     - |     - |         - |
+|                                           Linq | 2,643.6 ns |  8.87 ns |  7.41 ns |  1.00 | 0.0038 |     - |     - |      32 B |
+|                                     StructLinq | 1,144.9 ns |  5.55 ns |  5.19 ns |  0.43 | 0.0057 |     - |     - |      32 B |
+|                            StructLinqZeroAlloc |   901.1 ns | 16.58 ns | 13.84 ns |  0.34 |      - |     - |     - |         - |
+|                   StructLinqIFunctionZeroAlloc |   516.2 ns |  3.18 ns |  2.82 ns |  0.20 |      - |     - |     - |         - |
+| StructLinqIFunctionZeroAllocOnStructEnumerable |   385.8 ns |  2.30 ns |  2.04 ns |  0.15 |      - |     - |     - |         - |

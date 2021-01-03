@@ -6,17 +6,17 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
-Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.402
-  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=5.0.101
+  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
 
 
 ```
-|         Method |      Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|--------------- |----------:|---------:|---------:|------:|------:|------:|------:|----------:|
-|      SysSelect | 108.12 us | 0.329 us | 0.308 us |  1.00 |     - |     - |     - |      96 B |
-| DelegateSelect |  40.10 us | 0.146 us | 0.136 us |  0.37 |     - |     - |     - |      56 B |
-|   StructSelect |  22.48 us | 0.262 us | 0.245 us |  0.21 |     - |     - |     - |         - |
-|  ConvertSelect |  61.83 us | 0.085 us | 0.080 us |  0.57 |     - |     - |     - |      40 B |
+|         Method |     Mean |    Error |   StdDev | Ratio | Code Size | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|--------------- |---------:|---------:|---------:|------:|----------:|------:|------:|------:|----------:|
+|      SysSelect | 89.55 μs | 0.424 μs | 0.376 μs |  1.00 |    1067 B |     - |     - |     - |      96 B |
+| DelegateSelect | 20.09 μs | 0.084 μs | 0.078 μs |  0.22 |     277 B |     - |     - |     - |      56 B |
+|   StructSelect | 13.48 μs | 0.043 μs | 0.040 μs |  0.15 |     477 B |     - |     - |     - |         - |
+|  ConvertSelect | 37.55 μs | 0.086 μs | 0.071 μs |  0.42 |     842 B |     - |     - |     - |      40 B |

@@ -14,9 +14,9 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 
 
 ```
-|         Method |     Mean |    Error |   StdDev | Ratio | Code Size | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|--------------- |---------:|---------:|---------:|------:|----------:|------:|------:|------:|----------:|
-|      SysSelect | 55.66 μs | 0.266 μs | 0.236 μs |  1.00 |    1346 B |     - |     - |     - |      88 B |
-| DelegateSelect | 21.06 μs | 0.043 μs | 0.038 μs |  0.38 |     313 B |     - |     - |     - |      56 B |
-|   StructSelect | 17.15 μs | 0.044 μs | 0.041 μs |  0.31 |     578 B |     - |     - |     - |         - |
-|  ConvertSelect | 40.45 μs | 0.168 μs | 0.158 μs |  0.73 |     839 B |     - |     - |     - |      40 B |
+|         Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated | Code Size |
+|--------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|----------:|
+|      SysSelect | 56.91 μs | 0.351 μs | 0.328 μs |  1.00 |     - |     - |     - |      88 B |    1346 B |
+| DelegateSelect | 17.53 μs | 0.088 μs | 0.082 μs |  0.31 |     - |     - |     - |      56 B |     319 B |
+|   StructSelect | 10.01 μs | 0.041 μs | 0.038 μs |  0.18 |     - |     - |     - |         - |     593 B |
+|  ConvertSelect | 37.66 μs | 0.188 μs | 0.176 μs |  0.66 |     - |     - |     - |      40 B |     995 B |

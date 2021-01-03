@@ -41,7 +41,7 @@ namespace StructLinq.Benchmark
         public int StructLinq() => array.ToStructEnumerable().Sum();
 
         [Benchmark]
-        public int StructLinqZeroAlloc2() => array.ToStructEnumerable().Sum(x=> (IStructEnumerable<int, ArrayStructEnumerator<int>>)x);
+        public int StructLinqZeroAllocWithVisitor() => array.ToStructEnumerable().Sum(x=> (IStructEnumerable<int, ArrayStructEnumerator<int>>)x);
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+using StructLinq.Array;
 
 namespace StructLinq.Benchmark
 {
@@ -24,25 +25,42 @@ namespace StructLinq.Benchmark
             }
             return sum;
         }
+
         [Benchmark(Baseline = true)]
-        public int SysEnumerableSum() => array.Select(x => x.Element).Sum();
+        public int LINQSum() => array.Select(x => x.Element).Sum();
 
         [Benchmark]
-        public int StructSum()
+        public int StructLinq()
         {
             return array.ToStructEnumerable()
                         .Select(x=> x.Element)
                         .Sum();
         }
 
+        [Benchmark]
+        public int StructLinqWithVisitor()
+        {
+            return array.ToStructEnumerable()
+                .Select(x=> x.Element, x => (IStructEnumerable<Container, ArrayStructEnumerator<Container>>) x)
+                .Sum();
+        }
         
         [Benchmark]
-        public int StructSumZeroAlloc()
+        public int StructLinqZeroAlloc()
         {
             var @select = new ContainerSelect();
             return array.ToStructEnumerable()
                         .Select(ref @select, x=>x, x=>x)
                         .Sum(x => x);
+        }
+
+        [Benchmark]
+        public int StructLinqZeroAllocWithVisitor()
+        {
+            var @select = new ContainerSelect();
+            return array.ToStructEnumerable()
+                .Select(ref @select, x => (IStructEnumerable<Container, ArrayStructEnumerator<Container>>) x, x => x)
+                .Sum(x => x);
         }
     }
 

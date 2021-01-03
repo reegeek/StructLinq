@@ -6,19 +6,19 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19042
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.100-preview.7.20366.6
-  [Host]     : .NET Core 3.1.9 (CoreCLR 4.700.20.47201, CoreFX 4.700.20.47203), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.9 (CoreCLR 4.700.20.47201, CoreFX 4.700.20.47203), X64 RyuJIT
+.NET Core SDK=5.0.101
+  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
 
 
 ```
-|                Method |       Mean |    Error |    StdDev | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|---------------------- |-----------:|---------:|----------:|------:|--------:|-------:|------:|------:|----------:|
-|             Handmaded |   799.6 ns |  4.87 ns |   4.55 ns |  0.14 |    0.00 |      - |     - |     - |         - |
-|      SysEnumerableSum | 5,861.1 ns | 34.26 ns |  28.61 ns |  1.00 |    0.00 |      - |     - |     - |      32 B |
-|             StructSum | 3,253.7 ns | 30.06 ns |  28.12 ns |  0.55 |    0.01 | 0.0038 |     - |     - |      32 B |
-|          RefStructSum | 1,886.6 ns | 22.74 ns |  18.99 ns |  0.32 |    0.00 | 0.0057 |     - |     - |      32 B |
-|    ZeroAllocStructSum | 2,337.6 ns | 46.23 ns | 110.75 ns |  0.38 |    0.02 |      - |     - |     - |         - |
-| ZeroAllocRefStructSum |   716.5 ns |  6.18 ns |   5.78 ns |  0.12 |    0.00 |      - |     - |     - |         - |
+|                Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|---------------------- |-----------:|---------:|---------:|------:|-------:|------:|------:|----------:|
+|             Handmaded |   543.0 ns |  2.64 ns |  2.47 ns |  0.09 |      - |     - |     - |         - |
+|      SysEnumerableSum | 6,046.0 ns | 27.55 ns | 25.77 ns |  1.00 |      - |     - |     - |      32 B |
+|             StructSum | 3,207.4 ns | 16.92 ns | 15.83 ns |  0.53 | 0.0038 |     - |     - |      32 B |
+|          RefStructSum | 1,853.3 ns |  6.07 ns |  5.68 ns |  0.31 | 0.0057 |     - |     - |      32 B |
+|    ZeroAllocStructSum | 2,195.7 ns | 25.33 ns | 23.69 ns |  0.36 |      - |     - |     - |         - |
+| ZeroAllocRefStructSum |   682.9 ns |  2.28 ns |  2.13 ns |  0.11 |      - |     - |     - |         - |

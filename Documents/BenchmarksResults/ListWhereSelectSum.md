@@ -14,9 +14,9 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 
 
 ```
-|                          Method |      Mean |     Error |    StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|-------------------------------- |----------:|----------:|----------:|------:|------:|------:|------:|----------:|
-|                            LINQ | 65.116 μs | 0.6153 μs | 0.5756 μs |  1.00 |     - |     - |     - |     152 B |
-|          StructLinqWithDelegate | 26.146 μs | 0.2402 μs | 0.2247 μs |  0.40 |     - |     - |     - |      96 B |
-| StructLinqWithDelegateZeroAlloc | 27.854 μs | 0.0938 μs | 0.0783 μs |  0.43 |     - |     - |     - |         - |
-|             StructLinqZeroAlloc |  6.872 μs | 0.0155 μs | 0.0137 μs |  0.11 |     - |     - |     - |         - |
+|                          Method |     Mean |    Error |   StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|-------------------------------- |---------:|---------:|---------:|------:|------:|------:|------:|----------:|
+|                            LINQ | 65.45 μs | 0.587 μs | 0.549 μs |  1.00 |     - |     - |     - |     152 B |
+|          StructLinqWithDelegate | 28.71 μs | 0.119 μs | 0.111 μs |  0.44 |     - |     - |     - |      96 B |
+| StructLinqWithDelegateZeroAlloc | 27.96 μs | 0.139 μs | 0.123 μs |  0.43 |     - |     - |     - |         - |
+|             StructLinqZeroAlloc | 11.26 μs | 0.045 μs | 0.042 μs |  0.17 |     - |     - |     - |         - |

@@ -6,19 +6,19 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.0, OS=Windows 10.0.19041
-Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.402
-  [Host]     : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.8 (CoreCLR 4.700.20.41105, CoreFX 4.700.20.41903), X64 RyuJIT
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=5.0.101
+  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
 
 
 ```
 |                                   Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
 |----------------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|                                     Linq |  5.591 us | 0.0063 us | 0.0055 us |  1.00 |    0.00 |     - |     - |     - |         - |
-|                                    Array |  5.571 us | 0.0065 us | 0.0061 us |  1.00 |    0.00 |     - |     - |     - |         - |
-|                               StructLinq | 25.079 us | 0.0372 us | 0.0348 us |  4.49 |    0.01 |     - |     - |     - |         - |
-|                            RefStructLinq | 31.081 us | 0.0619 us | 0.0548 us |  5.56 |    0.01 |     - |     - |     - |         - |
-|             StructLinqWithCustomComparer | 16.231 us | 0.3306 us | 0.6449 us |  2.80 |    0.08 |     - |     - |     - |         - |
-| RefStructLinqZeroAllocwithCustomComparer |  3.563 us | 0.0051 us | 0.0045 us |  0.64 |    0.00 |     - |     - |     - |         - |
+|                                     Linq |  5.342 μs | 0.0205 μs | 0.0192 μs |  1.00 |    0.00 |     - |     - |     - |         - |
+|                                    Array |  4.678 μs | 0.0246 μs | 0.0230 μs |  0.88 |    0.00 |     - |     - |     - |         - |
+|                               StructLinq | 23.504 μs | 0.1103 μs | 0.0977 μs |  4.40 |    0.02 |     - |     - |     - |         - |
+|                            RefStructLinq | 17.033 μs | 0.0842 μs | 0.0787 μs |  3.19 |    0.02 |     - |     - |     - |         - |
+|             StructLinqWithCustomComparer | 14.999 μs | 0.0528 μs | 0.0468 μs |  2.81 |    0.01 |     - |     - |     - |         - |
+| RefStructLinqZeroAllocwithCustomComparer |  5.025 μs | 0.0157 μs | 0.0147 μs |  0.94 |    0.00 |     - |     - |     - |         - |
