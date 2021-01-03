@@ -4,6 +4,7 @@ using FluentAssertions;
 using ObjectLayoutInspector;
 using StructLinq.BCL.Dictionary;
 using Xunit;
+using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.Tests
 {

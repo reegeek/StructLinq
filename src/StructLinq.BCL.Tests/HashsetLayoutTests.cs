@@ -3,8 +3,8 @@ using System.Linq;
 using FluentAssertions;
 using ObjectLayoutInspector;
 using StructLinq.BCL.Hashset;
-using StructLinq.BCL.List;
 using Xunit;
+using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.Tests
 {

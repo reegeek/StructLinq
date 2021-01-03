@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils;
+using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.Dictionary
 {

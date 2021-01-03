@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using FluentAssertions;
 using ObjectLayoutInspector;
 using StructLinq.BCL.List;
 using Xunit;
+using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.Tests
 {
@@ -131,5 +127,4 @@ namespace StructLinq.BCL.Tests
         }
     }
 #endif
-
 }

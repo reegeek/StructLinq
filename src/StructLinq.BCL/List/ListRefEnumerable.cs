@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Array;
 using StructLinq.Utils;
+using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.List
 {
