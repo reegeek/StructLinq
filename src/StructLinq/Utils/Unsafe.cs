@@ -1,10 +1,12 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using InlineIL;
 using static InlineIL.IL.Emit;
+// ReSharper disable EntityNameCapturedOnly.Global
 
 namespace StructLinq.Utils
 {
-    static class Unsafe
+    public static class Unsafe
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref TTo As<TFrom, TTo>(ref TFrom source)
