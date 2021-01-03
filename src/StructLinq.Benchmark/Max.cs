@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
+using StructLinq.Range;
 
 namespace StructLinq.Benchmark
 {
@@ -9,12 +10,12 @@ namespace StructLinq.Benchmark
         private const int Count = 10000;
 
         [Benchmark(Baseline = true)]
-        public int RawMax()
+        public int Handmaded()
         {
-            var max = int.MaxValue;
+            var max = int.MinValue;
             for (var index = 0; index < Count; index++)
             {
-                if (index < max)
+                if (index > max)
                     max = index;
             }
 
@@ -22,28 +23,36 @@ namespace StructLinq.Benchmark
         } 
 
         [Benchmark]
-        public int SysMax()
+        public int LINQ()
         {
-            return Enumerable.Range(0, Count).Min();
+            return Enumerable.Range(0, Count).Max();
         }
 
         [Benchmark]
-        public int StructMax()
+        public int StructLINQ()
         {
-            return StructEnumerable.Range(0, Count).Min();
-        }
-
-        [Benchmark]
-        public int ZeroAllocStructMax()
-        {
-            return StructEnumerable.Range(0, Count).Min(x=>x);
+            return StructEnumerable.Range(0, Count).Max();
         }
 
 
         [Benchmark]
-        public int ConvertMax()
+        public int ZeroAllocStructLINQ()
         {
-            return Enumerable.Range(0, Count).ToStructEnumerable().Min();
+            return StructEnumerable.Range(0, Count).Max(x=> x);
+        }
+
+
+        [Benchmark]
+        public int ZeroAllocStructLINQOnEnumerable()
+        {
+            return StructEnumerable.Range(0, Count).Max(x=>(IStructEnumerable<int, RangeEnumerator>)x);
+        }
+
+
+        [Benchmark]
+        public int ConvertMin()
+        {
+            return Enumerable.Range(0, Count).ToStructEnumerable().Max();
         }
 
     }

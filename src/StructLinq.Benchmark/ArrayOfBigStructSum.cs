@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -65,6 +66,7 @@ namespace StructLinq.Benchmark
 
     internal struct StructContainerSelect : IFunction<StructContainer, int>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly int Eval(StructContainer element)
         {
             return element.Element;
@@ -73,6 +75,7 @@ namespace StructLinq.Benchmark
 
     internal struct InStructContainerSelect : IInFunction<StructContainer, int>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly int Eval(in StructContainer element)
         {
             return element.Element;

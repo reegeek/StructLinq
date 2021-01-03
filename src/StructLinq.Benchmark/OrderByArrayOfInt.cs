@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -92,6 +93,7 @@ namespace StructLinq.Benchmark
 
     public struct Identity<T> : IFunction<T, T>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Eval(T element)
         {
             return element;

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -53,6 +54,7 @@ namespace StructLinq.Benchmark
 
     struct WherePredicate : IFunction<int, bool>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Eval(int element)
         {
             return (element & 1) == 0;
@@ -61,6 +63,7 @@ namespace StructLinq.Benchmark
 
     struct SelectFunction : IFunction<int, int>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly int Eval(int element)
         {
             return element * 2;

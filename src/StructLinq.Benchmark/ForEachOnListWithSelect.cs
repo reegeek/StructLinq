@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
@@ -74,6 +75,7 @@ namespace StructLinq.Benchmark
 
         public readonly struct Mult2 : IFunction<int, int>
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public int Eval(int element)
             {
                 return element * 2;
