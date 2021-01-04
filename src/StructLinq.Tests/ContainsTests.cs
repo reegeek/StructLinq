@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using StructLinq.Range;
 using Xunit;
 
 namespace StructLinq.Tests
@@ -16,10 +17,27 @@ namespace StructLinq.Tests
         }
 
         [Fact]
+        public void ShouldReturnTrueWithVisitor()
+        {
+            var enumerable = StructEnumerable.Range(0, 100);
+            for (int i = 0; i < 100; i++)
+            {
+                enumerable.Contains(i, x => (IStructEnumerable<int, RangeEnumerator>)x).Should().BeTrue();
+            }
+        }
+
+        [Fact]
         public void ShouldReturnFalse()
         {
             var enumerable = StructEnumerable.Range(0, 100);
             enumerable.Contains(-10, x => x).Should().BeFalse();
+        }
+
+        [Fact]
+        public void ShouldReturnFalseWithVisitor()
+        {
+            var enumerable = StructEnumerable.Range(0, 100);
+            enumerable.Contains(-10, x => (IStructEnumerable<int, RangeEnumerator>)x).Should().BeFalse();
         }
 
         [Fact]
