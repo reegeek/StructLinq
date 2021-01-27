@@ -5,7 +5,7 @@ namespace StructLinq.Tests
 {
     public class RefSelectCollectionTests : AbstractCollectionTests<double,
         RefSelectCollection<int, double, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, RefSelectCollectionTests.MultFunction>,
-        RefSelectEnumerator<int, double, ArrayRefStructEnumerator<int>, RefSelectCollectionTests.MultFunction>>
+        RefSelectCollectionEnumerator<int, double, ArrayRefStructEnumerator<int>, RefSelectCollectionTests.MultFunction>>
     {
 
         protected override RefSelectCollection<int, double, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, RefSelectCollectionTests.MultFunction> Build(int size)

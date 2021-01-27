@@ -2,7 +2,7 @@
 
 namespace StructLinq.Select
 {
-    public struct RefSelectCollection<TIn, TOut, TEnumerable, TEnumerator, TFunction> : IStructCollection<TOut, RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction>>
+    public struct RefSelectCollection<TIn, TOut, TEnumerable, TEnumerator, TFunction> : IStructCollection<TOut, RefSelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>>
         where TFunction : struct, IInFunction<TIn, TOut>
         where TEnumerator : struct, IRefCollectionEnumerator<TIn>
         where TEnumerable : IRefStructCollection<TIn, TEnumerator>
@@ -19,10 +19,10 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
+        public RefSelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
+            return new RefSelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
 
         public int Count
