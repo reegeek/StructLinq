@@ -16,8 +16,8 @@ Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical core
 ```
 |                         Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
 |------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|                  HandmadedCode |  9.018 μs | 0.1786 μs | 0.3442 μs |  1.00 |    0.00 |     - |     - |     - |         - |
-|                        SysLinq | 28.411 μs | 0.1726 μs | 0.1614 μs |  3.13 |    0.12 |     - |     - |     - |      48 B |
-|         StructLinqWithDelegate | 31.017 μs | 0.6127 μs | 1.5259 μs |  3.47 |    0.24 |     - |     - |     - |      64 B |
-| StructLinqWithDelegateZeoAlloc | 30.736 μs | 0.6101 μs | 1.5195 μs |  3.42 |    0.25 |     - |     - |     - |         - |
-|         StructLinqWithFunction | 16.965 μs | 0.3245 μs | 0.4104 μs |  1.87 |    0.09 |     - |     - |     - |         - |
+|                  HandmadedCode |  7.818 μs | 0.0381 μs | 0.0338 μs |  1.00 |    0.00 |     - |     - |     - |         - |
+|                        SysLinq | 28.221 μs | 0.3126 μs | 0.2771 μs |  3.61 |    0.04 |     - |     - |     - |      48 B |
+|         StructLinqWithDelegate | 25.198 μs | 0.1475 μs | 0.1232 μs |  3.22 |    0.02 |     - |     - |     - |      64 B |
+| StructLinqWithDelegateZeoAlloc | 27.106 μs | 0.1202 μs | 0.1066 μs |  3.47 |    0.02 |     - |     - |     - |         - |
+|         StructLinqWithFunction |  7.768 μs | 0.0525 μs | 0.0491 μs |  0.99 |    0.01 |     - |     - |     - |         - |

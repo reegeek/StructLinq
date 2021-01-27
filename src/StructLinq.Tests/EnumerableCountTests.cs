@@ -3,13 +3,13 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class CountTests
+    public class EnumerableCountTests
     {
         [Fact]
         public void ShouldReturnIntCount()
         {
             var expected = 100;
-            var count = StructEnumerable.Range(0, expected).Count();
+            var count = StructEnumerable.Range(0, expected).Where(x=> true).Count();
             count.Should().Be(expected);
         }
 
@@ -17,7 +17,7 @@ namespace StructLinq.Tests
         public void ShouldReturnIntCount2()
         {
             var expected = 100;
-            var count = StructEnumerable.Range(0, expected).Count(x=> x);
+            var count = StructEnumerable.Range(0, expected).Where(x=> true).Count(x=> x);
             count.Should().Be(expected);
         }
 
@@ -25,7 +25,7 @@ namespace StructLinq.Tests
         public void ShouldReturnUIntCount()
         {
             uint expected = 100;
-            var count = StructEnumerable.Range(0, (int) expected).UIntCount();
+            var count = StructEnumerable.Range(0, (int) expected).Where(x=> true).UIntCount();
             count.Should().Be(expected);
         }
 
@@ -33,7 +33,7 @@ namespace StructLinq.Tests
         public void ShouldReturnUIntCount2()
         {
             uint expected = 100;
-            var count = StructEnumerable.Range(0, (int) expected).UIntCount(x => x);
+            var count = StructEnumerable.Range(0, (int) expected).Where(x=> true).UIntCount(x => x);
             count.Should().Be(expected);
         }
 
@@ -41,7 +41,7 @@ namespace StructLinq.Tests
         public void ShouldReturnLongCount()
         {
             long expected = 100;
-            var count = StructEnumerable.Range(0, (int)expected).LongCount();
+            var count = StructEnumerable.Range(0, (int)expected).Where(x=> true).LongCount();
             count.Should().Be(expected);
         }
 
@@ -49,7 +49,7 @@ namespace StructLinq.Tests
         public void ShouldReturnLongCount2()
         {
             long expected = 100;
-            var count = StructEnumerable.Range(0, (int)expected).LongCount(x => x);
+            var count = StructEnumerable.Range(0, (int)expected).Where(x=> true).LongCount(x => x);
             count.Should().Be(expected);
         }
 
