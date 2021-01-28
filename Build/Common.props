@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Common properties">
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
   </PropertyGroup>
 
