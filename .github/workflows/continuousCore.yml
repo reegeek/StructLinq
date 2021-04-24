@@ -45,10 +45,17 @@ jobs:
         with:
           dotnet-version: 5.0.*
 
+      - name: Cache .nuke/temp, ~/.nuget/packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            .nuke/temp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd TestCoreOnly'
         run: ./build.cmd TestCoreOnly
         env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
         with:
           name: test-results
@@ -58,31 +65,17 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
-
-      - name: Setup .NET 2.2
-        uses: actions/setup-dotnet@v1
+      - name: Cache .nuke/temp, ~/.nuget/packages
+        uses: actions/cache@v2
         with:
-          dotnet-version: 2.2.*
-
-      - name: Setup .NET 3.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.0.*
-
-      - name: Setup .NET 3.1
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.*
-
-      - name: Setup .NET 5.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 5.0.*
-
+          path: |
+            .nuke/temp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd TestCoreOnly'
         run: ./build.cmd TestCoreOnly
         env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
         with:
           name: test-results

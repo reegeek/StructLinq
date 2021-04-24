@@ -24,7 +24,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      
+
       - name: Setup .NET 2.2
         uses: actions/setup-dotnet@v1
         with:
@@ -45,10 +45,17 @@ jobs:
         with:
           dotnet-version: 5.0.*
 
+      - name: Cache .nuke/temp, ~/.nuget/packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            .nuke/temp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
         with:
           name: test-results

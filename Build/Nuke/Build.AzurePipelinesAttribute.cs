@@ -61,7 +61,7 @@ partial class Build
             };
             var symbol = dictionary.GetValueOrDefault(job.Name);
             var prefix = symbol == null ? "" : $"{symbol} ";
-            job.DisplayName = job.PartitionName == null
+            job.DisplayName = job.Parallel == 0
                 ? $"{prefix}{job.DisplayName}"
                 : $"{prefix}{job.DisplayName} 🧩";
             return job;
