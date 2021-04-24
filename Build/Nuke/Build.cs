@@ -56,7 +56,7 @@ partial class Build : Nuke.Common.NukeBuild
 
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion] readonly GitVersion GitVersion;
+    [GitVersion(Framework = "net5.0")] readonly GitVersion GitVersion;
 
     [CI] readonly AzurePipelines AzurePipelines;
 
