@@ -17,11 +17,11 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 ```
 |                  Method |           Job |       Runtime |      Mean |     Error |    StdDev | Code Size |   Gen 0 |  Gen 1 | Gen 2 | Allocated |
 |------------------------ |-------------- |-------------- |----------:|----------:|----------:|----------:|--------:|-------:|------:|----------:|
-|       ToListThenToArray |      .NET 4.8 |      .NET 4.8 | 29.983 μs | 0.1955 μs | 0.1829 μs |   0.58 KB | 36.1328 |      - |     - | 167.59 KB |
-| ToPooledListThenToArray |      .NET 4.8 |      .NET 4.8 | 17.976 μs | 0.1138 μs | 0.1065 μs |   1.56 KB |  8.4534 | 0.0305 |     - |  39.11 KB |
-|      UseCountForToArray |      .NET 4.8 |      .NET 4.8 |  6.248 μs | 0.0391 μs | 0.0366 μs |   0.09 KB |  8.4686 | 0.0076 |     - |  39.11 KB |
-|       StructLinqToArray |      .NET 4.8 |      .NET 4.8 |  5.788 μs | 0.0217 μs | 0.0203 μs |   0.45 KB |  8.4686 | 0.0076 |     - |  39.11 KB |
-|       ToListThenToArray | .NET Core 5.0 | .NET Core 5.0 | 22.911 μs | 0.1639 μs | 0.1533 μs |   1.33 KB | 36.1328 | 0.0305 |     - | 167.41 KB |
-| ToPooledListThenToArray | .NET Core 5.0 | .NET Core 5.0 | 19.488 μs | 0.0558 μs | 0.0522 μs |   1.26 KB |  8.4534 | 1.0376 |     - |  39.09 KB |
-|      UseCountForToArray | .NET Core 5.0 | .NET Core 5.0 |  6.230 μs | 0.0173 μs | 0.0153 μs |   0.09 KB |  8.4686 | 1.0529 |     - |  39.09 KB |
-|       StructLinqToArray | .NET Core 5.0 | .NET Core 5.0 |  5.886 μs | 0.0441 μs | 0.0412 μs |   0.23 KB |  8.4686 | 1.0529 |     - |  39.09 KB |
+|       ToListThenToArray |      .NET 4.8 |      .NET 4.8 | 33.230 μs | 0.3353 μs | 0.2972 μs |   0.58 KB | 36.1328 |      - |     - | 167.59 KB |
+| ToPooledListThenToArray |      .NET 4.8 |      .NET 4.8 | 18.844 μs | 0.3548 μs | 0.3796 μs |   1.56 KB |  8.4534 | 0.0305 |     - |  39.11 KB |
+|      UseCountForToArray |      .NET 4.8 |      .NET 4.8 | 11.251 μs | 0.0773 μs | 0.0723 μs |   0.09 KB |  8.4686 | 0.0153 |     - |  39.11 KB |
+|       StructLinqToArray |      .NET 4.8 |      .NET 4.8 |  6.066 μs | 0.0157 μs | 0.0122 μs |   0.45 KB |  8.4686 | 0.0076 |     - |  39.11 KB |
+|       ToListThenToArray | .NET Core 5.0 | .NET Core 5.0 | 22.805 μs | 0.1764 μs | 0.1650 μs |   1.33 KB | 36.1328 | 0.0305 |     - | 167.41 KB |
+| ToPooledListThenToArray | .NET Core 5.0 | .NET Core 5.0 | 17.015 μs | 0.0669 μs | 0.0593 μs |   1.35 KB |  8.4534 | 1.0376 |     - |  39.09 KB |
+|      UseCountForToArray | .NET Core 5.0 | .NET Core 5.0 |  5.552 μs | 0.0181 μs | 0.0170 μs |   0.09 KB |  8.4686 | 1.0529 |     - |  39.09 KB |
+|       StructLinqToArray | .NET Core 5.0 | .NET Core 5.0 |  4.978 μs | 0.0164 μs | 0.0153 μs |   0.32 KB |  8.4686 | 1.0529 |     - |  39.09 KB |

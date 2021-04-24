@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using StructLinq.Utils;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
@@ -11,7 +12,7 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var count = enumerator.Count;
-            var result = new T[count];
+            var result = ArrayHelpers.Create<T>(count);
             for (int i = 0; i < count; i++)
             {
                 result[i] = enumerator.Get(i);
@@ -25,7 +26,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
             var count = enumerator.Count;
-            var result = new T[count];
+            var result = ArrayHelpers.Create<T>(count);
             for (int i = 0; i < count; i++)
             {
                 ref var item = ref result[i];

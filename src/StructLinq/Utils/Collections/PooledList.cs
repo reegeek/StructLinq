@@ -87,7 +87,7 @@ namespace StructLinq.Utils.Collections
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T[] ToArray()
         {
-            var result = new T[Size];
+            var result = ArrayHelpers.Create<T>(Size);
             System.Array.Copy(Items, result, Size);
             return result;
         }

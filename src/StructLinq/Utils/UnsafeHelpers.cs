@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using InlineIL;
 using static InlineIL.IL.Emit;
 // ReSharper disable EntityNameCapturedOnly.Global
