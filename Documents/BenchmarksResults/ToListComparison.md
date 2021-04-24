@@ -7,21 +7,21 @@
 ``` ini
 
 BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
-Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=5.0.101
-  [Host]        : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
-  .NET 4.8      : .NET Framework 4.8 (4.8.4250.0), X64 RyuJIT
-  .NET Core 3.1 : .NET Core 3.1.10 (CoreCLR 4.700.20.51601, CoreFX 4.700.20.51901), X64 RyuJIT
+Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=5.0.202
+  [Host]        : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT
+  .NET 4.8      : .NET Framework 4.8 (4.8.4341.0), X64 RyuJIT
+  .NET Core 5.0 : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT
 
 
 ```
 |                      Method |           Job |       Runtime |     Mean |    Error |   StdDev | Code Size |   Gen 0 |  Gen 1 | Gen 2 | Allocated |
 |---------------------------- |-------------- |-------------- |---------:|---------:|---------:|----------:|--------:|-------:|------:|----------:|
-|                   AddInList |      .NET 4.8 |      .NET 4.8 | 40.57 μs | 0.794 μs | 0.779 μs |   0.54 KB | 31.1890 | 0.0610 |     - | 128.48 KB |
-|          ToArrayThenNewList |      .NET 4.8 |      .NET 4.8 | 36.83 μs | 0.327 μs | 0.273 μs |   2.77 KB | 19.0430 | 0.0610 |     - |  78.37 KB |
-| ToArrayThenNewListAndLayout |      .NET 4.8 |      .NET 4.8 | 35.33 μs | 0.704 μs | 1.269 μs |   2.98 KB | 19.0430 | 3.1738 |     - |  78.37 KB |
-|                 WithVisitor |      .NET 4.8 |      .NET 4.8 | 24.82 μs | 0.276 μs | 0.258 μs |   1.72 KB |  9.5215 |      - |     - |  39.19 KB |
-|                   AddInList | .NET Core 3.1 | .NET Core 3.1 | 35.36 μs | 0.434 μs | 0.406 μs |   0.43 KB | 31.2195 | 7.7820 |     - | 128.32 KB |
-|          ToArrayThenNewList | .NET Core 3.1 | .NET Core 3.1 | 38.70 μs | 0.281 μs | 0.263 μs |   1.19 KB | 19.0430 | 3.7842 |     - |   78.2 KB |
-| ToArrayThenNewListAndLayout | .NET Core 3.1 | .NET Core 3.1 | 36.82 μs | 0.313 μs | 0.293 μs |   0.82 KB | 19.0430 | 3.1738 |     - |   78.2 KB |
-|                 WithVisitor | .NET Core 3.1 | .NET Core 3.1 | 25.79 μs | 0.159 μs | 0.141 μs |   0.77 KB |  9.5215 | 1.1902 |     - |  39.12 KB |
+|                   AddInList |      .NET 4.8 |      .NET 4.8 | 27.49 μs | 0.221 μs | 0.184 μs |   0.54 KB | 27.7710 | 0.0305 |     - | 128.48 KB |
+|          ToArrayThenNewList |      .NET 4.8 |      .NET 4.8 | 27.04 μs | 0.196 μs | 0.153 μs |   2.77 KB | 16.9373 | 0.0305 |     - |  78.35 KB |
+| ToArrayThenNewListAndLayout |      .NET 4.8 |      .NET 4.8 | 25.55 μs | 0.108 μs | 0.101 μs |   2.98 KB | 16.9373 | 0.0305 |     - |  78.35 KB |
+|                 WithVisitor |      .NET 4.8 |      .NET 4.8 | 19.86 μs | 0.105 μs | 0.082 μs |   1.72 KB |  8.4534 | 0.0305 |     - |  39.18 KB |
+|                   AddInList | .NET Core 5.0 | .NET Core 5.0 | 20.22 μs | 0.178 μs | 0.166 μs |   0.62 KB | 27.7710 | 9.2468 |     - | 128.32 KB |
+|          ToArrayThenNewList | .NET Core 5.0 | .NET Core 5.0 | 22.28 μs | 0.118 μs | 0.110 μs |    1.8 KB | 16.9373 | 2.1057 |     - |   78.2 KB |
+| ToArrayThenNewListAndLayout | .NET Core 5.0 | .NET Core 5.0 | 21.00 μs | 0.079 μs | 0.070 μs |   1.46 KB | 16.9373 | 2.1057 |     - |   78.2 KB |
+|                 WithVisitor | .NET Core 5.0 | .NET Core 5.0 | 19.42 μs | 0.100 μs | 0.088 μs |   1.39 KB |  8.4534 | 1.0376 |     - |  39.12 KB |
