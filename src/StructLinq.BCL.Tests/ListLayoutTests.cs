@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using ObjectLayoutInspector;
-using StructLinq.BCL.List;
+using StructLinq.List;
+using StructLinq.Utils;
 using Xunit;
-using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.Tests
 {
@@ -71,7 +71,7 @@ namespace StructLinq.BCL.Tests
         public void ShouldCountMustBe(int size)
         {
             var list = Enumerable.Range(-1, size).ToList();
-            var layout = Unsafe.As<List<int>, ListLayout<int>>(ref list);
+            var layout = UnsafeHelpers.As<List<int>, ListLayout<int>>(ref list);
             var typeLayout = TypeLayout.GetLayout(list.GetType());
             var layoutLayout = TypeLayout.GetLayout<ListLayout<int>>();
             layout.Size.Should().Be(size, typeLayout.ToString() + layoutLayout);
@@ -84,7 +84,7 @@ namespace StructLinq.BCL.Tests
         public void ShouldMatchArrayOfInt(int size)
         {
             var list = Enumerable.Range(-1, size).ToList();
-            var layout = Unsafe.As<List<int>, ListLayout<int>>(ref list);
+            var layout = UnsafeHelpers.As<List<int>, ListLayout<int>>(ref list);
             for (int i = 0; i < size; i++)
             {
                 layout.Items[i].Should().Be(i - 1);
@@ -98,7 +98,7 @@ namespace StructLinq.BCL.Tests
         public void ShouldMatchArrayOfString(int size)
         {
             var list = Enumerable.Range(-1, size).Select(x=> x.ToString()).ToList();
-            var layout = Unsafe.As<List<string>, ListLayout<string>>(ref list);
+            var layout = UnsafeHelpers.As<List<string>, ListLayout<string>>(ref list);
             for (int i = 0; i < size; i++)
             {
                 layout.Items[i].Should().Be((i - 1).ToString());

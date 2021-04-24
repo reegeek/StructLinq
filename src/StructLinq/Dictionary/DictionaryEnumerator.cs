@@ -1,15 +1,17 @@
-﻿using System.Runtime.CompilerServices;
+﻿#if !NETSTANDARD1_1
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
-namespace StructLinq.BCL.Hashset
+namespace StructLinq.Dictionary
 {
-    public struct HashsetEnumerator<T> : ICollectionEnumerator<T>
+    public struct DictionaryEnumerator<TKey, TValue> : ICollectionEnumerator<KeyValuePair<TKey, TValue>>
     {
-        private readonly Slot<T>[] entries;
+        private readonly Entry<TKey, TValue>[] entries;
         private readonly int length;
         private readonly int start;
         private int index;
 
-        internal HashsetEnumerator(Slot<T>[] entries, int start, int count)
+        internal DictionaryEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
         {
             this.entries = entries;
             length = count - 1 + start;
@@ -42,13 +44,13 @@ namespace StructLinq.BCL.Hashset
             index = start-1;
         }
 
-        public readonly T Current
+        public readonly KeyValuePair<TKey, TValue> Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 ref var entry = ref entries[index];
-                return entry.Value;
+                return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
             }
         }
 
@@ -64,11 +66,12 @@ namespace StructLinq.BCL.Hashset
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T Get(int i)
+        public KeyValuePair<TKey, TValue> Get(int i)
         {
             ref var entry = ref entries[start + i];
-            return entry.Value;
+            return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
         }
 
     }
 }
+#endif

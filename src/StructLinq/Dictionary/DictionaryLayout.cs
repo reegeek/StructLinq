@@ -1,4 +1,5 @@
-﻿namespace StructLinq.BCL.Dictionary
+﻿#if !NETSTANDARD1_1
+namespace StructLinq.Dictionary
 {
     internal class DictionaryLayout<TKey, TValue>
     {
@@ -36,3 +37,4 @@
     #endif
 #endif
 }
+#endif

@@ -2,9 +2,9 @@
 using System.Linq;
 using FluentAssertions;
 using ObjectLayoutInspector;
-using StructLinq.BCL.Dictionary;
+using StructLinq.Dictionary;
+using StructLinq.Utils;
 using Xunit;
-using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.Tests
 {
@@ -24,7 +24,7 @@ namespace StructLinq.BCL.Tests
             var comparer = EqualityComparer<string>.Default;
             var dico = Enumerable.Range(0, 5)
                                  .ToDictionary(x => x.ToString(), x => x, comparer);
-            var dictionaryLayout = Unsafe.As<Dictionary<string, int>, DictionaryLayout<string, int>>(ref dico);
+            var dictionaryLayout = UnsafeHelpers.As<Dictionary<string, int>, DictionaryLayout<string, int>>(ref dico);
 
             for (int i = 0; i < 5; i++)
             {

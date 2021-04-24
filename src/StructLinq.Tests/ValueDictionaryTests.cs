@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using StructLinq.BCL.Dictionary;
+using StructLinq.Dictionary;
 using Xunit;
 
 namespace StructLinq.Tests

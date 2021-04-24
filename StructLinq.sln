@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Build", "_Build", "{2987C5
 		azure-pipelines.yml = azure-pipelines.yml
 		.github\workflows\continuous.yml = .github\workflows\continuous.yml
 		.github\workflows\continuousCore.yml = .github\workflows\continuousCore.yml
+		GitVersion.yml = GitVersion.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.Tests", "src\StructLinq.Tests\StructLinq.Tests.csproj", "{355C025E-3001-40F0-A456-05C13AF94466}"
@@ -32,8 +33,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuke", "Nuke", "{8A638E83-2D0E-49BB-AE31-7207F54336E7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NukeBuild", "Build\Nuke\NukeBuild.csproj", "{486A956C-407B-410A-97C2-59D00DDEAE21}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.BCL", "src\StructLinq.BCL\StructLinq.BCL.csproj", "{ED389B67-44CE-41B4-8088-2CF1399F2C0B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.BCL.x64.Tests", "src\StructLinq.BCL.Tests\StructLinq.BCL.x64.Tests.csproj", "{E0DB8CCB-6C19-4F42-AEE1-8AA14137D616}"
 EndProject
@@ -91,18 +90,6 @@ Global
 		{486A956C-407B-410A-97C2-59D00DDEAE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{486A956C-407B-410A-97C2-59D00DDEAE21}.Release|x64.ActiveCfg = Release|x64
 		{486A956C-407B-410A-97C2-59D00DDEAE21}.Release|x86.ActiveCfg = Release|x86
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|x64.ActiveCfg = Debug|x64
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|x64.Build.0 = Debug|x64
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|x86.ActiveCfg = Debug|x86
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Debug|x86.Build.0 = Debug|x86
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|x64.ActiveCfg = Release|x64
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|x64.Build.0 = Release|x64
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|x86.ActiveCfg = Release|x86
-		{ED389B67-44CE-41B4-8088-2CF1399F2C0B}.Release|x86.Build.0 = Release|x86
 		{E0DB8CCB-6C19-4F42-AEE1-8AA14137D616}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{E0DB8CCB-6C19-4F42-AEE1-8AA14137D616}.Debug|Any CPU.Build.0 = Debug|x64
 		{E0DB8CCB-6C19-4F42-AEE1-8AA14137D616}.Debug|x64.ActiveCfg = Debug|x64

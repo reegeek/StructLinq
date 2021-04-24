@@ -1,11 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StructLinq.BCL\StructLinq.BCL.csproj" />
     <ProjectReference Include="..\StructLinq\StructLinq.csproj" />
   </ItemGroup>
 

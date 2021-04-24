@@ -1,36 +1,36 @@
-﻿using System;
+﻿#if !NETSTANDARD1_1
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils;
-using Unsafe = StructLinq.Utils.Unsafe;
 
-namespace StructLinq.BCL.Dictionary
+namespace StructLinq.Dictionary
 {
-    public struct DictionaryEnumerable<TKey, TValue> : IStructCollection<KeyValuePair<TKey, TValue>, DictionaryEnumerator<TKey, TValue>>
+    public struct DictionaryValueEnumerable<TKey, TValue> : IStructCollection<TValue, DictionaryValueEnumerator<TKey, TValue>>
     {
         private readonly Dictionary<TKey, TValue> dictionary;
         private readonly DictionaryLayout<TKey, TValue> dictionaryLayout;
         private int count;
         private int start;
-        
-        internal DictionaryEnumerable(Dictionary<TKey, TValue> dictionary, int start, int count)
+
+        internal DictionaryValueEnumerable(Dictionary<TKey, TValue> dictionary, int start, int count)
         {
             this.dictionary = dictionary;
-            dictionaryLayout = Unsafe.As<Dictionary<TKey, TValue>, DictionaryLayout<TKey, TValue>>(ref dictionary);
-            this.count = count;
+            dictionaryLayout = UnsafeHelpers.As<Dictionary<TKey, TValue>, DictionaryLayout<TKey, TValue>>(ref dictionary);
             this.start = start;
+            this.count = count;
         }
 
-        public DictionaryEnumerable(Dictionary<TKey, TValue> dictionary) :
+        public DictionaryValueEnumerable(Dictionary<TKey, TValue> dictionary) :
             this(dictionary, 0, Int32.MaxValue)
         {
 
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly DictionaryEnumerator<TKey, TValue> GetEnumerator()
+        public readonly DictionaryValueEnumerator<TKey, TValue> GetEnumerator()
         {
-            return new DictionaryEnumerator<TKey, TValue>(dictionaryLayout.Entries, start, Count);
+            return new DictionaryValueEnumerator<TKey, TValue>(dictionaryLayout.Entries, start, Count);
         }
 
         public readonly int Count
@@ -51,33 +51,35 @@ namespace StructLinq.BCL.Dictionary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly object Clone()
+        public object Clone()
         {
             return this;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public KeyValuePair<TKey, TValue> Get(int i)
+        public TValue Get(int i)
         {
             ref var entry = ref dictionaryLayout.Entries[start + i];
-            return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+            return entry.Value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<KeyValuePair<TKey, TValue>>
+            where TVisitor : IVisitor<TValue>
         {
             var count = Count;
             var s = start;
             var array = dictionaryLayout.Entries;
             for (int i = 0; i < count; i++)
             {
-                ref var input = ref array[s+i];
-                if (!visitor.Visit(new KeyValuePair<TKey, TValue>(input.Key, input.Value)))
+                ref var entry = ref array[s+i];
+                if (!visitor.Visit(entry.Value))
                     return VisitStatus.VisitorFinished;
             }
 
             return VisitStatus.EnumeratorFinished;
         }
+
     }
 }
+#endif

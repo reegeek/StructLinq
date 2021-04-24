@@ -7,7 +7,7 @@ namespace StructLinq.Tests
 {
     public class IListTests : AbstractCollectionTests<
         int, 
-        IListEnumerable<int, IList<int>>, 
+        ListEnumerable<int, IList<int>>, 
         IListEnumerator<int, IList<int>>>
     {
         [Fact]
@@ -19,7 +19,7 @@ namespace StructLinq.Tests
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override IListEnumerable<int, IList<int>> Build(int size)
+        protected override ListEnumerable<int, IList<int>> Build(int size)
         {
             IList<int> list = Enumerable.Range(-1, size).ToList();
             return list.ToStructEnumerable();

@@ -1,42 +1,42 @@
-﻿using System;
+﻿#if !NETSTANDARD1_1
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils;
-using Unsafe = StructLinq.Utils.Unsafe;
 
-namespace StructLinq.BCL.Hashset
+namespace StructLinq.Dictionary
 {
-    public struct HashsetEnumerable<T> : IStructCollection<T, HashsetEnumerator<T>>
+    public struct DictionaryEnumerable<TKey, TValue> : IStructCollection<KeyValuePair<TKey, TValue>, DictionaryEnumerator<TKey, TValue>>
     {
-        private readonly HashSet<T> hashset;
-        private readonly HashsetLayout<T> hashsetLayout;
+        private readonly Dictionary<TKey, TValue> dictionary;
+        private readonly DictionaryLayout<TKey, TValue> dictionaryLayout;
         private int count;
         private int start;
         
-        internal HashsetEnumerable(HashSet<T> hashset, int start, int count)
+        internal DictionaryEnumerable(Dictionary<TKey, TValue> dictionary, int start, int count)
         {
-            this.hashset = hashset;
-            hashsetLayout = Unsafe.As<HashSet<T>, HashsetLayout<T>>(ref hashset);
+            this.dictionary = dictionary;
+            dictionaryLayout = UnsafeHelpers.As<Dictionary<TKey, TValue>, DictionaryLayout<TKey, TValue>>(ref dictionary);
             this.count = count;
             this.start = start;
         }
 
-        public HashsetEnumerable(HashSet<T> hashset) :
-            this(hashset, 0, Int32.MaxValue)
+        public DictionaryEnumerable(Dictionary<TKey, TValue> dictionary) :
+            this(dictionary, 0, Int32.MaxValue)
         {
 
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly HashsetEnumerator<T> GetEnumerator()
+        public readonly DictionaryEnumerator<TKey, TValue> GetEnumerator()
         {
-            return new HashsetEnumerator<T>(hashsetLayout.Entries, start, Count);
+            return new DictionaryEnumerator<TKey, TValue>(dictionaryLayout.Entries, start, Count);
         }
 
         public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => MathHelpers.Max(0, MathHelpers.Min(hashset.Count, count) - start);
+            get => MathHelpers.Max(0, MathHelpers.Min(dictionary.Count, count) - start);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -57,28 +57,28 @@ namespace StructLinq.BCL.Hashset
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T Get(int i)
+        public KeyValuePair<TKey, TValue> Get(int i)
         {
-            ref var entry = ref hashsetLayout.Entries[start + i];
-            return entry.Value;
+            ref var entry = ref dictionaryLayout.Entries[start + i];
+            return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<T>
+            where TVisitor : IVisitor<KeyValuePair<TKey, TValue>>
         {
             var count = Count;
             var s = start;
-            var array = hashsetLayout.Entries;
+            var array = dictionaryLayout.Entries;
             for (int i = 0; i < count; i++)
             {
                 ref var input = ref array[s+i];
-                if (!visitor.Visit(input.Value))
+                if (!visitor.Visit(new KeyValuePair<TKey, TValue>(input.Key, input.Value)))
                     return VisitStatus.VisitorFinished;
             }
 
             return VisitStatus.EnumeratorFinished;
-
         }
     }
 }
+#endif

@@ -1,10 +1,10 @@
-﻿using System;
+﻿#if !NETSTANDARD1_1
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils;
-using Unsafe = StructLinq.Utils.Unsafe;
 
-namespace StructLinq.BCL.Dictionary
+namespace StructLinq.Dictionary
 {
     public struct DictionaryKeyEnumerable<TKey, TValue> : IStructCollection<TKey, DictionaryKeyEnumerator<TKey, TValue>>
     {
@@ -16,7 +16,7 @@ namespace StructLinq.BCL.Dictionary
         internal DictionaryKeyEnumerable(Dictionary<TKey, TValue> dictionary, int start, int count)
         {
             this.dictionary = dictionary;
-            dictionaryLayout = Unsafe.As<Dictionary<TKey, TValue>, DictionaryLayout<TKey, TValue>>(ref dictionary);
+            dictionaryLayout = UnsafeHelpers.As<Dictionary<TKey, TValue>, DictionaryLayout<TKey, TValue>>(ref dictionary);
             this.start = start;
             this.count = count;
         }
@@ -81,3 +81,4 @@ namespace StructLinq.BCL.Dictionary
         }
     }
 }
+#endif

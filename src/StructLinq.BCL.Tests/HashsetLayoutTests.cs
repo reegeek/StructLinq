@@ -2,9 +2,9 @@
 using System.Linq;
 using FluentAssertions;
 using ObjectLayoutInspector;
-using StructLinq.BCL.Hashset;
+using StructLinq.Hashset;
+using StructLinq.Utils;
 using Xunit;
-using Unsafe = StructLinq.Utils.Unsafe;
 
 namespace StructLinq.BCL.Tests
 {
@@ -24,7 +24,7 @@ namespace StructLinq.BCL.Tests
         public void ShouldMatchArrayOfInt(int size)
         {
             var hashSet = Enumerable.Range(-1, size).ToHashSet();
-            var layout = Unsafe.As<HashSet<int>, HashsetLayout<int>>(ref hashSet);
+            var layout = UnsafeHelpers.As<HashSet<int>, HashsetLayout<int>>(ref hashSet);
             var list = hashSet.ToList();
             var typeLayout = TypeLayout.GetLayout(hashSet.GetType());
             var layoutLayout = TypeLayout.GetLayout<HashsetLayout<int>>();

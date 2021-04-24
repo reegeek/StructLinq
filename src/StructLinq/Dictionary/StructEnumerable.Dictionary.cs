@@ -1,10 +1,11 @@
-﻿using System.Runtime.CompilerServices;
-using StructLinq.BCL.Dictionary;
+﻿#if !NETSTANDARD1_1
+using System.Runtime.CompilerServices;
+using StructLinq.Dictionary;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class BCLStructEnumerable
+    public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DictionaryEnumerable<TKey, TValue> ToStructEnumerable<TKey, TValue>(this System.Collections.Generic.Dictionary<TKey, TValue> dictionary)
@@ -26,3 +27,4 @@ namespace StructLinq
 
     }
 }
+#endif

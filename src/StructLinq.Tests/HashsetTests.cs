@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using StructLinq.BCL.Hashset;
+using StructLinq.Hashset;
 using Xunit;
 
 namespace StructLinq.Tests

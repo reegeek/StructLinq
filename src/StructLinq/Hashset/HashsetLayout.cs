@@ -1,4 +1,5 @@
-﻿namespace StructLinq.BCL.Hashset
+﻿#if !NETSTANDARD1_1
+namespace StructLinq.Hashset
 {
     internal class HashsetLayout<T>
     {
@@ -16,3 +17,4 @@
     }
 
 }
+#endif

@@ -6,7 +6,7 @@ using static InlineIL.IL.Emit;
 
 namespace StructLinq.Utils
 {
-    public static class Unsafe
+    public static class UnsafeHelpers
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref TTo As<TFrom, TTo>(ref TFrom source)

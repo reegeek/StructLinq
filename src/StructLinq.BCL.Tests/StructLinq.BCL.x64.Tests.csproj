@@ -11,8 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StructLinq.BCL\StructLinq.BCL.csproj" />
     <PackageReference Include="ObjectLayoutInspector" Version="0.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StructLinq\StructLinq.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,9 @@
-﻿// ReSharper disable InconsistentNaming
+﻿#if !NETSTANDARD1_1
+// ReSharper disable InconsistentNaming
 
 using System;
 
-namespace StructLinq.BCL.List
+namespace StructLinq.List
 {
 #if (NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0)
     
@@ -23,3 +24,4 @@ namespace StructLinq.BCL.List
 #endif
 
 }
+#endif

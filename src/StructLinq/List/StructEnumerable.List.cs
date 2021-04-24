@@ -1,12 +1,12 @@
-﻿// ReSharper disable once CheckNamespace
-
+﻿#if !NETSTANDARD1_1
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using StructLinq.BCL.List;
+using StructLinq.List;
+// ReSharper disable CheckNamespace
 
 namespace StructLinq
 {
-    public static partial class BCLStructEnumerable
+    public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ListEnumerable<T> ToStructEnumerable<T>(this List<T> list)
@@ -20,3 +20,4 @@ namespace StructLinq
         }
     }
 }
+#endif

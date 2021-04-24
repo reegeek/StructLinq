@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
+﻿#if !NETSTANDARD1_1
 using System.Runtime.CompilerServices;
 
-namespace StructLinq.BCL.Dictionary
+namespace StructLinq.Dictionary
 {
-    public struct DictionaryEnumerator<TKey, TValue> : ICollectionEnumerator<KeyValuePair<TKey, TValue>>
+    public struct DictionaryKeyEnumerator<TKey, TValue> : ICollectionEnumerator<TKey>
     {
         private readonly Entry<TKey, TValue>[] entries;
         private readonly int length;
         private readonly int start;
         private int index;
 
-        internal DictionaryEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
+        internal DictionaryKeyEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
         {
             this.entries = entries;
             length = count - 1 + start;
-            index = start -1;
+            index = start - 1;
             this.start = start;
         }
 
@@ -25,12 +25,7 @@ namespace StructLinq.BCL.Dictionary
             while (++index <= length)
             {
                 ref var entry = ref entries[index];
-#if (NETCOREAPP3_0 )
                 if (entry.Next >= -1)
-#endif
-#if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0)
-                if (entry.HashCode >= 0)
-#endif
                     return true;
             }
 
@@ -43,13 +38,13 @@ namespace StructLinq.BCL.Dictionary
             index = start-1;
         }
 
-        public readonly KeyValuePair<TKey, TValue> Current
+        public readonly TKey Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 ref var entry = ref entries[index];
-                return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+                return entry.Key;
             }
         }
 
@@ -65,11 +60,12 @@ namespace StructLinq.BCL.Dictionary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public KeyValuePair<TKey, TValue> Get(int i)
+        public TKey Get(int i)
         {
             ref var entry = ref entries[start + i];
-            return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+            return entry.Key;
         }
 
     }
 }
+#endif

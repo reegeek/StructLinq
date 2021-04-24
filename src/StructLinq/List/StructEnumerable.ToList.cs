@@ -1,18 +1,19 @@
-﻿// ReSharper disable once CheckNamespace
+﻿#if !NETSTANDARD1_1
+// ReSharper disable once CheckNamespace
 
 using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using StructLinq.BCL.List;
-using Unsafe = StructLinq.Utils.Unsafe;
+using StructLinq.List;
+using StructLinq.Utils;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     // ReSharper disable once InconsistentNaming
     // ReSharper disable once UnusedType.Global
-    public static partial class BCLStructEnumerable
+    public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static List<T> ToList<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
@@ -20,7 +21,7 @@ namespace StructLinq
         {
             var array = enumerable.ToArray(capacity, pool, x => x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -40,7 +41,7 @@ namespace StructLinq
         {
             var array = collection.ToArray(x => x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -58,7 +59,7 @@ namespace StructLinq
         {
             var array = enumerable.ToArray(capacity, pool, x=>x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -73,7 +74,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return enumerable.ToList(capacity, ArrayPool<T>.Shared, _);
+            return enumerable.ToList<T, TEnumerable, TEnumerator>(capacity, ArrayPool<T>.Shared, _);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -85,7 +86,7 @@ namespace StructLinq
         {
             var array = collection.ToArray(x => x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -99,7 +100,7 @@ namespace StructLinq
         {
             var array = enumerable.ToArray(capacity, pool, x => x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -119,7 +120,7 @@ namespace StructLinq
         {
             var array = enumerable.ToArray(x => x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -137,7 +138,7 @@ namespace StructLinq
         {
             var array = enumerable.ToArray(capacity, pool, x => x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -152,7 +153,7 @@ namespace StructLinq
             where TEnumerable : IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            return enumerable.ToList(capacity, ArrayPool<T>.Shared, _);
+            return enumerable.ToList<T, TEnumerable, TEnumerator>(capacity, ArrayPool<T>.Shared, _);
         }
 
 
@@ -165,7 +166,7 @@ namespace StructLinq
         {
             var array = enumerable.ToArray(x => x);
             var result = new List<T>();
-            var listLayout = Unsafe.As<List<T>, ListLayout<T>>(ref result);
+            var listLayout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref result);
             listLayout.Items = array;
             listLayout.Size = array.Length;
             result.Capacity = array.Length;
@@ -173,3 +174,4 @@ namespace StructLinq
         }
     }
 }
+#endif

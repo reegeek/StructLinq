@@ -1,15 +1,16 @@
-﻿using System.Runtime.CompilerServices;
+﻿#if !NETSTANDARD1_1
+using System.Runtime.CompilerServices;
 
-namespace StructLinq.BCL.Dictionary
+namespace StructLinq.Dictionary
 {
-    public struct DictionaryKeyEnumerator<TKey, TValue> : ICollectionEnumerator<TKey>
+    public struct DictionaryValueEnumerator<TKey, TValue> : ICollectionEnumerator<TValue>
     {
         private readonly Entry<TKey, TValue>[] entries;
         private readonly int length;
         private readonly int start;
         private int index;
 
-        internal DictionaryKeyEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
+        internal DictionaryValueEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
         {
             this.entries = entries;
             length = count - 1 + start;
@@ -37,13 +38,13 @@ namespace StructLinq.BCL.Dictionary
             index = start-1;
         }
 
-        public readonly TKey Current
+        public readonly TValue Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 ref var entry = ref entries[index];
-                return entry.Key;
+                return entry.Value;
             }
         }
 
@@ -59,11 +60,12 @@ namespace StructLinq.BCL.Dictionary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TKey Get(int i)
+        public TValue Get(int i)
         {
             ref var entry = ref entries[start + i];
-            return entry.Key;
+            return entry.Value;
         }
 
     }
 }
+#endif

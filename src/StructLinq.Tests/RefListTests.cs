@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using StructLinq.Array;
-using StructLinq.BCL.List;
+using StructLinq.List;
 using Xunit;
 
 namespace StructLinq.Tests

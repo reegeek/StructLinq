@@ -4,7 +4,7 @@ using StructLinq.Utils;
 
 namespace StructLinq.IList
 {
-    public struct IListEnumerable<T, TList> : IStructCollection<T, IListEnumerator<T, TList>>
+    public struct ListEnumerable<T, TList> : IStructCollection<T, IListEnumerator<T, TList>>
         where TList : IList<T>
     {
         #region private fields
@@ -12,7 +12,7 @@ namespace StructLinq.IList
         private int length;
         private int start;
         #endregion
-        public IListEnumerable(TList list, int start, int length)
+        public ListEnumerable(TList list, int start, int length)
         {
             this.list = list;
             this.length = length;
@@ -43,7 +43,7 @@ namespace StructLinq.IList
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public object Clone()
         {
-            return new IListEnumerable<T, TList>(list, start, length);
+            return new ListEnumerable<T, TList>(list, start, length);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,11 +1,11 @@
-﻿using System;
+﻿#if !NETSTANDARD1_1
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Array;
 using StructLinq.Utils;
-using Unsafe = StructLinq.Utils.Unsafe;
 
-namespace StructLinq.BCL.List
+namespace StructLinq.List
 {
     public struct ListRefEnumerable<T> : IRefStructCollection<T, ArrayRefStructEnumerator<T>>
     {
@@ -17,7 +17,7 @@ namespace StructLinq.BCL.List
         internal ListRefEnumerable(List<T> list, int start, int count)
         {
             this.list = list;
-            layout = Unsafe.As<List<T>, ListLayout<T>>(ref list);
+            layout = UnsafeHelpers.As<List<T>, ListLayout<T>>(ref list);
             this.start = start;
             this.count = count;
         }
@@ -62,3 +62,4 @@ namespace StructLinq.BCL.List
         }
     }
 }
+#endif

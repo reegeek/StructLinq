@@ -1,19 +1,20 @@
-﻿using System.Runtime.CompilerServices;
+﻿#if !NETSTANDARD1_1
+using System.Runtime.CompilerServices;
 
-namespace StructLinq.BCL.Dictionary
+namespace StructLinq.Hashset
 {
-    public struct DictionaryValueEnumerator<TKey, TValue> : ICollectionEnumerator<TValue>
+    public struct HashsetEnumerator<T> : ICollectionEnumerator<T>
     {
-        private readonly Entry<TKey, TValue>[] entries;
+        private readonly Slot<T>[] entries;
         private readonly int length;
         private readonly int start;
         private int index;
 
-        internal DictionaryValueEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
+        internal HashsetEnumerator(Slot<T>[] entries, int start, int count)
         {
             this.entries = entries;
             length = count - 1 + start;
-            index = start - 1;
+            index = start -1;
             this.start = start;
         }
 
@@ -24,7 +25,12 @@ namespace StructLinq.BCL.Dictionary
             while (++index <= length)
             {
                 ref var entry = ref entries[index];
+#if (NETCOREAPP3_0 )
                 if (entry.Next >= -1)
+#endif
+#if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0)
+                if (entry.HashCode >= 0)
+#endif
                     return true;
             }
 
@@ -37,7 +43,7 @@ namespace StructLinq.BCL.Dictionary
             index = start-1;
         }
 
-        public readonly TValue Current
+        public readonly T Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -59,7 +65,7 @@ namespace StructLinq.BCL.Dictionary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TValue Get(int i)
+        public T Get(int i)
         {
             ref var entry = ref entries[start + i];
             return entry.Value;
@@ -67,3 +73,4 @@ namespace StructLinq.BCL.Dictionary
 
     }
 }
+#endif
