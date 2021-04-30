@@ -158,6 +158,7 @@ Following extensions are available for :
   - `Reverse`([zero allocation](Documents/BenchmarksResults/Reverse.md))
   - `Select`
   - `Skip`
+  - `SkipWhile`
   - `Sum`
   - `Take`
   - `Union`([zero allocation](Documents/BenchmarksResults/Union.md))	

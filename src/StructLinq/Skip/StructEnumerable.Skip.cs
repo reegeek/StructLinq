@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using StructLinq.Skip;
 
+// ReSharper disable once CheckNamespace
 namespace StructLinq
 {
     public static partial class StructEnumerable
