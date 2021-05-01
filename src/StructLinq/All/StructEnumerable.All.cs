@@ -11,55 +11,20 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool InnerAll<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
-        {
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                if (!predicate(current))
-                {
-                    enumerator.Dispose();
-                    return false;
-                }
-            }
-            enumerator.Dispose();
-            return true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool InnerAll<T, TEnumerator, TFunction>(ref TEnumerator enumerator, ref TFunction predicate)
-        where TEnumerator : struct, IStructEnumerator<T>
-        where TFunction : IFunction<T, bool>
-        {
-            while (enumerator.MoveNext())
-            {
-                var current = enumerator.Current;
-                if (!predicate.Eval(current))
-                {
-                    enumerator.Dispose();
-                    return false;
-                }
-            }
-            enumerator.Dispose();
-            return true;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool All<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return InnerAll(ref enumerator, predicate);
+            var visitor = new AllVisitor<T>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool All<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return InnerAll(ref enumerator, predicate);
+            var visitor = new AllVisitor<T>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -68,16 +33,46 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TFunction : IFunction<T, bool>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return InnerAll<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
+            var visitor = new AllVisitor<T, TFunction>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool All<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, IFunction<T, bool> predicate)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            var enumerator = enumerable.GetEnumerator();
-            return InnerAll<T, TEnumerator, IFunction<T, bool>>(ref enumerator, ref predicate);
+            var visitor = new AllVisitor<T, IFunction<T, bool>>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
+
+        private struct AllVisitor<T, TFunction> : IVisitor<T>
+            where TFunction : IFunction<T, bool>
+        {
+            private readonly TFunction function;
+            public AllVisitor(TFunction function)
+            {
+                this.function = function;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                return function.Eval(input);
+            }
+        }
+
+        private struct AllVisitor<T> : IVisitor<T>
+        {
+            private readonly Func<T, bool> function;
+            public AllVisitor(Func<T, bool> function)
+            {
+                this.function = function;
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                return function(input);
+            }
+        }
+
     }
 }
