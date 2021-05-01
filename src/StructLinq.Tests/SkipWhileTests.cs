@@ -5,7 +5,7 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public partial class SkipWhileTests : AbstractEnumerableTests<int,
+    public class SkipWhileTests : AbstractEnumerableTests<int,
         SkipWhileEnumerable<int, StructFunction<int, bool>, RangeEnumerable, RangeEnumerator>,
         SkipWhileEnumerator<int, StructFunction<int, bool>, RangeEnumerator>>
     {

@@ -27,11 +27,6 @@ To install [`StructLinq`](https://www.nuget.org/packages/StructLinq/) :
   ```
   PM> Install-Package StructLinq
   ```
-To install BCL wrapper use [`Struct.Linq.BCL`](https://www.nuget.org/packages/StructLinq.BCL/) :
-  ```
-  PM> Install-Package StructLinq.BCL
-  ```
-
 
 ## Usage
 
@@ -161,6 +156,7 @@ Following extensions are available for :
   - `SkipWhile`
   - `Sum`
   - `Take`
+  - `TakeWhile`
   - `Union`([zero allocation](Documents/BenchmarksResults/Union.md))	
   - `Where`
 ### Other Extensions
@@ -219,8 +215,10 @@ Following extensions are available for :
   - `Last`
   - `Select`
   - `Skip`
+  - `SkipWhile`
   - `Sum`
   - `Take`
+  - `TakeWhile`
   - `Union`
   - `Where`
 ### Other Extensions
