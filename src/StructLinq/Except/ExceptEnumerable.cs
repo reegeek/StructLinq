@@ -44,13 +44,43 @@ namespace StructLinq.Except
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            foreach (var input in this)
+            var exceptVisitor = new ExceptVisitor<TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
+            enumerable2.Visit(ref exceptVisitor);
+            exceptVisitor.Add = false;
+            var visitStatus = enumerable1.Visit(ref exceptVisitor);
+            visitor = exceptVisitor.Visitor;
+            exceptVisitor.Dispose();
+            return visitStatus;
+        }
+
+        private struct ExceptVisitor<TVisitor> : IVisitor<T>
+            where TVisitor : IVisitor<T>
+        {
+            public TVisitor Visitor;
+            public bool Add;
+            private PooledSet<T, TComparer> set;
+
+            public ExceptVisitor(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer, ref TVisitor visitor)
             {
-                if (!visitor.Visit(input))
-                    return VisitStatus.VisitorFinished;
+                this.Visitor = visitor;
+                set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
+                Add = true;
             }
 
-            return VisitStatus.EnumeratorFinished;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                if (!Add)
+                    return !set.AddIfNotPresent(input) || Visitor.Visit(input);
+                set.AddIfNotPresent(input);
+                return true;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public void Dispose()
+            {
+                set.Dispose();
+            }
         }
     }
 }

@@ -28,5 +28,16 @@ namespace StructLinq.Tests
             var value = array1.ToStructEnumerable().Except(array2.ToStructEnumerable()).ToArray();
             Assert.Equal(expected, value);
         }
+
+        [Fact]
+        public void SameAsSystemEnumerable()
+        {
+            var array1 = new int[] { 1, 1, 2, 3, 4, 4, 5 };
+            var array2 = new int[] { 4, 5, 6, 6, 7, 8, 9 };
+
+            var expected = array1.Except(array2);
+            var value = array1.ToStructEnumerable().Except(array2.ToStructEnumerable()).ToEnumerable();
+            Assert.Equal(expected, value);
+        }
     }
 }
