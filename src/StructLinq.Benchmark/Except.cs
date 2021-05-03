@@ -63,5 +63,14 @@ namespace StructLinq.Benchmark
             return sum;
         }
 
+        [Benchmark]
+        public int StructLinqZeroAllocAndComparerSum()
+        {
+            var comparer = new DefaultStructEqualityComparer();
+            return array1.ToStructEnumerable()
+                         .Except(array2.ToStructEnumerable(), comparer, x => x, x => x)
+                         .Sum(x=>x);
+        }
+
     }
 }

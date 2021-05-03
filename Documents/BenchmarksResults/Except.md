@@ -7,16 +7,17 @@
 ``` ini
 
 BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
-Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.101
-  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical cores
+.NET Core SDK=5.0.202
+  [Host]     : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT
 
 
 ```
-|                         Method |     Mean |   Error |  StdDev | Ratio |   Gen 0 |   Gen 1 |   Gen 2 | Allocated |
-|------------------------------- |---------:|--------:|--------:|------:|--------:|--------:|--------:|----------:|
-|                           Linq | 331.1 μs | 1.51 μs | 1.41 μs |  1.00 | 90.8203 | 90.8203 | 90.8203 |  524848 B |
-|                     StructLinq | 142.5 μs | 0.68 μs | 0.63 μs |  0.43 |       - |       - |       - |      64 B |
-|            StructLinqZeroAlloc | 155.3 μs | 0.60 μs | 0.53 μs |  0.47 |       - |       - |       - |         - |
-| StructLinqZeroAllocAndComparer | 118.3 μs | 0.29 μs | 0.25 μs |  0.36 |       - |       - |       - |         - |
+|                            Method |     Mean |   Error |  StdDev | Ratio |   Gen 0 |   Gen 1 |   Gen 2 | Allocated |
+|---------------------------------- |---------:|--------:|--------:|------:|--------:|--------:|--------:|----------:|
+|                              Linq | 405.5 μs | 4.10 μs | 3.64 μs |  1.00 | 90.8203 | 90.8203 | 90.8203 |  524848 B |
+|                        StructLinq | 169.1 μs | 1.25 μs | 1.05 μs |  0.42 |       - |       - |       - |      64 B |
+|               StructLinqZeroAlloc | 169.5 μs | 1.44 μs | 1.28 μs |  0.42 |       - |       - |       - |         - |
+|    StructLinqZeroAllocAndComparer | 148.6 μs | 0.81 μs | 0.76 μs |  0.37 |       - |       - |       - |         - |
+| StructLinqZeroAllocAndComparerSum | 129.5 μs | 0.62 μs | 0.52 μs |  0.32 |       - |       - |       - |         - |
