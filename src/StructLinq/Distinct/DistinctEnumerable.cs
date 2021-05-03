@@ -38,13 +38,36 @@ namespace StructLinq.Distinct
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            foreach (var input in this)
+            var distinctVisitor = new DistinctVisitor<TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
+            var visitStatus = enumerable.Visit(ref distinctVisitor);
+            visitor = distinctVisitor.visitor;
+            distinctVisitor.Dispose();
+            return visitStatus;
+        }
+
+        private struct DistinctVisitor<TVisitor> : IVisitor<T>
+            where TVisitor : IVisitor<T>
+        {
+            public TVisitor visitor;
+            private PooledSet<T, TComparer> set;
+
+            public DistinctVisitor(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer, ref TVisitor visitor)
             {
-                if (!visitor.Visit(input))
-                    return VisitStatus.VisitorFinished;
+                this.visitor = visitor;
+                set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
             }
 
-            return VisitStatus.EnumeratorFinished;
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                return !set.AddIfNotPresent(input) || visitor.Visit(input);
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public void Dispose()
+            {
+                set.Dispose();
+            }
         }
     }
 }

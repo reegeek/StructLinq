@@ -30,5 +30,21 @@ namespace StructLinq.Tests
                 .ToEnumerable();
             Assert.Equal(expected, value);
         }
+
+        [Fact]
+        public void ToArrayShouldEquals()
+        {
+            var expected = Enumerable.Range(0, 100)
+                                     .Select(x => x % 10)
+                                     .Distinct()
+                                     .ToArray();
+
+            var value = Enumerable.Range(0, 100)
+                                  .Select(x => x % 10)
+                                  .ToStructEnumerable()
+                                  .Distinct(x => x)
+                                  .ToArray();
+            Assert.Equal(expected, value);
+        }
     }
 }
