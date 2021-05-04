@@ -16,8 +16,8 @@ Intel Core i7-7700 CPU 3.60GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical core
 ```
 |                            Method |     Mean |   Error |  StdDev | Ratio |   Gen 0 |   Gen 1 |   Gen 2 | Allocated |
 |---------------------------------- |---------:|--------:|--------:|------:|--------:|--------:|--------:|----------:|
-|                              Linq | 424.0 μs | 8.27 μs | 7.74 μs |  1.00 | 90.8203 | 90.8203 | 90.8203 |  524824 B |
-|                        StructLinq | 184.9 μs | 2.72 μs | 2.42 μs |  0.44 |       - |       - |       - |      64 B |
-|               StructLinqZeroAlloc | 184.4 μs | 1.89 μs | 1.58 μs |  0.43 |       - |       - |       - |         - |
-|    StructLinqZeroAllocAndComparer | 149.1 μs | 0.82 μs | 0.69 μs |  0.35 |       - |       - |       - |         - |
-| StructLinqZeroAllocAndComparerSum | 132.7 μs | 0.41 μs | 0.37 μs |  0.31 |       - |       - |       - |         - |
+|                              Linq | 430.9 μs | 3.74 μs | 3.12 μs |  1.00 | 90.8203 | 90.8203 | 90.8203 |  524824 B |
+|                        StructLinq | 182.4 μs | 3.57 μs | 3.34 μs |  0.42 |       - |       - |       - |      64 B |
+|               StructLinqZeroAlloc | 187.4 μs | 3.61 μs | 3.71 μs |  0.43 |       - |       - |       - |         - |
+|    StructLinqZeroAllocAndComparer | 152.3 μs | 2.96 μs | 3.40 μs |  0.36 |       - |       - |       - |         - |
+| StructLinqZeroAllocAndComparerSum | 109.8 μs | 2.19 μs | 3.48 μs |  0.25 |       - |       - |       - |         - |

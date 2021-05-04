@@ -1,6 +1,7 @@
 ﻿using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using StructLinq.Utils;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Union
@@ -44,13 +45,15 @@ namespace StructLinq.Union
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
-            foreach (var input in this)
+            var distinctVisitor = new DistinctVisitor<T, TComparer, TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
+            var visitStatus = enumerable1.Visit(ref distinctVisitor);
+            if (visitStatus != VisitStatus.VisitorFinished)
             {
-                if (!visitor.Visit(input))
-                    return VisitStatus.VisitorFinished;
+                visitStatus = enumerable2.Visit(ref distinctVisitor);
             }
-
-            return VisitStatus.EnumeratorFinished;
+            visitor = distinctVisitor.Visitor;
+            distinctVisitor.Dispose();
+            return visitStatus;
         }
     }
 }
