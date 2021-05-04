@@ -97,9 +97,7 @@ namespace StructLinq.Where
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Visit(TIn input)
         {
-            if (function(input))
-                return visitor.Visit(input);
-            return true;
+            return !function(input) || visitor.Visit(input);
         }
     }
 }
