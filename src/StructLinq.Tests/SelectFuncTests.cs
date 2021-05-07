@@ -2,14 +2,13 @@
 using System.Linq;
 using StructLinq.Range;
 using StructLinq.Select;
-using StructLinq.Where;
 using Xunit;
 
 namespace StructLinq.Tests
 {
     public class SelectFuncTests : AbstractEnumerableTests<double,
-        SelectEnumerable<int, double, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>,
-        SelectEnumerator<int, double, WhereEnumerator<int, RangeEnumerator>>>
+        SelectEnumerable<int, double, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>,
+        SelectEnumerator<int, double, RangeEnumerator>>
     {
         [Fact]
         public void DelegateTest()
@@ -27,10 +26,11 @@ namespace StructLinq.Tests
             Assert.Equal(sys, structEnum);
         }
 
-        protected override SelectEnumerable<int, double, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>> Build(int size)
+        protected override SelectEnumerable<int, double, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator> Build(int size)
         {
+            IStructEnumerable<int, RangeEnumerator> rangeEnumerable = StructEnumerable.Range(-1, size);
             var selectEnumerable = 
-                StructEnumerable.Range(-1, size).Where(x=> true).Select(x=> x * 2.0, x=> x);
+                rangeEnumerable.Select(x=> x * 2.0);
             return selectEnumerable;
         }
 

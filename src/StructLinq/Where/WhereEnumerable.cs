@@ -33,6 +33,18 @@ namespace StructLinq.Where
             return visitStatus;
         }
 
+        internal TFunction Function
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => function;
+        }
+
+        internal TEnumerable Inner
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => inner;
+        }
+
         private struct WhereVisitor<TVisitor> : IVisitor<TIn>
             where TVisitor : IVisitor<TIn>
         {
@@ -51,8 +63,19 @@ namespace StructLinq.Where
             }
         }
     }
+
+    public interface IWhereEnumerable<TIn, TEnumerator> : IStructEnumerable<TIn, WhereEnumerator<TIn, TEnumerator>>
+        where TEnumerator : struct, IStructEnumerator<TIn>
+    {
+        TEnumerator GetInnerEnumerator();
+
+        VisitStatus InnerVisit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TIn>;
+
+        Func<TIn, bool> Function { get; }
+    }
     
-    public struct WhereEnumerable<TIn, TEnumerable, TEnumerator> : IStructEnumerable<TIn, WhereEnumerator<TIn, TEnumerator>>
+    public struct WhereEnumerable<TIn, TEnumerable, TEnumerator> : IWhereEnumerable<TIn, TEnumerator>
         where TEnumerator : struct, IStructEnumerator<TIn> 
         where TEnumerable : IStructEnumerable<TIn, TEnumerator>
     {
@@ -62,6 +85,25 @@ namespace StructLinq.Where
         {
             this.function = function;
             this.inner = inner;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TEnumerator GetInnerEnumerator()
+        {
+            return inner.GetEnumerator();
+        }
+
+        public Func<TIn, bool> Function         
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => function;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus InnerVisit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TIn>
+        {
+            return inner.Visit(ref visitor);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
