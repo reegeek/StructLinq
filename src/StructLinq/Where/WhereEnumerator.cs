@@ -8,14 +8,18 @@ namespace StructLinq.Where
         where TEnumerator : struct, IStructEnumerator<TIn>
     {
         #region private fields
+
         private TFunction predicate;
         private TEnumerator enumerator;
+
         #endregion
+
         public WhereEnumerator(ref TFunction predicate, ref TEnumerator enumerator)
         {
             this.predicate = predicate;
             this.enumerator = enumerator;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
@@ -29,15 +33,17 @@ namespace StructLinq.Where
 
             return false;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
             enumerator.Reset();
         }
+
         public readonly TIn Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => enumerator.Current; 
+            get => enumerator.Current;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -45,21 +51,24 @@ namespace StructLinq.Where
         {
             enumerator.Dispose();
         }
-
     }
-    
+
     public struct WhereEnumerator<TIn, TEnumerator> : IStructEnumerator<TIn>
         where TEnumerator : struct, IStructEnumerator<TIn>
     {
         #region private fields
+
         private Func<TIn, bool> predicate;
         private TEnumerator enumerator;
+
         #endregion
+
         public WhereEnumerator(Func<TIn, bool> predicate, ref TEnumerator enumerator)
         {
             this.predicate = predicate;
             this.enumerator = enumerator;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool MoveNext()
         {
@@ -73,15 +82,17 @@ namespace StructLinq.Where
 
             return false;
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
             enumerator.Reset();
         }
+
         public readonly TIn Current
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => enumerator.Current; 
+            get => enumerator.Current;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -89,7 +100,5 @@ namespace StructLinq.Where
         {
             enumerator.Dispose();
         }
-
     }
-    
 }
