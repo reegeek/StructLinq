@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
+using StructLinq.Array;
 
 namespace StructLinq.Benchmark
 {
@@ -70,6 +71,20 @@ namespace StructLinq.Benchmark
 
             return sum;
         }
+
+        [Benchmark]
+        public int StructEnumerable2()
+        {
+            var sum = 0;
+            var enumerable = new ArrayEnumerable2<int>(array);
+            foreach (var i in enumerable)
+            {
+                sum += i;
+            }
+
+            return sum;
+        }
+
 
     }
 

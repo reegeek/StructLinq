@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using StructLinq.Array;
 using Xunit;
 
@@ -17,6 +18,19 @@ namespace StructLinq.Tests
         protected override ArrayEnumerable<int> Build(int size)
         {
             return Enumerable.Range(-1, size).ToArray().ToStructEnumerable();
+        }
+
+        [Fact]
+        public void toto()
+        {
+            var array = Enumerable.Range(-1, 10).ToArray();
+            var enumerable = new ArrayEnumerable2<int>(array);
+            var list = new List<int>();
+            foreach (var i in enumerable)
+            {
+                list.Add(i);
+            }
+            Assert.Equal(array, list);
         }
     }
 }
