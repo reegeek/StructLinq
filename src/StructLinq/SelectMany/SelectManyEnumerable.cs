@@ -1,31 +1,31 @@
 ﻿using System.Runtime.CompilerServices;
-using StructLinq.Zip;
 
 namespace StructLinq.SelectMany
 {
-    public struct SelectManyEnumerable<T1, TEnumerable1, TEnumerator1, T2, TEnumerable2, TEnumerator2> : IStructEnumerable<(T1 First, T2 Second), ZipEnumerator<T1, TEnumerator1, T2, TEnumerator2>>
-        where TEnumerator1 : struct, IStructEnumerator<T1>
-        where TEnumerator2 : struct, IStructEnumerator<T2>
-        where TEnumerable1 : IStructEnumerable<T1, TEnumerator1>
-        where TEnumerable2 : IStructEnumerable<T2, TEnumerator2>
+    public readonly struct SelectManyEnumerable<TSource, TSourceEnumerable, TSourceEnumerator, TResult, TResultEnumerable, TResultEnumerator, TFunction> : IStructEnumerable<TResult, SelectManyEnumerator<TSource, TSourceEnumerator, TResult, TResultEnumerable, TResultEnumerator, TFunction>>
+        where TSourceEnumerable : IStructEnumerable<TSource, TSourceEnumerator>
+        where TSourceEnumerator : struct, IStructEnumerator<TSource>
+        where TResultEnumerable : IStructEnumerable<TResult, TResultEnumerator>
+        where TResultEnumerator : struct, IStructEnumerator<TResult>
+        where TFunction : IFunction<TSource, TResultEnumerable>
     {
-        private readonly TEnumerable1 enumerable1;
-        private readonly TEnumerable2 enumerable2;
+        private readonly TSourceEnumerable enumerable;
+        private readonly TFunction function;
 
-        public SelectManyEnumerable(TEnumerable1 enumerable1, TEnumerable2 enumerable2)
+        public SelectManyEnumerable(TSourceEnumerable enumerable, TFunction function)
         {
-            this.enumerable1 = enumerable1;
-            this.enumerable2 = enumerable2;
+            this.enumerable = enumerable;
+            this.function = function;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ZipEnumerator<T1, TEnumerator1, T2, TEnumerator2> GetEnumerator()
+        public SelectManyEnumerator<TSource, TSourceEnumerator, TResult, TResultEnumerable, TResultEnumerator, TFunction> GetEnumerator()
         {
-            return new (enumerable1.GetEnumerator(), enumerable2.GetEnumerator());
+            return new (enumerable.GetEnumerator(), function);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<(T1, T2)>
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TResult>
         {
             foreach (var input in this)
             {

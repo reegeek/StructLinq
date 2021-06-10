@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.IEnumerable;
 
-namespace StructLinq
+namespace StructLinq.SelectMany
 {
     public readonly struct FuncEnumerable<TSource, TResult> : IFunction<TSource, StructEnumerableFromIEnumerable<TResult>>
     {

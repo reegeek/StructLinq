@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using StructLinq.Zip;
+using StructLinq.IEnumerable;
+using StructLinq.SelectMany;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
@@ -8,24 +10,24 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ZipEnumerable<T1, TEnumerable1, TEnumerator1, T2, TEnumerable2, TEnumerator2> SelectMany<T1, TEnumerable1, TEnumerator1, T2, TEnumerable2, TEnumerator2>(this TEnumerable1 enumerable1, TEnumerable2 enumerable2, 
-                                                                                                                                                                        Func<TEnumerable1, IStructEnumerable<T1, TEnumerator1>> _,
-                                                                                                                                                                        Func<TEnumerable2, IStructEnumerable<T2, TEnumerator2>> __)
-            where TEnumerable1 : IStructEnumerable<T1, TEnumerator1>
-            where TEnumerator1 : struct, IStructEnumerator<T1>
-            where TEnumerable2 : IStructEnumerable<T2, TEnumerator2>
-            where TEnumerator2 : struct, IStructEnumerator<T2>
+        public static SelectManyEnumerable<TSource, TSourceEnumerable, TSourceEnumerator, TResult, TResultEnumerable, TResultEnumerator, TFunction> SelectMany<TSource, TSourceEnumerable, TSourceEnumerator, TResult, TResultEnumerable, TResultEnumerator, TFunction>(this TSourceEnumerable enumerable, TFunction function, 
+                                                                                                                                                                                                                                                                        Func<TSourceEnumerable, IStructEnumerable<TSource, TSourceEnumerator>> _,
+                                                                                                                                                                                                                                                                        Func<TResultEnumerable, IStructEnumerable<TResult, TResultEnumerator>> __)
+            where TSourceEnumerable : IStructEnumerable<TSource, TSourceEnumerator>
+            where TSourceEnumerator : struct, IStructEnumerator<TSource>
+            where TResultEnumerable : IStructEnumerable<TResult, TResultEnumerator>
+            where TResultEnumerator : struct, IStructEnumerator<TResult>
+            where TFunction : IFunction<TSource, TResultEnumerable>
         {
-            return new (enumerable1, enumerable2);
+            return new (enumerable, function);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ZipEnumerable<T1, IStructEnumerable<T1, TEnumerator1>, TEnumerator1, T2, IStructEnumerable<T2, TEnumerator2>, TEnumerator2> SelectMany<T1, TEnumerator1, T2, TEnumerator2>(this IStructEnumerable<T1, TEnumerator1> enumerable1, IStructEnumerable<T2, TEnumerator2> enumerable2)
-            where TEnumerator1 : struct, IStructEnumerator<T1>
-            where TEnumerator2 : struct, IStructEnumerator<T2>
+        public static SelectManyEnumerable<TSource, TSourceEnumerable, TSourceEnumerator, TResult, StructEnumerableFromIEnumerable<TResult>, GenericEnumerator<TResult>, FuncEnumerable<TSource, TResult>> SelectMany<TSource, TSourceEnumerable, TSourceEnumerator, TResult>(this TSourceEnumerable enumerable, Func<TSource, IEnumerable<TResult>> function)
+            where TSourceEnumerable : IStructEnumerable<TSource, TSourceEnumerator>
+            where TSourceEnumerator : struct, IStructEnumerator<TSource>
         {
-            return new (enumerable1, enumerable2);
+            return new (enumerable, new FuncEnumerable<TSource, TResult>(function));
         }
-
     }
 }
