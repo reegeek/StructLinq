@@ -54,25 +54,6 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<TEnumerable, TEnumerator>(this TEnumerable enumerable, <#= t.Name #> x, Func<TEnumerable, IStructCollection<<#= t.Name #>, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<<#= t.Name #>>
-            where TEnumerable : IStructCollection<<#= t.Name #>, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            var equalityComparer = new DefaultStructEqualityComparer();
-            return InnerCollectionContains(enumerator, x, equalityComparer);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<TEnumerator>(this IStructCollection<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
-            where TEnumerator : struct, ICollectionEnumerator<<#= t.Name #>>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            var equalityComparer = new DefaultStructEqualityComparer();
-            return InnerCollectionContains(enumerator, x, equalityComparer);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Contains<TEnumerable, TEnumerator>(this TEnumerable enumerable, <#= t.Name #> x,
             Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
             where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
