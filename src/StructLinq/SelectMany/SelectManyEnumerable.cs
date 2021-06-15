@@ -27,14 +27,15 @@ namespace StructLinq.SelectMany
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TResult>
         {
-            foreach (var input in this)
+            foreach (var source in enumerable)
             {
-                if (!visitor.Visit(input))
+                var resultEnumerable = function.Eval(source);
+                var status = resultEnumerable.Visit(ref visitor);
+                if (status == VisitStatus.VisitorFinished)
                     return VisitStatus.VisitorFinished;
             }
 
             return VisitStatus.EnumeratorFinished;
-
         }
     }
 }

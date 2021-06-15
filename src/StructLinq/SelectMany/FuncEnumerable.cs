@@ -20,4 +20,22 @@ namespace StructLinq.SelectMany
             return func(element).ToStructEnumerable();
         }
     }
+
+    public readonly struct FuncEnumerable<TSource, TResult, TResultEnumerable, TResultEnumerator> : IFunction<TSource, TResultEnumerable> 
+        where TResultEnumerable : IStructEnumerable<TResult, TResultEnumerator>
+        where TResultEnumerator : struct, IStructEnumerator<TResult>
+    {
+        private readonly Func<TSource, TResultEnumerable> func;
+
+        public FuncEnumerable(Func<TSource, TResultEnumerable> func)
+        {
+            this.func = func;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TResultEnumerable Eval(TSource element)
+        {
+            return func(element);
+        }
+    }
 }

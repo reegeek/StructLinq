@@ -152,6 +152,7 @@ Following extensions are available for :
   - `Repeat`
   - `Reverse`([zero allocation](Documents/BenchmarksResults/Reverse.md))
   - `Select`
+  - `SelectMany`
   - `Skip`
   - `SkipWhile`
   - `Sum`

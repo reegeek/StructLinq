@@ -33,8 +33,12 @@ namespace StructLinq.SelectMany
         public bool MoveNext()
         {
             if (hasCurrent)
-                return currentEnumerator.MoveNext();
-            
+            {
+                var moveNext = currentEnumerator.MoveNext();
+                if (moveNext)
+                    return true;
+            }
+
             while (true)
             {
                 if (!enumerator1.MoveNext())
