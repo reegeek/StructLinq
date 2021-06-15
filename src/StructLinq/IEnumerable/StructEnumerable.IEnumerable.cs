@@ -10,7 +10,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StructEnumerableFromIEnumerable<T> ToStructEnumerable<T>(this IEnumerable<T> enumerable)
         {
-            return new StructEnumerableFromIEnumerable<T>(enumerable);
+            return new(enumerable);
         }
     }
 }
