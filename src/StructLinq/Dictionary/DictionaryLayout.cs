@@ -7,8 +7,17 @@ namespace StructLinq.Dictionary
         public Entry<TKey, TValue>[] Entries;
     }
 
-#if (NETCOREAPP3_0 || NETCOREAPP3_1)
+#if (NET5_0_OR_GREATER)
     
+    internal struct Entry<TKey, TValue>
+    {
+        public uint HashCode;
+        public int Next;
+        internal TKey Key;           // Key of entry
+        internal TValue Value;         // Value of entry
+    }
+#elif NETCOREAPP3_0_OR_GREATER
+
     internal struct Entry<TKey, TValue>
     {
         public int Next;
@@ -17,16 +26,6 @@ namespace StructLinq.Dictionary
         internal TValue Value;         // Value of entry
     }
 #else 
-#if (NET5_0)
-    
-    internal struct Entry<TKey, TValue>
-    {
-        public uint HashCode;
-        public int Next;
-        internal TKey Key;           // Key of entry
-        internal TValue Value;         // Value of entry
-    }
-#else
     internal struct Entry<TKey, TValue>
     {
         public int HashCode;
@@ -34,7 +33,6 @@ namespace StructLinq.Dictionary
         internal TKey Key;           // Key of entry
         internal TValue Value;         // Value of entry
     }
-    #endif
 #endif
 }
 #endif
