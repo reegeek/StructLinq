@@ -10,7 +10,7 @@ namespace StructLinq.Benchmark
 {
     
     [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(RuntimeMoniker.Net50)]
     [DisassemblyDiagnoser(4)]
     public class ImpactOfUsingOnForEach
     {

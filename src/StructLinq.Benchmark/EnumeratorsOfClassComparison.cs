@@ -7,7 +7,7 @@ namespace StructLinq.Benchmark
 
     [DisassemblyDiagnoser(4), MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net48)]
-    [SimpleJob(RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(RuntimeMoniker.Net50)]
     public class EnumeratorsOfClassComparison
     {
         private Container[] array;
