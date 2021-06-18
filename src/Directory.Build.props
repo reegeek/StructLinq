@@ -3,6 +3,37 @@
     <RootDir>$(MSBuildThisFileDirectory)..</RootDir>
   </PropertyGroup>
   <Import Project="$(RootDir)\Build\Common.props"/>
-  <Import Condition="$(MSBuildProjectName.EndsWith('Tests'))" Project="$(RootDir)\Build\Common.Tests.props"/>
-  <Import Condition="$(MSBuildProjectName.EndsWith('Benchmark'))" Project="$(RootDir)\Build\Common.Benchmark.props"/>
+
+  <!-- common tests properties -->
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+    <IsPackable>False</IsPackable>
+    <DefaultTargetFrameworks>net50;net48</DefaultTargetFrameworks>
+  </PropertyGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <Import Project="$(RootDir)\Build\DeleteGenerateBindingRedirects.target" Condition="$(MSBuildProjectName.EndsWith('Tests'))"/>
+
+  <!-- common benchmark properties -->
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Benchmark'))">
+    <IsPackable>False</IsPackable>
+    <OutputType>Exe</OutputType>
+    <DefaultTargetFrameworks>net50;net48</DefaultTargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Benchmark'))">
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.12.1" />
+  </ItemGroup>
+
+  <Import Project="$(RootDir)\Build\DeleteGenerateBindingRedirects.target" Condition="$(MSBuildProjectName.EndsWith('Benchmark'))"/>
+
 </Project>
