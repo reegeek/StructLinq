@@ -44,6 +44,12 @@ stages:
         dependsOn: [ Setup ]
         steps:
           - task: UseDotNet@2
+            displayName: 'Setup .NET 5.0'
+            inputs:
+              packageType: sdk
+              version: 5.0.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
             displayName: 'Setup .NET 6.0'
             inputs:
               packageType: sdk
@@ -59,6 +65,12 @@ stages:
         strategy:
           parallel: 4
         steps:
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 5.0'
+            inputs:
+              packageType: sdk
+              version: 5.0.x
+              performMultiLevelLookup: true 
           - task: UseDotNet@2
             displayName: 'Setup .NET 6.0'
             inputs:
@@ -77,6 +89,12 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 5.0'
+            inputs:
+              packageType: sdk
+              version: 5.0.x
+              performMultiLevelLookup: true 
           - task: UseDotNet@2
             displayName: 'Setup .NET 6.0'
             inputs:
