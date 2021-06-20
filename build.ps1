@@ -40,9 +40,11 @@ Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
      $(dotnet --version) -and $LASTEXITCODE -eq 0) {
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
+    Write-Output "Find dotnet" 
 }
 else {
     # Download install script
+    Write-Output "download dotnet"
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
