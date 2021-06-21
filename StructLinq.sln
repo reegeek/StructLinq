@@ -19,9 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructLinq.Benchmark", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Props", "Props", "{9272A85F-FC64-4560-A88E-5362A37DA58E}"
 	ProjectSection(SolutionItems) = preProject
-		Build\Common.Benchmark.props = Build\Common.Benchmark.props
 		Build\Common.props = Build\Common.props
-		Build\Common.Tests.props = Build\Common.Tests.props
 		src\Directory.Build.props = src\Directory.Build.props
 	EndProjectSection
 EndProject
