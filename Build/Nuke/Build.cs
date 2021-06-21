@@ -123,7 +123,7 @@ partial class Build : Nuke.Common.NukeBuild
         }
     }
 
-    [Partition(3)] readonly Partition TestPartition;
+    [Partition(4)] readonly Partition TestPartition;
 
     Target Test => _ => _
         .DependsOn(Compile) 

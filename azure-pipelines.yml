@@ -21,21 +21,23 @@ stages:
     pool:
       vmImage: 'windows-latest'
     jobs:
-      - job: Setup
-        displayName: 'Setup'
-        dependsOn: [  ]
-        steps:
-        - task: UseDotNet@2
-          displayName: 'Setup .NET Core 2.2'
-          inputs:
-            packageType: runtime
-            version: 2.2.x
-            performMultiLevelLookup: true 
-
       - job: Compile
         displayName: '⚙️ Compile'
-        dependsOn: [ Setup ]
+        dependsOn: [ ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 5.0'
+            inputs:
+              packageType: sdk
+              version: 5.0.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 6.0'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              includePreviewVersions: true
+              performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -43,8 +45,45 @@ stages:
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
-          parallel: 3
+          parallel: 4
         steps:
+          - task: UseDotNet@2
+            displayName: 'Setup .NET Core 2.1'
+            inputs:
+              packageType: sdk
+              version: 2.1.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET Core 2.2'
+            inputs:
+              packageType: sdk
+              version: 2.2.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET Core 3.0'
+            inputs:
+              packageType: sdk
+              version: 3.0.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET Core 3.1'
+            inputs:
+              packageType: sdk
+              version: 3.1.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 5.0'
+            inputs:
+              packageType: sdk
+              version: 5.0.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 6.0'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              includePreviewVersions: true
+              performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -56,6 +95,19 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 5.0'
+            inputs:
+              packageType: sdk
+              version: 5.0.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 6.0'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              includePreviewVersions: true
+              performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'

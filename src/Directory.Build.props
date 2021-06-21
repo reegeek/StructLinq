@@ -7,7 +7,7 @@
   <!-- common tests properties -->
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>False</IsPackable>
-    <DefaultTargetFrameworks>net50;net48</DefaultTargetFrameworks>
+    <DefaultTargetFrameworks>net50;net48;net60</DefaultTargetFrameworks>
   </PropertyGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
