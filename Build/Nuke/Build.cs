@@ -128,7 +128,7 @@ partial class Build : Nuke.Common.NukeBuild
     Target Test => _ => _
         .DependsOn(Compile) 
         .Produces(TestResultDirectory / "*.trx")
-        .Partition(() => TestPartition)
+        .Partition(4)
         .Executes(() => ExecutesTest(false));
 
     void ExecutesTest(bool excludeNetFramework)
