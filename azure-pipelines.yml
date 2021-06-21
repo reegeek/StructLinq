@@ -45,7 +45,7 @@ stages:
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
-          parallel: 3
+          parallel: 4
         steps:
           - task: UseDotNet@2
             displayName: 'Setup .NET Core 2.1'
