@@ -23,7 +23,7 @@ stages:
     jobs:
       - job: Compile
         displayName: '⚙️ Compile'
-        dependsOn: [ Setup ]
+        dependsOn: [ ]
         steps:
           - task: UseDotNet@2
             displayName: 'Setup .NET 5.0'
