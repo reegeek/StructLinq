@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using StructLinq.Utils;
 
 namespace StructLinq.Array
@@ -20,7 +21,7 @@ namespace StructLinq.Array
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly ArrayStructEnumerator<T> GetEnumerator()
         {
-            return new ArrayStructEnumerator<T>(array, start, Count);
+            return new(array, start, Count);
         }
 
         public readonly int Count
@@ -34,7 +35,7 @@ namespace StructLinq.Array
         {
             checked
             {
-                this.start = (int)start + this.start;
+                this.start = MathHelpers.Min((int)start + this.start, this.length);
                 if (length.HasValue)
                     this.length = MathHelpers.Min((int)length.Value + this.start, this.length);
             }
@@ -47,14 +48,14 @@ namespace StructLinq.Array
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T Get(int i)
+        public readonly T Get(int i)
         {
             return array[start + i];
         }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
             unchecked
