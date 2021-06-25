@@ -58,7 +58,9 @@ namespace StructLinq.Benchmark
         public List<int> WithVisitor()
         {
             var visitor = new PooledListVisitor<int>(0, ArrayPool<int>.Shared);
-            enumerable.ToStructEnumerable().Visit(ref visitor);
+            var enumerator = enumerable.ToStructEnumerable().GetEnumerator();
+            enumerator.Dispose();
+            enumerator.Visit(ref visitor);
             var array = visitor.PooledList.ToArray();
             visitor.Dispose();
             var result = new List<int>();

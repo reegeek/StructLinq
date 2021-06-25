@@ -25,16 +25,6 @@ namespace StructLinq.Select
             var typedEnumerator = inner.GetEnumerator();
             return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<TOut>
-        {
-            var selectVisitor = new SelectVisitor<TIn, TOut, TFunction, TVisitor>(ref function, ref visitor);
-            var visitStatus = inner.Visit(ref selectVisitor);
-            visitor = selectVisitor.visitor;
-            return visitStatus;
-        }
     }
 
     internal struct SelectVisitor<TIn, TOut, TFunction, TVisitor> : IVisitor<TIn> 
@@ -78,17 +68,6 @@ namespace StructLinq.Select
         {
             var typedEnumerator = inner.GetEnumerator();
             return new SelectEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
-        }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<TOut>
-        {
-            var selectVisitor = new SelectVisitor<TIn, TOut, TVisitor>(function, ref visitor);
-            var visitStatus = inner.Visit(ref selectVisitor);
-            visitor = selectVisitor.visitor;
-            return visitStatus;
         }
     }
 

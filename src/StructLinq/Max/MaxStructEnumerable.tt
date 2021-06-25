@@ -56,7 +56,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
             var maxVisitor = new Max<#= t.Name #>Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -68,7 +70,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
             var maxVisitor = new Max<#= t.Name #>Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;

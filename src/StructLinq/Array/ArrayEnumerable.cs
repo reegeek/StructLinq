@@ -51,24 +51,5 @@ namespace StructLinq.Array
         {
             return array[start + i];
         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<T>
-        {
-            unchecked
-            {
-                var s = start;
-                var end = Count + s;
-                for (int i = s; i < end; i++)
-                {
-                    if (!visitor.Visit(array[i]))
-                        return VisitStatus.VisitorFinished;
-                }
-
-                return VisitStatus.EnumeratorFinished;
-            }
-        }
     }
 }

@@ -24,15 +24,5 @@ namespace StructLinq.Concat
             var enum2 = enumerable2.GetEnumerator();
             return new ConcatEnumerator<T, TEnumerator1, TEnumerator2>(ref  enum1, ref  enum2);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<T>
-        {
-            var visitStatus = enumerable1.Visit(ref visitor);
-            if (visitStatus == VisitStatus.VisitorFinished)
-                return visitStatus;
-            return enumerable2.Visit(ref visitor);
-        }
     }
 }

@@ -34,7 +34,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var maxVisitor = new MaxInt16Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -46,7 +48,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var maxVisitor = new MaxInt16Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -81,7 +85,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var maxVisitor = new MaxInt32Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -93,7 +99,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var maxVisitor = new MaxInt32Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -128,7 +136,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var maxVisitor = new MaxInt64Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -140,7 +150,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var maxVisitor = new MaxInt64Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -175,7 +187,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var maxVisitor = new MaxUInt16Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -187,7 +201,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var maxVisitor = new MaxUInt16Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -222,7 +238,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var maxVisitor = new MaxUInt32Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -234,7 +252,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var maxVisitor = new MaxUInt32Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -269,7 +289,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var maxVisitor = new MaxUInt64Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -281,7 +303,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var maxVisitor = new MaxUInt64Visitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -316,7 +340,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var maxVisitor = new MaxSingleVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -328,7 +354,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var maxVisitor = new MaxSingleVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -363,7 +391,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var maxVisitor = new MaxDoubleVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -375,7 +405,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var maxVisitor = new MaxDoubleVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -410,7 +442,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var maxVisitor = new MaxByteVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -422,7 +456,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var maxVisitor = new MaxByteVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -457,7 +493,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var maxVisitor = new MaxSByteVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -469,7 +507,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var maxVisitor = new MaxSByteVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -504,7 +544,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<DateTime>
         {
             var maxVisitor = new MaxDateTimeVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;
@@ -516,7 +558,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<DateTime>
         {
             var maxVisitor = new MaxDateTimeVisitor(false, default);
-            enumerable.Visit(ref maxVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref maxVisitor);
+            enumerator.Dispose();
             if (!maxVisitor.HasMax)
                 throw new ArgumentOutOfRangeException("No elements");
             return maxVisitor.Max;

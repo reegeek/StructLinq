@@ -48,15 +48,6 @@ namespace StructLinq.Select
         {
             return function(inner.Get(i));
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
-        {
-            var selectVisitor = new SelectVisitor<TIn, TOut, TVisitor>(function, ref visitor);
-            var visitStatus = inner.Visit(ref selectVisitor);
-            visitor = selectVisitor.visitor;
-            return visitStatus;
-        }
     }
 
     public struct SelectCollection<TIn, TOut, TEnumerable, TEnumerator, TFunction> : IStructCollection<TOut, SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>>
@@ -104,15 +95,6 @@ namespace StructLinq.Select
         public TOut Get(int i)
         {
             return function.Eval(inner.Get(i));
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
-        {
-            var selectVisitor = new SelectVisitor<TIn, TOut, TFunction, TVisitor>(ref function, ref visitor);
-            var visitStatus = inner.Visit(ref selectVisitor);
-            visitor = selectVisitor.visitor;
-            return visitStatus;
         }
     }
 }

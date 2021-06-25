@@ -16,7 +16,10 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new AllVisitor<T>(predicate);
-            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var all = enumerator.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            enumerator.Dispose();
+            return all;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -24,7 +27,10 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new AllVisitor<T>(predicate);
-            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var all = enumerator.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            enumerator.Dispose();
+            return all;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -34,7 +40,10 @@ namespace StructLinq
             where TFunction : IFunction<T, bool>
         {
             var visitor = new AllVisitor<T, TFunction>(predicate);
-            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var all = enumerator.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            enumerator.Dispose();
+            return all;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -42,7 +51,10 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new AllVisitor<T, IFunction<T, bool>>(predicate);
-            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var all = enumerator.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+            enumerator.Dispose();
+            return all;
         }
 
         private struct AllVisitor<T, TFunction> : IVisitor<T>

@@ -78,13 +78,13 @@ namespace StructLinq.SelectMany
             {
                 var source = enumerator1.Current;
                 var resultEnumerable = function.Eval(source);
-                var status = resultEnumerable.Visit(ref visitor);
+                var enumerator = resultEnumerable.GetEnumerator();
+                var status = enumerator.Visit(ref visitor);
+                enumerator.Dispose();
                 if (status == VisitStatus.VisitorFinished)
                     return VisitStatus.VisitorFinished;
             }
-
             enumerator1.Reset();
-
             return VisitStatus.EnumeratorFinished;
         }
     }

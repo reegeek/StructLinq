@@ -16,7 +16,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new IntCountVisitor<T>(0);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.Count;
         }
 
@@ -26,7 +28,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new IntCountVisitor<T>(0);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.Count;
         }
 
@@ -35,7 +39,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new LongCountVisitor<T>(0);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.Count;
         }
 
@@ -45,7 +51,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new LongCountVisitor<T>(0);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.Count;
         }
 
@@ -54,7 +62,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new UIntCountVisitor<T>(0);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.Count;
         }
 
@@ -64,7 +74,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new UIntCountVisitor<T>(0);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.Count;
         }
 

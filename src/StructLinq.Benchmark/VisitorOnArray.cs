@@ -25,7 +25,9 @@ namespace StructLinq.Benchmark
         public int Visitor()
         {
             var visitor = new SumVisitor(0);
-            array.ToStructEnumerable().Visit(ref visitor);
+            var enumerator = array.ToStructEnumerable().GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.sum;
         }
 
@@ -33,7 +35,9 @@ namespace StructLinq.Benchmark
         public int VisitorOnTake()
         {
             var visitor = new SumVisitor(0);
-            array.ToStructEnumerable().Take(900, x=>x).Visit(ref visitor);
+            var enumerator = array.ToStructEnumerable().Take(900, x=>x).GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.sum;
         }
 
@@ -41,7 +45,9 @@ namespace StructLinq.Benchmark
         public int VisitorOnSkip()
         {
             var visitor = new SumVisitor(0);
-            array.ToStructEnumerable().Skip(100, x=>x).Visit(ref visitor);
+            var enumerator = array.ToStructEnumerable().Skip(100, x=>x).GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.sum;
         }
 
@@ -49,7 +55,9 @@ namespace StructLinq.Benchmark
         public int VisitorOnSkipAndTake()
         {
             var visitor = new SumVisitor(0);
-            array.ToStructEnumerable().Take(900, x=>x).Skip(100, x => x).Visit(ref visitor);
+            var enumerator = array.ToStructEnumerable().Take(900, x=>x).Skip(100, x => x).GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
             return visitor.sum;
         }
 

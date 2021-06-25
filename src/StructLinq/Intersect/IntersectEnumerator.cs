@@ -75,9 +75,9 @@ namespace StructLinq.Intersect
             where TVisitor : IVisitor<T>
         {
             var exceptVisitor = new IntersectVisitor<TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
-            enumerator2.Visit(ref exceptVisitor);
+            enumerator1.Visit(ref exceptVisitor);
             exceptVisitor.Add = false;
-            var visitStatus = enumerator1.Visit(ref exceptVisitor);
+            var visitStatus = enumerator2.Visit(ref exceptVisitor);
             visitor = exceptVisitor.Visitor;
             exceptVisitor.Dispose();
             return visitStatus;

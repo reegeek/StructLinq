@@ -37,20 +37,5 @@ namespace StructLinq.Union
             var enum2 = enumerable2.GetEnumerator();
             return new UnionEnumerator<T, TEnumerator1, TEnumerator2, TComparer>(ref enum1, ref  enum2, comparer, capacity, bucketPool, slotPool);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<T>
-        {
-            var distinctVisitor = new DistinctVisitor<T, TComparer, TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
-            var visitStatus = enumerable1.Visit(ref distinctVisitor);
-            if (visitStatus != VisitStatus.VisitorFinished)
-            {
-                visitStatus = enumerable2.Visit(ref distinctVisitor);
-            }
-            visitor = distinctVisitor.Visitor;
-            distinctVisitor.Dispose();
-            return visitStatus;
-        }
     }
 }

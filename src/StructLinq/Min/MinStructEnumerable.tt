@@ -56,7 +56,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
             var minVisitor = new Min<#= t.Name #>Visitor(false, default);
-            enumerable.Visit(ref minVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref minVisitor);
+            enumerator.Dispose();
             if (!minVisitor.HasMin)
                 throw new ArgumentOutOfRangeException("No elements");
             return minVisitor.Min;
@@ -68,7 +70,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
             var minVisitor = new Min<#= t.Name #>Visitor(false, default);
-            enumerable.Visit(ref minVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref minVisitor);
+            enumerator.Dispose();
             if (!minVisitor.HasMin)
                 throw new ArgumentOutOfRangeException("No elements");
             return minVisitor.Min;

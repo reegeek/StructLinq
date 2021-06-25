@@ -15,7 +15,10 @@ namespace StructLinq
             where TComparer : IEqualityComparer<T>
         {
             var visitor = new ContainsVisitor<T, TComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -25,7 +28,10 @@ namespace StructLinq
         {
             EqualityComparer<T> equalityComparer = EqualityComparer<T>.Default;
             var visitor = new ContainsVisitor<T, EqualityComparer<T>>(equalityComparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -34,7 +40,10 @@ namespace StructLinq
             where TComparer : IEqualityComparer<T>
         {
             var visitor = new ContainsVisitor<T, TComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -43,7 +52,10 @@ namespace StructLinq
         {
             EqualityComparer<T> equalityComparer = EqualityComparer<T>.Default;
             var visitor = new ContainsVisitor<T, EqualityComparer<T>>(equalityComparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
     }
 }

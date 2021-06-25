@@ -18,7 +18,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Int16, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -28,7 +31,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Int16, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -61,7 +67,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Int32, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -71,7 +80,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Int32, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -104,7 +116,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Int64, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -114,7 +129,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Int64, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -147,7 +165,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<UInt16, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -157,7 +178,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<UInt16, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -190,7 +214,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<UInt32, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -200,7 +227,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<UInt32, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -233,7 +263,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<UInt64, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -243,7 +276,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<UInt64, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -276,7 +312,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Single, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -286,7 +325,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Single, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -319,7 +361,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Double, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -329,7 +374,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Double, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -362,7 +410,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Byte, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -372,7 +423,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<Byte, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -405,7 +459,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<SByte, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -415,7 +472,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<SByte, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -448,7 +508,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<DateTime, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -458,7 +521,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<DateTime, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

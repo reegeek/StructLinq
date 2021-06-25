@@ -67,7 +67,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var sumVisitor = new SumInt16Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -77,7 +79,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int16, TEnumerator>
         {
             var sumVisitor = new SumInt16Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -86,7 +90,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncInt16Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -98,7 +104,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncInt16Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -108,7 +116,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionInt16Visitor<T, IFunction<T,Int16>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -122,109 +132,10 @@ namespace StructLinq
             where TFunc : IFunction<T,Int16>
         {
             var sumVisitor = new SumIFunctionInt16Visitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int16 SumInt16<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<Int16>
-        {
-            Int16 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int16 SumInt16<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Int16>
-        {
-            Int16 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int16 SumInt16<T,TEnumerator>(ref TEnumerator enumerator, Func<T, Int16> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            Int16 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int16 Sum<TEnumerator>(this IStructCollection<Int16, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<Int16>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt16(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int16 Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<Int16, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<Int16>
-            where TEnumerable : struct, IStructCollection<Int16, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt16(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int16 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, Int16> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt16(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int16 Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, Int16> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt16(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int16 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,Int16> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt16<T,TEnumerator, IFunction<T,Int16>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int16 Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,Int16>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Int16>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt16<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -287,7 +198,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var sumVisitor = new SumInt32Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -297,7 +210,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int32, TEnumerator>
         {
             var sumVisitor = new SumInt32Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -306,7 +221,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncInt32Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -318,7 +235,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncInt32Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -328,7 +247,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionInt32Visitor<T, IFunction<T,Int32>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -342,109 +263,10 @@ namespace StructLinq
             where TFunc : IFunction<T,Int32>
         {
             var sumVisitor = new SumIFunctionInt32Visitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int32 SumInt32<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<Int32>
-        {
-            Int32 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int32 SumInt32<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Int32>
-        {
-            Int32 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int32 SumInt32<T,TEnumerator>(ref TEnumerator enumerator, Func<T, Int32> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            Int32 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int32 Sum<TEnumerator>(this IStructCollection<Int32, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<Int32>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt32(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int32 Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<Int32, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<Int32>
-            where TEnumerable : struct, IStructCollection<Int32, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt32(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int32 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, Int32> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt32(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int32 Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, Int32> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt32(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int32 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,Int32> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt32<T,TEnumerator, IFunction<T,Int32>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int32 Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,Int32>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Int32>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt32<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -507,7 +329,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var sumVisitor = new SumInt64Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -517,7 +341,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Int64, TEnumerator>
         {
             var sumVisitor = new SumInt64Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -526,7 +352,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncInt64Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -538,7 +366,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncInt64Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -548,7 +378,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionInt64Visitor<T, IFunction<T,Int64>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -562,109 +394,10 @@ namespace StructLinq
             where TFunc : IFunction<T,Int64>
         {
             var sumVisitor = new SumIFunctionInt64Visitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int64 SumInt64<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<Int64>
-        {
-            Int64 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int64 SumInt64<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Int64>
-        {
-            Int64 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Int64 SumInt64<T,TEnumerator>(ref TEnumerator enumerator, Func<T, Int64> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            Int64 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int64 Sum<TEnumerator>(this IStructCollection<Int64, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<Int64>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt64(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int64 Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<Int64, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<Int64>
-            where TEnumerable : struct, IStructCollection<Int64, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt64(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int64 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, Int64> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt64(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int64 Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, Int64> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt64(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int64 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,Int64> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt64<T,TEnumerator, IFunction<T,Int64>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Int64 Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,Int64>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Int64>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumInt64<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -727,7 +460,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var sumVisitor = new SumUInt16Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -737,7 +472,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt16, TEnumerator>
         {
             var sumVisitor = new SumUInt16Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -746,7 +483,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncUInt16Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -758,7 +497,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncUInt16Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -768,7 +509,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionUInt16Visitor<T, IFunction<T,UInt16>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -782,109 +525,10 @@ namespace StructLinq
             where TFunc : IFunction<T,UInt16>
         {
             var sumVisitor = new SumIFunctionUInt16Visitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt16 SumUInt16<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<UInt16>
-        {
-            UInt16 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt16 SumUInt16<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,UInt16>
-        {
-            UInt16 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt16 SumUInt16<T,TEnumerator>(ref TEnumerator enumerator, Func<T, UInt16> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            UInt16 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt16 Sum<TEnumerator>(this IStructCollection<UInt16, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<UInt16>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt16(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt16 Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<UInt16, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<UInt16>
-            where TEnumerable : struct, IStructCollection<UInt16, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt16(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt16 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, UInt16> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt16(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt16 Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, UInt16> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt16(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt16 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,UInt16> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt16<T,TEnumerator, IFunction<T,UInt16>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt16 Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,UInt16>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,UInt16>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt16<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -947,7 +591,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var sumVisitor = new SumUInt32Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -957,7 +603,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt32, TEnumerator>
         {
             var sumVisitor = new SumUInt32Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -966,7 +614,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncUInt32Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -978,7 +628,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncUInt32Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -988,7 +640,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionUInt32Visitor<T, IFunction<T,UInt32>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1002,109 +656,10 @@ namespace StructLinq
             where TFunc : IFunction<T,UInt32>
         {
             var sumVisitor = new SumIFunctionUInt32Visitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt32 SumUInt32<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<UInt32>
-        {
-            UInt32 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt32 SumUInt32<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,UInt32>
-        {
-            UInt32 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt32 SumUInt32<T,TEnumerator>(ref TEnumerator enumerator, Func<T, UInt32> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            UInt32 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt32 Sum<TEnumerator>(this IStructCollection<UInt32, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<UInt32>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt32(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt32 Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<UInt32, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<UInt32>
-            where TEnumerable : struct, IStructCollection<UInt32, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt32(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt32 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, UInt32> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt32(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt32 Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, UInt32> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt32(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt32 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,UInt32> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt32<T,TEnumerator, IFunction<T,UInt32>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt32 Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,UInt32>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,UInt32>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt32<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -1167,7 +722,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var sumVisitor = new SumUInt64Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -1177,7 +734,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<UInt64, TEnumerator>
         {
             var sumVisitor = new SumUInt64Visitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -1186,7 +745,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncUInt64Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -1198,7 +759,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncUInt64Visitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1208,7 +771,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionUInt64Visitor<T, IFunction<T,UInt64>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1222,109 +787,10 @@ namespace StructLinq
             where TFunc : IFunction<T,UInt64>
         {
             var sumVisitor = new SumIFunctionUInt64Visitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt64 SumUInt64<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<UInt64>
-        {
-            UInt64 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt64 SumUInt64<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,UInt64>
-        {
-            UInt64 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static UInt64 SumUInt64<T,TEnumerator>(ref TEnumerator enumerator, Func<T, UInt64> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            UInt64 result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt64 Sum<TEnumerator>(this IStructCollection<UInt64, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<UInt64>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt64(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt64 Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<UInt64, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<UInt64>
-            where TEnumerable : struct, IStructCollection<UInt64, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt64(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt64 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, UInt64> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt64(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt64 Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, UInt64> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt64(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt64 Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,UInt64> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt64<T,TEnumerator, IFunction<T,UInt64>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static UInt64 Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,UInt64>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,UInt64>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumUInt64<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -1387,7 +853,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var sumVisitor = new SumSingleVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -1397,7 +865,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Single, TEnumerator>
         {
             var sumVisitor = new SumSingleVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -1406,7 +876,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncSingleVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -1418,7 +890,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncSingleVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1428,7 +902,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionSingleVisitor<T, IFunction<T,Single>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1442,109 +918,10 @@ namespace StructLinq
             where TFunc : IFunction<T,Single>
         {
             var sumVisitor = new SumIFunctionSingleVisitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Single SumSingle<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<Single>
-        {
-            Single result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Single SumSingle<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Single>
-        {
-            Single result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Single SumSingle<T,TEnumerator>(ref TEnumerator enumerator, Func<T, Single> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            Single result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Single Sum<TEnumerator>(this IStructCollection<Single, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<Single>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSingle(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Single Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<Single, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<Single>
-            where TEnumerable : struct, IStructCollection<Single, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSingle(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Single Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, Single> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSingle(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Single Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, Single> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSingle(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Single Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,Single> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSingle<T,TEnumerator, IFunction<T,Single>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Single Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,Single>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Single>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSingle<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -1607,7 +984,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var sumVisitor = new SumDoubleVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -1617,7 +996,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Double, TEnumerator>
         {
             var sumVisitor = new SumDoubleVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -1626,7 +1007,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncDoubleVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -1638,7 +1021,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncDoubleVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1648,7 +1033,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionDoubleVisitor<T, IFunction<T,Double>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1662,109 +1049,10 @@ namespace StructLinq
             where TFunc : IFunction<T,Double>
         {
             var sumVisitor = new SumIFunctionDoubleVisitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Double SumDouble<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<Double>
-        {
-            Double result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Double SumDouble<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Double>
-        {
-            Double result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Double SumDouble<T,TEnumerator>(ref TEnumerator enumerator, Func<T, Double> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            Double result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Double Sum<TEnumerator>(this IStructCollection<Double, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<Double>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumDouble(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Double Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<Double, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<Double>
-            where TEnumerable : struct, IStructCollection<Double, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumDouble(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Double Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, Double> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumDouble(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Double Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, Double> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumDouble(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Double Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,Double> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumDouble<T,TEnumerator, IFunction<T,Double>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Double Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,Double>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Double>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumDouble<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -1827,7 +1115,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var sumVisitor = new SumByteVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -1837,7 +1127,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<Byte, TEnumerator>
         {
             var sumVisitor = new SumByteVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -1846,7 +1138,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncByteVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -1858,7 +1152,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncByteVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1868,7 +1164,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionByteVisitor<T, IFunction<T,Byte>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -1882,109 +1180,10 @@ namespace StructLinq
             where TFunc : IFunction<T,Byte>
         {
             var sumVisitor = new SumIFunctionByteVisitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Byte SumByte<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<Byte>
-        {
-            Byte result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Byte SumByte<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Byte>
-        {
-            Byte result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Byte SumByte<T,TEnumerator>(ref TEnumerator enumerator, Func<T, Byte> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            Byte result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Byte Sum<TEnumerator>(this IStructCollection<Byte, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<Byte>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumByte(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Byte Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<Byte, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<Byte>
-            where TEnumerable : struct, IStructCollection<Byte, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumByte(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Byte Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, Byte> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumByte(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Byte Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, Byte> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumByte(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Byte Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,Byte> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumByte<T,TEnumerator, IFunction<T,Byte>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Byte Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,Byte>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,Byte>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumByte<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }
@@ -2047,7 +1246,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var sumVisitor = new SumSByteVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;      
         }
 
@@ -2057,7 +1258,9 @@ namespace StructLinq
             where TEnumerable : struct, IStructEnumerable<SByte, TEnumerator>
         {
             var sumVisitor = new SumSByteVisitor(0);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;
         }
 
@@ -2066,7 +1269,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncSByteVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum;        
         }
 
@@ -2078,7 +1283,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumFuncSByteVisitor<T>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -2088,7 +1295,9 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var sumVisitor = new SumIFunctionSByteVisitor<T, IFunction<T,SByte>>(0, func);
-            enumerable.Visit(ref sumVisitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
+            enumerator.Dispose();
             return sumVisitor.sum; 
         }
 
@@ -2102,109 +1311,10 @@ namespace StructLinq
             where TFunc : IFunction<T,SByte>
         {
             var sumVisitor = new SumIFunctionSByteVisitor<T, TFunc>(0, func);
-            enumerable.Visit(ref sumVisitor);
-            return sumVisitor.sum;         }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SByte SumSByte<TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, ICollectionEnumerator<SByte>
-        {
-            SByte result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += enumerator.Get(i);
-            }
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref sumVisitor);
             enumerator.Dispose();
-            return result;
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SByte SumSByte<T,TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,SByte>
-        {
-            SByte result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func.Eval(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static SByte SumSByte<T,TEnumerator>(ref TEnumerator enumerator, Func<T, SByte> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            SByte result = 0;
-            var count = enumerator.Count;
-            for (int i = 0; i < count; i++)
-            {
-                result += func(enumerator.Get(i));
-            }
-            enumerator.Dispose();
-            return result;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SByte Sum<TEnumerator>(this IStructCollection<SByte, TEnumerator> enumerable)
-            where TEnumerator : struct, ICollectionEnumerator<SByte>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSByte(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SByte Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructCollection<SByte, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<SByte>
-            where TEnumerable : struct, IStructCollection<SByte, TEnumerator>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSByte(ref enumerator);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SByte Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, Func<T, SByte> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSByte(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SByte Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, 
-        Func<T, SByte> func, 
-        Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSByte(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SByte Sum<T,TEnumerator>(this IStructCollection<T, TEnumerator> enumerable, 
-        IFunction<T,SByte> func)
-            where TEnumerator : struct, ICollectionEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSByte<T,TEnumerator, IFunction<T,SByte>>(ref enumerator, ref func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SByte Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
-            ref TFunc func, 
-            Func<TEnumerable, IStructCollection<T, TEnumerator>> _,
-            Func<TFunc, IFunction<T,SByte>> __)
-            where TEnumerable : struct, IStructCollection<T, TEnumerator>
-            where TEnumerator : struct, ICollectionEnumerator<T>
-            where TFunc : IFunction<T,SByte>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return SumSByte<T,TEnumerator, TFunc>(ref enumerator,ref func);
+            return sumVisitor.sum;        
         }
 
     }

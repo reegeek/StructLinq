@@ -34,16 +34,5 @@ namespace StructLinq.Distinct
             var enumerator = enumerable.GetEnumerator();
             return new DistinctEnumerator<T, TEnumerator, TComparer>(ref enumerator, capacity, bucketPool, slotPool, comparer);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
-            where TVisitor : IVisitor<T>
-        {
-            var distinctVisitor = new DistinctVisitor<T, TComparer, TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
-            var visitStatus = enumerable.Visit(ref distinctVisitor);
-            visitor = distinctVisitor.Visitor;
-            distinctVisitor.Dispose();
-            return visitStatus;
-        }
     }
 }

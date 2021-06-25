@@ -40,7 +40,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<<#= t.Name #>, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -50,7 +53,10 @@ namespace StructLinq
         {
             var comparer = new DefaultStructEqualityComparer();
             var visitor = new ContainsVisitor<<#= t.Name #>, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.Visit(ref visitor) == VisitStatus.VisitorFinished;
+            enumerator.Dispose();
+            return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

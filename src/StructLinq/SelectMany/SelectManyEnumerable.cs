@@ -23,19 +23,5 @@ namespace StructLinq.SelectMany
         {
             return new (enumerable.GetEnumerator(), function);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TResult>
-        {
-            foreach (var source in enumerable)
-            {
-                var resultEnumerable = function.Eval(source);
-                var status = resultEnumerable.Visit(ref visitor);
-                if (status == VisitStatus.VisitorFinished)
-                    return VisitStatus.VisitorFinished;
-            }
-
-            return VisitStatus.EnumeratorFinished;
-        }
     }
 }

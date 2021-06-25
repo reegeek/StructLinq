@@ -33,9 +33,11 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new PooledListVisitor<T>(capacity, pool);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
             var array = visitor.PooledList.ToArray();
             visitor.Dispose();
+            enumerator.Dispose();
             return array;
         }
 
@@ -49,9 +51,11 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new PooledListVisitor<T>(capacity, ArrayPool<T>.Shared);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
             var array = visitor.PooledList.ToArray();
             visitor.Dispose();
+            enumerator.Dispose();
             return array;
         }
 
@@ -60,9 +64,11 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new PooledListVisitor<T>(capacity, pool);
-            enumerable.Visit(ref visitor);
+            var enumerator = enumerable.GetEnumerator();
+            enumerator.Visit(ref visitor);
             var array = visitor.PooledList.ToArray();
             visitor.Dispose();
+            enumerator.Dispose();
             return array;
         }
 

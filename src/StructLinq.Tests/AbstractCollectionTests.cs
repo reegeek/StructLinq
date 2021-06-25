@@ -112,9 +112,10 @@ namespace StructLinq.Tests
 
             var list = new List<T>();
             var visitor = new ListVisitor<T>(list);
-            
-            collection.Skip(skip, x => x)
-                                   .Visit(ref visitor);
+
+            var enumerator = collection.Skip(skip, x => x).GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
 
             
             var values = list.ToArray();
@@ -196,8 +197,9 @@ namespace StructLinq.Tests
             var list = new List<T>();
             var visitor = new ListVisitor<T>(list);
 
-            collection.Take(take, x => x)
-                                   .Visit(ref visitor);
+            var enumerator = collection.Take(take, x => x).GetEnumerator();
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
 
             var values = list.ToArray();
             var expected = array.Take((int) take).ToArray();

@@ -44,7 +44,6 @@ namespace StructLinq.IEnumerable
                 if (!visitor.Visit(Current))
                     return VisitStatus.VisitorFinished;
             }
-            Reset();
 
             return VisitStatus.EnumeratorFinished;
         }

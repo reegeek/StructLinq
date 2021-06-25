@@ -135,25 +135,6 @@ namespace StructLinq.Tests
         [InlineData(0)]
         [InlineData(5)]
         [InlineData(10)]
-        public void ShouldVisitAllEnumerable(int size)
-        {
-            //Arrange
-            var enumerable = Build(size);
-            var visitor = new ListVisitor<T>(new List<T>());
-
-            //Act
-            var status = enumerable.Visit(ref visitor);
-
-            //Assert
-            var expected = enumerable.ToEnumerable().ToArray();
-            Assert.Equal(expected, visitor.List.ToArray());
-            Assert.Equal(VisitStatus.EnumeratorFinished, status);
-        }
-
-        [Theory]
-        [InlineData(0)]
-        [InlineData(5)]
-        [InlineData(10)]
         public void ShouldVisitAll(int size)
         {
             //Arrange
@@ -171,24 +152,6 @@ namespace StructLinq.Tests
             Assert.Equal(VisitStatus.EnumeratorFinished, status);
         }
 
-
-        [Theory]
-        [InlineData(5)]
-        [InlineData(10)]
-        public void ShouldVisitFirstElement(int size)
-        {
-            //Arrange
-            var enumerable = Build(size);
-            var visitor = new FirstVisitor<T>();
-
-            //Act
-            var status = enumerable.Visit(ref visitor);
-
-            //Assert
-            var expected = enumerable.ToEnumerable().ToArray().First();
-            Assert.Equal(expected, visitor.First);
-            Assert.Equal(VisitStatus.VisitorFinished, status);
-        }
 
         [Theory]
         [InlineData(5)]
