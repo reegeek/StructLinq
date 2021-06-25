@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using StructLinq.Utils;
 
 namespace StructLinq.Array

@@ -151,6 +151,28 @@ namespace StructLinq.Tests
         }
 
         [Theory]
+        [InlineData(0)]
+        [InlineData(5)]
+        [InlineData(10)]
+        public void ShouldVisitAll(int size)
+        {
+            //Arrange
+            var enumerable = Build(size);
+            var visitor = new ListVisitor<T>(new List<T>());
+
+            //Act
+            var structEnumerator = enumerable.GetEnumerator();
+            var status = structEnumerator.Visit(ref visitor);
+            structEnumerator.Dispose();
+
+            //Assert
+            var expected = enumerable.ToEnumerable().ToArray();
+            Assert.Equal(expected, visitor.List.ToArray());
+            Assert.Equal(VisitStatus.EnumeratorFinished, status);
+        }
+
+
+        [Theory]
         [InlineData(5)]
         [InlineData(10)]
         public void ShouldVisitFirstElement(int size)
@@ -167,6 +189,27 @@ namespace StructLinq.Tests
             Assert.Equal(expected, visitor.First);
             Assert.Equal(VisitStatus.VisitorFinished, status);
         }
+
+        [Theory]
+        [InlineData(5)]
+        [InlineData(10)]
+        public void ShouldVisitFirstElt(int size)
+        {
+            //Arrange
+            var enumerable = Build(size);
+            var visitor = new FirstVisitor<T>();
+
+            //Act
+            var structEnumerator = enumerable.GetEnumerator();
+            var status = structEnumerator.Visit(ref visitor);
+            structEnumerator.Dispose();
+
+            //Assert
+            var expected = enumerable.ToEnumerable().ToArray().First();
+            Assert.Equal(expected, visitor.First);
+            Assert.Equal(VisitStatus.VisitorFinished, status);
+        }
+
     }
 
     internal struct ListVisitor<T> : IVisitor<T>

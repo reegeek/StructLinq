@@ -57,5 +57,19 @@ namespace StructLinq.OrderBy
             datas.Dispose();
             indexes = null;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            while (MoveNext())
+            {
+                if (!visitor.Visit(Current))
+                    return VisitStatus.VisitorFinished;
+            }
+            Reset();
+
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

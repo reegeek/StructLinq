@@ -25,5 +25,12 @@ namespace StructLinq.Empty
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => throw new NotImplementedException();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

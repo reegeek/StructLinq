@@ -25,7 +25,7 @@ namespace StructLinq.Hashset
             while (++index <= length)
             {
                 ref var entry = ref entries[index];
-#if (NETCOREAPP3_0 )
+#if (NETCOREAPP3_0_OR_GREATER)
                 if (entry.Next >= -1)
 #endif
 #if (NET452 || NETCOREAPP1_0 || NETCOREAPP2_0)
@@ -71,6 +71,23 @@ namespace StructLinq.Hashset
             return entry.Value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var count = Count;
+            var s = start;
+            var array = entries;
+            for (int i = 0; i < count; i++)
+            {
+                ref var input = ref array[s+i];
+                if (!visitor.Visit(input.Value))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+
+        }
     }
 }
 #endif

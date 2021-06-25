@@ -70,5 +70,22 @@ namespace StructLinq.SelectMany
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => currentEnumerator.Current;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TResult>
+        {
+            while (enumerator1.MoveNext())
+            {
+                var source = enumerator1.Current;
+                var resultEnumerable = function.Eval(source);
+                var status = resultEnumerable.Visit(ref visitor);
+                if (status == VisitStatus.VisitorFinished)
+                    return VisitStatus.VisitorFinished;
+            }
+
+            enumerator1.Reset();
+
+            return VisitStatus.EnumeratorFinished;
+        }
     }
 }

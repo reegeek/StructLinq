@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.SkipWhile
 {
@@ -52,6 +51,44 @@ namespace StructLinq.SkipWhile
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => enumerator.Current;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var selector = new SkipeWhileVisitor<TVisitor>(predicate, ref visitor);
+            var visitStatus = enumerator.Visit(ref selector);
+            visitor = selector.visitor;
+            return visitStatus;
+        }
+
+        private struct SkipeWhileVisitor<TVisitor> : IVisitor<T>
+            where TVisitor : IVisitor<T>
+        {
+            private bool skipDone;
+            public TVisitor visitor;
+            private TFunction predicate;
+
+            public SkipeWhileVisitor(TFunction predicate, ref TVisitor visitor)
+            {
+                skipDone = false;
+                this.visitor = visitor;
+                this.predicate = predicate;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                if (skipDone)
+                    return visitor.Visit(input);
+
+                if (predicate.Eval(input))
+                    return true;
+
+                skipDone = true;
+                return visitor.Visit(input);
+            }
         }
     }
 }

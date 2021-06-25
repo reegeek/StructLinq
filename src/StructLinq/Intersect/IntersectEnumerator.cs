@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Buffers;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
@@ -11,14 +12,22 @@ namespace StructLinq.Intersect
     {
         private TEnumerator1 enumerator1;
         private TEnumerator2 enumerator2;
+        private readonly TComparer comparer;
+        private readonly int capacity;
+        private readonly ArrayPool<int> bucketPool;
+        private readonly ArrayPool<Slot<T>> slotPool;
         private PooledSet<T, TComparer> set;
 
-        internal IntersectEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, ref PooledSet<T, TComparer> set)
+        internal IntersectEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, TComparer comparer, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool)
             : this()
         {
             this.enumerator1 = enumerator1;
             this.enumerator2 = enumerator2;
-            this.set = set;
+            this.comparer = comparer;
+            this.capacity = capacity;
+            this.bucketPool = bucketPool;
+            this.slotPool = slotPool;
+            set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,6 +68,50 @@ namespace StructLinq.Intersect
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => enumerator2.Current;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var exceptVisitor = new IntersectVisitor<TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
+            enumerator2.Visit(ref exceptVisitor);
+            exceptVisitor.Add = false;
+            var visitStatus = enumerator1.Visit(ref exceptVisitor);
+            visitor = exceptVisitor.Visitor;
+            exceptVisitor.Dispose();
+            return visitStatus;
+        }
+
+        private struct IntersectVisitor<TVisitor> : IVisitor<T>
+            where TVisitor : IVisitor<T>
+        {
+            public TVisitor Visitor;
+            public bool Add;
+            private PooledSet<T, TComparer> set;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public IntersectVisitor(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer, ref TVisitor visitor)
+            {
+                Visitor = visitor;
+                set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
+                Add = true;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                if (!Add)
+                    return set.Remove(input) && Visitor.Visit(input);
+                set.AddIfNotPresent(input);
+                return true;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public void Dispose()
+            {
+                set.Dispose();
+            }
         }
     }
 }

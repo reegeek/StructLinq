@@ -10,5 +10,7 @@ namespace StructLinq
         
         T Current { get; }
 
+        VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>;
     }
 }

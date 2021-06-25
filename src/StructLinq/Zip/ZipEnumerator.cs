@@ -40,5 +40,19 @@ namespace StructLinq.Zip
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => (enumerator1.Current, enumerator2.Current);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<(T1, T2)>
+        {
+            while (MoveNext())
+            {
+                if (!visitor.Visit(Current))
+                    return VisitStatus.VisitorFinished;
+            }
+            Reset();
+
+            return VisitStatus.EnumeratorFinished;
+        }    
     }
 }

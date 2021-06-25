@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
+using StructLinq.Utils;
 
 namespace StructLinq.Array
 {
@@ -39,7 +41,7 @@ namespace StructLinq.Array
             
         }
 
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => endIndex + 1 - start;
@@ -50,5 +52,23 @@ namespace StructLinq.Array
         {
             return array[start + i];
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            unchecked
+            {
+                var s = start;
+                for (int i = s; i <= endIndex; i++)
+                {
+                    if (!visitor.Visit(array[i]))
+                        return VisitStatus.VisitorFinished;
+                }
+
+                return VisitStatus.EnumeratorFinished;
+            }
+        }
+
     }
 }

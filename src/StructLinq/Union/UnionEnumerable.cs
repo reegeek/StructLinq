@@ -20,9 +20,7 @@ namespace StructLinq.Union
         private readonly ArrayPool<int> bucketPool;
         private readonly ArrayPool<Slot<T>> slotPool;
 
-        internal UnionEnumerable(ref TEnumerable1 enumerable1, ref TEnumerable2 enumerable2, TComparer comparer, int capacity,
-                                 ArrayPool<int> bucketPool, 
-                                 ArrayPool<Slot<T>> slotPool)
+        internal UnionEnumerable(ref TEnumerable1 enumerable1, ref TEnumerable2 enumerable2, TComparer comparer, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool)
         {
             this.enumerable1 = enumerable1;
             this.enumerable2 = enumerable2;
@@ -37,8 +35,7 @@ namespace StructLinq.Union
         {
             var enum1 = enumerable1.GetEnumerator();
             var enum2 = enumerable2.GetEnumerator();
-            var set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
-            return new UnionEnumerator<T, TEnumerator1, TEnumerator2, TComparer>(ref enum1, ref  enum2, ref set);
+            return new UnionEnumerator<T, TEnumerator1, TEnumerator2, TComparer>(ref enum1, ref  enum2, comparer, capacity, bucketPool, slotPool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Buffers;
+using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Intersect
@@ -12,12 +13,12 @@ namespace StructLinq.Intersect
         private TEnumerator2 enumerator2;
         private InPooledSet<T, TComparer> set;
 
-        internal RefIntersectEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, ref InPooledSet<T, TComparer> set)
+        internal RefIntersectEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, TComparer comparer, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool)
             : this()
         {
             this.enumerator1 = enumerator1;
             this.enumerator2 = enumerator2;
-            this.set = set;
+            this.set = new InPooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

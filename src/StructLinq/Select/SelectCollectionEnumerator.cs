@@ -51,6 +51,16 @@ namespace StructLinq.Select
             return function.Eval(element);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TOut>
+        {
+            var selectVisitor = new SelectVisitor<TIn, TOut, TFunction, TVisitor>(ref function, ref visitor);
+            var visitStatus = enumerator.Visit(ref selectVisitor);
+            visitor = selectVisitor.visitor;
+            return visitStatus;
+        }
+
     }
 
     public struct SelectCollectionEnumerator<TIn, TOut, TEnumerator> : ICollectionEnumerator<TOut>
@@ -98,6 +108,16 @@ namespace StructLinq.Select
         {
             var element = enumerator.Get(i);
             return function(element);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TOut>
+        {
+            var selectVisitor = new SelectVisitor<TIn, TOut, TVisitor>(function, ref visitor);
+            var visitStatus = enumerator.Visit(ref selectVisitor);
+            visitor = selectVisitor.visitor;
+            return visitStatus;
         }
 
     }

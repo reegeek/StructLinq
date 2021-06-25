@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using StructLinq.Distinct;
 using StructLinq.Range;
 using Xunit;

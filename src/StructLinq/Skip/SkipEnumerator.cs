@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace StructLinq.Skip
 {
@@ -41,6 +40,20 @@ namespace StructLinq.Skip
         public void Dispose()
         {
             enumerator.Dispose();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            while (MoveNext())
+            {
+                if (!visitor.Visit(Current))
+                    return VisitStatus.VisitorFinished;
+            }
+            Reset();
+
+            return VisitStatus.EnumeratorFinished;
         }
     }
 }
