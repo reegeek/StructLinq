@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
 using StructLinq.Array;
 using Enumerable = System.Linq.Enumerable;
@@ -17,6 +19,7 @@ namespace StructLinq.Benchmark
             sysArray = Enumerable.ToArray(Enumerable.Range(0,Count));
             array = Enumerable.ToArray(Enumerable.Range(0, Count));
         }
+        
         [Benchmark]
         public int Handmaded()
         {
@@ -28,6 +31,7 @@ namespace StructLinq.Benchmark
             }
             return sum;
         }
+
         [Benchmark]
         public int EnumerableLINQ() => sysArray.Sum();
 
@@ -41,7 +45,30 @@ namespace StructLinq.Benchmark
         public int StructLinq() => array.ToStructEnumerable().Sum();
 
         [Benchmark]
-        public int StructLinqZeroAllocWithVisitor() => array.ToStructEnumerable().Sum(x=> (IStructEnumerable<int, ArrayStructEnumerator<int>>)x);
+        public int StructLinqZeroAllocWithVisitor()
+        {
+            var enumerator = array.ToStructEnumerable().GetEnumerator();
+            var visitor = new SumVisitor(0);
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
+            return visitor.sum;
+        }
 
+        private struct SumVisitor : IVisitor<int>
+        {
+            public int sum;
+
+            public SumVisitor(int sum)
+            {
+                this.sum = sum;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(int input)
+            {
+                sum += input;
+                return true;
+            }
+        }
     }
 }

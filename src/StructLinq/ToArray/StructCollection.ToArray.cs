@@ -12,13 +12,10 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var count = enumerator.Count;
-            var result = ArrayHelpers.Create<T>(count);
-            for (int i = 0; i < count; i++)
-            {
-                result[i] = enumerator.Get(i);
-            }
+            var visitor = new ToArrayVisitor<T>(count);
+            enumerator.Visit(ref visitor);
             enumerator.Dispose();
-            return result;
+            return visitor.result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -65,7 +62,11 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             var enumerator = collection.GetEnumerator();
-            return ToArray<T, TEnumerator>(ref enumerator);
+            var count = enumerator.Count;
+            var visitor = new ToArrayVisitor<T>(count);
+            enumerator.Visit(ref visitor);
+            enumerator.Dispose();
+            return visitor.result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -76,6 +77,24 @@ namespace StructLinq
             return ToArray<T, TEnumerator>(ref enumerator);
         }
 
+        private struct ToArrayVisitor<T> : IVisitor<T>
+        {
+            public T[] result;
+            private int i; 
+            
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public ToArrayVisitor(int count)
+            {
+                result = ArrayHelpers.Create<T>(count);
+                i = 0;
+            }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                result[i++] = input;
+                return true;
+            }
+        }
     }
 }

@@ -14,10 +14,10 @@ Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 
 
 ```
-|               Method |     Mean |     Error |    StdDev | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|--------------------- |---------:|----------:|----------:|------:|------:|------:|----------:|
-|                  Sum | 2.704 μs | 0.0385 μs | 0.0301 μs |     - |     - |     - |         - |
-|              Visitor | 1.870 μs | 0.0027 μs | 0.0023 μs |     - |     - |     - |         - |
-|        VisitorOnTake | 1.502 μs | 0.0037 μs | 0.0032 μs |     - |     - |     - |         - |
-|        VisitorOnSkip | 1.838 μs | 0.0066 μs | 0.0062 μs |     - |     - |     - |         - |
-| VisitorOnSkipAndTake | 1.467 μs | 0.0046 μs | 0.0040 μs |     - |     - |     - |         - |
+|               Method |     Mean |   Error |  StdDev | Gen 0 | Gen 1 | Gen 2 | Allocated |
+|--------------------- |---------:|--------:|--------:|------:|------:|------:|----------:|
+|                  Sum | 397.5 ns | 1.45 ns | 1.36 ns |     - |     - |     - |         - |
+|              Visitor | 457.5 ns | 2.21 ns | 2.06 ns |     - |     - |     - |         - |
+|        VisitorOnTake | 361.4 ns | 2.18 ns | 1.93 ns |     - |     - |     - |         - |
+|        VisitorOnSkip | 470.6 ns | 0.85 ns | 0.79 ns |     - |     - |     - |         - |
+| VisitorOnSkipAndTake | 320.1 ns | 0.70 ns | 0.65 ns |     - |     - |     - |         - |

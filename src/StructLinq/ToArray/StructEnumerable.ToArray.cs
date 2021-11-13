@@ -60,16 +60,24 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T[] ToArray<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
+        private static T[] ToArray<T, TEnumerator>(ref TEnumerator enumerator, int capacity, ArrayPool<T> pool)
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var visitor = new PooledListVisitor<T>(capacity, pool);
-            var enumerator = enumerable.GetEnumerator();
             enumerator.Visit(ref visitor);
             var array = visitor.PooledList.ToArray();
             visitor.Dispose();
             enumerator.Dispose();
             return array;
+
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T[] ToArray<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int capacity, ArrayPool<T> pool)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return ToArray(ref enumerator, capacity, pool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
