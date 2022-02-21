@@ -38,6 +38,7 @@ namespace StructLinq.Concat
         {
             enumerator1.Reset();
             enumerator2.Reset();
+            first = true;
         }
 
         public T Current
