@@ -23,7 +23,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     GitHubActionsImage.WindowsLatest,
     AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
-    ImportGitHubTokenAs = nameof(GitHubToken),
+    EnableGitHubContext = true,
     InvokedTargets = new[] { nameof(Test), nameof(Pack) })]
 [GitHubActions(
     "continuousCore",
@@ -31,7 +31,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     GitHubActionsImage.MacOsLatest,
     AutoGenerate = false,
     On = new[] { GitHubActionsTrigger.Push },
-    ImportGitHubTokenAs = nameof(GitHubToken),
+    EnableGitHubContext = true,    
     InvokedTargets = new[] { nameof(TestCoreOnly) })]
 [AzurePipelines(
     suffix: null,
@@ -60,7 +60,6 @@ partial class Build : Nuke.Common.NukeBuild
 
     [CI] readonly AzurePipelines AzurePipelines;
 
-    [Parameter("GitHub Token")] readonly string GitHubToken;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ResultDirectory => RootDirectory / ".result";
@@ -90,7 +89,7 @@ partial class Build : Nuke.Common.NukeBuild
     void ExecutesCompile(bool excludeNetFramework)
     {
 
-        Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
+        Serilog.Log.Information(excludeNetFramework ? "Exclude net framework" : "Include net framework");
         if (excludeNetFramework)
         {
             var projectWithFrameworkAndPlatform =
@@ -133,7 +132,7 @@ partial class Build : Nuke.Common.NukeBuild
 
     void ExecutesTest(bool excludeNetFramework)
     {
-        Logger.Info(excludeNetFramework ? "Exclude net framework" : "Include net framework");
+        Serilog.Log.Information(excludeNetFramework ? "Exclude net framework" : "Include net framework");
 
         var groupTestConfigurations =
             (from project in TestProjects
@@ -162,7 +161,7 @@ partial class Build : Nuke.Common.NukeBuild
                         .SetFramework(v.framework)
                         .DisableNoBuild()
                         .SetProperty("Platform", v.platform)
-                        .SetLogger($"trx;LogFileName={v.project.Name}-{v.framework}.trx"));
+                        .SetLoggers($"trx;LogFileName={v.project.Name}-{v.framework}.trx"));
             });
 
         TestResultDirectory.GlobFiles("*.trx").ForEach(x =>
