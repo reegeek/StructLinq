@@ -60,6 +60,7 @@ namespace StructLinq.Union
             set.Clear();
             enumerator1.Reset();
             enumerator2.Reset();
+            first = true;
         }
 
         public ref T Current
