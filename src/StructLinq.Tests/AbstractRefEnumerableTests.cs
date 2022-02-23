@@ -111,10 +111,10 @@ namespace StructLinq.Tests
             List<T> FillList(IEnumerator<T> enumerator)
             {
                 var list = new List<T>();
-                enumerator.MoveNext();
-                list.Add(enumerator.Current);
-                enumerator.MoveNext();
-                list.Add(enumerator.Current);
+                while (enumerator.MoveNext())
+                {
+                    list.Add(enumerator.Current);
+                }
                 return list;
             }
         }
