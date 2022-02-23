@@ -5,6 +5,7 @@ using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 
 partial class Build
 {
@@ -26,8 +27,7 @@ partial class Build
                 case AzurePipelinesImage.WindowsLatest:
                 case AzurePipelinesImage.Windows2019:
                 case AzurePipelinesImage.Vs2017Win2016:
-                case AzurePipelinesImage.Vs2015Win2012R2:
-                case AzurePipelinesImage.Win1803:
+                case AzurePipelinesImage.Windows2022:
                     targetToExcludes = new []{ nameof(TestCoreOnly), nameof(CompileCoreOnly), nameof(PackCoreOnly)};
                     break;
                 case AzurePipelinesImage.Ubuntu1604:
@@ -35,7 +35,7 @@ partial class Build
                 case AzurePipelinesImage.UbuntuLatest:
                 case AzurePipelinesImage.MacOsLatest:
                 case AzurePipelinesImage.MacOs1014:
-                case AzurePipelinesImage.MacOs1013:
+                case AzurePipelinesImage.MacOs11:
                     targetToExcludes = new[] { nameof(Test), nameof(Compile), nameof(Pack), nameof(PackCoreOnly) };
                     break;
                 default:
@@ -47,9 +47,9 @@ partial class Build
             return base.GetStage(image, filterRelevantTargets);
         }
 
-        protected override AzurePipelinesJob GetJob(ExecutableTarget executableTarget, LookupTable<ExecutableTarget, AzurePipelinesJob> jobs, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected override AzurePipelinesJob GetJob(ExecutableTarget executableTarget, LookupTable<ExecutableTarget, AzurePipelinesJob> jobs, IReadOnlyCollection<ExecutableTarget> relevantTargets, AzurePipelinesImage image)
         {
-            var job = base.GetJob(executableTarget, jobs, relevantTargets);
+            var job = base.GetJob(executableTarget, jobs, relevantTargets, image);
             var dictionary = new Dictionary<string, string>
             {
                 {nameof(Compile), "⚙️"},
@@ -66,5 +66,6 @@ partial class Build
                 : $"{prefix}{job.DisplayName} 🧩";
             return job;
         }
+
     }
 }
