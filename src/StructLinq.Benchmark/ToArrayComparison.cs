@@ -9,9 +9,10 @@ using StructLinq.Utils.Collections;
 namespace StructLinq.Benchmark
 {
    
-    [DisassemblyDiagnoser(4), MemoryDiagnoser]
-    [SimpleJob(RuntimeMoniker.Net48)]
+    [MemoryDiagnoser]
+    [SimpleJob(RuntimeMoniker.Net48, baseline: true)]
     [SimpleJob(RuntimeMoniker.Net50)]
+    [SimpleJob(RuntimeMoniker.Net60)]
     public class ToArrayComparison
     {
         private RangeEnumerable enumerable;

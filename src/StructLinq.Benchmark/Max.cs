@@ -4,7 +4,7 @@ using StructLinq.Range;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(4)]
+    [MemoryDiagnoser]
     public class Max
     {
         private const int Count = 10000;

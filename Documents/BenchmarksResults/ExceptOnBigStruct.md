@@ -6,17 +6,17 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.101
-  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+.NET SDK=6.0.203
+  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
 
 
 ```
 |                    Method |     Mean |   Error |  StdDev | Ratio |    Gen 0 |    Gen 1 |    Gen 2 | Allocated |
 |-------------------------- |---------:|--------:|--------:|------:|---------:|---------:|---------:|----------:|
-|                      Linq | 652.5 μs | 3.15 μs | 2.95 μs |  1.00 | 399.4141 | 399.4141 | 399.4141 | 1572816 B |
-|                StructLinq | 212.3 μs | 1.12 μs | 1.05 μs |  0.33 |        - |        - |        - |         - |
-|             RefStructLinq | 183.3 μs | 0.66 μs | 0.55 μs |  0.28 |        - |        - |        - |         - |
-| RefStructLinqWithComparer | 156.5 μs | 0.51 μs | 0.45 μs |  0.24 |        - |        - |        - |         - |
+|                      Linq | 554.4 μs | 5.22 μs | 4.89 μs |  1.00 | 249.0234 | 249.0234 | 249.0234 | 863,588 B |
+|                StructLinq | 219.4 μs | 1.08 μs | 1.01 μs |  0.40 |        - |        - |        - |         - |
+|             RefStructLinq | 183.7 μs | 0.70 μs | 0.55 μs |  0.33 |        - |        - |        - |         - |
+| RefStructLinqWithComparer | 171.2 μs | 0.49 μs | 0.43 μs |  0.31 |        - |        - |        - |         - |

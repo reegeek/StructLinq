@@ -4,7 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(4)]
+    [MemoryDiagnoser]
     public class SkipWhileOnArray
     {
         private const int Count = 10_000;

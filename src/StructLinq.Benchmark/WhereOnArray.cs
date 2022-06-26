@@ -4,7 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(4)]
+    [MemoryDiagnoser]
     public class WhereOnArray
     {
         private int[] array;

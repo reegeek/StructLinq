@@ -5,9 +5,10 @@ using BenchmarkDotNet.Jobs;
 
 namespace StructLinq.Benchmark
 {
-    [DisassemblyDiagnoser(4), MemoryDiagnoser]
+    [MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net48, baseline:true)]
     [SimpleJob(RuntimeMoniker.Net50)]
+    [SimpleJob(RuntimeMoniker.Net60)]
     public class Dictionary
     {
 

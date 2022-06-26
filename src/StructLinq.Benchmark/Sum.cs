@@ -5,7 +5,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(4)]
+    [MemoryDiagnoser]
     public class Sum
     {
         private const int Count = 10000;

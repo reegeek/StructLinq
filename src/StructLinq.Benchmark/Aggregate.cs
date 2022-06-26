@@ -5,7 +5,7 @@ using StructLinq.Range;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(4)]
+    [MemoryDiagnoser]
     public class Aggregate
     {
         private readonly RangeEnumerable _rangeEnumerable;

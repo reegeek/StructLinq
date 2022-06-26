@@ -9,9 +9,9 @@ using StructLinq.IEnumerable;
 namespace StructLinq.Benchmark
 {
     
-    [SimpleJob(RuntimeMoniker.Net48)]
+    [SimpleJob(RuntimeMoniker.Net48, baseline: true)]
     [SimpleJob(RuntimeMoniker.Net50)]
-    [DisassemblyDiagnoser(4)]
+    [SimpleJob(RuntimeMoniker.Net60)]
     public class ImpactOfUsingOnForEach
     {
         private const int Count = 10000;

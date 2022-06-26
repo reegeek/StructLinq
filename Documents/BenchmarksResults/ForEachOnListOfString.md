@@ -6,15 +6,15 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.101
-  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+.NET SDK=6.0.203
+  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
 
 
 ```
-|     Method |      Mean |     Error |    StdDev | Ratio | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|----------- |----------:|----------:|----------:|------:|------:|------:|------:|----------:|
-|    Default | 30.981 μs | 0.1696 μs | 0.1586 μs |  1.00 |     - |     - |     - |         - |
-| StructLinq |  7.234 μs | 0.1432 μs | 0.1340 μs |  0.23 |     - |     - |     - |         - |
+|     Method |      Mean |     Error |    StdDev |    Median | Ratio | Allocated |
+|----------- |----------:|----------:|----------:|----------:|------:|----------:|
+|    Default | 15.320 μs | 0.0556 μs | 0.0464 μs | 15.322 μs |  1.00 |         - |
+| StructLinq |  7.240 μs | 0.1419 μs | 0.2124 μs |  7.387 μs |  0.48 |         - |

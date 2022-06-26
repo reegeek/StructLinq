@@ -6,19 +6,19 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.101
-  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+.NET SDK=6.0.203
+  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
 
 
 ```
-|                          Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated | Code Size |
-|-------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|----------:|
-|                       Handmaded |  5.012 μs | 0.0238 μs | 0.0223 μs |  1.00 |    0.00 |     - |     - |     - |         - |      24 B |
-|                            LINQ | 37.687 μs | 0.2068 μs | 0.1935 μs |  7.52 |    0.05 |     - |     - |     - |      40 B |     519 B |
-|                      StructLINQ |  5.009 μs | 0.0226 μs | 0.0212 μs |  1.00 |    0.01 |     - |     - |     - |      24 B |     188 B |
-|             ZeroAllocStructLINQ | 10.008 μs | 0.0426 μs | 0.0377 μs |  2.00 |    0.01 |     - |     - |     - |         - |     273 B |
-| ZeroAllocStructLINQOnEnumerable |  4.585 μs | 0.0905 μs | 0.1586 μs |  0.91 |    0.03 |     - |     - |     - |         - |     278 B |
-|                      ConvertMin | 40.150 μs | 0.2034 μs | 0.1903 μs |  8.01 |    0.04 |     - |     - |     - |      64 B |     418 B |
+|                          Method |      Mean |     Error |    StdDev | Ratio | RatioSD |  Gen 0 | Allocated |
+|-------------------------------- |----------:|----------:|----------:|------:|--------:|-------:|----------:|
+|                       Handmaded |  2.609 μs | 0.0156 μs | 0.0139 μs |  1.00 |    0.00 |      - |         - |
+|                            LINQ | 38.910 μs | 0.2739 μs | 0.2562 μs | 14.92 |    0.14 |      - |      40 B |
+|                      StructLINQ |  3.453 μs | 0.0201 μs | 0.0178 μs |  1.32 |    0.01 | 0.0038 |      24 B |
+|             ZeroAllocStructLINQ |  3.434 μs | 0.0300 μs | 0.0266 μs |  1.32 |    0.01 |      - |         - |
+| ZeroAllocStructLINQOnEnumerable |  4.550 μs | 0.0876 μs | 0.1256 μs |  1.75 |    0.06 |      - |         - |
+|                      ConvertMin | 39.008 μs | 0.2959 μs | 0.2767 μs | 14.95 |    0.17 |      - |      64 B |

@@ -6,17 +6,17 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.101
-  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+.NET SDK=6.0.203
+  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
 
 
 ```
-|                            Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Gen 0 | Gen 1 | Gen 2 | Allocated |
-|---------------------------------- |----------:|----------:|----------:|------:|--------:|------:|------:|------:|----------:|
-|                            SysSum |  6.855 μs | 0.0230 μs | 0.0215 μs |  1.00 |    0.00 |     - |     - |     - |         - |
-|            SysRangeWhereSelectSum | 87.849 μs | 0.5660 μs | 0.5294 μs | 12.82 |    0.07 |     - |     - |     - |     160 B |
-| ConvertWhereSelectSumWithDelegate | 61.777 μs | 0.4519 μs | 0.4227 μs |  9.01 |    0.06 |     - |     - |     - |      40 B |
-|         StructRangeWhereSelectSum |  5.538 μs | 0.0150 μs | 0.0133 μs |  0.81 |    0.00 |     - |     - |     - |         - |
+|                            Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Allocated |
+|---------------------------------- |----------:|----------:|----------:|------:|--------:|----------:|
+|                            SysSum |  7.137 μs | 0.0439 μs | 0.0410 μs |  1.00 |    0.00 |         - |
+|            SysRangeWhereSelectSum | 80.673 μs | 0.4691 μs | 0.4159 μs | 11.30 |    0.08 |     160 B |
+| ConvertWhereSelectSumWithDelegate | 63.532 μs | 0.5326 μs | 0.4982 μs |  8.90 |    0.10 |      40 B |
+|         StructRangeWhereSelectSum |  5.767 μs | 0.0306 μs | 0.0286 μs |  0.81 |    0.01 |         - |

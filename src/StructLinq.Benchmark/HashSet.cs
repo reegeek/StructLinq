@@ -8,6 +8,7 @@ namespace StructLinq.Benchmark
     [MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net48, baseline:true)]
     [SimpleJob(RuntimeMoniker.Net50)]
+    [SimpleJob(RuntimeMoniker.Net60)]
     public class HashSet
     {
 

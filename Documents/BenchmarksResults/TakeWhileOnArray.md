@@ -6,17 +6,17 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.202
-  [Host]     : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT
+.NET SDK=6.0.203
+  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
 
 
 ```
-|                      Method |     Mean |    Error |   StdDev | Ratio | Code Size |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|---------------------------- |---------:|---------:|---------:|------:|----------:|-------:|------:|------:|----------:|
-|                        Linq | 62.29 ns | 0.621 ns | 0.550 ns |  1.00 |     561 B | 0.0221 |     - |     - |     104 B |
-|                  StructLinq | 26.11 ns | 0.229 ns | 0.215 ns |  0.42 |     468 B | 0.0068 |     - |     - |      32 B |
-|         StructLinqZeroAlloc | 24.28 ns | 0.094 ns | 0.087 ns |  0.39 |     628 B |      - |     - |     - |         - |
-| StructLinqFunctionZeroAlloc | 24.27 ns | 0.108 ns | 0.101 ns |  0.39 |     550 B |      - |     - |     - |         - |
+|                      Method |     Mean |    Error |   StdDev | Ratio |  Gen 0 | Allocated |
+|---------------------------- |---------:|---------:|---------:|------:|-------:|----------:|
+|                        Linq | 38.36 ns | 0.340 ns | 0.301 ns |  1.00 | 0.0221 |     104 B |
+|                  StructLinq | 22.79 ns | 0.123 ns | 0.115 ns |  0.59 | 0.0068 |      32 B |
+|         StructLinqZeroAlloc | 22.49 ns | 0.165 ns | 0.155 ns |  0.59 |      - |         - |
+| StructLinqFunctionZeroAlloc | 22.43 ns | 0.125 ns | 0.110 ns |  0.58 |      - |         - |

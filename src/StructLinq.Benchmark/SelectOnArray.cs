@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace StructLinq.Benchmark
 {
-    [MemoryDiagnoser, DisassemblyDiagnoser(4)]
+    [MemoryDiagnoser]
     public class SelectOnArray
     {
         private int[] array;

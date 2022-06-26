@@ -6,18 +6,18 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19043
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.301
-  [Host]     : .NET Core 5.0.7 (CoreCLR 5.0.721.25508, CoreFX 5.0.721.25508), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.7 (CoreCLR 5.0.721.25508, CoreFX 5.0.721.25508), X64 RyuJIT
+.NET SDK=6.0.203
+  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
 
 
 ```
-|                                  Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Gen 1 | Gen 2 | Allocated |
-|---------------------------------------- |-----------:|---------:|---------:|------:|-------:|------:|------:|----------:|
-|                                    LINQ | 4,219.9 μs | 34.79 μs | 29.05 μs |  1.00 |      - |     - |     - |   32064 B |
-|                              StructLINQ | 1,862.5 μs |  6.40 μs |  5.99 μs |  0.44 | 5.8594 |     - |     - |   32032 B |
-| StructLINQWhereReturnIsStructEnumerable |   622.8 μs |  2.54 μs |  2.12 μs |  0.15 |      - |     - |     - |      32 B |
-|                  StructLINQWithFunction |   712.0 μs |  3.99 μs |  3.73 μs |  0.17 |      - |     - |     - |         - |
-|       StructLINQWithFunctionWithForeach |   817.3 μs |  7.96 μs |  7.44 μs |  0.19 |      - |     - |     - |       1 B |
+|                                  Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Allocated |
+|---------------------------------------- |-----------:|---------:|---------:|------:|-------:|----------:|
+|                                    LINQ | 4,202.0 μs | 45.29 μs | 42.36 μs |  1.00 |      - |  32,068 B |
+|                              StructLINQ | 2,238.4 μs | 26.90 μs | 23.84 μs |  0.53 | 3.9063 |  32,034 B |
+| StructLINQWhereReturnIsStructEnumerable |   612.7 μs |  2.67 μs |  2.23 μs |  0.15 |      - |      33 B |
+|                  StructLINQWithFunction |   700.6 μs |  3.78 μs |  3.35 μs |  0.17 |      - |       1 B |
+|       StructLINQWithFunctionWithForeach |   876.9 μs |  5.26 μs |  4.92 μs |  0.21 |      - |       1 B |

@@ -6,18 +6,18 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19042
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET Core SDK=5.0.101
-  [Host]     : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
-  DefaultJob : .NET Core 5.0.1 (CoreCLR 5.0.120.57516, CoreFX 5.0.120.57516), X64 RyuJIT
+.NET SDK=6.0.203
+  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
 
 
 ```
-|                     Method |       Mean |   Error |  StdDev | Ratio | Code Size |   Gen 0 |  Gen 1 | Gen 2 | Allocated |
-|--------------------------- |-----------:|--------:|--------:|------:|----------:|--------:|-------:|------:|----------:|
-|                       LINQ | 1,390.4 μs | 5.64 μs | 5.00 μs |  1.00 |     524 B | 25.3906 | 3.9063 |     - |  120312 B |
-|            StructLinqOrder | 1,447.7 μs | 6.23 μs | 5.83 μs |  1.04 |    3952 B |       - |      - |     - |      33 B |
-|          StructLinqOrderBy | 1,448.5 μs | 5.70 μs | 5.33 μs |  1.04 |    4272 B |       - |      - |     - |      33 B |
-|   StructLinqOrderZeroAlloc |   927.5 μs | 3.62 μs | 3.39 μs |  0.67 |    3350 B |       - |      - |     - |         - |
-| StructLinqOrderByZeroAlloc |   944.7 μs | 3.32 μs | 3.11 μs |  0.68 |    3756 B |       - |      - |     - |         - |
+|                     Method |       Mean |    Error |   StdDev | Ratio |   Gen 0 |  Gen 1 | Allocated |
+|--------------------------- |-----------:|---------:|---------:|------:|--------:|-------:|----------:|
+|                       LINQ | 1,353.1 μs |  9.28 μs |  7.75 μs |  1.00 | 25.3906 | 3.9063 | 120,313 B |
+|            StructLinqOrder | 1,540.3 μs | 14.01 μs | 11.70 μs |  1.14 |       - |      - |      34 B |
+|          StructLinqOrderBy | 1,545.6 μs |  6.72 μs |  6.29 μs |  1.14 |       - |      - |      34 B |
+|   StructLinqOrderZeroAlloc |   972.7 μs |  5.46 μs |  4.84 μs |  0.72 |       - |      - |       4 B |
+| StructLinqOrderByZeroAlloc |   985.0 μs |  7.71 μs |  6.83 μs |  0.73 |       - |      - |       2 B |
