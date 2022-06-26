@@ -1,10 +1,15 @@
 ﻿using System.Linq;
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
+
 
 namespace StructLinq.Benchmark
 {
     [MemoryDiagnoser]
+    [SimpleJob(RuntimeMoniker.Net48, baseline: true)]
+    [SimpleJob(RuntimeMoniker.Net50)]
+    [SimpleJob(RuntimeMoniker.Net60)]
     public class VisitorOnArray
     {
         private const int Count = 1_000;
