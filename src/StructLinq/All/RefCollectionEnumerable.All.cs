@@ -11,7 +11,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool InnerRefCollectionAll<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
+        internal static bool InnerRefCollectionAll<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
             where TEnumerator : struct, IRefCollectionEnumerator<T>
         {
             var count = enumerator.Count;
@@ -29,7 +29,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool InnerRefCollectionAll<T, TEnumerator, TFunction>(ref TEnumerator enumerator, ref TFunction predicate)
+        internal static bool InnerRefCollectionAll<T, TEnumerator, TFunction>(ref TEnumerator enumerator, ref TFunction predicate)
             where TEnumerator : struct, IRefCollectionEnumerator<T>
             where TFunction : IInFunction<T, bool>
         {
@@ -46,41 +46,43 @@ namespace StructLinq
             enumerator.Dispose();
             return true;
         }
+    }
 
-
+    public readonly partial struct RefStructCollection<T, TEnumerable, TEnumerator>
+        where TEnumerable : IRefStructCollection<T, TEnumerator>
+        where TEnumerator : struct, IRefCollectionEnumerator<T>
+    {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerable : IRefStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public bool All(Func<T, bool> predicate, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerRefCollectionAll(ref enumerator, predicate);
+            return StructEnumerable.InnerRefCollectionAll(ref enumerator, predicate);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> enumerable, Func<T, bool> predicate)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public bool All(Func<T, bool> predicate)
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerRefCollectionAll(ref enumerator, predicate);
+            return StructEnumerable.InnerRefCollectionAll(ref enumerator, predicate);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerable, TEnumerator, TFunction>(this TEnumerable enumerable, ref TFunction predicate, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerable : IRefStructCollection<T, TEnumerator>
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public bool All<TFunction>(ref TFunction predicate, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
             where TFunction : IInFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerRefCollectionAll<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
+            return StructEnumerable.InnerRefCollectionAll<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> enumerable, IInFunction<T, bool> predicate)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public bool All<TFunction>(ref TFunction predicate)
+            where TFunction : IInFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerRefCollectionAll<T, TEnumerator, IInFunction<T, bool>>(ref enumerator, ref predicate);
+            return StructEnumerable.InnerRefCollectionAll<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
         }
+
     }
 }

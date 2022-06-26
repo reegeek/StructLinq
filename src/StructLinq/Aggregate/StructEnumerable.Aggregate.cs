@@ -9,7 +9,7 @@ namespace StructLinq
     {
         #region private methods
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static TAccumulate Aggregate<T, TAccumulate, TEnumerator, TAggregation>(TEnumerator enumerator, TAccumulate seed, ref TAggregation aggregation)
+        public static TAccumulate Aggregate<T, TAccumulate, TEnumerator, TAggregation>(TEnumerator enumerator, TAccumulate seed, ref TAggregation aggregation)
             where TEnumerator : IStructEnumerator<T>
             where TAggregation : struct, IAggregation<T, TAccumulate>
         {
@@ -21,33 +21,62 @@ namespace StructLinq
             return aggregation.Result;
         }
         #endregion
+    }
+
+    public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator>
+        where TEnumerable : IStructEnumerable<T, TEnumerator>
+        where TEnumerator : struct, IStructEnumerator<T>
+    {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TAccumulate Aggregate<T, TAccumulate, TEnumerator, TAggregation>(this IStructEnumerable<T, TEnumerator> enumerable, TAccumulate seed, ref TAggregation aggregation)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation)
             where TAggregation : struct, IAggregation<T, TAccumulate>
         {
             var enumerator = enumerable.GetEnumerator();
-            return Aggregate<T, TAccumulate, TEnumerator, TAggregation>(enumerator, seed, ref aggregation);
+            return StructEnumerable.Aggregate<T, TAccumulate, TEnumerator, TAggregation>(enumerator, seed, ref aggregation);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TAccumulate Aggregate<T, TAccumulate, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, TAccumulate seed, Func<TAccumulate, T, TAccumulate> func)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public TAccumulate Aggregate<TAccumulate>(TAccumulate seed, Func<TAccumulate, T, TAccumulate> func)
         {
             var aggregation = new FuncAggregation<T, TAccumulate>(func);
-            return enumerable.Aggregate(seed, ref aggregation);
+            return Aggregate(seed, ref aggregation);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TAccumulate Aggregate<T, TAccumulate,TEnumerable, TEnumerator, TAggregation>(this TEnumerable enumerable, TAccumulate seed, ref TAggregation aggregation, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TAggregation : struct, IAggregation<T, TAccumulate>
-            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+        {
+            return Aggregate(seed, ref aggregation);
+        }
+    }
+
+    public readonly partial struct StructCollection<T, TEnumerable, TEnumerator>
+        where TEnumerable : IStructCollection<T, TEnumerator>
+        where TEnumerator : struct, ICollectionEnumerator<T>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation)
+            where TAggregation : struct, IAggregation<T, TAccumulate>
         {
             var enumerator = enumerable.GetEnumerator();
-            return Aggregate<T, TAccumulate, TEnumerator, TAggregation>(enumerator, seed, ref aggregation);
+            return StructEnumerable.Aggregate<T, TAccumulate, TEnumerator, TAggregation>(enumerator, seed, ref aggregation);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TAccumulate Aggregate<TAccumulate>(TAccumulate seed, Func<TAccumulate, T, TAccumulate> func)
+        {
+            var aggregation = new FuncAggregation<T, TAccumulate>(func);
+            return Aggregate(seed, ref aggregation);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TAggregation : struct, IAggregation<T, TAccumulate>
+        {
+            return Aggregate(seed, ref aggregation);
+        }
     }
 }
 

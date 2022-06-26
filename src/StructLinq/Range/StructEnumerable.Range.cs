@@ -7,9 +7,9 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RangeEnumerable Range(int start, int count)
+        public static StructCollection<int, RangeEnumerable, RangeEnumerator> Range(int start, int count)
         {
-            return new RangeEnumerable(start, count);
+            return new StructCollection<int, RangeEnumerable, RangeEnumerator>(new RangeEnumerable(start, count));
         }
     }
 }

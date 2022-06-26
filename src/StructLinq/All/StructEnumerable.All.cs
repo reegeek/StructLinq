@@ -8,29 +8,57 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    internal struct AllVisitor<T, TFunction> : IVisitor<T>
+        where TFunction : IFunction<T, bool>
+    {
+        private readonly TFunction function;
+        public AllVisitor(TFunction function)
+        {
+            this.function = function;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Visit(T input)
+        {
+            return function.Eval(input);
+        }
+    }
+
+    internal struct AllVisitor<T> : IVisitor<T>
+    {
+        private readonly Func<T, bool> function;
+        public AllVisitor(Func<T, bool> function)
+        {
+            this.function = function;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Visit(T input)
+        {
+            return function(input);
+        }
+    }
+
+    public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator>
+        where TEnumerable : IStructEnumerable<T, TEnumerator>
+        where TEnumerator : struct, IStructEnumerator<T>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public bool All(Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var visitor = new AllVisitor<T>(predicate);
             return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool All(Func<T, bool> predicate)
         {
             var visitor = new AllVisitor<T>(predicate);
             return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerable, TEnumerator, TFunction>(this TEnumerable enumerable, ref TFunction predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public bool All<TFunction>(ref TFunction predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TFunction : IFunction<T, bool>
         {
             var visitor = new AllVisitor<T, TFunction>(predicate);
@@ -38,41 +66,49 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool All<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, IFunction<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool All<TFunction>(ref TFunction predicate)
+            where TFunction : IFunction<T, bool>
         {
-            var visitor = new AllVisitor<T, IFunction<T, bool>>(predicate);
+            var visitor = new AllVisitor<T, TFunction>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+        }
+    }
+
+    public readonly partial struct StructCollection<T, TEnumerable, TEnumerator>
+        where TEnumerable : IStructCollection<T, TEnumerator>
+        where TEnumerator : struct, ICollectionEnumerator<T>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool All(Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        {
+            var visitor = new AllVisitor<T>(predicate);
             return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
 
-        private struct AllVisitor<T, TFunction> : IVisitor<T>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool All(Func<T, bool> predicate)
+        {
+            var visitor = new AllVisitor<T>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool All<TFunction>(ref TFunction predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TFunction : IFunction<T, bool>
         {
-            private readonly TFunction function;
-            public AllVisitor(TFunction function)
-            {
-                this.function = function;
-            }
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public bool Visit(T input)
-            {
-                return function.Eval(input);
-            }
+            var visitor = new AllVisitor<T, TFunction>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
 
-        private struct AllVisitor<T> : IVisitor<T>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool All<TFunction>(ref TFunction predicate)
+            where TFunction : IFunction<T, bool>
         {
-            private readonly Func<T, bool> function;
-            public AllVisitor(Func<T, bool> function)
-            {
-                this.function = function;
-            }
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public bool Visit(T input)
-            {
-                return function(input);
-            }
+            var visitor = new AllVisitor<T, TFunction>(predicate);
+            return enumerable.Visit(ref visitor) == VisitStatus.EnumeratorFinished;
         }
-
     }
+
 }

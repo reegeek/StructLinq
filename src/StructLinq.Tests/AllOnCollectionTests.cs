@@ -6,7 +6,7 @@ namespace StructLinq.Tests
 {
     public class AllOnCollectionTests
     {
-        private static RangeEnumerable StructEnumerable()
+        private static StructCollection<int, RangeEnumerable, RangeEnumerator> StructEnumerable()
         {
             return StructLinq.StructEnumerable.Range(0, 10);
         }
@@ -66,7 +66,7 @@ namespace StructLinq.Tests
         public void ShouldBeFalseWithIFunction()
         {
             var func = new AllFunction();
-            StructEnumerable().All(func).Should().BeFalse();
+            StructEnumerable().All(ref func).Should().BeFalse();
         }
     }
 }

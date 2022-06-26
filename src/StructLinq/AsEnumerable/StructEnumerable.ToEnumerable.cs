@@ -4,21 +4,48 @@ using StructLinq.AsEnumerable;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator>
+        where TEnumerable : IStructEnumerable<T, TEnumerator>
+        where TEnumerator : struct, IStructEnumerator<T>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static EnumerableFromStructEnumerable<T,TEnumerator> ToEnumerable<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> structEnumerable) 
-            where TEnumerator : struct, IStructEnumerator<T>
+        public EnumerableFromStructEnumerable<T,TEnumerator> ToEnumerable() 
         {
-            return new EnumerableFromStructEnumerable<T, TEnumerator>(structEnumerable);
+            return new EnumerableFromStructEnumerable<T, TEnumerator>(enumerable);
         }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static EnumerableFromRefStructEnumerable<T, TEnumerator> ToEnumerable<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> structEnumerable)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-        {
-            return new EnumerableFromRefStructEnumerable<T, TEnumerator>(structEnumerable);
-        }
+    }
 
+    public readonly partial struct StructCollection<T, TEnumerable, TEnumerator>
+        where TEnumerable : IStructCollection<T, TEnumerator>
+        where TEnumerator : struct, ICollectionEnumerator<T>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public EnumerableFromStructEnumerable<T,TEnumerator> ToEnumerable() 
+        {
+            return new EnumerableFromStructEnumerable<T, TEnumerator>(enumerable);
+        }
+    }
+
+
+    public readonly partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
+        where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        where TEnumerator : struct, IRefStructEnumerator<T>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public EnumerableFromRefStructEnumerable<T, TEnumerator> ToEnumerable()
+        {
+            return new EnumerableFromRefStructEnumerable<T, TEnumerator>(enumerable);
+        }
+    }
+
+    public readonly partial struct RefStructCollection<T, TEnumerable, TEnumerator>
+        where TEnumerable : IRefStructCollection<T, TEnumerator>
+        where TEnumerator : struct, IRefCollectionEnumerator<T>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public EnumerableFromRefStructEnumerable<T, TEnumerator> ToEnumerable()
+        {
+            return new EnumerableFromRefStructEnumerable<T, TEnumerator>(enumerable);
+        }
     }
 }

@@ -8,9 +8,9 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static StructEnumerableFromIEnumerable<T> ToStructEnumerable<T>(this IEnumerable<T> enumerable)
+        public static StructEnumerable<T, StructEnumerableFromIEnumerable<T>, GenericEnumerator<T>> ToStructEnumerable<T>(this IEnumerable<T> enumerable)
         {
-            return new(enumerable);
+            return new StructEnumerable<T, StructEnumerableFromIEnumerable<T>, GenericEnumerator<T>>(new StructEnumerableFromIEnumerable<T>(enumerable));
         }
     }
 }
