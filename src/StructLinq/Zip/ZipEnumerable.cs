@@ -2,7 +2,7 @@
 
 namespace StructLinq.Zip
 {
-    public struct ZipEnumerable<T1, TEnumerable1, TEnumerator1, T2, TEnumerable2, TEnumerator2> : IStructEnumerable<(T1 First, T2 Second), ZipEnumerator<T1, TEnumerator1, T2, TEnumerator2>>
+    public readonly struct ZipEnumerable<T1, TEnumerable1, TEnumerator1, T2, TEnumerable2, TEnumerator2> : IStructEnumerable<(T1 First, T2 Second), ZipEnumerator<T1, TEnumerator1, T2, TEnumerator2>>
         where TEnumerator1 : struct, IStructEnumerator<T1>
         where TEnumerator2 : struct, IStructEnumerator<T2>
         where TEnumerable1 : IStructEnumerable<T1, TEnumerator1>

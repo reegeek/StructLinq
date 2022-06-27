@@ -6,14 +6,14 @@ using StructLinq.Utils.Collections;
 
 namespace StructLinq.Distinct
 {
-    public struct DistinctEnumerable<T, TEnumerable, TEnumerator, TComparer> : IStructEnumerable<T,
+    public readonly struct DistinctEnumerable<T, TEnumerable, TEnumerator, TComparer> : IStructEnumerable<T,
             DistinctEnumerator<T, TEnumerator, TComparer>>
         where TComparer : IEqualityComparer<T>
         where TEnumerator : struct, IStructEnumerator<T>
         where TEnumerable : IStructEnumerable<T, TEnumerator>
 
     {
-        private TEnumerable enumerable;
+        private readonly TEnumerable enumerable;
         private readonly TComparer comparer;
         private readonly int capacity;
         private readonly ArrayPool<int> bucketPool;

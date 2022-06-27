@@ -25,7 +25,7 @@ namespace StructLinq.Select
             return new RefSelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
 
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => inner.Count;
@@ -44,13 +44,13 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TOut Get(int i)
+        public readonly TOut Get(int i)
         {
             return function.Eval(inner.Get(i));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
+        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
         {
             var count = Count;
             for (int i = 0; i < count; i++)

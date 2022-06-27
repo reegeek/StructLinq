@@ -2,7 +2,7 @@
 
 namespace StructLinq.Empty
 {
-    public struct EmptyEnumerable<T> : IStructEnumerable<T, EmptyEnumerator<T>>
+    public readonly struct EmptyEnumerable<T> : IStructEnumerable<T, EmptyEnumerator<T>>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly EmptyEnumerator<T> GetEnumerator()

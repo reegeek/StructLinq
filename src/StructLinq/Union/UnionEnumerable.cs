@@ -6,7 +6,7 @@ using StructLinq.Utils.Collections;
 
 namespace StructLinq.Union
 {
-    public struct UnionEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer> : IStructEnumerable<T, UnionEnumerator<T, TEnumerator1, TEnumerator2, TComparer>>
+    public readonly struct UnionEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer> : IStructEnumerable<T, UnionEnumerator<T, TEnumerator1, TEnumerator2, TComparer>>
         where TEnumerable1 : IStructEnumerable<T, TEnumerator1>
         where TEnumerable2 : IStructEnumerable<T, TEnumerator2>
         where TEnumerator1 : struct, IStructEnumerator<T>

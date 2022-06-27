@@ -17,12 +17,12 @@ namespace StructLinq.Reverse
             this.start = start;
             this.length = length;
         }
-        public ReverseEnumerator<T, TEnumerator> GetEnumerator()
+        public readonly ReverseEnumerator<T, TEnumerator> GetEnumerator()
         {
             var inner = structCollection.GetEnumerator();
             return new ReverseEnumerator<T, TEnumerator>(inner, start, Count);
         }
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => MathHelpers.Max(0, length - start);
@@ -40,13 +40,13 @@ namespace StructLinq.Reverse
         {
             return this;
         }
-        public T Get(int i)
+        public readonly T Get(int i)
         {
             return structCollection.Get(structCollection.Count - 1 - start - i);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor)
             where TVisitor : IVisitor<T>
         {
             var c = structCollection.Count;

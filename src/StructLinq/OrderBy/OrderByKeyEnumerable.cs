@@ -5,7 +5,7 @@ using StructLinq.Utils.Collections;
 
 namespace StructLinq.OrderBy
 {
-    public struct OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> : IStructEnumerable<T, OrderByEnumerator<T>>
+    public readonly struct OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer> : IStructEnumerable<T, OrderByEnumerator<T>>
         where TEnumerator : struct, IStructEnumerator<T>
         where TEnumerable : IStructEnumerable<T, TEnumerator>
         where TSelector : IFunction<T, TKey>

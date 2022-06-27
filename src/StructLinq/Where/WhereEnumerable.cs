@@ -52,12 +52,12 @@ namespace StructLinq.Where
         }
     }
     
-    public struct WhereEnumerable<TIn, TEnumerable, TEnumerator> : IStructEnumerable<TIn, WhereEnumerator<TIn, TEnumerator>>
+    public readonly struct WhereEnumerable<TIn, TEnumerable, TEnumerator> : IStructEnumerable<TIn, WhereEnumerator<TIn, TEnumerator>>
         where TEnumerator : struct, IStructEnumerator<TIn> 
         where TEnumerable : IStructEnumerable<TIn, TEnumerator>
     {
-        private Func<TIn, bool> function;
-        private TEnumerable inner;
+        private readonly Func<TIn, bool> function;
+        private readonly TEnumerable inner;
         public WhereEnumerable(Func<TIn, bool> function, ref TEnumerable inner)
         {
             this.function = function;

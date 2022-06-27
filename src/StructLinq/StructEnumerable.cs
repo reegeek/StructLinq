@@ -4,10 +4,10 @@
 namespace StructLinq
 {
     public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator>
-        where TEnumerable : IStructEnumerable<T, TEnumerator>
+        where TEnumerable : struct,IStructEnumerable<T, TEnumerator>
         where TEnumerator : struct, IStructEnumerator<T>
     {
-        internal readonly TEnumerable enumerable;
+        private readonly TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public StructEnumerable(TEnumerable enumerable)
@@ -23,10 +23,10 @@ namespace StructLinq
     }
 
     public readonly partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
-        where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
         where TEnumerator : struct, IRefStructEnumerator<T>
     {
-        internal readonly TEnumerable enumerable;
+        private readonly TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RefStructEnumerable(TEnumerable enumerable)
@@ -42,10 +42,10 @@ namespace StructLinq
     }
 
     public readonly partial struct StructCollection<T, TEnumerable, TEnumerator> 
-        where TEnumerable : IStructCollection<T, TEnumerator>
+        where TEnumerable : struct, IStructCollection<T, TEnumerator>
         where TEnumerator : struct, ICollectionEnumerator<T>
     {
-        internal readonly TEnumerable enumerable;
+        private readonly TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public StructCollection(TEnumerable enumerable)
@@ -67,10 +67,10 @@ namespace StructLinq
     }
 
     public readonly partial struct RefStructCollection<T, TEnumerable, TEnumerator>
-        where TEnumerable : IRefStructCollection<T, TEnumerator>
+        where TEnumerable : struct, IRefStructCollection<T, TEnumerator>
         where TEnumerator : struct, IRefCollectionEnumerator<T>
     {
-        internal readonly TEnumerable enumerable;
+        private readonly TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RefStructCollection(TEnumerable enumerable)

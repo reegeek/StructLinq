@@ -19,13 +19,13 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SelectCollectionEnumerator<TIn, TOut, TEnumerator> GetEnumerator()
+        public readonly SelectCollectionEnumerator<TIn, TOut, TEnumerator> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
             return new SelectCollectionEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
         }
 
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => inner.Count;
@@ -44,13 +44,13 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TOut Get(int i)
+        public readonly TOut Get(int i)
         {
             return function(inner.Get(i));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
+        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
         {
             var selectVisitor = new SelectVisitor<TIn, TOut, TVisitor>(function, ref visitor);
             var visitStatus = inner.Visit(ref selectVisitor);
@@ -82,7 +82,7 @@ namespace StructLinq.Select
             return new SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
         }
 
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => inner.Count;
@@ -101,13 +101,13 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TOut Get(int i)
+        public readonly TOut Get(int i)
         {
             return function.Eval(inner.Get(i));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
+        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
         {
             var selectVisitor = new SelectVisitor<TIn, TOut, TFunction, TVisitor>(ref function, ref visitor);
             var visitStatus = inner.Visit(ref selectVisitor);

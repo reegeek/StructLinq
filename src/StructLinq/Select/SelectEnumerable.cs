@@ -56,15 +56,15 @@ namespace StructLinq.Select
         }
     }
 
-    public struct
+    public readonly struct
         SelectEnumerable<TIn, TOut, TEnumerable, TEnumerator> : IStructEnumerable<TOut,
             SelectEnumerator<TIn, TOut, TEnumerator>>
         where TEnumerator : struct, IStructEnumerator<TIn>
         where TEnumerable : IStructEnumerable<TIn, TEnumerator>
     {
         #region private fields
-        private Func<TIn, TOut> function;
-        private TEnumerable inner;
+        private readonly Func<TIn, TOut> function;
+        private readonly TEnumerable inner;
         #endregion
 
         public SelectEnumerable(Func<TIn, TOut> function, ref TEnumerable inner)
