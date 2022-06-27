@@ -24,8 +24,6 @@ namespace StructLinq
     }
 
     public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator>
-        where TEnumerable : IStructEnumerable<T, TEnumerator>
-        where TEnumerator : struct, IStructEnumerator<T>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation)
@@ -52,8 +50,6 @@ namespace StructLinq
     }
 
     public readonly partial struct StructCollection<T, TEnumerable, TEnumerator>
-        where TEnumerable : IStructCollection<T, TEnumerator>
-        where TEnumerator : struct, ICollectionEnumerator<T>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation)

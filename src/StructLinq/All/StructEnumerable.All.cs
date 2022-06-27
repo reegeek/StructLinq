@@ -37,9 +37,7 @@ namespace StructLinq
         }
     }
 
-    public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator>
-        where TEnumerable : IStructEnumerable<T, TEnumerator>
-        where TEnumerator : struct, IStructEnumerator<T>
+    public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator> 
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last argument")]
@@ -75,8 +73,6 @@ namespace StructLinq
     }
 
     public readonly partial struct StructCollection<T, TEnumerable, TEnumerator>
-        where TEnumerable : IStructCollection<T, TEnumerator>
-        where TEnumerator : struct, ICollectionEnumerator<T>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last argument")]
