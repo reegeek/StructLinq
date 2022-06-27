@@ -101,13 +101,13 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly TOut Get(int i)
+        public TOut Get(int i)
         {
             return function.Eval(inner.Get(i));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<TOut>
         {
             var selectVisitor = new SelectVisitor<TIn, TOut, TFunction, TVisitor>(ref function, ref visitor);
             var visitStatus = inner.Visit(ref selectVisitor);

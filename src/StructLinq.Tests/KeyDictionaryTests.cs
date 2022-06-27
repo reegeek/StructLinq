@@ -8,7 +8,7 @@ namespace StructLinq.Tests
         DictionaryKeyEnumerable<int, string>,
         DictionaryKeyEnumerator<int, string>>
     {
-        protected override DictionaryKeyEnumerable<int, string> Build(int size)
+        protected override StructCollection<int, DictionaryKeyEnumerable<int, string>, DictionaryKeyEnumerator<int, string>> BuildCollection(int size)
         {
             return Enumerable
                    .Range(-1, size)

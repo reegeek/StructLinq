@@ -8,7 +8,7 @@ namespace StructLinq.Tests
 {
     public class RangeTests : AbstractCollectionTests<int, RangeEnumerable, RangeEnumerator>
     {
-        protected override RangeEnumerable Build(int size)
+        protected override StructCollection<int, RangeEnumerable, RangeEnumerator> BuildCollection(int size)
         {
             return StructEnumerable.Range(-1, size);
         }

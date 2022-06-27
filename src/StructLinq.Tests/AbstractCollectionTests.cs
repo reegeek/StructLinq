@@ -10,6 +10,14 @@ namespace StructLinq.Tests
         where TStructCollection : struct, IStructCollection<T, TEnumerator>
         where TEnumerator : struct, ICollectionEnumerator<T>
     {
+        protected override StructEnumerable<T, TStructCollection, TEnumerator> Build(int size)
+        {
+            return BuildCollection(size).ToStructEnumerable();
+        }
+
+        protected abstract StructCollection<T, TStructCollection, TEnumerator> BuildCollection(int size);
+
+
         [Theory]
         [InlineData(0)]
         [InlineData(5)]
@@ -17,7 +25,7 @@ namespace StructLinq.Tests
         public void ShouldCountEqual(int size)
         {
             //Arrange
-            var enumerable = Build(size);
+            var enumerable = BuildCollection(size);
 
             //Act
             int enumSize = enumerable.Count();
@@ -36,7 +44,7 @@ namespace StructLinq.Tests
         public void ShouldSlice(int size, uint start, uint length)
         {
             //Arrange
-            var collection = Build(size);
+            var collection = BuildCollection(size);
             var array = collection.ToEnumerable().ToArray();
 
             //Act
@@ -52,7 +60,7 @@ namespace StructLinq.Tests
         public void ShouldCumulateStartSlice()
         {
             //Arrange
-            var collection = Build(10);
+            var collection = BuildCollection(10);
             var array = collection.ToEnumerable().ToArray();
 
             //Act
@@ -69,7 +77,7 @@ namespace StructLinq.Tests
         public void ShouldClone()
         {
             //Arrange
-            var collection = Build(10);
+            var collection = BuildCollection(10);
 
             //Act
             var obj = collection.Clone();
@@ -90,7 +98,7 @@ namespace StructLinq.Tests
         [InlineData(7, 10)]
         public void ShouldSkipAsEnumerable(int size, int skip)
         {
-            TStructCollection collection = Build(size);
+            var collection = BuildCollection(size);
             var array = collection.ToEnumerable().ToArray();
 
             var values = collection.Skip(skip, x => x).ToArray();
@@ -107,7 +115,7 @@ namespace StructLinq.Tests
         [InlineData(7, 10)]
         public void ShouldSkipWithVisitor(int size, int skip)
         {
-            TStructCollection collection = Build(size);
+            var collection = BuildCollection(size);
             var array = collection.ToEnumerable().ToArray();
 
             var list = new List<T>();
@@ -128,7 +136,7 @@ namespace StructLinq.Tests
             if (!shouldReturnSameSequenceWhenResetIsCall)
                 return;
             //Arrange
-            var enumerable = Build(5).Skip(2);
+            var enumerable = BuildCollection(5).Skip(2);
 
             //Act
             using (var enumerator = enumerable.ToEnumerable().GetEnumerator())
@@ -156,7 +164,7 @@ namespace StructLinq.Tests
         [InlineData(7, 10)]
         public void ShouldSkipAsEnumerableWithInterface(int size, int skip)
         {
-            IStructCollection<T, TEnumerator> collection = Build(size);
+            var collection = BuildCollection(size);
             var array = collection.ToEnumerable().ToArray();
 
             var values = collection.Skip(skip).ToArray();
@@ -173,7 +181,7 @@ namespace StructLinq.Tests
         [InlineData(7, 10)]
         public void ShouldTakeAsEnumerable(int size, int take)
         {
-            TStructCollection collection = Build(size);
+            var collection = BuildCollection(size);
             var array = collection.ToEnumerable().ToArray();
 
             var values = collection.Take(take, x => x).ToArray();
@@ -190,7 +198,7 @@ namespace StructLinq.Tests
         [InlineData(7, 10)]
         public void ShouldTakeWithVisitor(int size, int take)
         {
-            TStructCollection collection = Build(size);
+            var collection = BuildCollection(size);
             var array = collection.ToEnumerable().ToArray();
 
             var list = new List<T>();
@@ -212,7 +220,7 @@ namespace StructLinq.Tests
         [InlineData(7, 10)]
         public void ShouldTakeAsEnumerableWithInterface(int size, int take)
         {
-            IStructCollection<T, TEnumerator> collection = Build(size);
+            var collection = BuildCollection(size);
             var array = collection.ToEnumerable().ToArray();
 
             var values = collection.Take(take, x => x).ToArray();
@@ -229,7 +237,7 @@ namespace StructLinq.Tests
         public void ShouldToArray(int size)
         {
             //Arrange
-            var collection = Build(size);
+            var collection = BuildCollection(size);
             var expected = collection.ToEnumerable().ToArray();
 
             //Act
@@ -246,7 +254,7 @@ namespace StructLinq.Tests
         public void ShouldToArrayWithInterface(int size)
         {
             //Arrange
-            IStructCollection<T, TEnumerator> collection = Build(size);
+            var collection = BuildCollection(size);
             var expected = collection.ToEnumerable().ToArray();
 
             //Act
@@ -260,7 +268,7 @@ namespace StructLinq.Tests
         public void ShouldReturnIthElement()
         {
             //Arrange
-            var collection = Build(10);
+            var collection = BuildCollection(10);
             var expected = collection.ToEnumerable().ToArray();
 
             for (int i = 0; i < expected.Length; i++)
@@ -275,7 +283,7 @@ namespace StructLinq.Tests
         public void ShouldSkipAndReturnIthElement()
         {
             //Arrange
-            var collection = Build(10).Skip(2);
+            var collection = BuildCollection(10).Skip(2);
             var expected = collection.ToEnumerable().ToArray();
 
             for (int i = 0; i < expected.Length; i++)

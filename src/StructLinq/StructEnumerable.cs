@@ -3,11 +3,11 @@
 
 namespace StructLinq
 {
-    public readonly partial struct StructEnumerable<T, TEnumerable, TEnumerator>
+    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
         where TEnumerable : struct,IStructEnumerable<T, TEnumerator>
         where TEnumerator : struct, IStructEnumerator<T>
     {
-        private readonly TEnumerable enumerable;
+        internal TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public StructEnumerable(TEnumerable enumerable)
@@ -20,13 +20,21 @@ namespace StructLinq
         {
             return enumerable.GetEnumerator();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            return enumerable.Visit(ref visitor);
+        }
+
     }
 
-    public readonly partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
+    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
         where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
         where TEnumerator : struct, IRefStructEnumerator<T>
     {
-        private readonly TEnumerable enumerable;
+        internal TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RefStructEnumerable(TEnumerable enumerable)
@@ -41,11 +49,11 @@ namespace StructLinq
         }
     }
 
-    public readonly partial struct StructCollection<T, TEnumerable, TEnumerator> 
+    public partial struct StructCollection<T, TEnumerable, TEnumerator> 
         where TEnumerable : struct, IStructCollection<T, TEnumerator>
         where TEnumerator : struct, ICollectionEnumerator<T>
     {
-        private readonly TEnumerable enumerable;
+        internal TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public StructCollection(TEnumerable enumerable)
@@ -64,13 +72,21 @@ namespace StructLinq
         {
             return enumerable.GetEnumerator();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            return enumerable.Visit(ref visitor);
+        }
+
     }
 
-    public readonly partial struct RefStructCollection<T, TEnumerable, TEnumerator>
+    public partial struct RefStructCollection<T, TEnumerable, TEnumerator>
         where TEnumerable : struct, IRefStructCollection<T, TEnumerator>
         where TEnumerator : struct, IRefCollectionEnumerator<T>
     {
-        private readonly TEnumerable enumerable;
+        internal TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RefStructCollection(TEnumerable enumerable)

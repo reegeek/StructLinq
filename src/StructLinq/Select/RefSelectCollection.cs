@@ -44,7 +44,7 @@ namespace StructLinq.Select
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly TOut Get(int i)
+        public TOut Get(int i)
         {
             return function.Eval(inner.Get(i));
         }

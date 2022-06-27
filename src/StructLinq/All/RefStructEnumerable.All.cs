@@ -46,7 +46,7 @@ namespace StructLinq
         }
     }
 
-    public readonly partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
+    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last argument")]

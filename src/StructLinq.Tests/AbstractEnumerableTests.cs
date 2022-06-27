@@ -10,7 +10,7 @@ namespace StructLinq.Tests
         where TEnumerator : struct, IStructEnumerator<T>
     {
         protected bool shouldReturnSameSequenceWhenResetIsCall = true; 
-        protected abstract TStructEnumerable Build(int size);
+        protected abstract StructEnumerable<T, TStructEnumerable, TEnumerator> Build(int size);
 
         [Theory]
         [InlineData(0)]

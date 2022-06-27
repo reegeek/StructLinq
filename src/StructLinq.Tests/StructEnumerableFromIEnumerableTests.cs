@@ -8,7 +8,7 @@ namespace StructLinq.Tests
         StructEnumerableFromIEnumerable<int>,
         GenericEnumerator<int>>
     {
-        protected override StructEnumerableFromIEnumerable<int> Build(int size)
+        protected override StructEnumerable<int, StructEnumerableFromIEnumerable<int>, GenericEnumerator<int>> Build(int size)
         {
             IEnumerable<int> enumerable = Enumerable.Range(0, size).ToArray();
             return enumerable.ToStructEnumerable();

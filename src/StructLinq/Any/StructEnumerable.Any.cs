@@ -11,7 +11,7 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool InnerAny<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
+        internal static bool InnerAny<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
             where TEnumerator : struct, IStructEnumerator<T>
         {
             while (enumerator.MoveNext())
@@ -28,7 +28,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool InnerAny<T, TEnumerator, TFunction>(ref TEnumerator enumerator, ref TFunction predicate)
+        internal static bool InnerAny<T, TEnumerator, TFunction>(ref TEnumerator enumerator, ref TFunction predicate)
         where TEnumerator : struct, IStructEnumerator<T>
         where TFunction : IFunction<T, bool>
         {
@@ -45,38 +45,13 @@ namespace StructLinq
             return false;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Any<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            var result = enumerator.MoveNext();
-            enumerator.Dispose();
-            return result;
-        }
+    }
 
-
+    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
+    { 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Any<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return InnerAny(ref enumerator, predicate);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Any<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return InnerAny(ref enumerator, predicate);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Any<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable)
-            where TEnumerator : struct, IStructEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public bool Any(Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             var result = enumerator.MoveNext();
@@ -85,21 +60,100 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Any<T, TEnumerable, TEnumerator, TFunction>(this TEnumerable enumerable, ref TFunction predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
-            where TEnumerator : struct, IStructEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public bool Any(Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return StructEnumerable.InnerAny(ref enumerator, predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any(Func<T, bool> predicate)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return StructEnumerable.InnerAny(ref enumerator, predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any()
+        {
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.MoveNext();
+            enumerator.Dispose();
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Any<TFunction>(ref TFunction predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TFunction : IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerAny<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
+            return StructEnumerable.InnerAny<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Any<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, IFunction<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool Any<TFunction>(ref TFunction predicate)
+            where TFunction : IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerAny<T, TEnumerator, IFunction<T, bool>>(ref enumerator, ref predicate);
+            return StructEnumerable.InnerAny<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
         }
     }
+
+    public partial struct StructCollection<T, TEnumerable, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Any(Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.MoveNext();
+            enumerator.Dispose();
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Any(Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return StructEnumerable.InnerAny(ref enumerator, predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any(Func<T, bool> predicate)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return StructEnumerable.InnerAny(ref enumerator, predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any()
+        {
+            var enumerator = enumerable.GetEnumerator();
+            var result = enumerator.MoveNext();
+            enumerator.Dispose();
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Any<TFunction>(ref TFunction predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TFunction : IFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return StructEnumerable.InnerAny<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any<TFunction>(ref TFunction predicate)
+            where TFunction : IFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return StructEnumerable.InnerAny<T, TEnumerator, TFunction>(ref enumerator, ref predicate);
+        }
+    }
+
+
 }

@@ -48,7 +48,7 @@ namespace StructLinq.Tests
         public void ShouldBeFalseWithIFunction()
         {
             var func = new AllFunction();
-            StructEnumerable.Range(0, 10).Any(func).Should().BeFalse();
+            StructEnumerable.Range(0, 10).Any(ref func).Should().BeFalse();
         }
 
         [Fact]
