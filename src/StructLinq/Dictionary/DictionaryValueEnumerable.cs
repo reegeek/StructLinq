@@ -30,7 +30,7 @@ namespace StructLinq.Dictionary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly DictionaryValueEnumerator<TKey, TValue> GetEnumerator()
         {
-            return new DictionaryValueEnumerator<TKey, TValue>(dictionaryLayout.Entries, start, Count);
+            return new(dictionaryLayout.Entries, start, Count);
         }
 
         public readonly int Count

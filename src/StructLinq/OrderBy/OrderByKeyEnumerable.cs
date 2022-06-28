@@ -58,7 +58,7 @@ namespace StructLinq.OrderBy
             if (size == 0)
             {
                 var empty = indexPool.Rent(0);
-                return new OrderByEnumerator<T>(empty, datas, size, indexPool);
+                return new(empty, datas, size, indexPool);
             }
 
             var indexes = indexPool.Rent(size);
@@ -69,7 +69,7 @@ namespace StructLinq.OrderBy
             var comp = comparer;
             QuickSort.Sort(indexes, 0, size - 1, keys.Items, ref comp, ascending);
             keys.Dispose();
-            return new OrderByEnumerator<T>(indexes, datas, size, indexPool);
+            return new(indexes, datas, size, indexPool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

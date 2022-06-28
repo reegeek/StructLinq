@@ -124,7 +124,7 @@ namespace StructLinq.Benchmark
         }
         public static StructContainer Create(int element)
         {
-            return new StructContainer(element, element, element, element, element, element, element, element, element);
+            return new(element, element, element, element, element, element, element, element, element);
         }
     }
 

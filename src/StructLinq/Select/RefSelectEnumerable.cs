@@ -22,7 +22,7 @@ namespace StructLinq.Select
         public RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
+            return new(ref function, ref typedEnumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -22,7 +22,7 @@ namespace StructLinq.Select
         public readonly SelectCollectionEnumerator<TIn, TOut, TEnumerator> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new SelectCollectionEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
+            return new(function, ref typedEnumerator);
         }
 
         public readonly int Count
@@ -79,7 +79,7 @@ namespace StructLinq.Select
         public SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new SelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
+            return new(ref function, ref typedEnumerator);
         }
 
         public readonly int Count

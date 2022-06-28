@@ -29,7 +29,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IStructEnumerator<T>
             where TEnumerable2 : IStructEnumerable<T, TEnumerator2>
         {
-            return new ExceptEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer>(ref enumerable, ref enumerable2, comparer, capacity, bucketPool, slotPool); 
+            return new(ref enumerable, ref enumerable2, comparer, capacity, bucketPool, slotPool); 
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,7 +47,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IStructEnumerator<T>
             where TEnumerable2 : IStructEnumerable<T, TEnumerator2>
         {
-            return new ExceptEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer>(ref enumerable, ref enumerable2, comparer, capacity, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, capacity, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -64,7 +64,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IStructEnumerator<T>
             where TEnumerable2 : IStructEnumerable<T, TEnumerator2>
         {
-            return new ExceptEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer>(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -80,7 +80,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IStructEnumerator<T>
             where TEnumerable2 : IStructEnumerable<T, TEnumerator2>
         {
-            return new ExceptEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, IEqualityComparer<T>>(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -96,7 +96,7 @@ namespace StructLinq
             where TEnumerable2 : IStructEnumerable<T, TEnumerator2>
         {
             var equalityComparer = EqualityComparer<T>.Default;
-            return new ExceptEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, EqualityComparer<T>>(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -108,7 +108,7 @@ namespace StructLinq
             where TEnumerator1 : struct, IStructEnumerator<T>
             where TEnumerator2 : struct, IStructEnumerator<T>
         {
-            return new ExceptEnumerable<T, IStructEnumerable<T, TEnumerator1>, IStructEnumerable<T, TEnumerator2>, TEnumerator1, TEnumerator2, IEqualityComparer<T>>(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -120,7 +120,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IStructEnumerator<T>
         {
             var equalityComparer = EqualityComparer<T>.Default;
-            return new ExceptEnumerable<T, IStructEnumerable<T, TEnumerator1>, IStructEnumerable<T, TEnumerator2>, TEnumerator1, TEnumerator2, EqualityComparer<T>>(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
     }
 }

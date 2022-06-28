@@ -36,7 +36,7 @@ namespace StructLinq.Except
             var enum1 = enumerable1.GetEnumerator();
             var enum2 = enumerable2.GetEnumerator();
             var set = new InPooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
-            return new RefExceptEnumerator<T, TEnumerator1, TEnumerator2, TComparer>(ref enum1, ref  enum2, ref set);
+            return new(ref enum1, ref  enum2, ref set);
         }
     }
 }

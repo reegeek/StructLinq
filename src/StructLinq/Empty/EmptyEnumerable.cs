@@ -7,7 +7,7 @@ namespace StructLinq.Empty
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly EmptyEnumerator<T> GetEnumerator()
         {
-            return new EmptyEnumerator<T>();
+            return new();
         }
 
         public VisitStatus Visit<TVisitor>(ref TVisitor visitor)

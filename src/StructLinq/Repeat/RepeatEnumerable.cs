@@ -17,7 +17,7 @@ namespace StructLinq.Repeat
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly RepeatEnumerator<T> GetEnumerator()
         {
-            return new RepeatEnumerator<T>(element, count);
+            return new(element, count);
         }
 
         public readonly int Count

@@ -25,7 +25,7 @@ namespace StructLinq.List
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly ArrayStructEnumerator<T> GetEnumerator()
         {
-            return new ArrayStructEnumerator<T>(layout.Items, start, Count);
+            return new(layout.Items, start, Count);
         }
 
         public readonly int Count

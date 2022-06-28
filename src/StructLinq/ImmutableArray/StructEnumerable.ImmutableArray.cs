@@ -12,7 +12,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ListEnumerable<T, ImmutableArray<T>> ToStructEnumerable<T>(this ImmutableArray<T> enumerable) 
         {
-            return new ListEnumerable<T, ImmutableArray<T>>(enumerable, 0, enumerable.Length);
+            return new(enumerable, 0, enumerable.Length);
         }
 
     }

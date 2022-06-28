@@ -19,7 +19,7 @@ namespace StructLinq.Skip
         public SkipEnumerator<T, TEnumerator> GetEnumerator()
         {
             var enumerator = inner.GetEnumerator();
-            return new SkipEnumerator<T, TEnumerator>(ref enumerator, count);
+            return new(ref enumerator, count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

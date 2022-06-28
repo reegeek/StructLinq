@@ -25,7 +25,7 @@ namespace StructLinq.Reverse
             var list = new PooledList<T>(capacity, pool);
             var enumerator = enumerable.GetEnumerator();
             PoolLists.Fill(ref list, ref enumerator);
-            return new ReverseEnumerator<T>(list);
+            return new(list);
         }
 
         internal TEnumerable Enumerable

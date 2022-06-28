@@ -30,7 +30,7 @@ namespace StructLinq.Hashset
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly HashsetEnumerator<T> GetEnumerator()
         {
-            return new HashsetEnumerator<T>(hashsetLayout.Entries, start, Count);
+            return new(hashsetLayout.Entries, start, Count);
         }
 
         public readonly int Count

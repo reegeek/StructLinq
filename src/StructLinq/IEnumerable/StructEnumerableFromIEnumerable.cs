@@ -16,7 +16,7 @@ namespace StructLinq.IEnumerable
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericEnumerator<T> GetEnumerator()
         {
-            return new GenericEnumerator<T>(inner.GetEnumerator());
+            return new(inner.GetEnumerator());
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

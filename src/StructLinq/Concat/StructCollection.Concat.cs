@@ -16,7 +16,7 @@ public partial struct StructCollection<T, TEnumerable, TEnumerator>
         where TEnumerable2 : struct, IStructEnumerable<T, TEnumerator2>
         where TEnumerator2 : struct, IStructEnumerator<T>
     {
-        return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+        return new(new(enumerable, enumerable2.enumerable));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -28,7 +28,7 @@ public partial struct StructCollection<T, TEnumerable, TEnumerator>
         where TEnumerable2 : struct, IStructCollection<T, TEnumerator2>
         where TEnumerator2 : struct, ICollectionEnumerator<T>
     {
-        return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+        return new (new (enumerable, enumerable2.enumerable));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -37,7 +37,7 @@ public partial struct StructCollection<T, TEnumerable, TEnumerator>
         where TEnumerable2 : struct, IStructCollection<T, TEnumerator2>
         where TEnumerator2 : struct, ICollectionEnumerator<T>
     {
-        return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+        return new (new(enumerable, enumerable2.enumerable));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -46,7 +46,7 @@ public partial struct StructCollection<T, TEnumerable, TEnumerator>
         where TEnumerable2 : struct, IStructEnumerable<T, TEnumerator2>
         where TEnumerator2 : struct, IStructEnumerator<T>
     {
-        return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+        return new(new(enumerable, enumerable2.enumerable));
     }
 
 }

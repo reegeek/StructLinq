@@ -19,7 +19,7 @@ namespace StructLinq.Skip
         public RefSkipEnumerator<T, TEnumerator> GetEnumerator()
         {
             var enumerator = inner.GetEnumerator();
-            return new RefSkipEnumerator<T, TEnumerator>(ref enumerator, count);
+            return new(ref enumerator, count);
         }
     }
 }

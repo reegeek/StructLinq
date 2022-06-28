@@ -22,7 +22,7 @@ namespace StructLinq.Concat
         {
             var enum1 = enumerable1.GetEnumerator();
             var enum2 = enumerable2.GetEnumerator();
-            return new ConcatEnumerator<T, TEnumerator1, TEnumerator2>(ref  enum1, ref  enum2);
+            return new(ref  enum1, ref  enum2);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

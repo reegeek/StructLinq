@@ -26,7 +26,7 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
             where TComparer : IComparer<TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, capacity, indexPool, dataPool, keyPool, true);
+            return new(ref enumerable, ref selector, ref comparer, capacity, indexPool, dataPool, keyPool, true);
         }
 
 
@@ -42,7 +42,7 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
             where TComparer : IComparer<TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, capacity, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
+            return new(ref enumerable, ref selector, ref comparer, capacity, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -57,7 +57,7 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
             where TComparer : IComparer<TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, TComparer>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
+            return new(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -70,7 +70,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TSelector : IFunction<T, TKey>
         {
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, IComparer<TKey>>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
+            return new(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -83,7 +83,7 @@ namespace StructLinq
             where TSelector : IFunction<T, TKey>
         {
             var comparer = Comparer<TKey>.Default;
-            return new OrderByKeyEnumerable<T, TEnumerable, TEnumerator, TSelector, TKey, Comparer<TKey>>(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
+            return new(ref enumerable, ref selector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -94,7 +94,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var structSelector = selector.ToStruct();
-            return new OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, IComparer<TKey>>(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
+            return new(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -105,7 +105,7 @@ namespace StructLinq
         {
             var comparer = Comparer<TKey>.Default;
             var structSelector = selector.ToStruct();
-            return new OrderByKeyEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, StructFunction<T, TKey>, TKey, Comparer<TKey>>(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
+            return new(ref enumerable, ref structSelector, ref comparer, 0, ArrayPool<int>.Shared, ArrayPool<T>.Shared, ArrayPool<TKey>.Shared, true);
         }
 
     }

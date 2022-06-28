@@ -11,12 +11,12 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ListEnumerable<T> ToStructEnumerable<T>(this List<T> list)
         {
-            return new ListEnumerable<T>(list);
+            return new(list);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ListRefEnumerable<T> ToRefStructEnumerable<T>(this List<T> list)
         {
-            return new ListRefEnumerable<T>(list);
+            return new(list);
         }
     }
 }

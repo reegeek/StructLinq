@@ -38,7 +38,7 @@ namespace StructLinq.Benchmark
             PoolLists.Fill(ref list, ref enumerator);
             var array = list.ToArray();
             list.Dispose();
-            return new List<int>(array);
+            return new(array);
         }
 
         [Benchmark]

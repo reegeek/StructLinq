@@ -16,7 +16,7 @@ namespace StructLinq
             T first = default;
             if (TryFirst(collection, ref first, x => x))
                 return first;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -26,7 +26,7 @@ namespace StructLinq
             T first = default;
             if (TryFirst(collection, ref first))
                 return first;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -37,7 +37,7 @@ namespace StructLinq
             T first = default;
             if (TryFirst(collection, predicate, ref first, x => x))
                 return first;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,7 +47,7 @@ namespace StructLinq
             T first = default;
             if (TryFirst(collection, predicate, ref first))
                 return first;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,7 +59,7 @@ namespace StructLinq
             T first = default;
             if (TryFirst(collection, ref predicate, ref first, x => x))
                 return first;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

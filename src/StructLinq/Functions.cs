@@ -8,12 +8,12 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StructFunction<TIn, TOut> ToStruct<TIn, TOut>(this Func<TIn, TOut> function)
         {
-            return new StructFunction<TIn, TOut>(function);
+            return new(function);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StructInFunction<TIn, TOut> ToStruct<TIn, TOut>(this InFunc<TIn, TOut> function)
         {
-            return new StructInFunction<TIn, TOut>(function);
+            return new(function);
         }
     }
 

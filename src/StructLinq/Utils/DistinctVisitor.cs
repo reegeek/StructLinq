@@ -15,7 +15,7 @@ namespace StructLinq.Utils
         public DistinctVisitor(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer, ref TVisitor visitor)
         {
             this.Visitor = visitor;
-            set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
+            set = new(capacity, bucketPool, slotPool, comparer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

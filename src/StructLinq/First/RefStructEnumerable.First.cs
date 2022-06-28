@@ -71,7 +71,7 @@ namespace StructLinq
                 return current;
             }
             enumerator.Dispose();
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -88,7 +88,7 @@ namespace StructLinq
                 }
             }
             enumerator.Dispose();
-            throw new Exception("No Match");
+            throw new("No Match");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -106,7 +106,7 @@ namespace StructLinq
                 }
             }
             enumerator.Dispose();
-            throw new Exception("No Match");
+            throw new("No Match");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

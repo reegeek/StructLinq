@@ -16,7 +16,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructEnumerable<T, TEnumerator2>
             where TEnumerator2 : struct, IStructEnumerator<T>
         {
-            return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
         }
 
 
@@ -26,7 +26,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructEnumerable<T, TEnumerator2>
             where TEnumerator2 : struct, IStructEnumerator<T>
         {
-            return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
         }
 
 
@@ -39,7 +39,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructCollection<T, TEnumerator2>
             where TEnumerator2 : struct, ICollectionEnumerator<T>
         {
-            return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -48,7 +48,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructCollection<T, TEnumerator2>
             where TEnumerator2 : struct, ICollectionEnumerator<T>
         {
-            return new StructEnumerable<T, ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>, ConcatEnumerator<T, TEnumerator, TEnumerator2>>(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
         }
 
     }
@@ -66,9 +66,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
             where TEnumerator2 : struct, IRefStructEnumerator<T>
         {
-            return new
-               RefStructEnumerable<T, RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>,
-                    RefConcatEnumerator<T, TEnumerator, TEnumerator2>>(
+            return new(
                     new RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2));
         }
 
@@ -81,9 +79,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
             where TEnumerator2 : struct, IRefStructEnumerator<T>
         {
-            return new
-                RefStructEnumerable<T, RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>,
-                    RefConcatEnumerator<T, TEnumerator, TEnumerator2>>(
+            return new(
                     new RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2));
         }
 
@@ -94,9 +90,7 @@ namespace StructLinq
             IRefStructEnumerable<T, TEnumerator2> enumerable2)
             where TEnumerator2 : struct, IRefStructEnumerator<T>
         {
-            return new RefStructEnumerable<T,
-                RefConcatEnumerable<T, TEnumerable, IRefStructEnumerable<T, TEnumerator2>, TEnumerator, TEnumerator2>,
-                RefConcatEnumerator<T, TEnumerator, TEnumerator2>>(
+            return new(
                 new RefConcatEnumerable<T, TEnumerable, IRefStructEnumerable<T, TEnumerator2>, TEnumerator, TEnumerator2>(
                     enumerable, enumerable2));
         }

@@ -9,7 +9,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EnumerableFromStructEnumerable<T,TEnumerator> ToEnumerable() 
         {
-            return new EnumerableFromStructEnumerable<T, TEnumerator>(enumerable);
+            return new(enumerable);
         }
     }
 
@@ -18,7 +18,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EnumerableFromStructEnumerable<T,TEnumerator> ToEnumerable() 
         {
-            return new EnumerableFromStructEnumerable<T, TEnumerator>(enumerable);
+            return new(enumerable);
         }
     }
 
@@ -28,7 +28,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EnumerableFromRefStructEnumerable<T, TEnumerator> ToEnumerable()
         {
-            return new EnumerableFromRefStructEnumerable<T, TEnumerator>(enumerable);
+            return new(enumerable);
         }
     }
 
@@ -37,7 +37,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EnumerableFromRefStructEnumerable<T, TEnumerator> ToEnumerable()
         {
-            return new EnumerableFromRefStructEnumerable<T, TEnumerator>(enumerable);
+            return new(enumerable);
         }
     }
 }

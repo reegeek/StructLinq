@@ -86,7 +86,7 @@ namespace StructLinq.Benchmark
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Enumerator GetEnumerator()
         {
-            return new Enumerator(array);
+            return new(array);
         }
 
         public struct Enumerator

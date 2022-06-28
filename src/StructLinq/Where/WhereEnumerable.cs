@@ -20,7 +20,7 @@ namespace StructLinq.Where
         public WhereEnumerator<TIn, TEnumerator, TFunction> GetEnumerator()
         {
             var enumerator = inner.GetEnumerator();
-            return new WhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
+            return new(ref function, ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -68,7 +68,7 @@ namespace StructLinq.Where
         public WhereEnumerator<TIn, TEnumerator> GetEnumerator()
         {
             var enumerator = inner.GetEnumerator();
-            return new WhereEnumerator<TIn, TEnumerator>(function, ref enumerator);
+            return new(function, ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

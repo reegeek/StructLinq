@@ -75,7 +75,7 @@ namespace StructLinq
             T last = default;
             if (TryInnerLast(ref enumerator, ref last))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -86,7 +86,7 @@ namespace StructLinq
             T last = default;
             if (TryInnerLast(ref enumerator, ref last))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -98,7 +98,7 @@ namespace StructLinq
             T last = default;
             if (TryInnerLast(ref enumerator, predicate, ref last))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -109,7 +109,7 @@ namespace StructLinq
             T last = default;
             if (TryInnerLast(ref enumerator, predicate, ref last))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -122,7 +122,7 @@ namespace StructLinq
             T last = default;
             if (TryInnerLast(ref enumerator, ref predicate, ref last))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

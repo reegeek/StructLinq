@@ -14,7 +14,7 @@ namespace StructLinq
             where TFunction : struct, IFunction<T, bool>
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            return new WhereEnumerable<T, TEnumerable, TEnumerator, TFunction>(ref predicate, ref enumerable);
+            return new(ref predicate, ref enumerable);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -23,7 +23,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
-            return new WhereEnumerable<T, TEnumerable, TEnumerator>(predicate, ref enumerable);
+            return new(predicate, ref enumerable);
 
         }
 
@@ -34,7 +34,7 @@ namespace StructLinq
             where TFunction : struct, IInFunction<T, bool>
             where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
         {
-            return new RefWhereEnumerable<T, TEnumerable, TEnumerator, TFunction>(ref predicate, ref enumerable);
+            return new(ref predicate, ref enumerable);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -44,7 +44,7 @@ namespace StructLinq
             where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
         {
             var structPredicate = predicate.ToStruct();
-            return new RefWhereEnumerable<T, TEnumerable, TEnumerator, StructInFunction<T, bool>>(ref structPredicate, ref enumerable);
+            return new(ref structPredicate, ref enumerable);
 
         }
 
@@ -52,7 +52,7 @@ namespace StructLinq
         public static WhereEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator> Where<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return new WhereEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator>(predicate, ref enumerable);
+            return new(predicate, ref enumerable);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -60,7 +60,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
             var structPredicate = predicate.ToStruct();
-            return new RefWhereEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator, StructInFunction<T, bool>>(ref structPredicate, ref enumerable);
+            return new(ref structPredicate, ref enumerable);
         }
 
     }

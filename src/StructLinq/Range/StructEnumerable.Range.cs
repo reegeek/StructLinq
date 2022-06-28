@@ -9,7 +9,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StructCollection<int, RangeEnumerable, RangeEnumerator> Range(int start, int count)
         {
-            return new StructCollection<int, RangeEnumerable, RangeEnumerator>(new RangeEnumerable(start, count));
+            return new(new(start, count));
         }
     }
 }

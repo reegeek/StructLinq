@@ -10,7 +10,7 @@ namespace StructLinq.Utils.Collections
 
         public PooledListVisitor(int capacity, ArrayPool<T> pool)
         {
-            PooledList = new PooledList<T>(capacity, pool);
+            PooledList = new(capacity, pool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

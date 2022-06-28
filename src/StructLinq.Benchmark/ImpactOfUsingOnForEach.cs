@@ -21,8 +21,8 @@ namespace StructLinq.Benchmark
 
         public ImpactOfUsingOnForEach()
         {
-            arrayOfClass = new ArrayEnumerableWithDispose<Class>(Enumerable.Range(0, Count).Select(x => new Class(x)).ToArray());
-            arrayOfStruct = new ArrayEnumerableWithDispose<Struct>(Enumerable.Range(0, Count).Select(x => new Struct(x)).ToArray());
+            arrayOfClass = new(Enumerable.Range(0, Count).Select(x => new Class(x)).ToArray());
+            arrayOfStruct = new(Enumerable.Range(0, Count).Select(x => new Struct(x)).ToArray());
         }
 
         [Benchmark(Baseline = true)]
@@ -141,7 +141,7 @@ namespace StructLinq.Benchmark
 
         public ArrayStructEnumeratorWithDispose<T> GetEnumerator()
         {
-            return new ArrayStructEnumeratorWithDispose<T>(array);
+            return new(array);
         }
 
         public IEnumerator<T> GetIEnumerator()

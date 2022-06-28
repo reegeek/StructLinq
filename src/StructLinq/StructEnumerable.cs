@@ -64,7 +64,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public StructEnumerable<T, TEnumerable, TEnumerator> ToStructEnumerable()
         {
-            return new StructEnumerable<T, TEnumerable, TEnumerator>(enumerable);
+            return new(enumerable);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -97,7 +97,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RefStructEnumerable<T, TEnumerable, TEnumerator> ToRefStructEnumerable()
         {
-            return new RefStructEnumerable<T, TEnumerable, TEnumerator>(enumerable);
+            return new(enumerable);
         }
 
 

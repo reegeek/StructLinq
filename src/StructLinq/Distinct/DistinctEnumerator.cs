@@ -14,7 +14,7 @@ namespace StructLinq.Distinct
         public DistinctEnumerator(ref TEnumerator enumerator, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer)
         {
             this.enumerator = enumerator;
-            set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
+            set = new(capacity, bucketPool, slotPool, comparer);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

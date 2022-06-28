@@ -11,14 +11,14 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ListEnumerable<T, IList<T>> ToStructEnumerable<T>(this IList<T> enumerable)
         {
-            return new ListEnumerable<T, IList<T>>(enumerable, 0, enumerable.Count);
+            return new(enumerable, 0, enumerable.Count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ListEnumerable<T, TList> ToStructEnumerable<T, TList>(this TList enumerable, Func<TList, IList<T>> _) 
             where TList : IList<T>
         {
-            return new ListEnumerable<T, TList>(enumerable, 0, enumerable.Count);
+            return new(enumerable, 0, enumerable.Count);
         }
 
     }

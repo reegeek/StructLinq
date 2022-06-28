@@ -22,7 +22,7 @@ namespace StructLinq.IList
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly IListEnumerator<T, TList> GetEnumerator()
         {
-            return new IListEnumerator<T, TList>(list, start, Count);
+            return new(list, start, Count);
         }
         public readonly int Count
         {

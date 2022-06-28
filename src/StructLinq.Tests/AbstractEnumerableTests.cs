@@ -139,7 +139,7 @@ namespace StructLinq.Tests
         {
             //Arrange
             var enumerable = Build(size);
-            var visitor = new ListVisitor<T>(new List<T>());
+            var visitor = new ListVisitor<T>(new());
 
             //Act
             var status = enumerable.Visit(ref visitor);

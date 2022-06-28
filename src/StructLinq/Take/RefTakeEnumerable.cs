@@ -19,7 +19,7 @@ namespace StructLinq.Take
         public RefTakeEnumerator<T, TEnumerator> GetEnumerator()
         {
             var enumerator = inner.GetEnumerator();
-            return new RefTakeEnumerator<T, TEnumerator>(ref enumerator, count);
+            return new(ref enumerator, count);
         }
     }
 }

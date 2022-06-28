@@ -9,7 +9,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static EmptyEnumerable<T> Empty<T>()
         {
-            return new EmptyEnumerable<T>();
+            return new();
         }
     }
 }

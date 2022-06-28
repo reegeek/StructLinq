@@ -12,14 +12,14 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
-            return new SkipEnumerable<T, TEnumerable, TEnumerator>(ref enumerable, count);
+            return new(ref enumerable, count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SkipEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator> Skip<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int count)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return new SkipEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator>(ref enumerable, count);
+            return new(ref enumerable, count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -27,14 +27,14 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<T>
             where TEnumerable : IRefStructEnumerable<T, TEnumerator>
         {
-            return new RefSkipEnumerable<T, TEnumerable, TEnumerator>(ref enumerable, count);
+            return new(ref enumerable, count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RefSkipEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator> Skip<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, int count)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            return new RefSkipEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator>(ref enumerable, count);
+            return new(ref enumerable, count);
         }
     }
 }

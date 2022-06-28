@@ -20,7 +20,7 @@ namespace StructLinq.Reverse
         public readonly ReverseEnumerator<T, TEnumerator> GetEnumerator()
         {
             var inner = structCollection.GetEnumerator();
-            return new ReverseEnumerator<T, TEnumerator>(inner, start, Count);
+            return new(inner, start, Count);
         }
         public readonly int Count
         {

@@ -10,7 +10,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static HashsetEnumerable<T> ToStructEnumerable<T>(this System.Collections.Generic.HashSet<T> hashset)
         {
-            return new HashsetEnumerable<T>(hashset);
+            return new(hashset);
         }
     }
 }

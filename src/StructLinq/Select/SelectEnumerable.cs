@@ -23,7 +23,7 @@ namespace StructLinq.Select
         public SelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new SelectEnumerator<TIn, TOut, TEnumerator, TFunction>(ref function, ref typedEnumerator);
+            return new(ref function, ref typedEnumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -77,7 +77,7 @@ namespace StructLinq.Select
         public SelectEnumerator<TIn, TOut, TEnumerator> GetEnumerator()
         {
             var typedEnumerator = inner.GetEnumerator();
-            return new SelectEnumerator<TIn, TOut, TEnumerator>(function, ref typedEnumerator);
+            return new(function, ref typedEnumerator);
         }
 
 

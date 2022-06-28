@@ -50,7 +50,7 @@ namespace StructLinq.Dictionary
             get
             {
                 ref var entry = ref entries[index];
-                return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+                return new(entry.Key, entry.Value);
             }
         }
 
@@ -69,7 +69,7 @@ namespace StructLinq.Dictionary
         public KeyValuePair<TKey, TValue> Get(int i)
         {
             ref var entry = ref entries[start + i];
-            return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+            return new(entry.Key, entry.Value);
         }
 
     }

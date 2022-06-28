@@ -16,7 +16,7 @@ namespace StructLinq
             T last = default;
             if (TryLast(collection, ref last, x=>x))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -26,7 +26,7 @@ namespace StructLinq
             T last = default;
             if (TryLast(collection, ref last))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -37,7 +37,7 @@ namespace StructLinq
             T last = default;
             if (TryLast(collection, predicate, ref last, x=>x))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,7 +47,7 @@ namespace StructLinq
             T last = default;
             if (TryLast(collection, predicate, ref last))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,7 +59,7 @@ namespace StructLinq
             T last = default;
             if (TryLast(collection, ref predicate, ref last, x=>x))
                 return last;
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

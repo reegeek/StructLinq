@@ -23,7 +23,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
-            return new DistinctEnumerable<T, TEnumerable, TEnumerator, TComparer>(ref enumerable, comparer, capacity, bucketPool, slotPool);
+            return new(ref enumerable, comparer, capacity, bucketPool, slotPool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -67,7 +67,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
         {
             var equalityComparer = EqualityComparer<T>.Default;
-            return new DistinctEnumerable<T, TEnumerable, TEnumerator, EqualityComparer<T>>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
 
@@ -86,7 +86,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<T>
         {
             var equalityComparer = EqualityComparer<T>.Default;
-            return new DistinctEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator, EqualityComparer<T>>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
 
@@ -101,7 +101,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<T>
             where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
         {
-            return new RefDistinctEnumerable<T, TEnumerable, TEnumerator, TComparer>(ref enumerable, comparer, capacity, bucketPool, slotPool);
+            return new(ref enumerable, comparer, capacity, bucketPool, slotPool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -153,7 +153,7 @@ namespace StructLinq
             IInEqualityComparer<T> comparer)
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
-            return new RefDistinctEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator, IInEqualityComparer<T>>(ref enumerable, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
 
         }
 
@@ -163,7 +163,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
             var equalityComparer = InEqualityComparer<T>.Default;
-            return new RefDistinctEnumerable<T, IRefStructEnumerable<T, TEnumerator>, TEnumerator, IInEqualityComparer<T>>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
     }
 }

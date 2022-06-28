@@ -32,7 +32,7 @@ namespace StructLinq.Distinct
         public DistinctEnumerator<T, TEnumerator, TComparer> GetEnumerator()
         {
             var enumerator = enumerable.GetEnumerator();
-            return new DistinctEnumerator<T, TEnumerator, TComparer>(ref enumerator, capacity, bucketPool, slotPool, comparer);
+            return new(ref enumerator, capacity, bucketPool, slotPool, comparer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

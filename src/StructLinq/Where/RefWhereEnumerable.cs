@@ -19,7 +19,7 @@ namespace StructLinq.Where
         public RefWhereEnumerator<TIn, TEnumerator, TFunction> GetEnumerator()
         {
             var enumerator = inner.GetEnumerator();
-            return new RefWhereEnumerator<TIn, TEnumerator, TFunction>(ref function, ref enumerator);
+            return new(ref function, ref enumerator);
         }
 
     }

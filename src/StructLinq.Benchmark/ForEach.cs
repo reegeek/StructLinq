@@ -39,7 +39,7 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int WithStruct()
         {
-            CountAction<int> countAction = new CountAction<int> { Count = 0 };
+            CountAction<int> countAction = new() { Count = 0 };
             StructEnumerable.Range(0, Count).ForEach(ref countAction);
             return countAction.Count;
         }
@@ -47,7 +47,7 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int ZeroAllocWithStruct()
         {
-            CountAction<int> countAction = new CountAction<int> { Count = 0 };
+            CountAction<int> countAction = new() { Count = 0 };
             StructEnumerable.Range(0, Count).ForEach(ref countAction, x=> x);
             return countAction.Count;
         }
@@ -56,7 +56,7 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int ToTypedEnumerableWithStruct()
         {
-            CountAction<int> countAction = new CountAction<int> { Count = 0 };
+            CountAction<int> countAction = new() { Count = 0 };
             var convertRange = Enumerable.Range(0, Count).ToStructEnumerable();
             convertRange.ForEach(ref countAction);
             return countAction.Count;

@@ -37,7 +37,7 @@ namespace StructLinq.Except
             var enum1 = enumerable1.GetEnumerator();
             var enum2 = enumerable2.GetEnumerator();
             var set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
-            return new ExceptEnumerator<T, TEnumerator1, TEnumerator2, TComparer>(ref enum1, ref  enum2, ref set);
+            return new(ref enum1, ref  enum2, ref set);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -63,7 +63,7 @@ namespace StructLinq.Except
             public ExceptVisitor(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer, ref TVisitor visitor)
             {
                 this.Visitor = visitor;
-                set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
+                set = new(capacity, bucketPool, slotPool, comparer);
                 Add = true;
             }
 

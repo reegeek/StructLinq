@@ -19,7 +19,7 @@ namespace StructLinq.Take
         public TakeEnumerator<T, TEnumerator> GetEnumerator()
         {
             var enumerator = inner.GetEnumerator();
-            return new TakeEnumerator<T, TEnumerator>(ref enumerator, count);
+            return new(ref enumerator, count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

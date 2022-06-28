@@ -9,7 +9,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RepeatEnumerable<T> Repeat<T>(T element, uint count)
         {
-            return new RepeatEnumerable<T>(element, count);
+            return new(element, count);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

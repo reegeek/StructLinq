@@ -13,7 +13,7 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StructInEqualityComparer<T> ToInEqualityComparer<T>(this IEqualityComparer<T> comparer)
         {
-            return new StructInEqualityComparer<T>(comparer);
+            return new(comparer);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : IRefStructEnumerable<T, TEnumerator2>
         {
-            return new RefUnionEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer>(ref enumerable, ref enumerable2, comparer, capacity, bucketPool, slotPool); 
+            return new(ref enumerable, ref enumerable2, comparer, capacity, bucketPool, slotPool); 
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -46,7 +46,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : IRefStructEnumerable<T, TEnumerator2>
         {
-            return new RefUnionEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer>(ref enumerable, ref enumerable2, comparer, capacity, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, capacity, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -63,7 +63,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : IRefStructEnumerable<T, TEnumerator2>
         {
-            return new RefUnionEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer>(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -79,7 +79,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : IRefStructEnumerable<T, TEnumerator2>
         {
-            return new RefUnionEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, IInEqualityComparer<T>>(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -95,7 +95,7 @@ namespace StructLinq
             where TEnumerable2 : IRefStructEnumerable<T, TEnumerator2>
         {
             var equalityComparer = InEqualityComparer<T>.Default;
-            return new RefUnionEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, StructInEqualityComparer<T>>(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -107,7 +107,7 @@ namespace StructLinq
             where TEnumerator1 : struct, IRefStructEnumerator<T>
             where TEnumerator2 : struct, IRefStructEnumerator<T>
         {
-            return new RefUnionEnumerable<T, IRefStructEnumerable<T, TEnumerator1>, IRefStructEnumerable<T, TEnumerator2>, TEnumerator1, TEnumerator2, IInEqualityComparer<T>>(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -119,7 +119,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IRefStructEnumerator<T>
         {
             var equalityComparer = InEqualityComparer<T>.Default;
-            return new RefUnionEnumerable<T, IRefStructEnumerable<T, TEnumerator1>, IRefStructEnumerable<T, TEnumerator2>, TEnumerator1, TEnumerator2, StructInEqualityComparer<T>>(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+            return new(ref enumerable, ref enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
         }
     }
 }

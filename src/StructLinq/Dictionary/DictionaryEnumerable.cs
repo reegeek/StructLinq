@@ -30,7 +30,7 @@ namespace StructLinq.Dictionary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly DictionaryEnumerator<TKey, TValue> GetEnumerator()
         {
-            return new DictionaryEnumerator<TKey, TValue>(dictionaryLayout.Entries, start, Count);
+            return new(dictionaryLayout.Entries, start, Count);
         }
 
         public readonly int Count
@@ -60,7 +60,7 @@ namespace StructLinq.Dictionary
         public KeyValuePair<TKey, TValue> Get(int i)
         {
             ref var entry = ref dictionaryLayout.Entries[start + i];
-            return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+            return new(entry.Key, entry.Value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -73,7 +73,7 @@ namespace StructLinq.Dictionary
             for (int i = 0; i < count; i++)
             {
                 ref var input = ref array[s+i];
-                if (!visitor.Visit(new KeyValuePair<TKey, TValue>(input.Key, input.Value)))
+                if (!visitor.Visit(new(input.Key, input.Value)))
                     return VisitStatus.VisitorFinished;
             }
 

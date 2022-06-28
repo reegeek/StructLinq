@@ -14,7 +14,7 @@ namespace StructLinq
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (collection.Count == 0)
-                throw new Exception("No Elements");
+                throw new("No Elements");
             return collection.Get(0);
         }
 
@@ -23,7 +23,7 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (collection.Count == 0)
-                throw new Exception("No Elements");
+                throw new("No Elements");
             return collection.Get(0);
         }
 
@@ -33,14 +33,14 @@ namespace StructLinq
             where TCollection : IStructCollection<T, TEnumerator>
         {
             if (collection.Count == 0)
-                throw new Exception("No Elements");
+                throw new("No Elements");
             for (int i = 0; i < collection.Count; i++)
             {
                 var first = collection.Get(i);
                 if (predicate(first))
                     return first;
             }
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -48,14 +48,14 @@ namespace StructLinq
             where TEnumerator : struct, ICollectionEnumerator<T>
         {
             if (collection.Count == 0)
-                throw new Exception("No Elements");
+                throw new("No Elements");
             for (int i = 0; i < collection.Count; i++)
             {
                 var first = collection.Get(i);
                 if (predicate(first))
                     return first;
             }
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -65,14 +65,14 @@ namespace StructLinq
             where TFunc : struct, IFunction<T, bool>
         {
             if (collection.Count == 0)
-                throw new Exception("No Elements");
+                throw new("No Elements");
             for (int i = 0; i < collection.Count; i++)
             {
                 var first = collection.Get(i);
                 if (predicate.Eval(first))
                     return first;
             }
-            throw new Exception("No Elements");
+            throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

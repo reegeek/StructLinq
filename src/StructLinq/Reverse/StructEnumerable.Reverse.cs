@@ -20,7 +20,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return new ReverseEnumerable<T, TEnumerable, TEnumerator>(enumerable, capacity, pool);
+            return new(enumerable, capacity, pool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -30,7 +30,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return new ReverseEnumerable<T, TEnumerable, TEnumerator>(enumerable, 0, ArrayPool<T>.Shared);
+            return new(enumerable, 0, ArrayPool<T>.Shared);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -38,7 +38,7 @@ namespace StructLinq
             this IStructEnumerable<T, TEnumerator> enumerable)
             where TEnumerator : struct, IStructEnumerator<T>
         {
-            return new ReverseEnumerable<T, IStructEnumerable<T, TEnumerator>, TEnumerator>(enumerable, 0, ArrayPool<T>.Shared);
+            return new(enumerable, 0, ArrayPool<T>.Shared);
         }
 
     }

@@ -19,7 +19,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<Int16, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Int16, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int16>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int16>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -28,7 +28,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int16>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Int16, IStructEnumerable<Int16, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int16>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int16>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -46,7 +46,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<Int16>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<Int16, IRefStructEnumerable<Int16, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int16>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int16>>.Shared);
         }
 
             
@@ -57,7 +57,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<Int32, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Int32, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int32>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int32>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -66,7 +66,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int32>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Int32, IStructEnumerable<Int32, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int32>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int32>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -84,7 +84,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<Int32>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<Int32, IRefStructEnumerable<Int32, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int32>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int32>>.Shared);
         }
 
             
@@ -95,7 +95,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<Int64, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Int64, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int64>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int64>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -104,7 +104,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Int64>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Int64, IStructEnumerable<Int64, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int64>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int64>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -122,7 +122,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<Int64>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<Int64, IRefStructEnumerable<Int64, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int64>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Int64>>.Shared);
         }
 
             
@@ -133,7 +133,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<UInt16, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<UInt16, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt16>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt16>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -142,7 +142,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt16>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<UInt16, IStructEnumerable<UInt16, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt16>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt16>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -160,7 +160,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<UInt16>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<UInt16, IRefStructEnumerable<UInt16, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt16>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt16>>.Shared);
         }
 
             
@@ -171,7 +171,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<UInt32, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<UInt32, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt32>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt32>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -180,7 +180,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt32>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<UInt32, IStructEnumerable<UInt32, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt32>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt32>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -198,7 +198,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<UInt32>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<UInt32, IRefStructEnumerable<UInt32, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt32>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt32>>.Shared);
         }
 
             
@@ -209,7 +209,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<UInt64, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<UInt64, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt64>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt64>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -218,7 +218,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<UInt64>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<UInt64, IStructEnumerable<UInt64, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt64>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt64>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -236,7 +236,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<UInt64>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<UInt64, IRefStructEnumerable<UInt64, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt64>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<UInt64>>.Shared);
         }
 
             
@@ -247,7 +247,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<Single, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Single, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Single>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Single>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -256,7 +256,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Single>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Single, IStructEnumerable<Single, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Single>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Single>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -274,7 +274,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<Single>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<Single, IRefStructEnumerable<Single, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Single>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Single>>.Shared);
         }
 
             
@@ -285,7 +285,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<Double, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Double, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Double>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Double>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -294,7 +294,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Double>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Double, IStructEnumerable<Double, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Double>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Double>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -312,7 +312,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<Double>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<Double, IRefStructEnumerable<Double, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Double>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Double>>.Shared);
         }
 
             
@@ -323,7 +323,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<Byte, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Byte, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Byte>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Byte>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -332,7 +332,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<Byte>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<Byte, IStructEnumerable<Byte, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Byte>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Byte>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -350,7 +350,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<Byte>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<Byte, IRefStructEnumerable<Byte, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Byte>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<Byte>>.Shared);
         }
 
             
@@ -361,7 +361,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<SByte, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<SByte, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<SByte>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<SByte>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -370,7 +370,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<SByte>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<SByte, IStructEnumerable<SByte, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<SByte>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<SByte>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -388,7 +388,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<SByte>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<SByte, IRefStructEnumerable<SByte, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<SByte>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<SByte>>.Shared);
         }
 
             
@@ -399,7 +399,7 @@ namespace StructLinq
             where TEnumerable : IStructEnumerable<DateTime, TEnumerator>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<DateTime, TEnumerable, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<DateTime>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<DateTime>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -408,7 +408,7 @@ namespace StructLinq
             where TEnumerator : struct, IStructEnumerator<DateTime>
         {
             var equalityComparer = new DefaultStructEqualityComparer();
-            return new DistinctEnumerable<DateTime, IStructEnumerable<DateTime, TEnumerator>, TEnumerator, DefaultStructEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<DateTime>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<DateTime>>.Shared);
         }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -426,7 +426,7 @@ namespace StructLinq
             where TEnumerator : struct, IRefStructEnumerator<DateTime>
         {
             var equalityComparer = new DefaultStructInEqualityComparer();
-            return new RefDistinctEnumerable<DateTime, IRefStructEnumerable<DateTime, TEnumerator>, TEnumerator, DefaultStructInEqualityComparer>(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<DateTime>>.Shared);
+            return new(ref enumerable, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<DateTime>>.Shared);
         }
 
     

@@ -30,7 +30,7 @@ namespace StructLinq.Distinct
         public RefDistinctEnumerator<T, TEnumerator, TComparer> GetEnumerator()
         {
             var enumerator = enumerable.GetEnumerator();
-            return new RefDistinctEnumerator<T, TEnumerator, TComparer>(ref enumerator, capacity, bucketPool, slotPool,
+            return new(ref enumerator, capacity, bucketPool, slotPool,
                                                                         comparer);
         }
     }

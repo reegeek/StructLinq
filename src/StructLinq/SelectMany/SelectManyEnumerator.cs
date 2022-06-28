@@ -17,7 +17,7 @@ namespace StructLinq.SelectMany
         {
             this.enumerator1 = enumerator1;
             this.function = function;
-            currentEnumerator = new TResultEnumerator();
+            currentEnumerator = new();
             hasCurrent = false;
         }
 

@@ -9,13 +9,13 @@ namespace StructLinq
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static StructCollection<T, ArrayEnumerable<T>, ArrayStructEnumerator<T>> ToStructEnumerable<T>(this T[] array)
         {
-            return new StructCollection<T, ArrayEnumerable<T>, ArrayStructEnumerator<T>>(new ArrayEnumerable<T>(array, 0, array.Length));
+            return new(new(array, 0, array.Length));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RefStructCollection<T, ArrayRefEnumerable<T>, ArrayRefStructEnumerator<T>> ToRefStructEnumerable<T>(this T[] array)
         {
-            return new RefStructCollection<T, ArrayRefEnumerable<T>, ArrayRefStructEnumerator<T>>(new ArrayRefEnumerable<T>(array, 0, array.Length));
+            return new(new(array, 0, array.Length));
         }
 
     }

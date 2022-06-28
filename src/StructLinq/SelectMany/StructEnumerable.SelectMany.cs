@@ -37,7 +37,7 @@ namespace StructLinq
                 Func<TSource, IEnumerable<TResult>> function)
             where TSourceEnumerator : struct, IStructEnumerator<TSource>
         {
-            return new(enumerable, new FuncEnumerable<TSource, TResult>(function));
+            return new(enumerable, new(function));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -54,7 +54,7 @@ namespace StructLinq
             where TResultEnumerable : IStructEnumerable<TResult, TResultEnumerator>
             where TResultEnumerator : struct, IStructEnumerator<TResult>
         {
-            return new(enumerable, new FuncEnumerable<TSource, TResult, TResultEnumerable, TResultEnumerator>(function));
+            return new(enumerable, new(function));
         }
 
     }
