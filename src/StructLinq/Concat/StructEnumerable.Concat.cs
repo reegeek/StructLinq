@@ -16,7 +16,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructEnumerable<T, TEnumerator2>
             where TEnumerator2 : struct, IStructEnumerator<T>
         {
-            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+            return new(new (enumerable, enumerable2.enumerable));
         }
 
 
@@ -26,7 +26,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructEnumerable<T, TEnumerator2>
             where TEnumerator2 : struct, IStructEnumerator<T>
         {
-            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+            return new(new (enumerable, enumerable2.enumerable));
         }
 
 
@@ -39,7 +39,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructCollection<T, TEnumerator2>
             where TEnumerator2 : struct, ICollectionEnumerator<T>
         {
-            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
+            return new(new (enumerable, enumerable2.enumerable));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -48,51 +48,7 @@ namespace StructLinq
             where TEnumerable2 : struct, IStructCollection<T, TEnumerator2>
             where TEnumerator2 : struct, ICollectionEnumerator<T>
         {
-            return new(new ConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2.enumerable));
-        }
-
-    }
-
-
-    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [Obsolete("Remove last argument")]
-        public RefStructEnumerable<T, RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>,
-            RefConcatEnumerator<T, TEnumerator, TEnumerator2>> Concat<TEnumerable2, TEnumerator2>(
-            TEnumerable2 enumerable2,
-            Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __,
-            Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
-            where TEnumerator2 : struct, IRefStructEnumerator<T>
-        {
-            return new(
-                    new RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2));
-        }
-
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RefStructEnumerable<T, RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>,
-            RefConcatEnumerator<T, TEnumerator, TEnumerator2>> Concat<TEnumerable2, TEnumerator2>(
-            TEnumerable2 enumerable2,
-            Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __)
-            where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
-            where TEnumerator2 : struct, IRefStructEnumerator<T>
-        {
-            return new(
-                    new RefConcatEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2>(enumerable, enumerable2));
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RefStructEnumerable<T,
-            RefConcatEnumerable<T, TEnumerable, IRefStructEnumerable<T, TEnumerator2>, TEnumerator, TEnumerator2>,
-            RefConcatEnumerator<T, TEnumerator, TEnumerator2>> Concat<TEnumerator2>(
-            IRefStructEnumerable<T, TEnumerator2> enumerable2)
-            where TEnumerator2 : struct, IRefStructEnumerator<T>
-        {
-            return new(
-                new RefConcatEnumerable<T, TEnumerable, IRefStructEnumerable<T, TEnumerator2>, TEnumerator, TEnumerator2>(
-                    enumerable, enumerable2));
+            return new(new (enumerable, enumerable2.enumerable));
         }
 
     }
