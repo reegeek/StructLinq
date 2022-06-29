@@ -8,9 +8,9 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static HashsetEnumerable<T> ToStructEnumerable<T>(this System.Collections.Generic.HashSet<T> hashset)
+        public static StructCollection<T, HashsetEnumerable<T>, HashsetEnumerator<T>> ToStructEnumerable<T>(this System.Collections.Generic.HashSet<T> hashset)
         {
-            return new(hashset);
+            return new (new(hashset));
         }
     }
 }

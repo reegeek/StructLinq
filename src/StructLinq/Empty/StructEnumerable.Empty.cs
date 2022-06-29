@@ -7,9 +7,9 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static EmptyEnumerable<T> Empty<T>()
+        public static StructEnumerable<T, EmptyEnumerable<T>, EmptyEnumerator<T>> Empty<T>()
         {
-            return new();
+            return new(new ());
         }
     }
 }
