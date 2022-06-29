@@ -10,12 +10,12 @@ namespace StructLinq.Tests
         ExceptEnumerable<int, RangeEnumerable, RangeEnumerable, RangeEnumerator, RangeEnumerator, EqualityComparer<int>>,
         ExceptEnumerator<int, RangeEnumerator, RangeEnumerator, EqualityComparer<int>>>
     {
-        protected override ExceptEnumerable<int, RangeEnumerable, RangeEnumerable, RangeEnumerator, RangeEnumerator, EqualityComparer<int>> Build(int size)
+        protected override StructEnumerable<int, ExceptEnumerable<int, RangeEnumerable, RangeEnumerable, RangeEnumerator, RangeEnumerator, EqualityComparer<int>>, ExceptEnumerator<int, RangeEnumerator, RangeEnumerator, EqualityComparer<int>>> Build(int size)
         {
             var enum1 = StructEnumerable.Range(0, size);
             var enum2 = StructEnumerable.Range(size + 10, size);
             var comparer = EqualityComparer<int>.Default;
-            return enum1.Except(enum2, comparer, x => x, x => x);
+            return enum1.Except(enum2, comparer);
         }
 
         [Fact]

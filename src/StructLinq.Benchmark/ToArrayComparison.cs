@@ -19,7 +19,7 @@ namespace StructLinq.Benchmark
 
         public ToArrayComparison()
         {
-            enumerable = StructEnumerable.Range(0, 10_000);
+            enumerable = new RangeEnumerable(0, 10_000);
         }
 
         [Benchmark]
@@ -55,7 +55,7 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int[] StructLinqToArray()
         {
-            return enumerable.ToArray(x => x);
+            return StructEnumerable.Range(0, 10_000).ToArray();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

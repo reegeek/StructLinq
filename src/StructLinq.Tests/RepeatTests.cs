@@ -7,7 +7,7 @@ namespace StructLinq.Tests
 {
     public class RepeatTests : AbstractCollectionTests<int, RepeatEnumerable<int>, RepeatEnumerator<int>>
     {
-        protected override RepeatEnumerable<int> Build(int size)
+        protected override StructCollection<int, RepeatEnumerable<int>, RepeatEnumerator<int>> BuildCollection(int size)
         {
             return StructEnumerable.Repeat(-1, (uint)size);
         }

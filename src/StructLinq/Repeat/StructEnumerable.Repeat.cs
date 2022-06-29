@@ -7,15 +7,9 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RepeatEnumerable<T> Repeat<T>(T element, uint count)
+        public static StructCollection<T, RepeatEnumerable<T>, RepeatEnumerator<T>> Repeat<T>(T element, uint count)
         {
-            return new(element, count);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Count<T>(RepeatEnumerable<T> repeatEnumerable)
-        {
-            return (int)repeatEnumerable.Count;
+            return new(new(element, count));
         }
     }
 }
