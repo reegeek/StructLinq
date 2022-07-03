@@ -6,45 +6,41 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct RefStructCollection<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T ElementAt<T, TCollection, TEnumerator>(this TCollection collection, int index, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T ElementAt(int index, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
         {
-            if (index >= collection.Count || index < 0)
+            if (index >= enumerable.Count || index < 0)
                 throw new ArgumentOutOfRangeException("index");
-            return collection.Get(index);
+            return enumerable.Get(index);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T ElementAt<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, int index)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public T ElementAt(int index)
         {
-            if (index >= collection.Count || index < 0)
+            if (index >= enumerable.Count || index < 0)
                 throw new ArgumentOutOfRangeException("index");
-            return collection.Get(index);
+            return enumerable.Get(index);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryElementAt<T, TCollection, TEnumerator>(this TCollection collection, ref T elementAt, int index, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryElementAt(ref T elementAt, int index, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
         {
-            if (index >= collection.Count || index < 0)
+            if (index >= enumerable.Count || index < 0)
                 return false;
-            elementAt = ref collection.Get(index);
+            elementAt = ref enumerable.Get(index);
             return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryElementAt<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, ref T elementAt, int index)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public bool TryElementAt(ref T elementAt, int index)
         {
-            if (index >= collection.Count || index < 0)
+            if (index >= enumerable.Count || index < 0)
                 return false;
-            elementAt = ref collection.Get(index);
+            elementAt = ref enumerable.Get(index);
             return true;
         }
 

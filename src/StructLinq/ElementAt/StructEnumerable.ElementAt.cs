@@ -6,11 +6,10 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryInnerElementAt<T, TEnumerator>(ref TEnumerator enumerator, ref T elementAt, int index)
-            where TEnumerator : struct, IStructEnumerator<T>
+        private static bool TryInnerElementAt(ref TEnumerator enumerator, ref T elementAt, int index)
         {
             if (index < 0)
                 return false;
@@ -33,8 +32,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T InnerElementAt<T, TEnumerator>(ref TEnumerator enumerator, int index)
-            where TEnumerator : struct, IStructEnumerator<T>
+        private T InnerElementAt(ref TEnumerator enumerator, int index)
         {
             if (index < 0)
                 throw new ArgumentOutOfRangeException("index");
@@ -56,37 +54,34 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T ElementAt<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, int index, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T ElementAt(int index, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerElementAt<T, TEnumerator>(ref enumerator, index);
+            return InnerElementAt(ref enumerator, index);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T ElementAt<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, int index)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public T ElementAt(int index)
         {
             var enumerator = enumerable.GetEnumerator();
-            return InnerElementAt<T, TEnumerator>(ref enumerator, index);
+            return InnerElementAt(ref enumerator, index);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryElementAt<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, ref T elementAt, int index, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryElementAt(ref T elementAt, int index, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryInnerElementAt(ref enumerator, ref elementAt, index);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryElementAt<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, ref T elementAt, int index)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool TryElementAt(ref T elementAt, int index)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryInnerElementAt(ref enumerator, ref elementAt, index);
         }
     }
+
 }
