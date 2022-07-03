@@ -3,16 +3,22 @@
 
 namespace StructLinq
 {
-    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
-        where TEnumerable : struct,IStructEnumerable<T, TEnumerator>
-        where TEnumerator : struct, IStructEnumerator<T>
+    public partial struct StructCollection<T, TEnumerable, TEnumerator> 
+        where TEnumerable : struct, IStructCollection<T, TEnumerator>
+        where TEnumerator : struct, ICollectionEnumerator<T>
     {
         internal TEnumerable enumerable;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public StructEnumerable(TEnumerable enumerable)
+        public StructCollection(TEnumerable enumerable)
         {
             this.enumerable = enumerable;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructEnumerable<T, TEnumerable, TEnumerator> ToStructEnumerable()
+        {
+            return new(enumerable);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -28,6 +34,11 @@ namespace StructLinq
             return enumerable.Visit(ref visitor);
         }
 
+        internal int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => enumerable.Count;
+        }
     }
 
 }
