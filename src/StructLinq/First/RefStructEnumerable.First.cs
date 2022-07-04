@@ -6,11 +6,10 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryRefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator, ref T first)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private bool TryRefInnerFirst(ref TEnumerator enumerator, ref T first)
         {
             if (enumerator.MoveNext())
             {
@@ -24,8 +23,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryRefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate, ref T first)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private bool TryRefInnerFirst(ref TEnumerator enumerator, Func<T, bool> predicate, ref T first)
         {
             while (enumerator.MoveNext())
             {
@@ -42,8 +40,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryRefInnerFirst<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate, ref T first)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private bool TryRefInnerFirst<TFunc>(ref TEnumerator enumerator, ref TFunc predicate, ref T first)
             where TFunc : struct, IInFunction<T, bool>
         {
             while (enumerator.MoveNext())
@@ -61,8 +58,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T RefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private T RefInnerFirst(ref TEnumerator enumerator)
         {
             if (enumerator.MoveNext())
             {
@@ -75,8 +71,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T RefInnerFirst<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private T RefInnerFirst(ref TEnumerator enumerator, Func<T, bool> predicate)
         {
             while (enumerator.MoveNext())
             {
@@ -92,8 +87,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T RefInnerFirst<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private T RefInnerFirst<TFunc>(ref TEnumerator enumerator, ref TFunc predicate)
             where TFunc : struct, IFunction<T, bool>
         {
             while (enumerator.MoveNext())
@@ -110,92 +104,98 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T First(Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
-            return RefInnerFirst<T, TEnumerator>(ref enumerator);
+            return RefInnerFirst(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        public T First(this IRefStructEnumerable<T, TEnumerator> enumerable)
         {
             var enumerator = enumerable.GetEnumerator();
-            return RefInnerFirst<T, TEnumerator>(ref enumerator);
+            return RefInnerFirst(ref enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T First(Func<T, bool> predicate, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             return RefInnerFirst(ref enumerator, predicate);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        public T First(Func<T, bool> predicate)
         {
             var enumerator = enumerable.GetEnumerator();
             return RefInnerFirst(ref enumerator, predicate);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T First<TFunc>(ref TFunc predicate, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
             where TFunc : struct, IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
-            return RefInnerFirst<T, TEnumerator, TFunc>(ref enumerator, ref predicate);
+            return RefInnerFirst<TFunc>(ref enumerator, ref predicate);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        public T First<TFunc>(ref TFunc predicate)
+            where TFunc : struct, IFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefInnerFirst<TFunc>(ref enumerator, ref predicate);
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool TryFirst(ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryRefInnerFirst(ref enumerator, ref first);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, ref T first)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        public bool TryFirst(ref T first)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryRefInnerFirst(ref enumerator, ref first);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryFirst(Func<T, bool> predicate, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryRefInnerFirst(ref enumerator, predicate, ref first);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate, ref T first)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        public bool TryFirst(Func<T, bool> predicate, ref T first)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryRefInnerFirst(ref enumerator, predicate, ref first);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryFirst<TFunc>(ref TFunc predicate, ref T first, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
             where TFunc : struct, IInFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
             return TryRefInnerFirst(ref enumerator, ref predicate, ref first);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool TryFirst<TFunc>(ref TFunc predicate, ref T first)
+            where TFunc : struct, IInFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryRefInnerFirst(ref enumerator, ref predicate, ref first);
+        }
     }
 }

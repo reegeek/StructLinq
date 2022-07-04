@@ -6,12 +6,10 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T FirstOrDefault<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        public T FirstOrDefault(Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             T first = default;
@@ -20,8 +18,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T FirstOrDefault<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public T FirstOrDefault()
         {
             var enumerator = enumerable.GetEnumerator();
             T first = default;
@@ -30,9 +27,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T FirstOrDefault<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T FirstOrDefault(Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             T first = default;
@@ -41,8 +37,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T FirstOrDefault<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public T FirstOrDefault(Func<T, bool> predicate)
         {
             var enumerator = enumerable.GetEnumerator();
             T first = default;
@@ -51,9 +46,18 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T FirstOrDefault<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T FirstOrDefault<TFunc>(ref TFunc predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TFunc : struct, IFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            T first = default;
+            TryInnerFirst(ref enumerator, ref predicate, ref first);
+            return first;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T FirstOrDefault<TFunc>(ref TFunc predicate)
             where TFunc : struct, IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();

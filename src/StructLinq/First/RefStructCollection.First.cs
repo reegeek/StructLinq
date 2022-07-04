@@ -6,95 +6,97 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct RefStructCollection<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TCollection, TEnumerator>(this TCollection collection, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T First(Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
         {
             T first = default;
-            if (TryFirst(collection, ref first, x => x))
+            if (TryFirst(ref first, x => x))
                 return first;
             throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public T First()
         {
             T first = default;
-            if (TryFirst(collection, ref first))
+            if (TryFirst(ref first))
                 return first;
             throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TCollection, TEnumerator>(this TCollection collection, Func<T, bool> predicate, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T First(Func<T, bool> predicate, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
         {
             T first = default;
-            if (TryFirst(collection, predicate, ref first, x => x))
+            if (TryFirst(predicate, ref first))
                 return first;
             throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, Func<T, bool> predicate)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public T First(Func<T, bool> predicate)
         {
             T first = default;
-            if (TryFirst(collection, predicate, ref first))
+            if (TryFirst(predicate, ref first))
                 return first;
             throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T First<T, TCollection, TEnumerator, TFunc>(this TCollection collection, ref TFunc predicate, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T First<TFunc>(ref TFunc predicate, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
             where TFunc : struct, IInFunction<T, bool>
         {
             T first = default;
-            if (TryFirst(collection, ref predicate, ref first, x => x))
+            if (TryFirst(ref predicate, ref first))
                 return first;
             throw new("No Elements");
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TCollection, TEnumerator>(this TCollection collection, ref T first, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        public T First<TFunc>(ref TFunc predicate)
+            where TFunc : struct, IInFunction<T, bool>
         {
-            if (collection.Count == 0)
+            T first = default;
+            if (TryFirst(ref predicate, ref first))
+                return first;
+            throw new("No Elements");
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool TryFirst(ref T first, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
+        {
+            if (enumerable.Count == 0)
                 return false;
-            ref var result = ref collection.Get(0);
+            ref var result = ref enumerable.Get(0);
             first = result;
             return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, ref T first)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public bool TryFirst(ref T first)
         {
-            if (collection.Count == 0)
+            if (enumerable.Count == 0)
                 return false;
-            ref var result = ref collection.Get(0);
+            ref var result = ref enumerable.Get(0);
             first = result;
             return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TCollection, TEnumerator>(this TCollection collection, Func<T, bool> predicate, ref T first, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryFirst(Func<T, bool> predicate, ref T first, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
         {
-            if (collection.Count == 0)
+            if (enumerable.Count == 0)
                 return false;
-            for (int i = 0; i < collection.Count; i++)
+            for (int i = 0; i < enumerable.Count; i++)
             {
-                ref var result = ref collection.Get(i);
+                ref var result = ref enumerable.Get(i);
                 if (predicate(result))
                 {
                     first = result;
@@ -105,14 +107,13 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TEnumerator>(this IRefStructCollection<T, TEnumerator> collection, Func<T, bool> predicate, ref T first)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        public bool TryFirst(Func<T, bool> predicate, ref T first)
         {
-            if (collection.Count == 0)
+            if (enumerable.Count == 0)
                 return false;
-            for (int i = 0; i < collection.Count; i++)
+            for (int i = 0; i < enumerable.Count; i++)
             {
-                ref var result = ref collection.Get(i);
+                ref var result = ref enumerable.Get(i);
                 if (predicate(result))
                 {
                     first = result;
@@ -123,17 +124,16 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryFirst<T, TCollection, TEnumerator, TFunc>(this TCollection collection, ref TFunc predicate, ref T first, Func<TCollection, IRefStructCollection<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefCollectionEnumerator<T>
-            where TCollection : IRefStructCollection<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryFirst<TFunc>(ref TFunc predicate, ref T first, Func<TEnumerable, IRefStructCollection<T, TEnumerator>> _)
             where TFunc : struct, IInFunction<T, bool>
         {
-            if (collection.Count == 0)
+            if (enumerable.Count == 0)
                 return false;
 
-            for (int i = 0; i < collection.Count; i++)
+            for (int i = 0; i < enumerable.Count; i++)
             {
-                ref var result = ref collection.Get(i);
+                ref var result = ref enumerable.Get(i);
                 if (predicate.Eval(in result))
                 {
                     first = result;
@@ -143,5 +143,23 @@ namespace StructLinq
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool TryFirst<TFunc>(ref TFunc predicate, ref T first)
+            where TFunc : struct, IInFunction<T, bool>
+        {
+            if (enumerable.Count == 0)
+                return false;
+
+            for (int i = 0; i < enumerable.Count; i++)
+            {
+                ref var result = ref enumerable.Get(i);
+                if (predicate.Eval(in result))
+                {
+                    first = result;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
