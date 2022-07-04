@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.ForEach
 {
@@ -11,6 +12,7 @@ namespace StructLinq.ForEach
         {
             this.action = action;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Do(T element)
         {
             action(element);

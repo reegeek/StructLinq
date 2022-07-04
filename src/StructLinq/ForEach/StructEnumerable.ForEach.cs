@@ -5,11 +5,10 @@ using StructLinq.ForEach;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void InternalForEach<T, TEnumerator, TAction>(ref TAction action, TEnumerator enumerator)
-            where TEnumerator : struct, IStructEnumerator<T>
+        private void InternalForEach<TAction>(ref TAction action, TEnumerator enumerator)
             where TAction : struct, IAction<T>
         {
             while (enumerator.MoveNext())
@@ -20,19 +19,17 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ForEach<T, TEnumerator, TAction>(this IStructEnumerable<T, TEnumerator> enumerable, ref TAction action) 
-            where TEnumerator : struct, IStructEnumerator<T>
+        public void ForEach<TAction>(ref TAction action) 
             where TAction : struct, IAction<T>
         {
             var enumerator = enumerable.GetEnumerator();
-            InternalForEach<T, TEnumerator, TAction>(ref action, enumerator);
+            InternalForEach(ref action, enumerator);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ForEach<T, TEnumerator, TAction, TEnumerable>(this TEnumerable enumerable, ref TAction action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
+        [Obsolete("Remove last argument")]
+        public void ForEach<TAction>(ref TAction action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TAction : struct, IAction<T>
-            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
         {
             var enumerator = enumerable.GetEnumerator();
             while (enumerator.MoveNext())
@@ -43,16 +40,15 @@ namespace StructLinq
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ForEach<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Action<T> action)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public void ForEach(Action<T> action)
         {
             var structAction = new StructAction<T>(action);
-            enumerable.ForEach(ref structAction);
+            ForEach(ref structAction);
         }
 
-        public static void ForEach<T, TEnumerator, TEnumerable>(this TEnumerable enumerable, Action<T> action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : struct, IStructEnumerable<T, TEnumerator>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public void ForEach(Action<T> action, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             while (enumerator.MoveNext())

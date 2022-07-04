@@ -112,7 +112,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T First(this IRefStructEnumerable<T, TEnumerator> enumerable)
+        public T First()
         {
             var enumerator = enumerable.GetEnumerator();
             return RefInnerFirst(ref enumerator);
