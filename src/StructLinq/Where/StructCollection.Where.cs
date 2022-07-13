@@ -5,7 +5,7 @@ using StructLinq.Where;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
+    public partial struct StructCollection<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last argument")]
