@@ -6,11 +6,11 @@ using StructLinq.TakeWhile;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
+    public partial struct RefStructCollection<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last argument")]
-        public RefStructEnumerable<T, RefTakeWhileEnumerable<T, TFunction, TEnumerable, TEnumerator>, RefTakeWhileEnumerator<T, TFunction, TEnumerator>> 
+        public RefStructEnumerable<T, RefTakeWhileEnumerable<T, TFunction, TEnumerable, TEnumerator>, RefTakeWhileEnumerator<T, TFunction, TEnumerator>>
             TakeWhile<TFunction>(TFunction predicate, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
             where TFunction : struct, IInFunction<T, bool>
         {
@@ -41,4 +41,5 @@ namespace StructLinq
         }
 
     }
+
 }
