@@ -6,11 +6,10 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryInnerLast<T, TEnumerator>(ref TEnumerator enumerator, ref T last)
-            where TEnumerator : struct, IStructEnumerator<T>
+        private static bool TryInnerLast(ref TEnumerator enumerator, ref T last)
         {
             if (enumerator.MoveNext())
             {
@@ -30,8 +29,7 @@ namespace StructLinq
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryInnerLast<T, TEnumerator>(ref TEnumerator enumerator, Func<T, bool> predicate, ref T last)
-            where TEnumerator : struct, IStructEnumerator<T>
+        private static bool TryInnerLast(ref TEnumerator enumerator, Func<T, bool> predicate, ref T last)
         {
             bool found = false;
             while (enumerator.MoveNext())
@@ -48,8 +46,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryInnerLast<T, TEnumerator, TFunc>(ref TEnumerator enumerator, ref TFunc predicate, ref T last)
-            where TEnumerator : struct, IStructEnumerator<T>
+        private static bool TryInnerLast<TFunc>(ref TEnumerator enumerator, ref TFunc predicate, ref T last)
             where TFunc : struct, IFunction<T, bool>
         {
             bool found = false;
@@ -67,9 +64,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T Last<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T Last(Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             T last = default;
@@ -79,8 +75,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T Last<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public T Last()
         {
             var enumerator = enumerable.GetEnumerator();
             T last = default;
@@ -90,9 +85,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T Last<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T Last(Func<T, bool> predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             T last = default;
@@ -102,8 +96,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T Last<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public T Last(Func<T, bool> predicate)
         {
             var enumerator = enumerable.GetEnumerator();
             T last = default;
@@ -113,9 +106,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T Last<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public T Last<TFunc>(ref TFunc predicate, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TFunc : struct, IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
@@ -126,43 +118,46 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryLast<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryLast(ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryInnerLast(ref enumerator, ref last);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryLast<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, ref T last)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool TryLast(ref T last)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryInnerLast(ref enumerator, ref last);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryLast<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<T, bool> predicate, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryLast(Func<T, bool> predicate, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryInnerLast(ref enumerator, predicate, ref last);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryLast<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, Func<T, bool> predicate, ref T last)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool TryLast(Func<T, bool> predicate, ref T last)
         {
             var enumerator = enumerable.GetEnumerator();
             return TryInnerLast(ref enumerator, predicate, ref last);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryLast<T, TEnumerable, TEnumerator, TFunc>(this TEnumerable enumerable, ref TFunc predicate, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool TryLast<TFunc>(ref TFunc predicate, ref T last, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
+            where TFunc : struct, IFunction<T, bool>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return TryInnerLast(ref enumerator, ref predicate, ref last);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool TryLast<TFunc>(ref TFunc predicate, ref T last)
             where TFunc : struct, IFunction<T, bool>
         {
             var enumerator = enumerable.GetEnumerator();
