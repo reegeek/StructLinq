@@ -5,8 +5,8 @@ using StructLinq.Utils.Collections;
 namespace StructLinq.Intersect
 {
     public struct RefIntersectEnumerable<T, TEnumerable1, TEnumerable2, TEnumerator1, TEnumerator2, TComparer> : IRefStructEnumerable<T, RefIntersectEnumerator<T, TEnumerator1, TEnumerator2, TComparer>>
-        where TEnumerable1 : IRefStructEnumerable<T, TEnumerator1>
-        where TEnumerable2 : IRefStructEnumerable<T, TEnumerator2>
+        where TEnumerable1 : struct, IRefStructEnumerable<T, TEnumerator1>
+        where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
         where TEnumerator1 : struct, IRefStructEnumerator<T>
         where TEnumerator2 : struct, IRefStructEnumerator<T>
         where TComparer : IInEqualityComparer<T>

@@ -9,24 +9,24 @@ using StructLinq.Utils.Collections;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
+    public partial struct RefStructCollection<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove two last arguments")]
         public RefStructEnumerable<T, RefIntersectEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2, TComparer>, RefIntersectEnumerator<T, TEnumerator, TEnumerator2, TComparer>>
             Intersect<TEnumerable2, TEnumerator2, TComparer>(
-                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2, 
+                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2,
                 TComparer comparer,
                 int capacity,
-                ArrayPool<int> bucketPool, 
+                ArrayPool<int> bucketPool,
                 ArrayPool<Slot<T>> slotPool,
-                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _, 
-                Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __) 
-            where TComparer : IInEqualityComparer<T> 
+                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _,
+                Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __)
+            where TComparer : IInEqualityComparer<T>
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
         {
-            return new(new(ref enumerable, ref enumerable2.enumerable, comparer, capacity, bucketPool, slotPool)); 
+            return new(new(ref enumerable, ref enumerable2.enumerable, comparer, capacity, bucketPool, slotPool));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -49,16 +49,16 @@ namespace StructLinq
         [Obsolete("Remove two last arguments")]
         public RefStructEnumerable<T, RefIntersectEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2, TComparer>, RefIntersectEnumerator<T, TEnumerator, TEnumerator2, TComparer>>
             Intersect<TEnumerable2, TEnumerator2, TComparer>(
-                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2, 
+                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2,
                 TComparer comparer,
                 int capacity,
-                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _, 
-                Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __) 
-            where TComparer : IInEqualityComparer<T> 
+                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _,
+                Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __)
+            where TComparer : IInEqualityComparer<T>
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
         {
-            return new (new(ref enumerable, ref enumerable2.enumerable, comparer, capacity, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared));
+            return new(new(ref enumerable, ref enumerable2.enumerable, comparer, capacity, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -78,11 +78,11 @@ namespace StructLinq
         [Obsolete("Remove two last arguments")]
         public RefStructEnumerable<T, RefIntersectEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2, TComparer>, RefIntersectEnumerator<T, TEnumerator, TEnumerator2, TComparer>>
             Intersect<TEnumerable2, TEnumerator2, TComparer>(
-                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2, 
+                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2,
                 TComparer comparer,
-                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _, 
-                Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __) 
-            where TComparer : IInEqualityComparer<T> 
+                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _,
+                Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __)
+            where TComparer : IInEqualityComparer<T>
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
         {
@@ -106,9 +106,9 @@ namespace StructLinq
         [Obsolete("Remove two last arguments")]
         public RefStructEnumerable<T, RefIntersectEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2, IInEqualityComparer<T>>, RefIntersectEnumerator<T, TEnumerator, TEnumerator2, IInEqualityComparer<T>>>
             Intersect<TEnumerable2, TEnumerator2>(
-                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2, 
+                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2,
                 IInEqualityComparer<T> comparer,
-                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _, 
+                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _,
                 Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __)
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>
@@ -131,8 +131,8 @@ namespace StructLinq
         [Obsolete("Remove two last arguments")]
         public RefStructEnumerable<T, RefIntersectEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2, StructInEqualityComparer<T>>, RefIntersectEnumerator<T, TEnumerator, TEnumerator2, StructInEqualityComparer<T>>>
             Intersect<TEnumerable2, TEnumerator2>(
-                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2, 
-                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _, 
+                RefStructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2,
+                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _,
                 Func<TEnumerable2, IRefStructEnumerable<T, TEnumerator2>> __)
             where TEnumerator2 : struct, IRefStructEnumerator<T>
             where TEnumerable2 : struct, IRefStructEnumerable<T, TEnumerator2>

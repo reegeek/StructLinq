@@ -10,7 +10,7 @@ using StructLinq.Utils.Collections;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
+    public partial struct StructCollection<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last two arguments")]
@@ -105,7 +105,7 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last two arguments")]
-        public  StructEnumerable<T, IntersectEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2, IEqualityComparer<T>>, IntersectEnumerator<T, TEnumerator, TEnumerator2, IEqualityComparer<T>>>
+        public StructEnumerable<T, IntersectEnumerable<T, TEnumerable, TEnumerable2, TEnumerator, TEnumerator2, IEqualityComparer<T>>, IntersectEnumerator<T, TEnumerator, TEnumerator2, IEqualityComparer<T>>>
             Intersect<TEnumerable2, TEnumerator2>(
                 StructEnumerable<T, TEnumerable2, TEnumerator2> enumerable2,
                 IEqualityComparer<T> comparer,
@@ -114,7 +114,7 @@ namespace StructLinq
             where TEnumerator2 : struct, IStructEnumerator<T>
             where TEnumerable2 : struct, IStructEnumerable<T, TEnumerator2>
         {
-            return new( new(ref enumerable, ref enumerable2.enumerable, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared));
+            return new(new(ref enumerable, ref enumerable2.enumerable, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
