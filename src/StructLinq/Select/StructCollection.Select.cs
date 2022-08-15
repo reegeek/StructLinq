@@ -5,33 +5,40 @@ using StructLinq.Select;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct StructCollection<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SelectCollection<TIn, TOut, TEnumerable, TEnumerator, TFunction> Select<TIn, TOut, TEnumerable, TEnumerator, TFunction>(
-            this TEnumerable enumerable, 
+        [Obsolete("Remove last argument")]
+        public StructCollection<TOut, SelectCollection<T, TOut, TEnumerable, TEnumerator, TFunction>, SelectCollectionEnumerator<T, TOut, TEnumerator, TFunction>> Select<TOut, TFunction>(
             ref TFunction function, 
-            Func<TEnumerable, IStructCollection<TIn, TEnumerator>> _, 
-            Func<TFunction, IFunction<TIn, TOut>> __)
-            where TEnumerator : struct, ICollectionEnumerator<TIn>
-            where TFunction : struct, IFunction<TIn, TOut>
-            where TEnumerable : struct, IStructCollection<TIn, TEnumerator>
+            Func<TEnumerable, IStructCollection<T, TEnumerator>> _, 
+            Func<TFunction, IFunction<T, TOut>> __)
+            where TFunction : struct, IFunction<T, TOut>
         {
-            return new(ref function, ref enumerable);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SelectCollection<TIn, TOut, TEnumerable, TEnumerator> Select<TIn, TOut, TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TIn, TOut> function, Func<TEnumerable, IStructCollection<TIn, TEnumerator>> _)
-            where TEnumerator : struct, ICollectionEnumerator<TIn>
-            where TEnumerable : struct, IStructCollection<TIn, TEnumerator>
-        {
-            return new(function, ref enumerable);
+            return new(new(ref function, ref enumerable));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static SelectCollection<TIn, TOut, IStructCollection<TIn, TEnumerator>, TEnumerator> Select<TIn, TOut, TEnumerator>(this IStructCollection<TIn, TEnumerator> enumerable, Func<TIn, TOut> function)
-            where TEnumerator : struct, ICollectionEnumerator<TIn>
+        public StructCollection<TOut, SelectCollection<T, TOut, TEnumerable, TEnumerator, TFunction>, SelectCollectionEnumerator<T, TOut, TEnumerator, TFunction>> Select<TOut, TFunction>(
+            ref TFunction function,
+            Func<TFunction, IFunction<T, TOut>> __)
+            where TFunction : struct, IFunction<T, TOut>
         {
-            return new(function, ref enumerable);
+            return new(new(ref function, ref enumerable));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public StructCollection<TOut, SelectCollection<T, TOut, TEnumerable, TEnumerator>, SelectCollectionEnumerator<T, TOut, TEnumerator>> Select<TOut>(Func<T, TOut> function,
+            Func<TEnumerable, IStructCollection<T, TEnumerator>> _)
+        {
+            return new(new(function, ref enumerable));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructCollection<TOut, SelectCollection<T, TOut, TEnumerable, TEnumerator>, SelectCollectionEnumerator<T, TOut, TEnumerator>> Select<TOut>(Func<T, TOut> function)
+        {
+            return new(new(function, ref enumerable));
         }
     }
 }

@@ -5,41 +5,46 @@ using StructLinq.Select;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RefSelectEnumerable<TIn, TOut, TEnumerable, TEnumerator, TFunction> Select<TIn, TOut, TEnumerable, TEnumerator, TFunction>(
-            this TEnumerable enumerable, ref TFunction function,
-            Func<TEnumerable, IRefStructEnumerable<TIn, TEnumerator>> _, 
-            Func<TFunction, IInFunction<TIn, TOut>> __)
-            where TEnumerator : struct, IRefStructEnumerator<TIn>
-            where TFunction : struct, IInFunction<TIn, TOut>
-            where TEnumerable : struct, IRefStructEnumerable<TIn, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public StructEnumerable<TOut, RefSelectEnumerable<T, TOut, TEnumerable, TEnumerator, TFunction>, RefSelectEnumerator<T, TOut, TEnumerator, TFunction>> Select<TOut, TFunction>(
+            ref TFunction function,
+            Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _, 
+            Func<TFunction, IInFunction<T, TOut>> __)
+            where TFunction : struct, IInFunction<T, TOut>
         {
-            return new(ref function, ref enumerable);
+            return new( new(ref function, ref enumerable));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RefSelectEnumerable<TIn, TOut, TEnumerable, TEnumerator, StructInFunction<TIn, TOut>>
-            Select<TIn, TOut, TEnumerable, TEnumerator>(
-                this TEnumerable enumerable, 
-                InFunc<TIn, TOut> function, 
-                Func<TEnumerable, IRefStructEnumerable<TIn, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<TIn>
-            where TEnumerable : struct, IRefStructEnumerable<TIn, TEnumerator>
+        public StructEnumerable<TOut, RefSelectEnumerable<T, TOut, TEnumerable, TEnumerator, TFunction>, RefSelectEnumerator<T, TOut, TEnumerator, TFunction>> Select<TOut, TFunction>(
+            ref TFunction function,
+            Func<TFunction, IInFunction<T, TOut>> __)
+            where TFunction : struct, IInFunction<T, TOut>
         {
-            var fct = function.ToStruct();
-            return new(ref fct, ref enumerable);
+            return new(new(ref function, ref enumerable));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static RefSelectEnumerable<TIn, TOut, IRefStructEnumerable<TIn, TEnumerator>, TEnumerator, StructInFunction<TIn, TOut>> Select<TIn, TOut, TEnumerator>(
-            this IRefStructEnumerable<TIn, TEnumerator> enumerable, 
-            InFunc<TIn, TOut> function)
-            where TEnumerator : struct, IRefStructEnumerator<TIn>
+        [Obsolete("Remove last argument")]
+        public StructEnumerable<TOut, RefSelectEnumerable<T, TOut, TEnumerable, TEnumerator, StructInFunction<T, TOut>>, RefSelectEnumerator<T, TOut, TEnumerator, StructInFunction<T, TOut>>>
+            Select<TOut>(
+                InFunc<T, TOut> function, 
+                Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
         {
             var fct = function.ToStruct();
-            return new(ref fct, ref enumerable);
+            return new(new(ref fct, ref enumerable));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructEnumerable<TOut, RefSelectEnumerable<T, TOut, TEnumerable, TEnumerator, StructInFunction<T, TOut>>, RefSelectEnumerator<T, TOut, TEnumerator, StructInFunction<T, TOut>>>
+            Select<TOut>(
+                InFunc<T, TOut> function)
+        {
+            var fct = function.ToStruct();
+            return new(new(ref fct, ref enumerable));
         }
     }
 }
