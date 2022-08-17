@@ -6,11 +6,11 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public abstract class AbstractRefEnumerableTests<T, TStructEnumerable, TEnumerator>
-        where TStructEnumerable : IRefStructEnumerable<T, TEnumerator>
+        where TStructEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
         where TEnumerator : struct, IRefStructEnumerator<T>
     {
         protected bool shouldReturnSameSequenceWhenResetIsCall = true;
-        protected abstract TStructEnumerable Build(int size);
+        protected abstract RefStructEnumerable<T, TStructEnumerable, TEnumerator> Build(int size);
 
         [Theory]
         [InlineData(0)]

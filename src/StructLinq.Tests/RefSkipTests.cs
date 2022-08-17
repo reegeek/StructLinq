@@ -10,9 +10,9 @@ namespace StructLinq.Tests
         RefSkipEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>> ,
         RefSkipEnumerator<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>>
     {
-        protected override RefSkipEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>  Build(int size)
+        protected override RefStructEnumerable<int, RefSkipEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>, RefSkipEnumerator<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>> Build(int size)
         {
-            var refSkipEnumerable = StructEnumerable.Range(-1, size + 5).ToArray().ToRefStructEnumerable().Where((in int x) => true, x=>x).Skip(5, x=> x);
+            var refSkipEnumerable = StructEnumerable.Range(-1, size + 5).ToArray().ToRefStructEnumerable().Where((in int _) => true).Skip(5);
             return refSkipEnumerable;
         }
 

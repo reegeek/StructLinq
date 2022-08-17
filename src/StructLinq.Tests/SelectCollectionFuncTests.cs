@@ -26,12 +26,11 @@ namespace StructLinq.Tests
             Assert.Equal(sys, structEnum);
         }
 
-        protected override SelectCollection<int, double, RangeEnumerable, RangeEnumerator> Build(int size)
+        protected override StructCollection<double, SelectCollection<int, double, RangeEnumerable, RangeEnumerator>, SelectCollectionEnumerator<int, double, RangeEnumerator>> BuildCollection(int size)
         {
-            var selectEnumerable = 
-                StructEnumerable.Range(-1, size).Select(x=> x * 2.0, x=> x);
+            var selectEnumerable =
+                StructEnumerable.Range(-1, size).Select(x => x * 2.0);
             return selectEnumerable;
         }
-
     }
 }
