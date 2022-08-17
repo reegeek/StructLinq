@@ -7,12 +7,11 @@ namespace StructLinq.Tests
         RefSelectCollection<int, double, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, RefSelectCollectionTests.MultFunction>,
         RefSelectCollectionEnumerator<int, double, ArrayRefStructEnumerator<int>, RefSelectCollectionTests.MultFunction>>
     {
-
-        protected override RefSelectCollection<int, double, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, RefSelectCollectionTests.MultFunction> Build(int size)
+        protected override StructCollection<double, RefSelectCollection<int, double, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, MultFunction>, RefSelectCollectionEnumerator<int, double, ArrayRefStructEnumerator<int>, MultFunction>> BuildCollection(int size)
         {
             var func = new MultFunction();
-            var selectEnumerable = 
-                StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Select(ref func, x=>x, x => x);
+            var selectEnumerable =
+                StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Select(ref func, x => x);
             return selectEnumerable;
         }
 

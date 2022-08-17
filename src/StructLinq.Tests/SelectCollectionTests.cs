@@ -27,12 +27,13 @@ namespace StructLinq.Tests
             Assert.Equal(sys, structEnum);
         }
 
-        protected override SelectCollection<int, double, RangeEnumerable, RangeEnumerator, MultFunction> Build(int size)
+        protected override StructCollection<double, SelectCollection<int, double, RangeEnumerable, RangeEnumerator, MultFunction>, SelectCollectionEnumerator<int, double, RangeEnumerator, MultFunction>> BuildCollection(int size)
         {
             var func = new MultFunction();
-            var selectEnumerable = 
-                StructEnumerable.Range(-1, size).Select(ref func, x=>x, x => x);
+            var selectEnumerable =
+                StructEnumerable.Range(-1, size).Select(ref func, x => x);
             return selectEnumerable;
         }
+
     }
 }

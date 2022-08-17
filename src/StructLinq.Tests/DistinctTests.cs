@@ -10,7 +10,7 @@ namespace StructLinq.Tests
         DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, DefaultStructEqualityComparer>,
         DistinctEnumerator<int, RangeEnumerator, DefaultStructEqualityComparer>>
     {
-        protected override DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, DefaultStructEqualityComparer> Build(int size)
+        protected override StructEnumerable<int, DistinctEnumerable<int, RangeEnumerable, RangeEnumerator, DefaultStructEqualityComparer>, DistinctEnumerator<int, RangeEnumerator, DefaultStructEqualityComparer>> Build(int size)
         {
             var selectEnumerable = StructEnumerable.Range(-1, size).Distinct(x => x);
             return selectEnumerable;

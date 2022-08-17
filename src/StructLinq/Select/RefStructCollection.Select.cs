@@ -19,7 +19,6 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [Obsolete("Remove last argument")]
         public StructCollection<TOut, RefSelectCollection<T, TOut, TEnumerable, TEnumerator, TFunction>, RefSelectCollectionEnumerator<T, TOut, TEnumerator, TFunction>> Select<TOut, TFunction>(
             ref TFunction function,
             Func<TFunction, IInFunction<T, TOut>> __)

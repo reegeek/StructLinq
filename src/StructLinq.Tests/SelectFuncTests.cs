@@ -8,7 +8,7 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class SelectFuncTests : AbstractEnumerableTests<double,
-        SelectEnumerable<int, double, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>,
+        SelectEnumerable<int, double, WhereEnumerable<int, RangeEnumerable, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>,
         SelectEnumerator<int, double, WhereEnumerator<int, RangeEnumerator>>>
     {
         [Fact]
@@ -27,13 +27,13 @@ namespace StructLinq.Tests
             Assert.Equal(sys, structEnum);
         }
 
-        protected override SelectEnumerable<int, double, WhereEnumerable<int, IStructEnumerable<int, RangeEnumerator>, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>> Build(int size)
+        protected override StructEnumerable<double, SelectEnumerable<int, double, WhereEnumerable<int, RangeEnumerable, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>>, SelectEnumerator<int, double, WhereEnumerator<int, RangeEnumerator>>> Build(int size)
         {
-            var selectEnumerable = 
-                StructEnumerable.Range(-1, size).Where(x=> true).Select(x=> x * 2.0, x=> x);
+            var selectEnumerable =
+                StructEnumerable.Range(-1, size).Where(x => true).Select(x => x * 2.0);
             return selectEnumerable;
-        }
 
+        }
     }
 
 }
