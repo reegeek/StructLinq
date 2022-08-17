@@ -10,9 +10,9 @@ namespace StructLinq.Tests
         RefTakeEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>,
         RefTakeEnumerator<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>>
     {
-        protected override RefTakeEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>  Build(int size)
+        protected override RefStructEnumerable<int, RefTakeEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>, RefTakeEnumerator<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>> Build(int size)
         {
-            var refTakeEnumerable = StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Where((in int x)=> true, x=>x).Take(size, x=> x);
+            var refTakeEnumerable = StructEnumerable.Range(-1, size).ToArray().ToRefStructEnumerable().Where((in int _) => true).Take(size);
             return refTakeEnumerable;
         }
 
@@ -22,7 +22,7 @@ namespace StructLinq.Tests
         [InlineData(10)]
         public void ShouldBeTheSameAsSystem(int takeCount)
         {
-            var expected = Enumerable.Range(0, 7).ToArray().Take((int)takeCount).ToArray();
+            var expected = Enumerable.Range(0, 7).ToArray().Take(takeCount).ToArray();
             var value = Enumerable.Range(0, 7).ToArray().ToRefStructEnumerable().Take(takeCount).ToArray();
 
             Assert.Equal(expected, value);
