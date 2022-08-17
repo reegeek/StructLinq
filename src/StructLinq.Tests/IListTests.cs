@@ -19,7 +19,7 @@ namespace StructLinq.Tests
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override ListEnumerable<int, IList<int>> Build(int size)
+        protected override StructCollection<int, ListEnumerable<int, IList<int>>, IListEnumerator<int, IList<int>>> BuildCollection(int size)
         {
             IList<int> list = Enumerable.Range(-1, size).ToList();
             return list.ToStructEnumerable();
