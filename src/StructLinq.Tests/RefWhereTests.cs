@@ -10,12 +10,12 @@ namespace StructLinq.Tests
         RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>,
         RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>
     {
-        protected override RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>> Build(int size)
+        protected override RefStructEnumerable<int, RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>> Build(int size)
         {
-            RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>> whereEnumerable = Enumerable.Range(-1, size)
-                .ToArray()
-                .ToRefStructEnumerable()
-                .Where((in int x) => x >= -1, x => x);
+            var whereEnumerable = Enumerable.Range(-1, size)
+                    .ToArray()
+                    .ToRefStructEnumerable()
+                    .Where((in int x) => x >= -1);
             return whereEnumerable;
         }
 
@@ -31,7 +31,7 @@ namespace StructLinq.Tests
                 .Range(-50, 100)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where(selector, x => x)
+                .Where(selector)
                 .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
@@ -50,19 +50,11 @@ namespace StructLinq.Tests
                 .Range(-50, 100)
                 .ToArray()
                 .ToRefStructEnumerable()
-                .Where(ref whereFunc, x => x)
+                .Where(ref whereFunc)
                 .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
 
-        }
-
-        struct WhereFunc : IFunction<int, bool>
-        {
-            public bool Eval(int element)
-            {
-                return element > 0;
-            }
         }
 
         struct InWhereFunc : IInFunction<int, bool>
