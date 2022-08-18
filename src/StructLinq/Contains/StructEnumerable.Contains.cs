@@ -6,12 +6,11 @@ using StructLinq.Contains;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct StructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerable, TEnumerator, TComparer>(this TEnumerable enumerable, T x, TComparer comparer, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool Contains<TComparer>(T x, TComparer comparer, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
             where TComparer : IEqualityComparer<T>
         {
             var visitor = new ContainsVisitor<T, TComparer>(comparer, x);
@@ -19,9 +18,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, T x, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<T>
-            where TEnumerable : IStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool Contains(T x, Func<TEnumerable, IStructEnumerable<T, TEnumerator>> _)
         {
             EqualityComparer<T> equalityComparer = EqualityComparer<T>.Default;
             var visitor = new ContainsVisitor<T, EqualityComparer<T>>(equalityComparer, x);
@@ -29,8 +27,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerator, TComparer>(this IStructEnumerable<T, TEnumerator> enumerable, T x, TComparer comparer)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool Contains<TComparer>(T x, TComparer comparer)
             where TComparer : IEqualityComparer<T>
         {
             var visitor = new ContainsVisitor<T, TComparer>(comparer, x);
@@ -38,8 +35,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerator>(this IStructEnumerable<T, TEnumerator> enumerable, T x)
-            where TEnumerator : struct, IStructEnumerator<T>
+        public bool Contains(T x)
         {
             EqualityComparer<T> equalityComparer = EqualityComparer<T>.Default;
             var visitor = new ContainsVisitor<T, EqualityComparer<T>>(equalityComparer, x);

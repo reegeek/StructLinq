@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public static partial class StructEnumerable
+    public partial struct RefStructEnumerable<T, TEnumerable, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool RefInnerContains<T, TEnumerator, TComparer>(TEnumerator enumerator, T x, TComparer comparer)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        private static bool RefInnerContains<TComparer>(TEnumerator enumerator, T x, TComparer comparer)
             where TComparer : IInEqualityComparer<T>
         {
             while (enumerator.MoveNext())
@@ -23,9 +21,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerable, TEnumerator, TComparer>(this TEnumerable enumerable, T x, TComparer comparer, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool Contains<TComparer>(T x, TComparer comparer, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
             where TComparer : IInEqualityComparer<T>
         {
             var enumerator = enumerable.GetEnumerator();
@@ -33,9 +30,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerable, TEnumerator>(this TEnumerable enumerable, T x, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-            where TEnumerable : IRefStructEnumerable<T, TEnumerator>
+        [Obsolete("Remove last argument")]
+        public bool Contains(T x, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
         {
             var enumerator = enumerable.GetEnumerator();
             var equalityComparer = InEqualityComparer<T>.Default;
@@ -43,8 +39,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerator, TComparer>(this IRefStructEnumerable<T, TEnumerator> enumerable, T x, TComparer comparer)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        public bool Contains<TComparer>(T x, TComparer comparer)
             where TComparer : IInEqualityComparer<T>
         {
             var enumerator = enumerable.GetEnumerator();
@@ -52,8 +47,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<T, TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, T x)
-            where TEnumerator : struct, IRefStructEnumerator<T>
+        public bool Contains(T x)
         {
             var enumerator = enumerable.GetEnumerator();
             var equalityComparer = InEqualityComparer<T>.Default;

@@ -33,19 +33,10 @@ namespace StructLinq
         <# foreach(var t in types) {  #>
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<TEnumerable, TEnumerator>(this TEnumerable enumerable, <#= t.Name #> x,
+        [Obsolete("Remove last argument")]
+        public static bool Contains<TEnumerable, TEnumerator>(this StructEnumerable<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x,
             Func<TEnumerable, IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
-            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
-            where TEnumerable : IStructEnumerable<<#= t.Name #>, TEnumerator>
-        {
-            var comparer = new DefaultStructEqualityComparer();
-            var visitor = new ContainsVisitor<<#= t.Name #>, DefaultStructEqualityComparer>(comparer, x);
-            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<TEnumerator>(
-            this IStructEnumerable<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
             where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
         {
             var comparer = new DefaultStructEqualityComparer();
@@ -54,24 +45,80 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Contains<TEnumerable, TEnumerator>(this TEnumerable enumerable, <#= t.Name #> x,
+        public static bool Contains<TEnumerable, TEnumerator>(
+            this StructEnumerable<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerable : struct, IStructEnumerable<<#= t.Name #>, TEnumerator>
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+        {
+            var comparer = new DefaultStructEqualityComparer();
+            var visitor = new ContainsVisitor<<#= t.Name #>, DefaultStructEqualityComparer>(comparer, x);
+            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static bool Contains<TEnumerable, TEnumerator>(this StructCollection<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x,
+            Func<TEnumerable, IStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerable : struct, IStructCollection<<#= t.Name #>, TEnumerator>
+            where TEnumerator : struct, ICollectionEnumerator<<#= t.Name #>>
+        {
+            var comparer = new DefaultStructEqualityComparer();
+            var visitor = new ContainsVisitor<<#= t.Name #>, DefaultStructEqualityComparer>(comparer, x);
+            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerable, TEnumerator>(
+            this StructCollection<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerable : struct, IStructCollection<<#= t.Name #>, TEnumerator>
+            where TEnumerator : struct, ICollectionEnumerator<<#= t.Name #>>
+        {
+            var comparer = new DefaultStructEqualityComparer();
+            var visitor = new ContainsVisitor<<#= t.Name #>, DefaultStructEqualityComparer>(comparer, x);
+            return enumerable.Visit(ref visitor) == VisitStatus.VisitorFinished;
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static bool Contains<TEnumerable, TEnumerator>(this RefStructEnumerable<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x,
             Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
             where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
             where TEnumerable : struct, IRefStructEnumerable<<#= t.Name #>, TEnumerator>
         {
             var comparer = new DefaultStructInEqualityComparer();
-            var enumerator = enumerable.GetEnumerator();
-            return RefInnerContains(enumerator, x, comparer);
+            return enumerable.Contains(x, comparer);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Contains<TEnumerable, TEnumerator>(
-            this IRefStructEnumerable<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            this RefStructEnumerable<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerable : struct, IRefStructEnumerable<<#= t.Name #>, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
         {
             var comparer = new DefaultStructInEqualityComparer();
-            var enumerator = enumerable.GetEnumerator();
-            return RefInnerContains(enumerator, x, comparer);
+            return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static bool Contains<TEnumerable, TEnumerator>(this RefStructCollection<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x,
+            Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerator : struct, IRefCollectionEnumerator<<#= t.Name #>>
+            where TEnumerable : struct, IRefStructCollection<<#= t.Name #>, TEnumerator>
+        {
+            var comparer = new DefaultStructInEqualityComparer();
+            return enumerable.Contains(x, comparer);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerable, TEnumerator>(
+            this RefStructCollection<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerable : struct, IRefStructCollection<<#= t.Name #>, TEnumerator>
+            where TEnumerator : struct, IRefCollectionEnumerator<<#= t.Name #>>
+        {
+            var comparer = new DefaultStructInEqualityComparer();
+            return enumerable.Contains(x, comparer);
         }
 
     <# } #>

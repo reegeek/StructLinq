@@ -32,7 +32,7 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public bool StructLinq()
         {
-            return array.ToStructEnumerable().Contains(StructContainer.Create(5_000), x=>x);
+            return array.ToStructEnumerable().Contains(StructContainer.Create(5_000));
 
         }
 
@@ -46,7 +46,7 @@ namespace StructLinq.Benchmark
         public bool StructLinqWithCustomComparer()
         {
             var comparer = new DistinctOnBigStruct.StructEqualityComparer();
-            return array.ToStructEnumerable().Contains(StructContainer.Create(5_000), comparer, x=>x);
+            return array.ToStructEnumerable().Contains(StructContainer.Create(5_000), comparer);
 
         }
 
