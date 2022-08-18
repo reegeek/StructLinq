@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
-using StructLinq.Array;
 using Enumerable = System.Linq.Enumerable;
 
 namespace StructLinq.Benchmark
@@ -41,7 +40,7 @@ namespace StructLinq.Benchmark
         public int StructLinq() => array.ToStructEnumerable().Sum();
 
         [Benchmark]
-        public int StructLinqZeroAllocWithVisitor() => array.ToStructEnumerable().Sum(x=> (IStructEnumerable<int, ArrayStructEnumerator<int>>)x);
+        public int StructLinqZeroAllocWithVisitor() => array.ToStructEnumerable().ToStructEnumerable().Sum();
 
     }
 }

@@ -50,7 +50,7 @@ namespace StructLinq.Benchmark
         {
             var @select = new StructContainerSelect();
             return array.ToStructEnumerable()
-                        .Sum(ref @select, x => x, x => x);
+                        .Sum(ref @select, x => x);
         }
 
         [Benchmark]

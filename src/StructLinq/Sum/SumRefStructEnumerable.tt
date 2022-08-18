@@ -32,7 +32,7 @@ namespace StructLinq
 {
 <# foreach(var t in types) {  #>
 
-    public static partial class StructEnumerable
+    public static partial class RefStructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static <#= t.Name #> RefSum<#= t.Name #><TEnumerator>(ref TEnumerator enumerator)
@@ -78,7 +78,8 @@ namespace StructLinq
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static <#= t.Name #> Sum<TEnumerator>(this IRefStructEnumerable<<#= t.Name #>, TEnumerator> enumerable)
+        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this RefStructEnumerable<<#= t.Name #>, TEnumerable, TEnumerator> enumerable)
+            where TEnumerable : struct, IRefStructEnumerable<<#= t.Name #>, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
         {
             var enumerator = enumerable.GetEnumerator();
@@ -86,7 +87,8 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this TEnumerable enumerable, Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+        [Obsolete("Remove last argument")]
+        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this RefStructEnumerable<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
             where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
             where TEnumerable : struct, IRefStructEnumerable<<#= t.Name #>, TEnumerator>
         {
@@ -95,15 +97,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static <#= t.Name #> Sum<T,TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, InFunc<T, <#= t.Name #>> func)
-            where TEnumerator : struct, IRefStructEnumerator<T>
-        {
-            var enumerator = enumerable.GetEnumerator();
-            return RefSum<#= t.Name #>(ref enumerator, func);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator>(this TEnumerable enumerable, InFunc<T, <#= t.Name #>> func, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+        public static <#= t.Name #> Sum<T,TEnumerable, TEnumerator>(this RefStructEnumerable<T, TEnumerable, TEnumerator> enumerable, InFunc<T, <#= t.Name #>> func)
             where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
@@ -112,7 +106,18 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static <#= t.Name #> Sum<T,TEnumerator>(this IRefStructEnumerable<T, TEnumerator> enumerable, IInFunction<T,<#= t.Name #>> func)
+        [Obsolete("Remove last argument")]
+        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator>(this RefStructEnumerable<T, TEnumerable, TEnumerator> enumerable, InFunc<T, <#= t.Name #>> func, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+            where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #>(ref enumerator, func);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<T, TEnumerable, TEnumerator>(this RefStructEnumerable<T, TEnumerable, TEnumerator> enumerable, IInFunction<T,<#= t.Name #>> func)
+            where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
         {
             var enumerator = enumerable.GetEnumerator();
@@ -120,12 +125,100 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator, TFunc>(this TEnumerable enumerable,
+        [Obsolete("Remove last argument")]
+        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator, TFunc>(this RefStructEnumerable<T, TEnumerable, TEnumerator> enumerable, 
             ref TFunc func, 
             Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _,
             Func<TFunc, IInFunction<T,<#= t.Name #>>> __)
             where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
             where TEnumerator : struct, IRefStructEnumerator<T>
+            where TFunc : IInFunction<T,<#= t.Name #>>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #><T,TEnumerator, TFunc>(ref enumerator,ref func);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator, TFunc>(this RefStructEnumerable<T, TEnumerable, TEnumerator> enumerable, 
+            ref TFunc func, 
+            Func<TFunc, IInFunction<T,<#= t.Name #>>> __)
+            where TEnumerable : struct, IRefStructEnumerable<T, TEnumerator>
+            where TEnumerator : struct, IRefStructEnumerator<T>
+            where TFunc : IInFunction<T,<#= t.Name #>>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #><T,TEnumerator, TFunc>(ref enumerator,ref func);
+        }
+
+        //RefStructCollection
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this RefStructCollection<<#= t.Name #>, TEnumerable, TEnumerator> enumerable)
+            where TEnumerable : struct, IRefStructCollection<<#= t.Name #>, TEnumerator>
+            where TEnumerator : struct, IRefCollectionEnumerator<<#= t.Name #>>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #>(ref enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static <#= t.Name #> Sum<TEnumerable, TEnumerator>(this RefStructCollection<<#= t.Name #>, TEnumerable, TEnumerator> enumerable, Func<TEnumerable, IRefStructEnumerable<<#= t.Name #>, TEnumerator>> _)
+            where TEnumerator : struct, IRefCollectionEnumerator<<#= t.Name #>>
+            where TEnumerable : struct, IRefStructCollection<<#= t.Name #>, TEnumerator>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #>(ref enumerator);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<T,TEnumerable, TEnumerator>(this RefStructCollection<T, TEnumerable, TEnumerator> enumerable, InFunc<T, <#= t.Name #>> func)
+            where TEnumerable : struct, IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #>(ref enumerator, func);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator>(this RefStructCollection<T, TEnumerable, TEnumerator> enumerable, InFunc<T, <#= t.Name #>> func, Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _)
+            where TEnumerable : struct, IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #>(ref enumerator, func);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<T, TEnumerable, TEnumerator>(this RefStructCollection<T, TEnumerable, TEnumerator> enumerable, IInFunction<T,<#= t.Name #>> func)
+            where TEnumerable : struct, IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #><T,TEnumerator, IInFunction<T,<#= t.Name #>>>(ref enumerator, ref func);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator, TFunc>(this RefStructCollection<T, TEnumerable, TEnumerator> enumerable, 
+            ref TFunc func, 
+            Func<TEnumerable, IRefStructEnumerable<T, TEnumerator>> _,
+            Func<TFunc, IInFunction<T,<#= t.Name #>>> __)
+            where TEnumerable : struct, IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
+            where TFunc : IInFunction<T,<#= t.Name #>>
+        {
+            var enumerator = enumerable.GetEnumerator();
+            return RefSum<#= t.Name #><T,TEnumerator, TFunc>(ref enumerator,ref func);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static <#= t.Name #> Sum<T,TEnumerable,TEnumerator, TFunc>(this RefStructCollection<T, TEnumerable, TEnumerator> enumerable, 
+            ref TFunc func, 
+            Func<TFunc, IInFunction<T,<#= t.Name #>>> __)
+            where TEnumerable : struct, IRefStructCollection<T, TEnumerator>
+            where TEnumerator : struct, IRefCollectionEnumerator<T>
             where TFunc : IInFunction<T,<#= t.Name #>>
         {
             var enumerator = enumerable.GetEnumerator();
