@@ -32,7 +32,7 @@ namespace StructLinq.Benchmark
         {
             var multFunction = new MultFunction();
             return StructEnumerable.Range(0, Count)
-                            .Select(ref multFunction, x=>x, x => x)
+                            .Select(ref multFunction, x=>x)
                             .Sum(x=> x);
         }
 
@@ -42,7 +42,7 @@ namespace StructLinq.Benchmark
             var multFunction = new MultFunction();
             return Enumerable.Range(0, Count)
                       .ToStructEnumerable()
-                      .Select(ref multFunction, x => x, x=> x)
+                      .Select(ref multFunction, x => x)
                       .Sum(x=>x);
         }
     }

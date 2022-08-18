@@ -15,9 +15,9 @@ namespace StructLinq.Tests
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override ArrayRefEnumerable<int> Build(int size)
+        protected override RefStructEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>> Build(int size)
         {
-            return Enumerable.Range(-1, size).ToArray().ToRefStructEnumerable();
+            return Enumerable.Range(-1, size).ToArray().ToRefStructEnumerable().ToRefStructEnumerable();
         }
 
         [Fact]

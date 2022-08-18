@@ -10,9 +10,9 @@ namespace StructLinq.Tests
         WhereEnumerable<int, RangeEnumerable, RangeEnumerator>,
         WhereEnumerator<int, RangeEnumerator>>
     {
-        protected override WhereEnumerable<int, RangeEnumerable, RangeEnumerator> Build(int size)
+        protected override StructEnumerable<int, WhereEnumerable<int, RangeEnumerable, RangeEnumerator>, WhereEnumerator<int, RangeEnumerator>> Build(int size)
         {
-            var whereEnumerable = StructEnumerable.Range(-1, size).Where(x => x >= -1, x=>x);
+            var whereEnumerable = StructEnumerable.Range(-1, size).Where(x => x >= -1);
             return whereEnumerable;
         }
 
@@ -26,7 +26,7 @@ namespace StructLinq.Tests
                 .ToArray();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Where(selector, x=>x)
+                .Where(selector)
                 .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
@@ -43,7 +43,7 @@ namespace StructLinq.Tests
             var whereFunc = new WhereFunc();
             var structEnum = StructEnumerable
                 .Range(-50, 100)
-                .Where(ref whereFunc, x=>x)
+                .Where(ref whereFunc)
                 .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);

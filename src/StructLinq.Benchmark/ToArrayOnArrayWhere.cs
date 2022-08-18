@@ -30,8 +30,8 @@ namespace StructLinq.Benchmark
         [Benchmark]
         public int[] StructLinqZeroAlloc() => array
                                      .ToStructEnumerable()
-                                     .Where(x => (x & 1) == 0, x=>x)
-                                     .ToArray(x=>x);
+                                     .Where(x => (x & 1) == 0)
+                                     .ToArray();
 
         
         [Benchmark]
@@ -40,8 +40,8 @@ namespace StructLinq.Benchmark
             var where = new WherePredicate();
             return array
                    .ToStructEnumerable()
-                   .Where(ref where, x=> x)
-                   .ToArray(x=>x);
+                   .Where(ref where)
+                   .ToArray();
         }
     }
 }

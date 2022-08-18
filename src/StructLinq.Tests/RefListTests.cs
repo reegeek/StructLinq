@@ -28,9 +28,9 @@ namespace StructLinq.Tests
             Assert.Equal(expected, actual);
         }
 
-        protected override ListRefEnumerable<int> Build(int size)
+        protected override RefStructEnumerable<int, ListRefEnumerable<int>, ArrayRefStructEnumerator<int>> Build(int size)
         {
-            return Enumerable.Range(-1, size).ToList().ToRefStructEnumerable();
+            return Enumerable.Range(-1, size).ToList().ToRefStructEnumerable().ToRefStructEnumerable();
         }
 
         [Fact]

@@ -27,10 +27,11 @@ namespace StructLinq.Tests
             Assert.Equal(expected, enumerable);
         }
 
-        protected override ListEnumerable<int> Build(int size)
+        protected override StructCollection<int, ListEnumerable<int>, ArrayStructEnumerator<int>> BuildCollection(int size)
         {
             var list = Enumerable.Range(-1, size).ToList();
             return list.ToStructEnumerable();
         }
+
     }
 }

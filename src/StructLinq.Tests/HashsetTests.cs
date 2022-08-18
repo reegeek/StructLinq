@@ -8,12 +8,12 @@ namespace StructLinq.Tests
         HashsetEnumerable<int>,
         HashsetEnumerator<int>>
     {
-        protected override HashsetEnumerable<int> Build(int size)
+        protected override StructCollection<int, HashsetEnumerable<int>, HashsetEnumerator<int>> BuildCollection(int size)
         {
             return Enumerable
-                   .Range(-1, size)
-                   .ToHashSet()
-                   .ToStructEnumerable();
+                .Range(-1, size)
+                .ToHashSet()
+                .ToStructEnumerable();
         }
 
         [Theory]
