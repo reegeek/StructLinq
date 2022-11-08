@@ -26,17 +26,22 @@ stages:
         dependsOn: [ ]
         steps:
           - task: UseDotNet@2
-            displayName: 'Setup .NET 7.0'
+            displayName: 'Setup .NET 5.0'
             inputs:
               packageType: sdk
-              version: 7.0.x
+              version: 5.0.x
               performMultiLevelLookup: true 
           - task: UseDotNet@2
             displayName: 'Setup .NET 6.0'
             inputs:
               packageType: sdk
               version: 6.0.x
-              includePreviewVersions: true
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 7.0'
+            inputs:
+              packageType: sdk
+              version: 7.0.x
               performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
