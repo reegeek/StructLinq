@@ -7,7 +7,7 @@
   <!-- common tests properties -->
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>False</IsPackable>
-    <DefaultTargetFrameworks>net60;net50;net48</DefaultTargetFrameworks>
+    <DefaultTargetFrameworks>net70;net60;net48</DefaultTargetFrameworks>
   </PropertyGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
@@ -26,7 +26,7 @@
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Benchmark'))">
     <IsPackable>False</IsPackable>
     <OutputType>Exe</OutputType>
-    <DefaultTargetFrameworks>net50;net48;net60</DefaultTargetFrameworks>
+    <DefaultTargetFrameworks>net48;net60;net70</DefaultTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Benchmark'))">
