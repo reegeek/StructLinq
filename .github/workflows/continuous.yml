@@ -19,9 +19,9 @@ name: continuous
 on: [push]
 
 jobs:
-  windows-latest:
-    name: windows-latest
-    runs-on: windows-latest
+  windows-2019:
+    name: windows-2019
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v1
 

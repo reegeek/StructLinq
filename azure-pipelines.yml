@@ -15,11 +15,11 @@
 # ------------------------------------------------------------------------------
 
 stages:
-  - stage: windows_latest
-    displayName: 'windows-latest'
+  - stage: windows_2019
+    displayName: 'windows-2019'
     dependsOn: [  ]
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'windows-2019'
     jobs:
       - job: Compile
         displayName: '⚙️ Compile'
