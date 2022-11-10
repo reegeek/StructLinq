@@ -33,12 +33,6 @@ namespace StructLinq
         {
             return enumerable.Visit(ref visitor);
         }
-
-        internal int Count
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => enumerable.Count;
-        }
     }
 
 }

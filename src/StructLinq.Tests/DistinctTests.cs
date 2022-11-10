@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using StructLinq.Distinct;
 using StructLinq.Range;
 using Xunit;
@@ -26,7 +25,7 @@ namespace StructLinq.Tests
             var value = Enumerable.Range(0, 100)
                 .Select(x => x % 10)
                 .ToStructEnumerable()
-                .Distinct(x => x)
+                .Distinct()
                 .ToEnumerable();
             Assert.Equal(expected, value);
         }
@@ -42,7 +41,7 @@ namespace StructLinq.Tests
             var value = Enumerable.Range(0, 100)
                                   .Select(x => x % 10)
                                   .ToStructEnumerable()
-                                  .Distinct(x => x)
+                                  .Distinct()
                                   .ToArray();
             Assert.Equal(expected, value);
         }
