@@ -11,7 +11,12 @@ public static class ProjectExtensions
         var frameworks = project.GetTargetFrameworks();
         if (!excludeNetFramework)
             return frameworks.ToList();
-        return frameworks.Where(x => x.Contains("standard") || x.Contains("core") || x.Contains("net50")  || x.Contains("net60")).ToList();
+        return frameworks.Where(x => 
+        x.Contains("standard") ||
+        x.Contains("core") || 
+        x.Contains("net50") || 
+        x.Contains("net60") 
+        ).ToList();
     }
 
     public static IReadOnlyCollection<string> GetPlatforms(this Project project)
@@ -50,7 +55,7 @@ public static class ProjectExtensions
             if (azurePipelines != null && x.framework.Contains("2.2"))
                 return false;
 
-            //exclude netcore 2.1, 2.2, 6.0 in x86 because is not well handle by azure pipelines and github actions on windows
+            //exclude netcore 2.1, 2.2, 5.0 in x86 because is not well handle by azure pipelines and github actions on windows
             if (x.platform != "x86")
                 return true;
             if (x.framework == null)
@@ -59,7 +64,7 @@ public static class ProjectExtensions
                 return false;
             if (x.framework.Contains("2.2"))
                 return false;
-            if (x.framework.Contains("60"))
+            if (x.framework.Contains("50"))
                 return false;
             return true;
         });
