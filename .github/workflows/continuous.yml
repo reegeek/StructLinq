@@ -19,7 +19,7 @@ name: continuous
 on: [push]
 
 jobs:
-  windows-latest
+  windows-latest:
     name: windows-latest
     runs-on: windows-latest
     steps:
