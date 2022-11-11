@@ -19,36 +19,21 @@ name: continuous
 on: [push]
 
 jobs:
-  windows-2019:
-    name: windows-2019
-    runs-on: windows-2019
+  windows-latest
+    name: windows-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
 
-      - name: Setup .NET 2.2
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET version
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 2.2.*
-
-      - name: Setup .NET 3.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.0.*
-
-      - name: Setup .NET 3.1
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.*
-
-      - name: Setup .NET 5.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 5.0.*
-
-      - name: Setup .NET 6.0
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.*
+          dotnet-version: |
+            2.2.*
+            3.0.*
+            3.1.*
+            5.0.*
+            6.0.*
 
       - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2
