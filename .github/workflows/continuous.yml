@@ -34,6 +34,7 @@ jobs:
             3.1.*
             5.0.*
             6.0.*
+            7.0.*
 
       - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2

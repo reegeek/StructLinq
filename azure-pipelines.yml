@@ -37,6 +37,12 @@ stages:
               packageType: sdk
               version: 6.0.x
               performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 7.0'
+            inputs:
+              packageType: sdk
+              version: 7.0.x
+              performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -82,6 +88,12 @@ stages:
               packageType: sdk
               version: 6.0.x
               performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 7.0'
+            inputs:
+              packageType: sdk
+              version: 7.0.x
+              performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -104,6 +116,12 @@ stages:
             inputs:
               packageType: sdk
               version: 6.0.x
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 7.0'
+            inputs:
+              packageType: sdk
+              version: 7.0.x
               performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
