@@ -15,11 +15,11 @@
 # ------------------------------------------------------------------------------
 
 stages:
-  - stage: windows_latest
-    displayName: 'windows-latest'
+  - stage: windows_2019
+    displayName: 'windows-2019'
     dependsOn: [  ]
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'windows-2019'
     jobs:
       - job: Compile
         displayName: '⚙️ Compile'
@@ -36,7 +36,12 @@ stages:
             inputs:
               packageType: sdk
               version: 6.0.x
-              includePreviewVersions: true
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 7.0'
+            inputs:
+              packageType: sdk
+              version: 7.0.x
               performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
@@ -82,7 +87,12 @@ stages:
             inputs:
               packageType: sdk
               version: 6.0.x
-              includePreviewVersions: true
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 7.0'
+            inputs:
+              packageType: sdk
+              version: 7.0.x
               performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
@@ -106,7 +116,12 @@ stages:
             inputs:
               packageType: sdk
               version: 6.0.x
-              includePreviewVersions: true
+              performMultiLevelLookup: true 
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 7.0'
+            inputs:
+              packageType: sdk
+              version: 7.0.x
               performMultiLevelLookup: true 
           - task: CmdLine@2
             inputs:
