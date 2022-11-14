@@ -1,22 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<Import Project="$(RootDir)\Build\BCLTests.props" />
 
   <PropertyGroup>
-    <IsPackable>False</IsPackable>
-    <TargetFrameworks>net70;net60;net48</TargetFrameworks>
+    <TargetFramework>net60</TargetFramework>
   </PropertyGroup>
-
+	
 	<ItemGroup>
-        <PackageReference Include="FluentAssertions" Version="6.7.0" />
+		<PackageReference Include="ObjectLayoutInspector" Version="0.1.4" />
+		<PackageReference Include="FluentAssertions" Version="6.8.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
         <PackageReference Include="xunit" Version="2.4.2" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
-  </ItemGroup>
+	</ItemGroup>	
 
-	
- <ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\StructLinq\StructLinq.csproj" />
   </ItemGroup>
 
