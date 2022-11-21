@@ -1,5 +1,22 @@
-﻿namespace StructLinq
+﻿using System.Runtime.CompilerServices;
+
+namespace StructLinq
 {
+    public readonly partial struct StructEnum<T, TEnumerator>
+    where TEnumerator : struct, IStructEnumerator<T>
+    {
+        private readonly TEnumerator enumerator;
+
+        public StructEnum(TEnumerator enumerator)
+        {
+            this.enumerator = enumerator;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TEnumerator GetEnumerator() => enumerator;
+    }
+
+
     public interface IStructEnumerable<out T, out TEnumerator>
         where TEnumerator : struct, IStructEnumerator<T>
     {

@@ -7,6 +7,9 @@ namespace StructLinq
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static StructEnum<T, ArrayStructEnumerator<T>> ToStructEnum<T>(this T[] array) => new(new(array, 0, array.Length));
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ArrayEnumerable<T> ToStructEnumerable<T>(this T[] array)
         {
             return new ArrayEnumerable<T>(array, 0, array.Length);

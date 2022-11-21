@@ -8,6 +8,21 @@ using StructLinq.Utils.Collections;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T[] ToArray(int capacity, ArrayPool<T> pool)
+        {
+            using var list = new PooledList<T>(capacity, pool);
+            foreach(var t in this)
+                list.Add(t);
+            return list.ToArray();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T[] ToArray(int capacity = 0) => ToArray(capacity, ArrayPool<T>.Shared);
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

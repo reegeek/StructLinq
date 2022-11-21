@@ -4,19 +4,19 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class ArrayTests : AbstractCollectionTests<int, ArrayEnumerable<int>, ArrayStructEnumerator<int>>
+    public class ArrayTests : AbstractEnumerableTests<int, ArrayStructEnumerator<int>>
     {
         [Fact]
         public void ShouldSameAsSystem()
         {
             var sysArray = Enumerable.Range(0, 50).ToArray();
-            var structArray = Enumerable.Range(0, 50).ToArray().ToStructEnumerable().ToEnumerable().ToArray();
+            var structArray = Enumerable.Range(0, 50).ToArray().ToStructEnum().ToEnumerable().ToArray();
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override ArrayEnumerable<int> Build(int size)
+        protected override StructEnum<int, ArrayStructEnumerator<int>> Build(int size)
         {
-            return Enumerable.Range(-1, size).ToArray().ToStructEnumerable();
+            return Enumerable.Range(-1, size).ToArray().ToStructEnum();
         }
     }
 }
