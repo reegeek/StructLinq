@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.SelectMany
 {
@@ -6,7 +7,7 @@ namespace StructLinq.SelectMany
         where TSourceEnumerator : struct, IStructEnumerator<TSource>
         where TResultEnumerator : struct, IStructEnumerator<TResult>
         where TResultEnumerable : IStructEnumerable<TResult, TResultEnumerator>
-        where TFunction : IFunction<TSource, TResultEnumerable>
+        where TFunction : IFunction<TSource, TResultEnumerable> //TODO should return IStructEnumerator
     {
         private TSourceEnumerator enumerator1;
         private TFunction function;
@@ -69,6 +70,22 @@ namespace StructLinq.SelectMany
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => currentEnumerator.Current;
+        }
+
+        //TODO: improve it
+        public SelectManyEnumerator<TSource, TSourceEnumerator, TResult, TResultEnumerable, TResultEnumerator, TFunction> GetEnumerator() => this;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TResult>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
         }
     }
 }

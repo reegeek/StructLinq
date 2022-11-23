@@ -39,5 +39,22 @@ namespace StructLinq.Take
         {
             enumerator.Dispose();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TakeEnumerator<T, TEnumerator> GetEnumerator() => this;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 }

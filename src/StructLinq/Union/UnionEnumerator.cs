@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Buffers;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using StructLinq.Utils;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Union
@@ -11,15 +14,25 @@ namespace StructLinq.Union
     {
         private TEnumerator1 enumerator1;
         private TEnumerator2 enumerator2;
+        private readonly TComparer comparer;
+        private readonly int capacity;
+        private readonly ArrayPool<int> bucketPool;
+        private readonly ArrayPool<Slot<T>> slotPool;
         private PooledSet<T, TComparer> set;
         private bool first;
 
-        internal UnionEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, ref PooledSet<T, TComparer> set)
+        internal UnionEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, TComparer comparer, int capacity,
+                                 ArrayPool<int> bucketPool,
+                                 ArrayPool<Slot<T>> slotPool)
             : this()
         {
             this.enumerator1 = enumerator1;
             this.enumerator2 = enumerator2;
-            this.set = set;
+            this.comparer = comparer;
+            this.capacity = capacity;
+            this.bucketPool = bucketPool;
+            this.slotPool = slotPool;
+            this.set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
             first = true;
         }
 
@@ -69,5 +82,21 @@ namespace StructLinq.Union
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => first ? enumerator1.Current : enumerator2.Current;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var distinctVisitor = new DistinctVisitor<T, TComparer, TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
+            var visitStatus = enumerator1.Visit(ref distinctVisitor);
+            if (visitStatus != VisitStatus.VisitorFinished)
+            {
+                visitStatus = enumerator2.Visit(ref distinctVisitor);
+            }
+            visitor = distinctVisitor.Visitor;
+            distinctVisitor.Dispose();
+            return visitStatus;
+        }
+
     }
 }

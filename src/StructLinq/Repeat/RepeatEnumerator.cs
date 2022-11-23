@@ -47,5 +47,19 @@ namespace StructLinq.Repeat
         {
             return element;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (!visitor.Visit(element))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 }

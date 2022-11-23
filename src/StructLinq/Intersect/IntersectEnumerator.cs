@@ -60,5 +60,22 @@ namespace StructLinq.Intersect
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => enumerator2.Current;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public IntersectEnumerator<T, TEnumerator1, TEnumerator2, TComparer> GetEnumerator() => this;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 }

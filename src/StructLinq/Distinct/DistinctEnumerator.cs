@@ -1,6 +1,9 @@
 ﻿using System.Buffers;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using StructLinq.Utils;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Distinct
@@ -10,10 +13,18 @@ namespace StructLinq.Distinct
         where TComparer : IEqualityComparer<T>
     {
         private TEnumerator enumerator;
+        private readonly int capacity;
+        private readonly ArrayPool<int> bucketPool;
+        private readonly ArrayPool<Slot<T>> slotPool;
+        private readonly TComparer comparer;
         private PooledSet<T, TComparer> set;
         public DistinctEnumerator(ref TEnumerator enumerator, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer)
         {
             this.enumerator = enumerator;
+            this.capacity = capacity;
+            this.bucketPool = bucketPool;
+            this.slotPool = slotPool;
+            this.comparer = comparer;
             set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
         }
         
@@ -47,5 +58,17 @@ namespace StructLinq.Distinct
         {
             set.Dispose();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var distinctVisitor = new DistinctVisitor<T, TComparer, TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
+            var visitStatus = enumerator.Visit(ref distinctVisitor);
+            visitor = distinctVisitor.Visitor;
+            distinctVisitor.Dispose();
+            return visitStatus;
+        }
+
     }
 }

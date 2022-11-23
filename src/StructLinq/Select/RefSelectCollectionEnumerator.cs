@@ -59,6 +59,23 @@ namespace StructLinq.Select
             var element = enumerator.Get(i);
             return function.Eval(element);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RefSelectCollectionEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator() => this;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TOut>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 
 }

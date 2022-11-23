@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace StructLinq.Where
@@ -51,6 +52,37 @@ namespace StructLinq.Where
         {
             enumerator.Dispose();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TIn>
+        {
+            var selector = new WhereVisitor<TVisitor>(ref predicate, ref visitor);
+            var visitStatus = enumerator.Visit(ref selector);
+            visitor = selector.visitor;
+            return visitStatus;
+        }
+
+        private struct WhereVisitor<TVisitor> : IVisitor<TIn>
+            where TVisitor : IVisitor<TIn>
+        {
+            public TFunction function;
+            public TVisitor visitor;
+            public WhereVisitor(ref TFunction function, ref TVisitor visitor)
+            {
+                this.function = function;
+                this.visitor = visitor;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(TIn input)
+            {
+                if (function.Eval(input))
+                    return visitor.Visit(input);
+                return true;
+            }
+        }
+
     }
 
     public struct WhereEnumerator<TIn, TEnumerator> : IStructEnumerator<TIn>
@@ -100,5 +132,16 @@ namespace StructLinq.Where
         {
             enumerator.Dispose();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TIn>
+        {
+            var whereVisitor = new WhereVisitor<TIn, TVisitor>(predicate, ref visitor);
+            var visitStatus = enumerator.Visit(ref whereVisitor);
+            visitor = whereVisitor.visitor;
+            return visitStatus;
+        }
+
     }
 }

@@ -71,6 +71,24 @@ namespace StructLinq.Hashset
             return entry.Value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var count = Count;
+            var s = start;
+            var array = entries;
+            for (int i = 0; i < count; i++)
+            {
+                ref var input = ref array[s + i];
+                if (!visitor.Visit(input.Value))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+
+        }
+
     }
 }
 #endif

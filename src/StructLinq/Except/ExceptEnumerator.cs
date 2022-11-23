@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Buffers;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils.Collections;
 
@@ -11,14 +13,23 @@ namespace StructLinq.Except
     {
         private TEnumerator1 enumerator1;
         private TEnumerator2 enumerator2;
+        private readonly TComparer comparer;
+        private readonly int capacity;
+        private readonly ArrayPool<int> bucketPool;
+        private readonly ArrayPool<Slot<T>> slotPool;
         private PooledSet<T, TComparer> set;
 
-        internal ExceptEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, ref PooledSet<T, TComparer> set)
+        internal ExceptEnumerator(ref TEnumerator1 enumerator1, ref TEnumerator2 enumerator2, 
+            TComparer comparer, int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool)
             : this()
         {
             this.enumerator1 = enumerator1;
             this.enumerator2 = enumerator2;
-            this.set = set;
+            this.comparer = comparer;
+            this.capacity = capacity;
+            this.bucketPool = bucketPool;
+            this.slotPool = slotPool;
+            set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -60,5 +71,49 @@ namespace StructLinq.Except
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => enumerator1.Current;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var exceptVisitor = new ExceptVisitor<TVisitor>(capacity, bucketPool, slotPool, comparer, ref visitor);
+            enumerator2.Visit(ref exceptVisitor);
+            exceptVisitor.Add = false;
+            var visitStatus = enumerator1.Visit(ref exceptVisitor);
+            visitor = exceptVisitor.Visitor;
+            exceptVisitor.Dispose();
+            return visitStatus;
+        }
+
+        private struct ExceptVisitor<TVisitor> : IVisitor<T>
+            where TVisitor : IVisitor<T>
+        {
+            public TVisitor Visitor;
+            public bool Add;
+            private PooledSet<T, TComparer> set;
+
+            public ExceptVisitor(int capacity, ArrayPool<int> bucketPool, ArrayPool<Slot<T>> slotPool, TComparer comparer, ref TVisitor visitor)
+            {
+                this.Visitor = visitor;
+                set = new PooledSet<T, TComparer>(capacity, bucketPool, slotPool, comparer);
+                Add = true;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                if (!Add)
+                    return !set.AddIfNotPresent(input) || Visitor.Visit(input);
+                set.AddIfNotPresent(input);
+                return true;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public void Dispose()
+            {
+                set.Dispose();
+            }
+        }
+
     }
 }

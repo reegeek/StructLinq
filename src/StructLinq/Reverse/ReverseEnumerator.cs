@@ -37,6 +37,20 @@ namespace StructLinq.Reverse
         {
             list.Dispose();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            for(int i = list.Size -1; i >= 0; i--)
+            {
+                if (!visitor.Visit(list.Items[i]))
+                    return VisitStatus.VisitorFinished;
+
+            }
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 
     public struct ReverseEnumerator<T, TEnumerator> : ICollectionEnumerator<T>
@@ -90,5 +104,23 @@ namespace StructLinq.Reverse
         {
             return inner.Get(offset - start - i);
         }
+
+        //TODO: improve it
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReverseEnumerator<T, TEnumerator> GetEnumerator() => this;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 }

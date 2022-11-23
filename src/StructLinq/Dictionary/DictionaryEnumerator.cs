@@ -72,6 +72,22 @@ namespace StructLinq.Dictionary
             return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<KeyValuePair<TKey, TValue>>
+        {
+            var count = Count;
+            var s = start;
+            var array = entries;
+            for (int i = 0; i < count; i++)
+            {
+                ref var input = ref array[s + i];
+                if (!visitor.Visit(new KeyValuePair<TKey, TValue>(input.Key, input.Value)))
+                    return VisitStatus.VisitorFinished;
+            }
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 }
 #endif

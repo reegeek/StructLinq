@@ -43,5 +43,22 @@ namespace StructLinq.Select
         {
             enumerator.Dispose();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] 
+        public RefSelectEnumerator<TIn, TOut, TEnumerator, TFunction> GetEnumerator() => this;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TOut>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 }

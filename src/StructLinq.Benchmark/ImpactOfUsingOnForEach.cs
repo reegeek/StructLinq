@@ -195,5 +195,22 @@ namespace StructLinq.Benchmark
         public void Dispose()
         {
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ArrayStructEnumeratorWithDispose<T> GetEnumerator() => this;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor) where TVisitor : IVisitor<T>
+        {
+            foreach (var input in this)
+            {
+                if (!visitor.Visit(input))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+
+        }
+
     }
 }

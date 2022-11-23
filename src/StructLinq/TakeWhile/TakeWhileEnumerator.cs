@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.TakeWhile
 {
@@ -44,5 +45,35 @@ namespace StructLinq.TakeWhile
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => enumerator.Current;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var selector = new TakeWhileVisitor<TVisitor>(predicate, ref visitor);
+            var visitStatus = enumerator.Visit(ref selector);
+            visitor = selector.visitor;
+            return visitStatus;
+        }
+
+        private struct TakeWhileVisitor<TVisitor> : IVisitor<T>
+            where TVisitor : IVisitor<T>
+        {
+            public TVisitor visitor;
+            private TFunction predicate;
+
+            public TakeWhileVisitor(TFunction predicate, ref TVisitor visitor)
+            {
+                this.visitor = visitor;
+                this.predicate = predicate;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public bool Visit(T input)
+            {
+                return predicate.Eval(input) && visitor.Visit(input);
+            }
+        }
+
     }
 }

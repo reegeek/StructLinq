@@ -46,5 +46,16 @@ namespace StructLinq.Concat
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => first ? enumerator1.Current : enumerator2.Current;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            var visitStatus = enumerator1.Visit(ref visitor);
+            if (visitStatus == VisitStatus.VisitorFinished)
+                return visitStatus;
+            return enumerator2.Visit(ref visitor);
+        }
+
     }
 }

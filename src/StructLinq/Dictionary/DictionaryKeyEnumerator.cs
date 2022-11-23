@@ -66,6 +66,23 @@ namespace StructLinq.Dictionary
             return entry.Key;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<TKey>
+        {
+            var count = Count;
+            var s = start;
+            var array = entries;
+            for (int i = 0; i < count; i++)
+            {
+                ref var entry = ref array[s + i];
+                if (!visitor.Visit(entry.Key))
+                    return VisitStatus.VisitorFinished;
+            }
+
+            return VisitStatus.EnumeratorFinished;
+        }
+
     }
 }
 #endif

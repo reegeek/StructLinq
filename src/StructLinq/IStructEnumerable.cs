@@ -14,6 +14,13 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TEnumerator GetEnumerator() => enumerator;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            return enumerator.Visit(ref visitor);
+        }
     }
 
 
