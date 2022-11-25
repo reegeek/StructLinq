@@ -4,7 +4,7 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class ArrayTests : AbstractEnumerableTests<int, ArrayStructEnumerator<int>>
+    public class ArrayTests : AbstractCollectionTests<int, ArrayStructEnumerator<int>>
     {
         [Fact]
         public void ShouldSameAsSystem()
@@ -14,7 +14,7 @@ namespace StructLinq.Tests
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override StructEnum<int, ArrayStructEnumerator<int>> Build(int size)
+        protected override StructCollec<int, ArrayStructEnumerator<int>> BuildCollection(int size)
         {
             return Enumerable.Range(-1, size).ToArray().ToStructEnum();
         }

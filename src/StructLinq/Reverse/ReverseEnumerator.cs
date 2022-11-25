@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using StructLinq.Utils;
 using StructLinq.Utils.Collections;
 
 namespace StructLinq.Reverse
@@ -57,8 +58,8 @@ namespace StructLinq.Reverse
         where TEnumerator : struct, ICollectionEnumerator<T>
     {
         private readonly TEnumerator inner;
-        private readonly int endIndex;
-        private readonly int start;
+        private int endIndex;
+        private int start;
         private readonly int offset;
         private int index;
 
@@ -120,6 +121,18 @@ namespace StructLinq.Reverse
             }
 
             return VisitStatus.EnumeratorFinished;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = MathHelpers.Min((int)start + this.start, this.endIndex + 1);
+                if (length.HasValue)
+                    this.endIndex = MathHelpers.Min((int)length.Value + this.start - 1, this.endIndex);
+                Reset();
+            }
         }
 
     }

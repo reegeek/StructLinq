@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StructLinq.Utils;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -9,11 +10,16 @@ namespace StructLinq.IList
     {
         #region private fields
         private readonly TList list;
-        private readonly int endIndex;
-        private readonly int start;
+        private int endIndex;
+        private int start;
         private int index;
 
         #endregion
+        public IListEnumerator(TList list) : this(list, 0, list.Count)
+        {
+            
+        }
+
         public IListEnumerator(TList list, int start, int length)
         {
             this.list = list;
@@ -70,6 +76,18 @@ namespace StructLinq.IList
             }
 
             return VisitStatus.EnumeratorFinished;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = MathHelpers.Min((int)start + this.start, this.endIndex + 1);
+                if (length.HasValue)
+                    this.endIndex = MathHelpers.Min((int)length.Value + this.start - 1, this.endIndex);
+                Reset();
+            }
         }
 
     }

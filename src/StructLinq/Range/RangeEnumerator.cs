@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using StructLinq.Utils;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Range
 {
@@ -6,8 +7,8 @@ namespace StructLinq.Range
     {
         #region private fields
         private int index;
-        private readonly int end;
-        private readonly int start;
+        private int end;
+        private int start;
         #endregion
         public RangeEnumerator(int start, int count)
         {
@@ -62,6 +63,18 @@ namespace StructLinq.Range
             }
 
             return VisitStatus.EnumeratorFinished;
+        }
+
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = MathHelpers.Min((int)start + this.start, this.end + 1);
+                if (length.HasValue)
+                    this.end = MathHelpers.Min((int)length.Value + this.start - 1, this.end);
+                Reset();
+            }
         }
 
     }

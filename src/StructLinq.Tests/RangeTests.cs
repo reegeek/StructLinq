@@ -6,11 +6,11 @@ using StructLinq.Range;
 
 namespace StructLinq.Tests
 {
-    public class RangeTests : AbstractCollectionTests<int, RangeEnumerable, RangeEnumerator>
+    public class RangeTests : AbstractCollectionTests<int, RangeEnumerator>
     {
-        protected override RangeEnumerable Build(int size)
+        protected override StructCollec<int, RangeEnumerator> BuildCollection(int size)
         {
-            return StructEnumerable.Range(-1, size);
+            return StructEnumerable.Range2(-1, size);
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace StructLinq.Tests
         public void ShouldBeEqualToSystem(int start, int count)
         {
             var system = Enumerable.Range(start, count);
-            var structEnum = StructEnumerable.Range(start, count).ToEnumerable();
+            var structEnum = StructEnumerable.Range2(start, count).ToEnumerable();
             structEnum.Should().Equal(system);
         }
     }

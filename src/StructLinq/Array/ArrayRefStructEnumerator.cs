@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using StructLinq.Utils;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Array
 {
@@ -6,8 +7,8 @@ namespace StructLinq.Array
     {
         #region private fields
         private readonly T[] array;
-        private readonly int endIndex;
-        private readonly int start;
+        private int endIndex;
+        private int start;
         private int index;
         #endregion
         public ArrayRefStructEnumerator(T[] array, int start, int length)
@@ -49,6 +50,18 @@ namespace StructLinq.Array
         public ref T Get(int i)
         {
             return ref array[start + i];
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = MathHelpers.Min((int)start + this.start, this.endIndex + 1);
+                if (length.HasValue)
+                    this.endIndex = MathHelpers.Min((int)length.Value + this.start - 1, this.endIndex);
+                Reset();
+            }
         }
 
     }

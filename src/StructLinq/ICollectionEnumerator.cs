@@ -4,5 +4,6 @@
     {
         int Count { get; }
         T Get(int i); 
+        void Slice(uint start, uint? length);
     }
 }

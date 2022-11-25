@@ -6,8 +6,8 @@ namespace StructLinq.Dictionary
     public struct DictionaryKeyEnumerator<TKey, TValue> : ICollectionEnumerator<TKey>
     {
         private readonly Entry<TKey, TValue>[] entries;
-        private readonly int length;
-        private readonly int start;
+        private int length;
+        private int start;
         private int index;
 
         internal DictionaryKeyEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
@@ -82,6 +82,18 @@ namespace StructLinq.Dictionary
 
             return VisitStatus.EnumeratorFinished;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = (int) start + this.start;
+                if (length.HasValue)
+                    this.length = (int) length.Value + this.start;
+            }
+        }
+
 
     }
 }

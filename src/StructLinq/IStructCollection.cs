@@ -17,6 +17,27 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public StructEnum<T, TEnumerator> ToStructEnum() =>new(enumerator);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i) => enumerator.Get(i);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructCollec<T, TEnumerator> Slice(uint start, uint? length)
+        {
+            var copy = enumerator;
+            copy.Slice(start, length);
+            return new(copy);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int Count() => enumerator.Count;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VisitStatus Visit<TVisitor>(ref TVisitor visitor)
+            where TVisitor : IVisitor<T>
+        {
+            return enumerator.Visit(ref visitor);
+        }
     }
 
 

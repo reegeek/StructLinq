@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StructLinq.Utils;
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -61,6 +62,13 @@ namespace StructLinq.Select
             return visitStatus;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            enumerator.Slice(start, length);
+        }
+
+
     }
 
     public struct SelectCollectionEnumerator<TIn, TOut, TEnumerator> : ICollectionEnumerator<TOut>
@@ -118,6 +126,13 @@ namespace StructLinq.Select
             visitor = selectVisitor.visitor;
             return visitStatus;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            enumerator.Slice(start, length);
+        }
+
 
     }
 }

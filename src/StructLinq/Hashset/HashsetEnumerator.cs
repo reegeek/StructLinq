@@ -6,8 +6,8 @@ namespace StructLinq.Hashset
     public struct HashsetEnumerator<T> : ICollectionEnumerator<T>
     {
         private readonly Slot<T>[] entries;
-        private readonly int length;
-        private readonly int start;
+        private int length;
+        private int start;
         private int index;
 
         internal HashsetEnumerator(Slot<T>[] entries, int start, int count)
@@ -86,9 +86,18 @@ namespace StructLinq.Hashset
             }
 
             return VisitStatus.EnumeratorFinished;
-
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = (int) start + this.start;
+                if (length.HasValue)
+                    this.length = (int) length.Value + this.start;
+            }
+        }
     }
 }
 #endif

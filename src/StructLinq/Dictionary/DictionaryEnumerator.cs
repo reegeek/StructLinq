@@ -1,4 +1,5 @@
 ﻿#if !NETSTANDARD1_1
+using StructLinq.Utils;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -7,8 +8,8 @@ namespace StructLinq.Dictionary
     public struct DictionaryEnumerator<TKey, TValue> : ICollectionEnumerator<KeyValuePair<TKey, TValue>>
     {
         private readonly Entry<TKey, TValue>[] entries;
-        private readonly int length;
-        private readonly int start;
+        private int length;
+        private int start;
         private int index;
 
         internal DictionaryEnumerator(Entry<TKey, TValue>[] entries, int start, int count)
@@ -88,6 +89,16 @@ namespace StructLinq.Dictionary
             return VisitStatus.EnumeratorFinished;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                this.start = (int) start + this.start;
+                if (length.HasValue)
+                    this.length = (int) length.Value + this.start;
+            }
+        }
     }
 }
 #endif

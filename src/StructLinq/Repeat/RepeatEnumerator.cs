@@ -1,11 +1,12 @@
-﻿using System.Runtime.CompilerServices;
+﻿using StructLinq.Utils;
+using System.Runtime.CompilerServices;
 
 namespace StructLinq.Repeat
 {
     public struct RepeatEnumerator<T> : ICollectionEnumerator<T>
     {
         private readonly T element;
-        private readonly uint count;
+        private uint count;
         private uint index;
         public RepeatEnumerator(T element, uint count)
         {
@@ -59,6 +60,16 @@ namespace StructLinq.Repeat
             }
 
             return VisitStatus.EnumeratorFinished;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            checked
+            {
+                count = start > count ? 0 :
+                    length.HasValue ? MathHelpers.Min(length.Value, count - start) : count - start;
+            }
         }
 
     }

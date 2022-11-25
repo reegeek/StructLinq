@@ -76,6 +76,12 @@ namespace StructLinq.Select
             return VisitStatus.EnumeratorFinished;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
+            enumerator.Slice(start, length);
+        }
+
     }
 
 }

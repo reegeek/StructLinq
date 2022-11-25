@@ -1,10 +1,32 @@
 ﻿using System;
+using System.Buffers;
 using System.Runtime.CompilerServices;
 using StructLinq.Utils;
+using StructLinq.Utils.Collections;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructCollec<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T[] ToArray()
+        {
+            var count = enumerator.Count;
+            var result = ArrayHelpers.Create<T>(count);
+            for (int i = 0; i < count; i++)
+            {
+                result[i] = enumerator.Get(i);
+            }
+            enumerator.Dispose();
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public T[] ToArray(Func<TEnumerator, ICollectionEnumerator<T>> _) => ToArray();
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

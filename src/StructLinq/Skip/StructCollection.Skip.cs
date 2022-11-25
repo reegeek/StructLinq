@@ -4,6 +4,17 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructCollec<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructCollec<T, TEnumerator> Skip(int count) => Slice((uint)count, null);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public StructCollec<T, TEnumerator> Skip(int count, Func<TEnumerator, ICollectionEnumerator<T>> _) => Skip(count);
+    }
+
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
