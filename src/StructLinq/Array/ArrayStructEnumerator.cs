@@ -39,7 +39,7 @@ namespace StructLinq.Array
             
         }
 
-        public int Count
+        public readonly int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => endIndex + 1 - start;
