@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

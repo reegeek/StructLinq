@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace StructLinq
+﻿namespace StructLinq
 {
     public interface IRefCollectionEnumerator<T> : IRefStructEnumerator<T>
     {
