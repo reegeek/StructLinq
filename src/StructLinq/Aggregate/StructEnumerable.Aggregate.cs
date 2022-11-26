@@ -5,6 +5,39 @@ using StructLinq.Aggregate;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    //TODO use visitor
+    public partial struct StructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation)
+            where TAggregation : struct, IAggregation<T, TAccumulate>
+        {
+            aggregation.Result = seed;
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                aggregation.Aggregate(copy.Current);
+            }
+            return aggregation.Result;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TAccumulate Aggregate<TAccumulate>(TAccumulate seed, Func<TAccumulate, T, TAccumulate> func)
+        {
+            var aggregation = new FuncAggregation<T, TAccumulate>(func);
+            return Aggregate(seed, ref aggregation);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation, Func<TEnumerator, IStructEnumerator<T>> _)
+            where TAggregation : struct, IAggregation<T, TAccumulate>
+        {
+            return Aggregate<TAccumulate, TAggregation>(seed, ref aggregation);
+        }
+    }
+
+
     public static partial class StructEnumerable
     {
         #region private methods

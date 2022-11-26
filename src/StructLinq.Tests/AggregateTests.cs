@@ -11,7 +11,7 @@ namespace StructLinq.Tests
             var expected =
                 Enumerable.Range(-5, 10)
                     .Aggregate(0, (accumulate, element) => accumulate + element);
-            var actual = StructEnumerable.Range(-5, 10)
+            var actual = StructEnumerable.Range2(-5, 10)
                 .Aggregate(0, (accumulate, element) => accumulate + element);
             Assert.Equal(expected, actual);
         }
@@ -23,20 +23,8 @@ namespace StructLinq.Tests
                 Enumerable.Range(-50, 100)
                     .Aggregate(0, (accumulate, element) => accumulate + element);
             var aggregation = new Aggregation();
-            var actual = StructEnumerable.Range(-50, 100)
+            var actual = StructEnumerable.Range2(-50, 100)
                 .Aggregate(0, ref aggregation);
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void StructTest2()
-        {
-            var expected =
-                Enumerable.Range(-50, 100)
-                          .Aggregate(0, (accumulate, element) => accumulate + element);
-            var aggregation = new Aggregation();
-            var actual = StructEnumerable.Range(-50, 100)
-                                         .Aggregate(0, ref aggregation, x=>x);
             Assert.Equal(expected, actual);
         }
 
