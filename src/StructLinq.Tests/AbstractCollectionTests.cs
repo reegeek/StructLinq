@@ -10,7 +10,7 @@ namespace StructLinq.Tests
     {
         protected override StructEnum<T, TEnumerator> Build(int size)
         {
-            return BuildCollection(size).ToStructEnum();
+            return BuildCollection(size).ToStructEnumerable();
         }
 
         protected abstract StructCollec<T, TEnumerator> BuildCollection(int size);

@@ -3,10 +3,9 @@
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
-    public partial struct StructCollec<T, TEnumerator>
+    public partial struct RefStructCollec<T, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public StructEnumerableEnumerable<T, TEnumerator> ToEnumerable() => ToStructEnumerable().ToEnumerable();
-
+        public RefStructEnumerableEnumerable<T, TEnumerator> ToEnumerable() => ToRefStrutEnumerable().ToEnumerable();
     }
 }

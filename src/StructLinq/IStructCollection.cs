@@ -16,7 +16,7 @@ namespace StructLinq
         public TEnumerator GetEnumerator() => enumerator;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public StructEnum<T, TEnumerator> ToStructEnum() =>new(enumerator);
+        public StructEnum<T, TEnumerator> ToStructEnumerable() =>new(enumerator);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Get(int i) => enumerator.Get(i);

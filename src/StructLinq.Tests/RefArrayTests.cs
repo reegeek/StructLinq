@@ -5,7 +5,7 @@ using Xunit;
 
 namespace StructLinq.Tests
 {
-    public class RefArrayTests : AbstractRefCollectionTests<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>>
+    public class RefArrayTests : AbstractRefCollectionTests<int, ArrayRefStructEnumerator<int>>
     {
         [Fact]
         public void ShouldSameAsSystem()
@@ -15,9 +15,9 @@ namespace StructLinq.Tests
             Assert.Equal(sysArray, structArray);
         }
 
-        protected override ArrayRefEnumerable<int> Build(int size)
+        protected override RefStructCollec<int, ArrayRefStructEnumerator<int>> BuildCollection(int size)
         {
-            return Enumerable.Range(-1, size).ToArray().ToRefStructEnumerable();
+            return Enumerable.Range(-1, size).ToArray().ToRefStructEnum();
         }
 
         [Fact]

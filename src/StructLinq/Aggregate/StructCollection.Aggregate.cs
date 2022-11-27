@@ -10,13 +10,13 @@ namespace StructLinq
         public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation)
             where TAggregation : struct, IAggregation<T, TAccumulate>
         {
-            return ToStructEnum().Aggregate(seed, ref aggregation);
+            return ToStructEnumerable().Aggregate(seed, ref aggregation);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TAccumulate Aggregate<TAccumulate>(TAccumulate seed, Func<TAccumulate, T, TAccumulate> func)
         {
-            return ToStructEnum().Aggregate(seed, func);
+            return ToStructEnumerable().Aggregate(seed, func);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -24,7 +24,7 @@ namespace StructLinq
         public TAccumulate Aggregate<TAccumulate, TAggregation>(TAccumulate seed, ref TAggregation aggregation, Func<TEnumerator, IStructEnumerator<T>> _)
             where TAggregation : struct, IAggregation<T, TAccumulate>
         {
-            return ToStructEnum().Aggregate(seed, ref aggregation);
+            return ToStructEnumerable().Aggregate(seed, ref aggregation);
         }
     }
 }
