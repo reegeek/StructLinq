@@ -8,6 +8,31 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct RefStructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool All(Func<T, bool> predicate)
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                ref var current = ref copy.Current;
+                if (!predicate(current))
+                {
+                    copy.Dispose();
+                    return false;
+                }
+            }
+            copy.Dispose();
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        private bool All(Func<T, bool> predicate, Func<TEnumerator, IRefStructEnumerator<T>> _) => All(predicate);
+    }
+
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
