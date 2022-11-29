@@ -6,17 +6,17 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|              Method |      Mean |     Error |    StdDev | Ratio |  Gen 0 | Allocated |
-|-------------------- |----------:|----------:|----------:|------:|-------:|----------:|
-|                Linq | 19.279 ns | 0.0894 ns | 0.0793 ns |  1.00 |      - |         - |
-|      EnumerableLinq | 18.882 ns | 0.3072 ns | 0.2873 ns |  0.98 |      - |         - |
-|          StructLinq | 14.112 ns | 0.1742 ns | 0.1454 ns |  0.73 | 0.0068 |      32 B |
-| StructLinqZeroAlloc |  3.474 ns | 0.0314 ns | 0.0279 ns |  0.18 |      - |         - |
+|              Method |      Mean |     Error |    StdDev | Ratio |   Gen0 | Allocated | Alloc Ratio |
+|-------------------- |----------:|----------:|----------:|------:|-------:|----------:|------------:|
+|                Linq | 18.837 ns | 0.0693 ns | 0.0649 ns |  1.00 |      - |         - |          NA |
+|      EnumerableLinq | 18.736 ns | 0.0728 ns | 0.0645 ns |  0.99 |      - |         - |          NA |
+|          StructLinq |  5.876 ns | 0.0341 ns | 0.0302 ns |  0.31 | 0.0068 |      32 B |          NA |
+| StructLinqZeroAlloc |  1.006 ns | 0.0122 ns | 0.0114 ns |  0.05 |      - |         - |          NA |

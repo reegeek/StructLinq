@@ -6,17 +6,17 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|                            Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Allocated |
-|---------------------------------- |----------:|----------:|----------:|------:|--------:|----------:|
-|                            SysSum |  7.137 μs | 0.0439 μs | 0.0410 μs |  1.00 |    0.00 |         - |
-|            SysRangeWhereSelectSum | 80.673 μs | 0.4691 μs | 0.4159 μs | 11.30 |    0.08 |     160 B |
-| ConvertWhereSelectSumWithDelegate | 63.532 μs | 0.5326 μs | 0.4982 μs |  8.90 |    0.10 |      40 B |
-|         StructRangeWhereSelectSum |  5.767 μs | 0.0306 μs | 0.0286 μs |  0.81 |    0.01 |         - |
+|                            Method |      Mean |     Error |    StdDev | Ratio | RatioSD | Allocated | Alloc Ratio |
+|---------------------------------- |----------:|----------:|----------:|------:|--------:|----------:|------------:|
+|                            SysSum |  6.942 μs | 0.0163 μs | 0.0127 μs |  1.00 |    0.00 |         - |          NA |
+|            SysRangeWhereSelectSum | 79.612 μs | 0.5985 μs | 0.5598 μs | 11.49 |    0.08 |     160 B |          NA |
+| ConvertWhereSelectSumWithDelegate | 61.600 μs | 0.3007 μs | 0.2666 μs |  8.87 |    0.05 |      40 B |          NA |
+|         StructRangeWhereSelectSum |  5.594 μs | 0.0075 μs | 0.0066 μs |  0.81 |    0.00 |         - |          NA |

@@ -6,19 +6,19 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|                                         Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Allocated |
-|----------------------------------------------- |-----------:|---------:|---------:|------:|-------:|----------:|
-|                                            For |   179.4 ns |  1.03 ns |  0.96 ns |  0.06 |      - |         - |
-|                                           Linq | 3,078.9 ns | 23.24 ns | 18.14 ns |  1.00 | 0.0038 |      32 B |
-|                                     StructLinq |   797.6 ns |  2.18 ns |  1.82 ns |  0.26 | 0.0067 |      32 B |
-|                            StructLinqZeroAlloc |   908.0 ns |  3.07 ns |  2.40 ns |  0.29 |      - |         - |
-|                   StructLinqIFunctionZeroAlloc |   174.0 ns |  0.30 ns |  0.23 ns |  0.06 |      - |         - |
-| StructLinqIFunctionZeroAllocOnStructEnumerable |   174.2 ns |  0.58 ns |  0.54 ns |  0.06 |      - |         - |
+|                                         Method |       Mean |    Error |   StdDev | Ratio |   Gen0 | Allocated | Alloc Ratio |
+|----------------------------------------------- |-----------:|---------:|---------:|------:|-------:|----------:|------------:|
+|                                            For |   175.1 ns |  0.61 ns |  0.54 ns |  0.06 |      - |         - |        0.00 |
+|                                           Linq | 2,753.6 ns | 11.84 ns | 11.08 ns |  1.00 | 0.0038 |      32 B |        1.00 |
+|                                     StructLinq |   907.8 ns |  3.49 ns |  2.72 ns |  0.33 | 0.0067 |      32 B |        1.00 |
+|                            StructLinqZeroAlloc |   893.3 ns |  2.89 ns |  2.56 ns |  0.32 |      - |         - |        0.00 |
+|                   StructLinqIFunctionZeroAlloc |   169.3 ns |  0.45 ns |  0.42 ns |  0.06 |      - |         - |        0.00 |
+| StructLinqIFunctionZeroAllocOnStructEnumerable |   169.7 ns |  0.50 ns |  0.47 ns |  0.06 |      - |         - |        0.00 |

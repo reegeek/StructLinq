@@ -6,18 +6,18 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
 |                             Method |     Mean |    Error |   StdDev | Allocated |
 |----------------------------------- |---------:|---------:|---------:|----------:|
-|                            SysLinq | 49.06 μs | 0.108 μs | 0.084 μs |     104 B |
-|             StructLinqWithDelegate | 28.79 μs | 0.104 μs | 0.098 μs |         - |
-| StructLinqWithDelegateAsEnumerable | 56.13 μs | 0.109 μs | 0.097 μs |     104 B |
-|                         StructLinq | 14.01 μs | 0.043 μs | 0.038 μs |         - |
-|             StructLinqAsEnumerable | 35.96 μs | 0.221 μs | 0.206 μs |     104 B |
+|                            SysLinq | 49.25 μs | 0.138 μs | 0.122 μs |     104 B |
+|             StructLinqWithDelegate | 34.00 μs | 0.185 μs | 0.155 μs |         - |
+| StructLinqWithDelegateAsEnumerable | 44.51 μs | 0.240 μs | 0.213 μs |     104 B |
+|                         StructLinq | 13.66 μs | 0.063 μs | 0.052 μs |         - |
+|             StructLinqAsEnumerable | 26.15 μs | 0.270 μs | 0.252 μs |     104 B |
