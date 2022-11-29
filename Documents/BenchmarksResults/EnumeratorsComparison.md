@@ -6,66 +6,66 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]             : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  .NET 5.0           : .NET 5.0.17 (5.0.1722.21314), X64 RyuJIT
-  .NET 6.0           : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  .NET Framework 4.8 : .NET Framework 4.8 (4.8.4515.0), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]             : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  .NET 6.0           : .NET 6.0.11 (6.0.1122.52304), X64 RyuJIT AVX2
+  .NET 7.0           : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  .NET Framework 4.8 : .NET Framework 4.8.1 (4.8.9105.0), X64 RyuJIT VectorSize=256
 
 
 ```
-|              Method |                Job |            Runtime | ItemCount |        Mean |     Error |    StdDev | Ratio | RatioSD | Allocated |
-|-------------------- |------------------- |------------------- |---------- |------------:|----------:|----------:|------:|--------:|----------:|
-|          **SysForEach** |           **.NET 5.0** |           **.NET 5.0** |         **2** |   **0.7136 ns** | **0.0117 ns** | **0.0110 ns** |  **0.84** |    **0.02** |         **-** |
-|    StructEnumerable |           .NET 5.0 |           .NET 5.0 |         2 |   1.8016 ns | 0.0074 ns | 0.0069 ns |  2.13 |    0.07 |         - |
-| RefStructEnumerable |           .NET 5.0 |           .NET 5.0 |         2 |   1.7636 ns | 0.0101 ns | 0.0089 ns |  2.08 |    0.07 |         - |
-|   ArrayEnumerableV1 |           .NET 5.0 |           .NET 5.0 |         2 |   1.9895 ns | 0.0078 ns | 0.0073 ns |  2.35 |    0.08 |         - |
-|          SysForEach |           .NET 6.0 |           .NET 6.0 |         2 |   0.3869 ns | 0.0060 ns | 0.0053 ns |  0.46 |    0.02 |         - |
-|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |         2 |   1.0844 ns | 0.0134 ns | 0.0126 ns |  1.28 |    0.05 |         - |
-| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |         2 |   1.0939 ns | 0.0180 ns | 0.0160 ns |  1.29 |    0.05 |         - |
-|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |         2 |   1.9477 ns | 0.0070 ns | 0.0062 ns |  2.30 |    0.08 |         - |
-|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   0.8483 ns | 0.0293 ns | 0.0274 ns |  1.00 |    0.00 |         - |
-|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   1.8448 ns | 0.0097 ns | 0.0090 ns |  2.18 |    0.07 |         - |
-| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   1.8527 ns | 0.0165 ns | 0.0138 ns |  2.18 |    0.07 |         - |
-|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   2.0605 ns | 0.0073 ns | 0.0068 ns |  2.43 |    0.08 |         - |
-|                     |                    |                    |           |             |           |           |       |         |           |
-|          **SysForEach** |           **.NET 5.0** |           **.NET 5.0** |        **20** |  **10.2285 ns** | **0.0569 ns** | **0.0533 ns** |  **1.49** |    **0.01** |         **-** |
-|    StructEnumerable |           .NET 5.0 |           .NET 5.0 |        20 |  10.5224 ns | 0.0596 ns | 0.0558 ns |  1.53 |    0.01 |         - |
-| RefStructEnumerable |           .NET 5.0 |           .NET 5.0 |        20 |   8.0105 ns | 0.0646 ns | 0.0604 ns |  1.17 |    0.01 |         - |
-|   ArrayEnumerableV1 |           .NET 5.0 |           .NET 5.0 |        20 |  11.0884 ns | 0.0959 ns | 0.0850 ns |  1.62 |    0.02 |         - |
-|          SysForEach |           .NET 6.0 |           .NET 6.0 |        20 |   5.9842 ns | 0.0401 ns | 0.0356 ns |  0.87 |    0.01 |         - |
-|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |        20 |   7.8641 ns | 0.0401 ns | 0.0375 ns |  1.15 |    0.01 |         - |
-| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |        20 |   7.8656 ns | 0.0629 ns | 0.0588 ns |  1.15 |    0.01 |         - |
-|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |        20 |  10.4796 ns | 0.0407 ns | 0.0381 ns |  1.53 |    0.01 |         - |
-|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |        20 |   6.8579 ns | 0.0465 ns | 0.0435 ns |  1.00 |    0.00 |         - |
-|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |        20 |   8.3157 ns | 0.0428 ns | 0.0357 ns |  1.21 |    0.01 |         - |
-| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |        20 |   8.4234 ns | 0.1007 ns | 0.0942 ns |  1.23 |    0.02 |         - |
-|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |        20 |  13.0549 ns | 0.0738 ns | 0.0691 ns |  1.90 |    0.02 |         - |
-|                     |                    |                    |           |             |           |           |       |         |           |
-|          **SysForEach** |           **.NET 5.0** |           **.NET 5.0** |       **100** |  **43.1960 ns** | **0.2061 ns** | **0.1827 ns** |  **0.99** |    **0.01** |         **-** |
-|    StructEnumerable |           .NET 5.0 |           .NET 5.0 |       100 |  58.1305 ns | 0.4501 ns | 0.3990 ns |  1.33 |    0.01 |         - |
-| RefStructEnumerable |           .NET 5.0 |           .NET 5.0 |       100 |  45.3003 ns | 0.1172 ns | 0.1097 ns |  1.04 |    0.00 |         - |
-|   ArrayEnumerableV1 |           .NET 5.0 |           .NET 5.0 |       100 |  63.3466 ns | 0.2148 ns | 0.1904 ns |  1.45 |    0.01 |         - |
-|          SysForEach |           .NET 6.0 |           .NET 6.0 |       100 |  42.7354 ns | 0.1138 ns | 0.1064 ns |  0.98 |    0.00 |         - |
-|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |       100 |  46.3047 ns | 0.1739 ns | 0.1452 ns |  1.06 |    0.00 |         - |
-| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |       100 |  46.3702 ns | 0.1864 ns | 0.1743 ns |  1.06 |    0.01 |         - |
-|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |       100 |  64.2843 ns | 0.2033 ns | 0.1802 ns |  1.47 |    0.01 |         - |
-|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  43.7402 ns | 0.1363 ns | 0.1275 ns |  1.00 |    0.00 |         - |
-|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  45.7428 ns | 0.1973 ns | 0.1846 ns |  1.05 |    0.01 |         - |
-| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  45.6049 ns | 0.1511 ns | 0.1413 ns |  1.04 |    0.00 |         - |
-|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  63.6860 ns | 0.0803 ns | 0.0712 ns |  1.46 |    0.00 |         - |
-|                     |                    |                    |           |             |           |           |       |         |           |
-|          **SysForEach** |           **.NET 5.0** |           **.NET 5.0** |      **1000** | **381.0066 ns** | **0.7150 ns** | **0.5971 ns** |  **1.00** |    **0.00** |         **-** |
-|    StructEnumerable |           .NET 5.0 |           .NET 5.0 |      1000 | 518.0785 ns | 1.7207 ns | 1.6096 ns |  1.36 |    0.01 |         - |
-| RefStructEnumerable |           .NET 5.0 |           .NET 5.0 |      1000 | 392.1199 ns | 0.8584 ns | 0.7168 ns |  1.03 |    0.00 |         - |
-|   ArrayEnumerableV1 |           .NET 5.0 |           .NET 5.0 |      1000 | 584.9259 ns | 3.4681 ns | 2.8960 ns |  1.54 |    0.01 |         - |
-|          SysForEach |           .NET 6.0 |           .NET 6.0 |      1000 | 380.1563 ns | 1.0023 ns | 0.9376 ns |  1.00 |    0.00 |         - |
-|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |      1000 | 404.9016 ns | 0.7473 ns | 0.6625 ns |  1.06 |    0.00 |         - |
-| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |      1000 | 405.8414 ns | 1.6857 ns | 1.4076 ns |  1.07 |    0.00 |         - |
-|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |      1000 | 580.2002 ns | 1.0439 ns | 0.9764 ns |  1.52 |    0.01 |         - |
-|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 380.8477 ns | 0.9991 ns | 0.8343 ns |  1.00 |    0.00 |         - |
-|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 392.6993 ns | 0.9748 ns | 0.7610 ns |  1.03 |    0.00 |         - |
-| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 392.5307 ns | 0.9440 ns | 0.8369 ns |  1.03 |    0.00 |         - |
-|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 568.6044 ns | 1.2277 ns | 1.1484 ns |  1.49 |    0.00 |         - |
+|              Method |                Job |            Runtime | ItemCount |        Mean |     Error |    StdDev | Ratio | RatioSD | Allocated | Alloc Ratio |
+|-------------------- |------------------- |------------------- |---------- |------------:|----------:|----------:|------:|--------:|----------:|------------:|
+|          **SysForEach** |           **.NET 6.0** |           **.NET 6.0** |         **2** |   **0.5395 ns** | **0.0089 ns** | **0.0084 ns** |  **0.53** |    **0.01** |         **-** |          **NA** |
+|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |         2 |   1.0813 ns | 0.0078 ns | 0.0073 ns |  1.06 |    0.01 |         - |          NA |
+| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |         2 |   1.0727 ns | 0.0079 ns | 0.0074 ns |  1.05 |    0.01 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |         2 |   2.7919 ns | 0.0113 ns | 0.0100 ns |  2.74 |    0.03 |         - |          NA |
+|          SysForEach |           .NET 7.0 |           .NET 7.0 |         2 |   0.7274 ns | 0.0090 ns | 0.0080 ns |  0.71 |    0.01 |         - |          NA |
+|    StructEnumerable |           .NET 7.0 |           .NET 7.0 |         2 |   0.9126 ns | 0.0229 ns | 0.0214 ns |  0.90 |    0.02 |         - |          NA |
+| RefStructEnumerable |           .NET 7.0 |           .NET 7.0 |         2 |   0.8818 ns | 0.0055 ns | 0.0049 ns |  0.87 |    0.01 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 7.0 |           .NET 7.0 |         2 |   2.6261 ns | 0.0432 ns | 0.0404 ns |  2.58 |    0.04 |         - |          NA |
+|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   1.0190 ns | 0.0093 ns | 0.0087 ns |  1.00 |    0.00 |         - |          NA |
+|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   1.7663 ns | 0.0099 ns | 0.0083 ns |  1.74 |    0.02 |         - |          NA |
+| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   1.7838 ns | 0.0095 ns | 0.0079 ns |  1.75 |    0.02 |         - |          NA |
+|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |         2 |   2.7393 ns | 0.0215 ns | 0.0201 ns |  2.69 |    0.04 |         - |          NA |
+|                     |                    |                    |           |             |           |           |       |         |           |             |
+|          **SysForEach** |           **.NET 6.0** |           **.NET 6.0** |        **20** |   **5.8328 ns** | **0.0136 ns** | **0.0113 ns** |  **0.58** |    **0.00** |         **-** |          **NA** |
+|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |        20 |   7.7520 ns | 0.0231 ns | 0.0193 ns |  0.77 |    0.00 |         - |          NA |
+| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |        20 |   7.7400 ns | 0.0325 ns | 0.0288 ns |  0.77 |    0.00 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |        20 |  11.4317 ns | 0.0423 ns | 0.0395 ns |  1.13 |    0.01 |         - |          NA |
+|          SysForEach |           .NET 7.0 |           .NET 7.0 |        20 |   5.2822 ns | 0.0334 ns | 0.0296 ns |  0.52 |    0.00 |         - |          NA |
+|    StructEnumerable |           .NET 7.0 |           .NET 7.0 |        20 |   7.1606 ns | 0.0236 ns | 0.0210 ns |  0.71 |    0.01 |         - |          NA |
+| RefStructEnumerable |           .NET 7.0 |           .NET 7.0 |        20 |   7.2399 ns | 0.1234 ns | 0.1155 ns |  0.72 |    0.01 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 7.0 |           .NET 7.0 |        20 |  11.6708 ns | 0.0431 ns | 0.0382 ns |  1.16 |    0.01 |         - |          NA |
+|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |        20 |  10.0910 ns | 0.0602 ns | 0.0534 ns |  1.00 |    0.00 |         - |          NA |
+|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |        20 |  11.2802 ns | 0.0461 ns | 0.0409 ns |  1.12 |    0.01 |         - |          NA |
+| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |        20 |  11.2868 ns | 0.0525 ns | 0.0491 ns |  1.12 |    0.01 |         - |          NA |
+|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |        20 |  11.7509 ns | 0.1469 ns | 0.1374 ns |  1.17 |    0.01 |         - |          NA |
+|                     |                    |                    |           |             |           |           |       |         |           |             |
+|          **SysForEach** |           **.NET 6.0** |           **.NET 6.0** |       **100** |  **42.2655 ns** | **0.1662 ns** | **0.1554 ns** |  **0.75** |    **0.00** |         **-** |          **NA** |
+|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |       100 |  45.9079 ns | 0.1442 ns | 0.1349 ns |  0.81 |    0.00 |         - |          NA |
+| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |       100 |  45.2104 ns | 0.3548 ns | 0.2963 ns |  0.80 |    0.01 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |       100 |  62.3430 ns | 0.3062 ns | 0.2864 ns |  1.11 |    0.01 |         - |          NA |
+|          SysForEach |           .NET 7.0 |           .NET 7.0 |       100 |  38.9808 ns | 0.0955 ns | 0.0798 ns |  0.69 |    0.00 |         - |          NA |
+|    StructEnumerable |           .NET 7.0 |           .NET 7.0 |       100 |  41.6850 ns | 0.2103 ns | 0.1967 ns |  0.74 |    0.00 |         - |          NA |
+| RefStructEnumerable |           .NET 7.0 |           .NET 7.0 |       100 |  42.0053 ns | 0.2092 ns | 0.1957 ns |  0.74 |    0.00 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 7.0 |           .NET 7.0 |       100 |  58.2898 ns | 0.1694 ns | 0.1584 ns |  1.03 |    0.00 |         - |          NA |
+|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  56.4203 ns | 0.1987 ns | 0.1659 ns |  1.00 |    0.00 |         - |          NA |
+|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  56.9391 ns | 0.1976 ns | 0.1848 ns |  1.01 |    0.00 |         - |          NA |
+| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  56.9231 ns | 0.1793 ns | 0.1677 ns |  1.01 |    0.00 |         - |          NA |
+|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |       100 |  64.2843 ns | 1.2006 ns | 1.0643 ns |  1.14 |    0.02 |         - |          NA |
+|                     |                    |                    |           |             |           |           |       |         |           |             |
+|          **SysForEach** |           **.NET 6.0** |           **.NET 6.0** |      **1000** | **375.3040 ns** | **1.2134 ns** | **1.0756 ns** |  **0.73** |    **0.00** |         **-** |          **NA** |
+|    StructEnumerable |           .NET 6.0 |           .NET 6.0 |      1000 | 387.3172 ns | 1.6300 ns | 1.5247 ns |  0.76 |    0.01 |         - |          NA |
+| RefStructEnumerable |           .NET 6.0 |           .NET 6.0 |      1000 | 388.6788 ns | 3.0873 ns | 2.5780 ns |  0.76 |    0.01 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 6.0 |           .NET 6.0 |      1000 | 576.8136 ns | 1.7095 ns | 1.5991 ns |  1.13 |    0.01 |         - |          NA |
+|          SysForEach |           .NET 7.0 |           .NET 7.0 |      1000 | 335.6658 ns | 0.9673 ns | 0.9048 ns |  0.66 |    0.00 |         - |          NA |
+|    StructEnumerable |           .NET 7.0 |           .NET 7.0 |      1000 | 362.2799 ns | 0.7993 ns | 0.6240 ns |  0.71 |    0.00 |         - |          NA |
+| RefStructEnumerable |           .NET 7.0 |           .NET 7.0 |      1000 | 362.7813 ns | 0.7799 ns | 0.6913 ns |  0.71 |    0.00 |         - |          NA |
+|   ArrayEnumerableV1 |           .NET 7.0 |           .NET 7.0 |      1000 | 548.3063 ns | 1.4988 ns | 1.4020 ns |  1.07 |    0.01 |         - |          NA |
+|          SysForEach | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 511.3674 ns | 2.6135 ns | 2.4447 ns |  1.00 |    0.00 |         - |          NA |
+|    StructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 511.8095 ns | 2.4448 ns | 1.9087 ns |  1.00 |    0.01 |         - |          NA |
+| RefStructEnumerable | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 511.5876 ns | 2.7156 ns | 2.5402 ns |  1.00 |    0.01 |         - |          NA |
+|   ArrayEnumerableV1 | .NET Framework 4.8 | .NET Framework 4.8 |      1000 | 575.1538 ns | 2.6253 ns | 2.4557 ns |  1.12 |    0.01 |         - |          NA |

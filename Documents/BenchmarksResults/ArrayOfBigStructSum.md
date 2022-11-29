@@ -6,19 +6,19 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|                Method |       Mean |    Error |   StdDev | Ratio |  Gen 0 | Allocated |
-|---------------------- |-----------:|---------:|---------:|------:|-------:|----------:|
-|             Handmaded |   554.1 ns |  4.79 ns |  4.25 ns |  0.09 |      - |         - |
-|      SysEnumerableSum | 5,915.5 ns | 35.31 ns | 33.03 ns |  1.00 |      - |      32 B |
-|             StructSum | 2,845.7 ns |  9.42 ns |  8.35 ns |  0.48 | 0.0038 |      32 B |
-|          RefStructSum | 1,907.8 ns | 19.48 ns | 17.26 ns |  0.32 | 0.0057 |      32 B |
-|    ZeroAllocStructSum | 1,980.5 ns |  9.26 ns |  7.73 ns |  0.33 |      - |         - |
-| ZeroAllocRefStructSum |   698.2 ns |  0.77 ns |  0.65 ns |  0.12 |      - |         - |
+|                Method |       Mean |    Error |   StdDev | Ratio |   Gen0 | Allocated | Alloc Ratio |
+|---------------------- |-----------:|---------:|---------:|------:|-------:|----------:|------------:|
+|             Handmaded |   515.3 ns |  1.54 ns |  1.44 ns |  0.10 |      - |         - |        0.00 |
+|      SysEnumerableSum | 5,366.5 ns | 32.26 ns | 28.59 ns |  1.00 |      - |      32 B |        1.00 |
+|             StructSum | 2,304.5 ns | 10.64 ns |  9.43 ns |  0.43 | 0.0038 |      32 B |        1.00 |
+|          RefStructSum | 2,042.3 ns |  7.23 ns |  5.64 ns |  0.38 | 0.0038 |      32 B |        1.00 |
+|    ZeroAllocStructSum |   954.6 ns | 19.08 ns | 28.55 ns |  0.18 |      - |         - |        0.00 |
+| ZeroAllocRefStructSum |   556.3 ns |  1.15 ns |  0.96 ns |  0.10 |      - |         - |        0.00 |

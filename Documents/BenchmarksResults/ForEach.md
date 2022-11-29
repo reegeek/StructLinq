@@ -6,18 +6,18 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|                      Method |      Mean |    Error |   StdDev | Ratio | Allocated |
-|---------------------------- |----------:|---------:|---------:|------:|----------:|
-|                  ClrForEach | 382.41 μs | 1.285 μs | 1.202 μs |  1.00 |      40 B |
-|                  WithAction | 178.08 μs | 0.383 μs | 0.358 μs |  0.47 |      24 B |
-|                  WithStruct |  25.68 μs | 0.043 μs | 0.038 μs |  0.07 |      24 B |
-|         ZeroAllocWithStruct | 138.63 μs | 0.474 μs | 0.420 μs |  0.36 |         - |
-| ToTypedEnumerableWithStruct | 384.04 μs | 3.147 μs | 2.944 μs |  1.00 |      64 B |
+|                      Method |      Mean |    Error |   StdDev | Ratio | Allocated | Alloc Ratio |
+|---------------------------- |----------:|---------:|---------:|------:|----------:|------------:|
+|                  ClrForEach | 353.44 μs | 1.817 μs | 1.610 μs |  1.00 |      40 B |        1.00 |
+|                  WithAction | 176.35 μs | 0.661 μs | 0.619 μs |  0.50 |      24 B |        0.60 |
+|                  WithStruct |  25.47 μs | 0.094 μs | 0.078 μs |  0.07 |      24 B |        0.60 |
+|         ZeroAllocWithStruct | 137.62 μs | 0.493 μs | 0.461 μs |  0.39 |         - |        0.00 |
+| ToTypedEnumerableWithStruct | 366.26 μs | 1.795 μs | 1.679 μs |  1.04 |      64 B |        1.60 |

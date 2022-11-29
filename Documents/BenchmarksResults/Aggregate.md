@@ -6,18 +6,18 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|                   Method |      Mean |     Error |    StdDev | Ratio |  Gen 0 | Allocated |
-|------------------------- |----------:|----------:|----------:|------:|-------:|----------:|
-|             SysAggregate | 51.506 μs | 0.3861 μs | 0.3224 μs |  1.00 |      - |      40 B |
-|        DelegateAggregate | 15.347 μs | 0.0625 μs | 0.0554 μs |  0.30 |      - |      24 B |
-|          StructAggregate |  2.597 μs | 0.0092 μs | 0.0081 μs |  0.05 | 0.0038 |      24 B |
-| ZeroAllocStructAggregate | 13.719 μs | 0.0158 μs | 0.0140 μs |  0.27 |      - |         - |
-|         ConvertAggregate | 38.369 μs | 0.1214 μs | 0.1076 μs |  0.74 |      - |      64 B |
+|                   Method |      Mean |     Error |    StdDev | Ratio |   Gen0 | Allocated | Alloc Ratio |
+|------------------------- |----------:|----------:|----------:|------:|-------:|----------:|------------:|
+|             SysAggregate | 51.079 μs | 0.1588 μs | 0.1240 μs |  1.00 |      - |      40 B |        1.00 |
+|        DelegateAggregate | 17.656 μs | 0.0852 μs | 0.0797 μs |  0.35 |      - |      24 B |        0.60 |
+|          StructAggregate |  2.566 μs | 0.0072 μs | 0.0067 μs |  0.05 | 0.0038 |      24 B |        0.60 |
+| ZeroAllocStructAggregate | 13.639 μs | 0.1404 μs | 0.1314 μs |  0.27 |      - |         - |        0.00 |
+|         ConvertAggregate | 33.087 μs | 0.1565 μs | 0.1464 μs |  0.65 |      - |      64 B |        1.60 |

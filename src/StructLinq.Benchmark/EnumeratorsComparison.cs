@@ -8,8 +8,8 @@ namespace StructLinq.Benchmark
 
     [MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net48, baseline: true)]
-    [SimpleJob(RuntimeMoniker.Net50)]
     [SimpleJob(RuntimeMoniker.Net60)]
+    [SimpleJob(RuntimeMoniker.Net70)]
     public class EnumeratorsComparison
     {
         private int[] array;

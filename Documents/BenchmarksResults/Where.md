@@ -6,17 +6,17 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|         Method |     Mean |    Error |   StdDev | Ratio | Allocated |
-|--------------- |---------:|---------:|---------:|------:|----------:|
-|      SysSelect | 92.21 μs | 0.633 μs | 0.561 μs |  1.00 |      96 B |
-| DelegateSelect | 18.23 μs | 0.151 μs | 0.134 μs |  0.20 |      56 B |
-|   StructSelect | 13.97 μs | 0.157 μs | 0.147 μs |  0.15 |         - |
-|  ConvertSelect | 38.91 μs | 0.132 μs | 0.103 μs |  0.42 |      40 B |
+|         Method |     Mean |    Error |   StdDev | Ratio | Allocated | Alloc Ratio |
+|--------------- |---------:|---------:|---------:|------:|----------:|------------:|
+|      SysSelect | 97.16 μs | 0.752 μs | 0.628 μs |  1.00 |      96 B |        1.00 |
+| DelegateSelect | 17.70 μs | 0.045 μs | 0.040 μs |  0.18 |      56 B |        0.58 |
+|   StructSelect | 13.60 μs | 0.030 μs | 0.027 μs |  0.14 |         - |        0.00 |
+|  ConvertSelect | 40.36 μs | 0.155 μs | 0.145 μs |  0.42 |      40 B |        0.42 |

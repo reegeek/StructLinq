@@ -6,16 +6,16 @@
 ### Results:
 ``` ini
 
-BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
 Intel Core i7-8750H CPU 2.20GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=6.0.203
-  [Host]     : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
-  DefaultJob : .NET 6.0.6 (6.0.622.26707), X64 RyuJIT
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 
 
 ```
-|              Method |     Mean |    Error |   StdDev | Ratio | Allocated |
-|-------------------- |---------:|---------:|---------:|------:|----------:|
-|                Linq | 79.46 μs | 0.130 μs | 0.101 μs |  1.00 |     120 B |
-|          StructLinq | 17.94 μs | 0.110 μs | 0.092 μs |  0.23 |      64 B |
-| StructLinqZeroAlloc | 19.95 μs | 0.081 μs | 0.076 μs |  0.25 |         - |
+|              Method |     Mean |    Error |   StdDev | Ratio | Allocated | Alloc Ratio |
+|-------------------- |---------:|---------:|---------:|------:|----------:|------------:|
+|                Linq | 75.90 μs | 0.262 μs | 0.245 μs |  1.00 |     120 B |        1.00 |
+|          StructLinq | 18.79 μs | 0.268 μs | 0.251 μs |  0.25 |      64 B |        0.53 |
+| StructLinqZeroAlloc | 14.24 μs | 0.043 μs | 0.036 μs |  0.19 |         - |        0.00 |
