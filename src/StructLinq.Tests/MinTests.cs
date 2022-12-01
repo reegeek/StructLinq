@@ -7,53 +7,32 @@ namespace StructLinq.Tests
 {
     public class MinTests
     {
-        [Fact]
-        public void MinTest()
+        [Theory]
+        [InlineData(int.MinValue, 10)]
+        [InlineData(-10, 10)]
+        [InlineData(0, 10)]
+        [InlineData(10, 10)]
+        public void MinTest(int start, int count)
         {
-            var count = 100;
-            var mult = -2.0;
-            var structMin = StructEnumerable
-                .Range(0, count)
-                .Select(x => x * mult, x=> (IStructEnumerable<int, RangeEnumerator>) x)
-                .Min();
-            Assert.Equal((count - 1) * mult, structMin);
+            var array = Enumerable.Range(start, count).ToArray();
+
+            var structMin = array.ToStructEnumerable().Min();
+            var expected = array.Min();
+            Assert.Equal(expected, structMin);
         }
 
-        [Fact]
-        public void MinTest2()
+        [Theory]
+        [InlineData(int.MinValue, 10)]
+        [InlineData(-10, 10)]
+        [InlineData(0, 10)]
+        [InlineData(10, 10)]
+        public void MinTestOnWhre(int start, int count)
         {
-            var count = 100;
-            var mult = -2.0;
-            var structMin = StructEnumerable
-                .Range(0, count)
-                .Select(x => x * mult, x => (IStructEnumerable<int, RangeEnumerator>)x)
-                .Min(x=>x);
-            Assert.Equal((count - 1) * mult, structMin);
-        }
+            var array = Enumerable.Range(start, count).ToArray();
 
-        
-        [Fact]
-        public void MinTestOnCollection()
-        {
-            var count = 100;
-            var mult = -2.0;
-            var structMin = StructEnumerable
-                .Range(0, count)
-                .Select(x => x * mult, x=>x)
-                .Min();
-            Assert.Equal((count - 1) * mult, structMin);
-        }
-
-        [Fact]
-        public void MinTestOnCollection2()
-        {
-            var count = 100;
-            var mult = -2.0;
-            var structMin = StructEnumerable
-                            .Range(0, count)
-                            .Select(x => x * mult, x => x)
-                            .Min(x=>x);
-            Assert.Equal((count - 1) * mult, structMin);
+            var structMin = array.ToStructEnumerable().Where(x=> true).Min();
+            var expected = array.Min();
+            Assert.Equal(expected, structMin);
         }
 
 

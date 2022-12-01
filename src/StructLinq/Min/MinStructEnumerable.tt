@@ -44,7 +44,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(<#= t.Name #> input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
