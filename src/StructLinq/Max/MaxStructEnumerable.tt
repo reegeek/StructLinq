@@ -44,7 +44,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(<#= t.Name #> input)
             {
-                HasMax = true;
+                if (!HasMax)
+                {
+                    Max = input;
+                    HasMax = true;
+                    return true;
+                }
                 if (Max < input)
                     Max = input;
                 return true;

@@ -7,30 +7,39 @@ namespace StructLinq.Tests
 {
     public class MaxTests
     {
-        [Fact]
-        public void MaxTest()
+        [Theory]
+        [InlineData(int.MaxValue, 10)]
+        [InlineData(-10, 10)]
+        [InlineData(0, 10)]
+        [InlineData(10, 10)]
+        public void MaxTest(int end, int count)
         {
-            var count = 100;
-            var mult = 2.0;
-            var structMax = StructEnumerable
-                .Range(0, count)
-                .Select(x=> x * mult, x=> (IStructEnumerable<int, RangeEnumerator>) x)
-                .Max();
-            Assert.Equal((count-1) * mult, structMax);
+            var array = Enumerable.Range(end - count, count).ToArray();
+
+            var max = array.ToStructEnumerable().Max();
+
+            var expected = array.Max();
+
+            Assert.Equal(expected, max);
         }
 
-        [Fact]
-        public void MaxTest2()
+        [Theory]
+        [InlineData(int.MaxValue, 10)]
+        [InlineData(-10, 10)]
+        [InlineData(0, 10)]
+        [InlineData(10, 10)]
+        public void MaxTestOnWhere(int end, int count)
         {
-            var count = 100;
-            var mult = 2.0;
-            var structMax = StructEnumerable
-                            .Range(0, count)
-                            .Select(x=> x * mult, x=> (IStructEnumerable<int, RangeEnumerator>)x)
-                            .Max(x=>x);
-            Assert.Equal((count-1) * mult, structMax);
+            var array = Enumerable.Range(end - count, count).ToArray();
+
+            var max = array.ToStructEnumerable().Where(x=> true).Max();
+
+            var expected = array.Max();
+
+            Assert.Equal(expected, max);
         }
-        
+
+
         [Fact]
         public void ErrorTest()
         {
@@ -38,30 +47,7 @@ namespace StructLinq.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => structEnum.Max());
         }
 
-        [Fact]
-        public void MaxTestOnCollection()
-        {
-            var count = 100;
-            var mult = 2.0;
-            var structMax = StructEnumerable
-                .Range(0, count)
-                .Select(x=> x * mult, x=> x)
-                .Max();
-            Assert.Equal((count-1) * mult, structMax);
-        }
-
-        [Fact]
-        public void MaxTestOnCollection2()
-        {
-            var count = 100;
-            var mult = 2.0;
-            var structMax = StructEnumerable
-                .Range(0, count)
-                .Select(x=> x * mult, x=>x)
-                .Max(x=>x);
-            Assert.Equal((count-1) * mult, structMax);
-        }
-        
+       
         [Fact]
         public void ErrorTestOnCollection()
         {
