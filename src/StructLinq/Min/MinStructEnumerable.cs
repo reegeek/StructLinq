@@ -22,7 +22,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(Int16 input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -69,7 +74,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(Int32 input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -116,7 +126,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(Int64 input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -163,7 +178,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(UInt16 input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -210,7 +230,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(UInt32 input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -257,7 +282,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(UInt64 input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -304,7 +334,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(Single input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -351,7 +386,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(Double input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -398,7 +438,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(Byte input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -445,7 +490,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(SByte input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
@@ -492,7 +542,12 @@ namespace StructLinq
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public bool Visit(DateTime input)
             {
-                HasMin = true;
+                if (!HasMin)
+                {
+                    Min = input;
+                    HasMin = true;
+                    return true;
+                }
                 if (Min > input)
                     Min = input;
                 return true;
