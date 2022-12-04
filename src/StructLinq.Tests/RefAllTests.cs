@@ -2,14 +2,15 @@
 using StructLinq.Array;
 using StructLinq.Where;
 using Xunit;
+using System.Linq;
 
 namespace StructLinq.Tests
 {
     public class RefAllTests
     {
-        private static RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>> Enumerable()
+        private static RefStructEnum<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>> Enumerable()
         {
-            return StructEnumerable.Range(0, 10).ToArray().ToRefStructEnumerable().Where((in int x) => true, _ => _);
+            return System.Linq.Enumerable.Range(0, 10).ToArray().ToRefStructEnum().Where((in int x) => true);
         }
 
         [Fact]
@@ -22,18 +23,6 @@ namespace StructLinq.Tests
         public void ShouldBeFalseWithFunc()
         {
             Enumerable().All(x => x > 5).Should().BeFalse();
-        }
-
-        [Fact]
-        public void ShouldBeTrueWithFuncZeroAlloc()
-        {
-            Enumerable().All(x => x < 11, x=> x).Should().BeTrue();
-        }
-
-        [Fact]
-        public void ShouldBeFalseWithFuncZeroAlloc()
-        {
-            Enumerable().All(x => x > 5, x=> x).Should().BeFalse();
         }
 
         [Fact]
@@ -60,14 +49,14 @@ namespace StructLinq.Tests
         public void ShouldBeFalseWithIFunction()
         {
             var func = new AllFunction(5);
-            Enumerable().All(func).Should().BeFalse();
+            Enumerable().All(ref func).Should().BeFalse();
         }
 
         [Fact]
         public void ShouldBeTrueWithIFunction()
         {
             var func = new AllFunction(-1);
-            Enumerable().All(func).Should().BeTrue();
+            Enumerable().All(ref func).Should().BeTrue();
         }
 
     }

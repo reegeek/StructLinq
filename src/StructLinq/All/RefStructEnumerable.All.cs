@@ -11,7 +11,7 @@ namespace StructLinq
     public partial struct RefStructEnum<T, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool All(Func<T, bool> predicate)
+        public bool All(Func<T, bool> predicate)
         {
             var copy = enumerator;
             while (copy.MoveNext())
@@ -29,7 +29,44 @@ namespace StructLinq
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last argument")]
-        private bool All(Func<T, bool> predicate, Func<TEnumerator, IRefStructEnumerator<T>> _) => All(predicate);
+        public bool All(Func<T, bool> predicate, Func<TEnumerator, IRefStructEnumerator<T>> _) => All(predicate);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool All<TFunction>(ref TFunction predicate)
+            where TFunction : IInFunction<T, bool>
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                ref var current = ref copy.Current;
+                if (!predicate.Eval(in current))
+                {
+                    copy.Dispose();
+                    return false;
+                }
+            }
+            copy.Dispose();
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool All<TFunction>(ref TFunction predicate, Func<TEnumerator, IRefStructEnumerator<T>> _)
+            where TFunction : IInFunction<T, bool>
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                ref var current = ref copy.Current;
+                if (!predicate.Eval(in current))
+                {
+                    copy.Dispose();
+                    return false;
+                }
+            }
+            copy.Dispose();
+            return true;
+        }
     }
 
 

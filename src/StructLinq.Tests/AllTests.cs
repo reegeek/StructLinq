@@ -7,9 +7,9 @@ namespace StructLinq.Tests
 {
     public class AllTests
     {
-        private static WhereEnumerable<int, RangeEnumerable, RangeEnumerator> StructEnumerable()
+        private static StructEnum<int, WhereEnumerator<int, RangeEnumerator>> StructEnumerable()
         {
-            return StructLinq.StructEnumerable.Range(0, 10).Where(x=> true, x=> x);
+            return StructLinq.StructEnumerable.Range2(0, 10).Where(x=> true);
         }
 
         [Fact]
@@ -22,18 +22,6 @@ namespace StructLinq.Tests
         public void ShouldBeFalseWithFunc()
         {
             StructEnumerable().All(x => x > 5).Should().BeFalse();
-        }
-
-        [Fact]
-        public void ShouldBeTrueWithFuncZeroAlloc()
-        {
-            StructEnumerable().All(x => x < 11, x=> x).Should().BeTrue();
-        }
-
-        [Fact]
-        public void ShouldBeFalseWithFuncZeroAlloc()
-        {
-            StructEnumerable().All(x => x > 5, x=> x).Should().BeFalse();
         }
 
         [Fact]
@@ -67,7 +55,7 @@ namespace StructLinq.Tests
         public void ShouldBeFalseWithIFunction()
         {
             var func = new AllFunction();
-            StructEnumerable().All(func).Should().BeFalse();
+            StructEnumerable().All(ref func).Should().BeFalse();
         }
     }
 

@@ -8,6 +8,54 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructCollec<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool All(Func<T, bool> predicate)
+        {
+            var count = enumerator.Count;
+            for (int i = 0; i < count; i++)
+            {
+                var current = enumerator.Get(i);
+                if (!predicate(current))
+                {
+                    enumerator.Dispose();
+                    return false;
+                }
+            }
+            enumerator.Dispose();
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool All(Func<T, bool> predicate, Func<TEnumerator, IStructEnumerator<T>> _) => All(predicate);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool All<TFunction>(ref TFunction predicate)
+            where TFunction : IFunction<T, bool>
+        {
+            var count = enumerator.Count;
+            for (int i = 0; i < count; i++)
+            {
+                var current = enumerator.Get(i);
+                if (!predicate.Eval(current))
+                {
+                    enumerator.Dispose();
+                    return false;
+                }
+            }
+            enumerator.Dispose();
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool All<TFunction>(ref TFunction predicate, Func<TEnumerator, IStructEnumerator<T>> _)
+            where TFunction : IFunction<T, bool>
+            => All(ref predicate);
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
