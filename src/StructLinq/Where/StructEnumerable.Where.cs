@@ -5,6 +5,41 @@ using StructLinq.Where;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructEnum<T, WhereEnumerator<T, TEnumerator, TFunction>> Where<TFunction>(ref TFunction predicate)
+            where TFunction : struct, IFunction<T, bool>
+        {
+            var copy = enumerator;
+            return new(new(ref predicate, ref copy));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public StructEnum<T, WhereEnumerator<T, TEnumerator, TFunction>> Where<TFunction>(ref TFunction predicate, Func<TEnumerator, IStructEnumerator<T>> _)
+            where TFunction : struct, IFunction<T, bool>
+        {
+            var copy = enumerator;
+            return new(new(ref predicate, ref copy));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructEnum<T, WhereEnumerator<T, TEnumerator>> Where(Func<T, bool> predicate)
+        {
+            var copy = enumerator;
+            return new(new(predicate, ref copy));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public StructEnum<T, WhereEnumerator<T, TEnumerator>> Where(Func<T, bool> predicate, Func<TEnumerator, IStructEnumerator<T>> _)
+        {
+            var copy = enumerator;
+            return new(new(predicate, ref copy));
+        }
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

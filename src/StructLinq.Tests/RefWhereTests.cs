@@ -7,15 +7,14 @@ using Xunit;
 namespace StructLinq.Tests
 {
     public class RefWhereTests : AbstractRefEnumerableTests<int,
-        RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>,
         RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>>
     {
-        protected override RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>> Build(int size)
+        protected override RefStructEnum<int, RefWhereEnumerator<int, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>>> Build(int size)
         {
-            RefWhereEnumerable<int, ArrayRefEnumerable<int>, ArrayRefStructEnumerator<int>, StructInFunction<int, bool>> whereEnumerable = Enumerable.Range(-1, size)
+            var whereEnumerable = Enumerable.Range(-1, size)
                 .ToArray()
-                .ToRefStructEnumerable()
-                .Where((in int x) => x >= -1, x => x);
+                .ToRefStructEnum()
+                .Where((in int x) => x >= -1);
             return whereEnumerable;
         }
 
@@ -30,8 +29,8 @@ namespace StructLinq.Tests
             var structEnum = Enumerable
                 .Range(-50, 100)
                 .ToArray()
-                .ToRefStructEnumerable()
-                .Where(selector, x => x)
+                .ToRefStructEnum()
+                .Where(selector)
                 .ToEnumerable()
                 .ToArray();
             Assert.Equal(sys, structEnum);
@@ -49,7 +48,7 @@ namespace StructLinq.Tests
             var structEnum = Enumerable
                 .Range(-50, 100)
                 .ToArray()
-                .ToRefStructEnumerable()
+                .ToRefStructEnum()
                 .Where(ref whereFunc, x => x)
                 .ToEnumerable()
                 .ToArray();
