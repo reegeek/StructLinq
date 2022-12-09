@@ -8,32 +8,13 @@ namespace StructLinq.Tests
         [Fact]
         public void ShouldBeTrueWithFunc()
         {
-            StructEnumerable.Range(0, 10).Any(x => x > 5).Should().BeTrue();
+            StructEnumerable.Range2(0, 10).Any(x => x > 5).Should().BeTrue();
         }
 
         [Fact]
         public void ShouldBeFalseWithFunc()
         {
-            StructEnumerable.Range(0, 10).Any(x => x > 11).Should().BeFalse();
-        }
-
-        [Fact]
-        public void ShouldBeTrueWithFuncZeroAlloc()
-        {
-            StructEnumerable.Range(0, 10).Any(x => x > 5, x=> x).Should().BeTrue();
-        }
-
-        [Fact]
-        public void ShouldBeFalseWithFuncZeroAlloc()
-        {
-            StructEnumerable.Range(0, 10).Any(x => x > 11, x=> x).Should().BeFalse();
-        }
-
-        [Fact]
-        public void ShouldBeFalseWithIFunctionZeroAlloc()
-        {
-            var func = new AllFunction();
-            StructEnumerable.Range(0, 10).Any(ref func, x => x).Should().BeFalse();
+            StructEnumerable.Range2(0, 10).Any(x => x > 11).Should().BeFalse();
         }
 
         private struct AllFunction : IFunction<int, bool>
@@ -48,21 +29,21 @@ namespace StructLinq.Tests
         public void ShouldBeFalseWithIFunction()
         {
             var func = new AllFunction();
-            StructEnumerable.Range(0, 10).Any(func).Should().BeFalse();
+            StructEnumerable.Range2(0, 10).Any(ref func).Should().BeFalse();
         }
 
         [Fact]
         public void ShouldBeTrueForNonEmptyEnumerable()
         {
             var array = new int[] {1};
-            array.ToStructEnumerable().Any().Should().BeTrue();
+            array.ToStructEnum().Any().Should().BeTrue();
         }
 
         [Fact]
         public void ShouldBeFalseForEmptyEnumerable()
         {
             var array = new int[0];
-            array.ToStructEnumerable().Any().Should().BeFalse();
+            array.ToStructEnum().Any().Should().BeFalse();
         }
 
     }

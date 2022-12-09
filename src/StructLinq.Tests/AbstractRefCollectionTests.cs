@@ -11,7 +11,7 @@ namespace StructLinq.Tests
     {
         protected abstract RefStructCollec<T, TEnumerator> BuildCollection(int size);
 
-        protected override RefStructEnum<T, TEnumerator> Build(int size) => BuildCollection(size).ToRefStrutEnumerable();
+        protected override RefStructEnum<T, TEnumerator> Build(int size) => BuildCollection(size).ToRefStructEnumerable();
 
         [Theory]
         [InlineData(0)]

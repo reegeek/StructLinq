@@ -8,6 +8,100 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any()
+        {
+            var copy = enumerator;
+            var result = copy.MoveNext();
+            copy.Dispose();
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Any(Func<TEnumerator, IStructEnumerator<T>> _)
+        {
+            var copy = enumerator;
+            var result = copy.MoveNext();
+            copy.Dispose();
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any(Func<T, bool> predicate)
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                var current = copy.Current;
+                if (predicate(current))
+                {
+                    enumerator.Dispose();
+                    return true;
+                }
+            }
+            copy.Dispose();
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Any(Func<T, bool> predicate, Func<TEnumerator, IStructEnumerator<T>> _)
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                var current = copy.Current;
+                if (predicate(current))
+                {
+                    enumerator.Dispose();
+                    return true;
+                }
+            }
+            copy.Dispose();
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Any<TFunction>(ref TFunction predicate)
+               where TFunction : struct, IFunction<T, bool>
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                var current = copy.Current;
+                if (predicate.Eval(current))
+                {
+                    copy.Dispose();
+                    return true;
+                }
+            }
+            copy.Dispose();
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Any<TFunction>(ref TFunction predicate, Func<TEnumerator, IStructEnumerator<T>> _)
+               where TFunction : struct, IFunction<T, bool>
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                var current = copy.Current;
+                if (predicate.Eval(current))
+                {
+                    copy.Dispose();
+                    return true;
+                }
+            }
+            copy.Dispose();
+            return false;
+        }
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -13,7 +13,7 @@ namespace StructLinq
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RefStructEnum<T, TEnumerator> ToRefStrutEnumerable() => new(enumerator);
+        public RefStructEnum<T, TEnumerator> ToRefStructEnumerable() => new(enumerator);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => enumerator.Count;
