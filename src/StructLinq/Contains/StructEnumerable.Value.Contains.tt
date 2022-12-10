@@ -28,6 +28,47 @@ using StructLinq.Contains;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+
+    public static partial class StructEnumerableExtensions
+    {
+        <# foreach(var t in types) {  #>
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerator : struct, IStructEnumerator<<#= t.Name #>>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerator : struct, ICollectionEnumerator<<#= t.Name #>>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerator : struct, IRefStructEnumerator<<#= t.Name #>>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<<#= t.Name #>, TEnumerator> enumerable, <#= t.Name #> x)
+            where TEnumerator : struct, IRefCollectionEnumerator<<#= t.Name #>>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    <# } #>
+
+    }
+
     public static partial class StructEnumerable
     {
         <# foreach(var t in types) {  #>

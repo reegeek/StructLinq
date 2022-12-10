@@ -7,6 +7,375 @@ using StructLinq.Contains;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+
+    public static partial class StructEnumerableExtensions
+    {
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<Int16, TEnumerator> enumerable, Int16 x)
+            where TEnumerator : struct, IStructEnumerator<Int16>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<Int16, TEnumerator> enumerable, Int16 x)
+            where TEnumerator : struct, ICollectionEnumerator<Int16>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<Int16, TEnumerator> enumerable, Int16 x)
+            where TEnumerator : struct, IRefStructEnumerator<Int16>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<Int16, TEnumerator> enumerable, Int16 x)
+            where TEnumerator : struct, IRefCollectionEnumerator<Int16>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<Int32, TEnumerator> enumerable, Int32 x)
+            where TEnumerator : struct, IStructEnumerator<Int32>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<Int32, TEnumerator> enumerable, Int32 x)
+            where TEnumerator : struct, ICollectionEnumerator<Int32>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<Int32, TEnumerator> enumerable, Int32 x)
+            where TEnumerator : struct, IRefStructEnumerator<Int32>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<Int32, TEnumerator> enumerable, Int32 x)
+            where TEnumerator : struct, IRefCollectionEnumerator<Int32>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<Int64, TEnumerator> enumerable, Int64 x)
+            where TEnumerator : struct, IStructEnumerator<Int64>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<Int64, TEnumerator> enumerable, Int64 x)
+            where TEnumerator : struct, ICollectionEnumerator<Int64>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<Int64, TEnumerator> enumerable, Int64 x)
+            where TEnumerator : struct, IRefStructEnumerator<Int64>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<Int64, TEnumerator> enumerable, Int64 x)
+            where TEnumerator : struct, IRefCollectionEnumerator<Int64>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<UInt16, TEnumerator> enumerable, UInt16 x)
+            where TEnumerator : struct, IStructEnumerator<UInt16>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<UInt16, TEnumerator> enumerable, UInt16 x)
+            where TEnumerator : struct, ICollectionEnumerator<UInt16>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<UInt16, TEnumerator> enumerable, UInt16 x)
+            where TEnumerator : struct, IRefStructEnumerator<UInt16>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<UInt16, TEnumerator> enumerable, UInt16 x)
+            where TEnumerator : struct, IRefCollectionEnumerator<UInt16>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<UInt32, TEnumerator> enumerable, UInt32 x)
+            where TEnumerator : struct, IStructEnumerator<UInt32>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<UInt32, TEnumerator> enumerable, UInt32 x)
+            where TEnumerator : struct, ICollectionEnumerator<UInt32>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<UInt32, TEnumerator> enumerable, UInt32 x)
+            where TEnumerator : struct, IRefStructEnumerator<UInt32>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<UInt32, TEnumerator> enumerable, UInt32 x)
+            where TEnumerator : struct, IRefCollectionEnumerator<UInt32>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<UInt64, TEnumerator> enumerable, UInt64 x)
+            where TEnumerator : struct, IStructEnumerator<UInt64>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<UInt64, TEnumerator> enumerable, UInt64 x)
+            where TEnumerator : struct, ICollectionEnumerator<UInt64>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<UInt64, TEnumerator> enumerable, UInt64 x)
+            where TEnumerator : struct, IRefStructEnumerator<UInt64>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<UInt64, TEnumerator> enumerable, UInt64 x)
+            where TEnumerator : struct, IRefCollectionEnumerator<UInt64>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<Single, TEnumerator> enumerable, Single x)
+            where TEnumerator : struct, IStructEnumerator<Single>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<Single, TEnumerator> enumerable, Single x)
+            where TEnumerator : struct, ICollectionEnumerator<Single>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<Single, TEnumerator> enumerable, Single x)
+            where TEnumerator : struct, IRefStructEnumerator<Single>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<Single, TEnumerator> enumerable, Single x)
+            where TEnumerator : struct, IRefCollectionEnumerator<Single>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<Double, TEnumerator> enumerable, Double x)
+            where TEnumerator : struct, IStructEnumerator<Double>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<Double, TEnumerator> enumerable, Double x)
+            where TEnumerator : struct, ICollectionEnumerator<Double>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<Double, TEnumerator> enumerable, Double x)
+            where TEnumerator : struct, IRefStructEnumerator<Double>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<Double, TEnumerator> enumerable, Double x)
+            where TEnumerator : struct, IRefCollectionEnumerator<Double>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<Byte, TEnumerator> enumerable, Byte x)
+            where TEnumerator : struct, IStructEnumerator<Byte>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<Byte, TEnumerator> enumerable, Byte x)
+            where TEnumerator : struct, ICollectionEnumerator<Byte>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<Byte, TEnumerator> enumerable, Byte x)
+            where TEnumerator : struct, IRefStructEnumerator<Byte>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<Byte, TEnumerator> enumerable, Byte x)
+            where TEnumerator : struct, IRefCollectionEnumerator<Byte>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<SByte, TEnumerator> enumerable, SByte x)
+            where TEnumerator : struct, IStructEnumerator<SByte>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<SByte, TEnumerator> enumerable, SByte x)
+            where TEnumerator : struct, ICollectionEnumerator<SByte>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<SByte, TEnumerator> enumerable, SByte x)
+            where TEnumerator : struct, IRefStructEnumerator<SByte>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<SByte, TEnumerator> enumerable, SByte x)
+            where TEnumerator : struct, IRefCollectionEnumerator<SByte>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructEnum<DateTime, TEnumerator> enumerable, DateTime x)
+            where TEnumerator : struct, IStructEnumerator<DateTime>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this StructCollec<DateTime, TEnumerator> enumerable, DateTime x)
+            where TEnumerator : struct, ICollectionEnumerator<DateTime>
+        {
+           var comparer = new DefaultStructEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructEnum<DateTime, TEnumerator> enumerable, DateTime x)
+            where TEnumerator : struct, IRefStructEnumerator<DateTime>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<TEnumerator>(this RefStructCollec<DateTime, TEnumerator> enumerable, DateTime x)
+            where TEnumerator : struct, IRefCollectionEnumerator<DateTime>
+        {
+           var comparer = new DefaultStructInEqualityComparer();
+           return enumerable.Contains(x, comparer);
+        }
+
+    
+    }
+
     public static partial class StructEnumerable
     {
                 

@@ -1,11 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using StructLinq.Contains;
 
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Contains<TComparer>(T x, TComparer comparer)
+            where TComparer : IEqualityComparer<T>
+        {
+            var visitor = new ContainsVisitor<T, TComparer>(comparer, x);
+            return Visit(ref visitor) == VisitStatus.VisitorFinished;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Contains<TComparer>(T x, TComparer comparer, Func<TEnumerator, IStructEnumerator<T>> _)
+            where TComparer : IEqualityComparer<T>
+        {
+            var visitor = new ContainsVisitor<T, TComparer>(comparer, x);
+            return Visit(ref visitor) == VisitStatus.VisitorFinished;
+        }
+
+    }
+
+    public static partial class StructEumerableExtensions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<T, TEnumerator>(this StructEnum<T, TEnumerator> enumerable, T x)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            return enumerable.Contains(x, EqualityComparer<T>.Default);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static bool Contains<T, TEnumerator>(this StructEnum<T, TEnumerator> enumerable, T x, Func<TEnumerator, IStructEnumerator<T>> _)
+            where TEnumerator : struct, IStructEnumerator<T>
+        {
+            return enumerable.Contains(x, EqualityComparer<T>.Default);
+        }
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -5,6 +5,58 @@ using System.Runtime.CompilerServices;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct RefStructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Contains<TComparer>(T x, TComparer comparer)
+            where TComparer : IInEqualityComparer<T>
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                 ref var enumeratorCurrent = ref copy.Current;
+                if (comparer.Equals(in x, in enumeratorCurrent))
+                    return true;
+            }
+            copy.Dispose();
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public bool Contains<TComparer>(T x, TComparer comparer, Func<TEnumerator, IRefStructEnumerator<T>> _)
+            where TComparer : IInEqualityComparer<T>
+        {
+            var copy = enumerator;
+            while (copy.MoveNext())
+            {
+                 ref var enumeratorCurrent = ref copy.Current;
+                if (comparer.Equals(in x, in enumeratorCurrent))
+                    return true;
+            }
+            copy.Dispose();
+            return false;
+        }
+    }
+
+    public static partial class StructEumerableExtensions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains<T, TEnumerator>(this RefStructEnum<T, TEnumerator> enumerable, T x)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return enumerable.Contains(x, InEqualityComparer<T>.Default);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public static bool Contains<T, TEnumerator>(this RefStructEnum<T, TEnumerator> enumerable, T x, Func<TEnumerator, IRefStructEnumerator<T>> _)
+            where TEnumerator : struct, IRefStructEnumerator<T>
+        {
+            return enumerable.Contains(x, InEqualityComparer<T>.Default);
+        }
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
