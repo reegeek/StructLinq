@@ -9,6 +9,61 @@ using StructLinq.Count;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int Count()
+        {
+            var visitor = new IntCountVisitor<T>(0);
+            Visit(ref visitor);
+            return visitor.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public int Count(Func<TEnumerator, IStructEnumerator<T>> _) 
+        {
+            var visitor = new IntCountVisitor<T>(0);
+            Visit(ref visitor);
+            return visitor.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint UIntCount()
+        {
+            var visitor = new UIntCountVisitor<T>(0);
+            Visit(ref visitor);
+            return visitor.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public uint UIntCount(Func<TEnumerator, IStructEnumerator<T>> _) 
+        {
+            var visitor = new UIntCountVisitor<T>(0);
+            Visit(ref visitor);
+            return visitor.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public long LongCount()
+        {
+            var visitor = new LongCountVisitor<T>(0);
+            Visit(ref visitor);
+            return visitor.Count;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Obsolete("Remove last argument")]
+        public long LongCount(Func<TEnumerator, IStructEnumerator<T>> _) 
+        {
+            var visitor = new LongCountVisitor<T>(0);
+            Visit(ref visitor);
+            return visitor.Count;
+        }
+
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
