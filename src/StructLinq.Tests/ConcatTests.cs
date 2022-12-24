@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using StructLinq.Array;
 using StructLinq.Concat;
-using StructLinq.Empty;
 using Xunit;
 
 namespace StructLinq.Tests

@@ -11,11 +11,14 @@ namespace StructLinq
     public partial struct RefStructCollec<T, TEnumerator>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Any() => ToRefStructEnumerable().Any();
+        public bool Any()
+        {
+            return enumerator.Count > 0;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Obsolete("Remove last argument")]
-        public bool Any(Func<TEnumerator, IRefCollectionEnumerator<T>> _) => ToRefStructEnumerable().Any();
+        public bool Any(Func<TEnumerator, IRefCollectionEnumerator<T>> _) => Any();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Any(Func<T, bool> predicate) => ToRefStructEnumerable().Any(predicate);
