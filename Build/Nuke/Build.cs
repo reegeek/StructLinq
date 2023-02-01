@@ -18,7 +18,7 @@ using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-[CheckBuildProjectConfigurations(TimeoutInMilliseconds = 2000)]
+[CheckBuildProjectConfigurations(TimeoutInMilliseconds = 20000)]
 [UnsetVisualStudioEnvironmentVariables]
 [GitHubActions(
     "continuous",
