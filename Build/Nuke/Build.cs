@@ -83,9 +83,8 @@ partial class Build : Nuke.Common.NukeBuild
             var ps1File = ResultDirectory / "donet-install.ps1";
             using (var client = new HttpClient())
             {
-                using var s = client.GetStreamAsync(@"https://dot.net/v1/dotnet-install.ps1");
-                using var fs = new FileStream(ps1File, FileMode.CreateNew);
-                s.Result.CopyTo(fs);
+                var bytes = client.GetByteArrayAsync(@"https://dot.net/v1/dotnet-install.ps1").Result;
+                File.WriteAllBytes(ps1File, bytes);
             }
             PowerShellTasks.PowerShell($" {ps1File} -Channel 3.0 -Architecture x86");
         });
