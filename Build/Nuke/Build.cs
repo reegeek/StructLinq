@@ -81,9 +81,9 @@ partial class Build : Nuke.Common.NukeBuild
             if (AzurePipelines == null && GitHubActions == null)
                 return;
             var ps1File = ResultDirectory / "donet-install.ps1";
-            using var client = new HttpClient();
-            using (var s = client.GetStreamAsync(@"https://dot.net/v1/dotnet-install.ps1"))
+            using (var client = new HttpClient())
             {
+                using var s = client.GetStreamAsync(@"https://dot.net/v1/dotnet-install.ps1");
                 using var fs = new FileStream(ps1File, FileMode.CreateNew);
                 s.Result.CopyTo(fs);
             }
