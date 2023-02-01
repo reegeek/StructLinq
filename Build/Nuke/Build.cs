@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AzurePipelines;
@@ -17,7 +18,7 @@ using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-[CheckBuildProjectConfigurations]
+[CheckBuildProjectConfigurations(TimeoutInMilliseconds = 2000)]
 [UnsetVisualStudioEnvironmentVariables]
 [GitHubActions(
     "continuous",
@@ -41,7 +42,6 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
     ExcludedTargets = new[] { nameof(Clean), nameof(PackCoreOnly)})]
-
 partial class Build : Nuke.Common.NukeBuild
 {
     /// Support plugins are available for:
@@ -73,6 +73,8 @@ partial class Build : Nuke.Common.NukeBuild
         .Before(Clean)
         .Executes(() =>
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return;
             if (AzurePipelines == null && GitHubActions == null)
                 return;
             ChocolateyTasks.Chocolatey(" install dotnetcore-sdk --version=3.0.103");
