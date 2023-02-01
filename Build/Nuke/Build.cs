@@ -80,6 +80,7 @@ partial class Build : Nuke.Common.NukeBuild
                 return;
             if (AzurePipelines == null && GitHubActions == null)
                 return;
+            Directory.CreateDirectory(ResultDirectory);
             var ps1File = ResultDirectory / "donet-install.ps1";
             using (var client = new HttpClient())
             {
