@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using Nuke.Common;
 using Nuke.Common.CI;
@@ -14,11 +16,12 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Chocolatey;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Tools.PowerShell;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
-[CheckBuildProjectConfigurations(TimeoutInMilliseconds = 20000)]
+[CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
 [GitHubActions(
     "continuous",
@@ -77,7 +80,14 @@ partial class Build : Nuke.Common.NukeBuild
                 return;
             if (AzurePipelines == null && GitHubActions == null)
                 return;
-            ChocolateyTasks.Chocolatey(" install dotnetcore-sdk --version=3.0.103");
+            var ps1File = ResultDirectory / "donet-install.ps1";
+            using var client = new HttpClient();
+            using (var s = client.GetStreamAsync(@"https://dot.net/v1/dotnet-install.ps1"))
+            {
+                using var fs = new FileStream(ps1File, FileMode.CreateNew);
+                s.Result.CopyTo(fs);
+            }
+            PowerShellTasks.PowerShell($" {ps1File} -Channel 3.0 -Architecture x86");
         });
 
     Target Clean => _ => _
