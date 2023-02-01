@@ -10,6 +10,65 @@ using StructLinq.Utils.Collections;
 // ReSharper disable once CheckNamespace
 namespace StructLinq
 {
+    public partial struct StructEnum<T, TEnumerator>
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructEnum<T, ExceptEnumerator<T, TEnumerator, TEnumerator2, TComparer>> Except<TEnumerator2, TComparer>(
+            StructEnum<T, TEnumerator2> enumerable,
+            TComparer comparer,
+            int capacity,
+            ArrayPool<int> bucketPool,
+            ArrayPool<Slot<T>> slotPool) 
+                where TEnumerator2 : struct, IStructEnumerator<T> 
+                where TComparer : IEqualityComparer<T>
+        {
+            var copy = enumerator;
+            var copy2 = enumerable.enumerator;
+            return new(new(ref copy, ref copy2, comparer, capacity, bucketPool, slotPool));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public StructEnum<T, ExceptEnumerator<T, TEnumerator, TEnumerator2, TComparer>> Except<TEnumerator2, TComparer>(
+            StructCollec<T, TEnumerator2> enumerable,
+            TComparer comparer,
+            int capacity,
+            ArrayPool<int> bucketPool,
+            ArrayPool<Slot<T>> slotPool)
+            where TEnumerator2 : struct, ICollectionEnumerator<T>
+            where TComparer : IEqualityComparer<T>
+        {
+            var copy = enumerator;
+            var copy2 = enumerable.enumerator;
+            return new(new(ref copy, ref copy2, comparer, capacity, bucketPool, slotPool));
+        }
+
+    }
+
+    public static partial class StructEnumerable
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static StructEnum<T, ExceptEnumerator<T, TEnumerator, TEnumerator2, TComparer>> Except<T, TEnumerator,
+                TEnumerator2, TComparer>
+            (this StructEnum<T, TEnumerator> enumerable1, StructEnum<T, TEnumerator2> enumerable2, TComparer comparer) 
+                where TEnumerator : struct, IStructEnumerator<T> 
+                where TEnumerator2 : struct, IStructEnumerator<T>
+                where TComparer : IEqualityComparer<T>
+        {
+            return enumerable1.Except(enumerable2, comparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static StructEnum<T, ExceptEnumerator<T, TEnumerator, TEnumerator2, EqualityComparer<T>>> Except<T, TEnumerator, TEnumerator2>
+            (this StructEnum<T, TEnumerator> enumerable1, StructEnum<T, TEnumerator2> enumerable2)
+            where TEnumerator : struct, IStructEnumerator<T>
+            where TEnumerator2 : struct, IStructEnumerator<T>
+        {
+            var equalityComparer = EqualityComparer<T>.Default;
+            return enumerable1.Except(enumerable2, equalityComparer, 0, ArrayPool<int>.Shared, ArrayPool<Slot<T>>.Shared);
+        }
+
+    }
+
     public static partial class StructEnumerable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

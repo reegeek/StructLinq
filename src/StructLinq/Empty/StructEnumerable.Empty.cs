@@ -11,5 +11,9 @@ namespace StructLinq
         {
             return new EmptyEnumerable<T>();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static StructCollec<T, EmptyEnumerator<T>> Empty2<T>() => new(new());
+
     }
 }

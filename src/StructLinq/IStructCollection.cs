@@ -5,7 +5,7 @@ namespace StructLinq
     public readonly partial struct StructCollec<T, TEnumerator>
     where TEnumerator : struct, ICollectionEnumerator<T>
     {
-        private readonly TEnumerator enumerator;
+        internal readonly TEnumerator enumerator;
 
         public StructCollec(TEnumerator enumerator)
         {

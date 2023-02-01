@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1;net452;net472;net48;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net50;net60;net70</TargetFrameworks>
+    <!--<TargetFrameworks>netstandard1.1;net452;net472;net48;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net50;net60;net70</TargetFrameworks>-->
+    <TargetFrameworks>net70;net60;net48</TargetFrameworks>
 	<OldVersion>True</OldVersion>
 	<OldVersion Condition="'$(TargetFramework)' == 'netstandard1.1' Or '$(TargetFramework)' == 'net452'">true</OldVersion>
   </PropertyGroup>

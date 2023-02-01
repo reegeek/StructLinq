@@ -3,8 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace StructLinq.Empty
 {
-    public struct EmptyEnumerator<T> : IStructEnumerator<T>
+    public struct EmptyEnumerator<T> : ICollectionEnumerator<T>
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
         }
@@ -31,6 +32,23 @@ namespace StructLinq.Empty
             where TVisitor : IVisitor<T>
         {
             return VisitStatus.EnumeratorFinished;
+        }
+
+        public int Count
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Get(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Slice(uint start, uint? length)
+        {
         }
     }
 }

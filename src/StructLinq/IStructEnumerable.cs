@@ -5,7 +5,7 @@ namespace StructLinq
     public readonly partial struct StructEnum<T, TEnumerator>
     where TEnumerator : struct, IStructEnumerator<T>
     {
-        private readonly TEnumerator enumerator;
+        internal readonly TEnumerator enumerator;
 
         public StructEnum(TEnumerator enumerator)
         {
