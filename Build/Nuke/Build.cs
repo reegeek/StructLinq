@@ -10,6 +10,7 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Chocolatey;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
@@ -59,14 +60,23 @@ partial class Build : Nuke.Common.NukeBuild
     [GitVersion(Framework = "net5.0")] readonly GitVersion GitVersion;
 
     [CI] readonly AzurePipelines AzurePipelines;
-
-
+    [CI] readonly GitHubActions GitHubActions;
+    
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ResultDirectory => RootDirectory / ".result";
     AbsolutePath PackagesDirectory => ResultDirectory / "packages";
     AbsolutePath TestResultDirectory => ResultDirectory / "test-results";
     IEnumerable<Project> TestProjects => Solution.GetProjects("*.Tests");
     IEnumerable<Project> AllProjects => Solution.AllProjects.Where(x=> SourceDirectory.Contains(x.Path));
+
+    Target SdkInstallation => _ => _
+        .Before(Clean)
+        .Executes(() =>
+        {
+            if (AzurePipelines == null && GitHubActions == null)
+                return;
+            ChocolateyTasks.Chocolatey(" install dotnetcore-sdk --version=3.0.103");
+        });
 
     Target Clean => _ => _
         .Before(Restore)
@@ -76,6 +86,7 @@ partial class Build : Nuke.Common.NukeBuild
         });
 
     Target Restore => _ => _
+        .DependsOn(SdkInstallation)
         .Executes(() =>
         {
             DotNetRestore(s => s
