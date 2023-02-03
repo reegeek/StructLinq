@@ -56,7 +56,7 @@ public static class ProjectExtensions
             if (azurePipelines != null && x.framework.Contains("2.2"))
                 return false;
 
-            //exclude netcore 2.1, 2.2, 5.0, 7.0 in x86 because is not well handle by azure pipelines and github actions on windows
+            //exclude netcore 2.1, 2.2, 3.0, 5.0 in x86 because is not well handle by azure pipelines and github actions on windows
             if (x.platform != "x86")
                 return true;
             if (x.framework == null)
@@ -65,9 +65,9 @@ public static class ProjectExtensions
                 return false;
             if (x.framework.Contains("2.2"))
                 return false;
-            if (x.framework.Contains("50"))
+            if (x.framework.Contains("30"))
                 return false;
-            if (x.framework.Contains("70"))
+            if (x.framework.Contains("50"))
                 return false;
             return true;
         });
