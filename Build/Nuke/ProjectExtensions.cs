@@ -65,7 +65,7 @@ public static class ProjectExtensions
                 return false;
             if (x.framework.Contains("2.2"))
                 return false;
-            if (x.framework.Contains("30"))
+            if (x.framework.Contains("3.0"))
                 return false;
             if (x.framework.Contains("50"))
                 return false;
