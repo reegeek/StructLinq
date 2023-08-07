@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net70;net60;net48</TargetFrameworks>
 		<IsPackable>False</IsPackable>
@@ -11,7 +11,7 @@
     
 	<ItemGroup>
 		<PackageReference Include="BenchmarkDotNet" Version="0.13.4" />
-		<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.2" />
+		<PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.7" />
 	</ItemGroup>
 
 </Project>
