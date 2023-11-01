@@ -105,9 +105,12 @@ namespace StructLinq
                 return false;
             for (int i = 0; i < collection.Count; i++)
             {
-                first = collection.Get(i);
-                if (predicate(first))
+                var current = collection.Get(i);
+                if (predicate(current))
+                {
+                    first = current;
                     return true;
+                }
             }
             return false;
         }
@@ -120,9 +123,12 @@ namespace StructLinq
                 return false;
             for (int i = 0; i < collection.Count; i++)
             {
-                first = collection.Get(i);
-                if (predicate(first))
+                var current = collection.Get(i);
+                if (predicate(current))
+                {
+                    first = current;
                     return true;
+                }
             }
             return false;
         }
@@ -137,9 +143,12 @@ namespace StructLinq
                 return false;
             for (int i = 0; i < collection.Count; i++)
             {
-                first = collection.Get(i);
+                var current = collection.Get(i);
                 if (predicate.Eval(first))
+                {
+                    first = current;
                     return true;
+                }
             }
             return false;
         }
