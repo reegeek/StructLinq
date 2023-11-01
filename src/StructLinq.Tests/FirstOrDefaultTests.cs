@@ -40,7 +40,6 @@ namespace StructLinq.Tests
             StructEnumerable.Empty<int>().FirstOrDefault(x=>x).Should().Be(default);
         }
 
-
         [Fact]
         public void ShouldReturnFirstElementWithFunc()
         {
@@ -61,6 +60,17 @@ namespace StructLinq.Tests
                                   .FirstOrDefault(x=> x > 5, x=> x)
                                   .Should()
                                   .Be(6);
+        }
+
+        [Fact]
+        public void ShouldReturnDefaultValue()
+        {
+            var array = Enumerable.Range(0, 10)
+                .ToArray()
+                .ToStructEnumerable()
+                .FirstOrDefault(x => x == 11)
+                .Should()
+                .Be(default);
         }
     }
 }
