@@ -77,6 +77,7 @@
               "Pack",
               "PackCoreOnly",
               "Restore",
+              "SdkInstallation",
               "Test",
               "TestCoreOnly"
             ]
@@ -98,6 +99,7 @@
               "Pack",
               "PackCoreOnly",
               "Restore",
+              "SdkInstallation",
               "Test",
               "TestCoreOnly"
             ]

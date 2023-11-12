@@ -1,6 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Threading.Channels;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AzurePipelines;
@@ -10,8 +15,10 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Chocolatey;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Tools.PowerShell;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -40,7 +47,6 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
     InvokedTargets = new[] { nameof(Test), nameof(TestCoreOnly), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore) },
     ExcludedTargets = new[] { nameof(Clean), nameof(PackCoreOnly)})]
-
 partial class Build : Nuke.Common.NukeBuild
 {
     /// Support plugins are available for:
@@ -59,14 +65,48 @@ partial class Build : Nuke.Common.NukeBuild
     [GitVersion(Framework = "net5.0")] readonly GitVersion GitVersion;
 
     [CI] readonly AzurePipelines AzurePipelines;
-
-
+    [CI] readonly GitHubActions GitHubActions;
+    
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath ResultDirectory => RootDirectory / ".result";
     AbsolutePath PackagesDirectory => ResultDirectory / "packages";
     AbsolutePath TestResultDirectory => ResultDirectory / "test-results";
     IEnumerable<Project> TestProjects => Solution.GetProjects("*.Tests");
     IEnumerable<Project> AllProjects => Solution.AllProjects.Where(x=> SourceDirectory.Contains(x.Path));
+
+    Target SdkInstallation => _ => _
+        .Before(Clean)
+        .Executes(() =>
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return;
+            Directory.CreateDirectory(ResultDirectory);
+            var ps1File = ResultDirectory / "donet-install.ps1";
+            using (var client = new HttpClient())
+            {
+                var bytes = client.GetByteArrayAsync(@"https://dot.net/v1/dotnet-install.ps1").Result;
+                File.WriteAllBytes(ps1File, bytes);
+            }
+
+            var channels = new[] {"2.1", "3.0", "3.1", "5.0"};
+            var architectures = new[] {"x86", "x64"};
+            var list = new List<(string chan, string arch)>();
+
+            foreach (var channel in channels)
+            {
+                foreach (var arch in architectures)
+                {
+                    list.Add((channel, arch));
+                }
+            }
+
+            list.AsParallel()
+            .ForAll(x =>
+            {
+                    var folder = ResultDirectory / x.chan / x.arch;
+                    PowerShellTasks.PowerShell($" {ps1File} -Channel {x.chan} -Architecture {x.arch} -InstallDir {folder}");
+                });
+        });
 
     Target Clean => _ => _
         .Before(Restore)
@@ -76,18 +116,43 @@ partial class Build : Nuke.Common.NukeBuild
         });
 
     Target Restore => _ => _
+        .DependsOn(SdkInstallation)
         .Executes(() =>
         {
+            var path = Environment.GetEnvironmentVariable("PATH");
+            var channels = new[] { "2.1", "3.0", "3.1", "5.0" };
+            var architectures = new[] { "x86", "x64" };
+            foreach (var channel in channels)
+            {
+                foreach (var architecture in architectures)
+                {
+                    path += $";{ResultDirectory / channel / architecture}";
+                }
+            }
+
             DotNetRestore(s => s
-                .SetProjectFile(Solution));
+                .SetProjectFile(Solution)
+                .AddProcessEnvironmentVariable("PATH", path));
         });
 
     Target Compile => _ => _
         .DependsOn(Restore)
-        .Executes(() => ExecutesCompile(false));
+        .Executes(() => 
+            ExecutesCompile(false));
 
     void ExecutesCompile(bool excludeNetFramework)
     {
+        var path = Environment.GetEnvironmentVariable("PATH");
+        var channels = new[] { "2.1", "3.0", "3.1", "5.0" };
+        var architectures = new[] { "x86", "x64" };
+        foreach (var channel in channels)
+        {
+            foreach (var architecture in architectures)
+            {
+                path += $";{ResultDirectory / channel / architecture}";
+            }
+        }
+
 
         Serilog.Log.Information(excludeNetFramework ? "Exclude net framework" : "Include net framework");
         if (excludeNetFramework)
@@ -105,6 +170,7 @@ partial class Build : Nuke.Common.NukeBuild
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
                 .SetInformationalVersion(GitVersion.InformationalVersion)
+                .AddProcessEnvironmentVariable("PATH", path)
                 .CombineWith(projectWithFrameworkAndPlatform, (s, f) => s
                     .SetFramework(f.framework)
                     .SetProperty("Platform", f.platform)
@@ -115,6 +181,7 @@ partial class Build : Nuke.Common.NukeBuild
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
+                .AddProcessEnvironmentVariable("PATH", path)
                 .EnableNoRestore()
                 .SetAssemblyVersion(GitVersion.AssemblySemVer)
                 .SetFileVersion(GitVersion.AssemblySemFileVer)
@@ -133,6 +200,18 @@ partial class Build : Nuke.Common.NukeBuild
     void ExecutesTest(bool excludeNetFramework)
     {
         Serilog.Log.Information(excludeNetFramework ? "Exclude net framework" : "Include net framework");
+
+        var path = Environment.GetEnvironmentVariable("PATH");
+        var channels = new[] { "2.1", "3.0", "3.1", "5.0" };
+        var architectures = new[] { "x86", "x64" };
+        foreach (var channel in channels)
+        {
+            foreach (var architecture in architectures)
+            {
+                path += $";{ResultDirectory / channel / architecture}";
+            }
+        }
+
 
         var groupTestConfigurations =
             (from project in TestProjects
@@ -154,6 +233,7 @@ partial class Build : Nuke.Common.NukeBuild
                     .SetConfiguration(Configuration)
                     .SetNoRestore(InvokedTargets.Contains(Restore))
                     .SetNoBuild(InvokedTargets.Contains(Compile))
+                    .AddProcessEnvironmentVariable("PATH", path)
                     .ResetVerbosity()
                     .SetResultsDirectory(TestResultDirectory)
                     .CombineWith(testConfigurations, (_, v) => _
